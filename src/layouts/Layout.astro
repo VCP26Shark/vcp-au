@@ -8,11 +8,14 @@ import Footer from '../components/Footer.astro';
 interface Props {
 	title?: string;
 	description?: string;
+	/** Comma-separated meta keywords */
+	keywords?: string;
 	/** Keep the page out of search results (e.g. client-only pages) */
 	noindex?: boolean;
 }
 
-const { title = 'VCPility', description = '', noindex = false } = Astro.props;
+const { title = 'VCPility', description = '', keywords = '', noindex = false } = Astro.props;
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
 ---
 
 <!doctype html>
@@ -24,8 +27,19 @@ const { title = 'VCPility', description = '', noindex = false } = Astro.props;
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
 		{description && <meta name="description" content={description} />}
+		{keywords && <meta name="keywords" content={keywords} />}
 		{noindex && <meta name="robots" content="noindex" />}
 		<title>{title}</title>
+		{canonical && <link rel="canonical" href={canonical} />}
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="VCPility" />
+		<meta property="og:locale" content="en_AU" />
+		<meta property="og:title" content={title} />
+		{description && <meta property="og:description" content={description} />}
+		{canonical && <meta property="og:url" content={canonical} />}
+		<meta name="twitter:card" content="summary" />
+		<meta name="twitter:title" content={title} />
+		{description && <meta name="twitter:description" content={description} />}
 		{/* Preload the upright face only; italic loads on demand where it is used */}
 		<Font cssVariable="--font-sans" preload={[{ style: 'normal' }]} />
 		<script is:inline>
