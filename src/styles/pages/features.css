@@ -125,7 +125,7 @@
 	border-color: var(--color-ink);
 }
 
-/* Yellow rule that draws along the bottom edge on hover */
+/* Accent rule that draws along the bottom edge on hover */
 .feat-hero .tile::before {
 	content: '';
 	position: absolute;
@@ -133,7 +133,7 @@
 	bottom: 0;
 	left: 0;
 	height: 3px;
-	background: var(--color-yellow);
+	background: var(--gradient-accent);
 	transform: scaleX(0);
 	transition: transform 0.45s var(--ease-out);
 }
@@ -180,7 +180,7 @@
 
 .feat-hero .tile:hover .tile__label,
 .feat-hero .tile:focus-visible .tile__label {
-	color: var(--color-yellow-dark);
+	color: var(--color-accent-deep);
 }
 
 .feat-hero .tile__title {
@@ -208,17 +208,17 @@
 
 .feat-hero .tile:hover .tile__num,
 .feat-hero .tile:focus-visible .tile__num {
-	color: rgb(253 224 71 / 0.25);
+	color: rgb(224 3 72 / 0.25);
 }
 
-/* Yellow tile: black rule and a warm glow instead */
+/* Accent tile: black rule and a warm glow instead */
 .feat-hero .tile--highlight::before {
 	background: var(--color-ink);
 }
 
 .feat-hero .tile--highlight:hover,
 .feat-hero .tile--highlight:focus-visible {
-	box-shadow: 0 20px 40px rgb(253 224 71 / 0.3);
+	box-shadow: 0 20px 40px rgb(224 3 72 / 0.3);
 }
 
 .feat-hero .tile--highlight:hover .tile__label,
@@ -418,8 +418,9 @@
 }
 
 .tool:hover .tool__icon {
-	background: var(--color-yellow);
-	border-color: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
+	border-color: var(--color-accent);
 	transform: scale(1.1) rotate(-5deg);
 }
 
@@ -429,6 +430,11 @@
 	fill: none;
 	stroke: var(--color-ink);
 	stroke-width: 1.5;
+	transition: stroke 0.4s ease;
+}
+
+.tool:hover .tool__icon svg {
+	stroke: var(--color-white);
 }
 
 .tool__label {
@@ -462,7 +468,7 @@
 	line-height: 1;
 	letter-spacing: -0.03em;
 	font-variant-numeric: tabular-nums;
-	color: var(--color-yellow-dark);
+	color: var(--color-accent-deep);
 }
 
 .tools__stat dt {
@@ -627,7 +633,7 @@
 	width: 14px;
 	height: 14px;
 	fill: none;
-	stroke: var(--color-yellow);
+	stroke: var(--color-accent);
 	stroke-width: 2.5;
 	transition: stroke 0.3s ease;
 }
@@ -650,14 +656,15 @@
 	color: var(--color-gray-500);
 }
 
-/* Hover: the row nudges in and the check turns yellow */
+/* Hover: the row nudges in and the check turns accent */
 .checklist__item:hover .checklist__icon {
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 	transform: translateX(8px) rotate(-5deg);
 }
 
 .checklist__item:hover .checklist__icon svg {
-	stroke: var(--color-ink);
+	stroke: var(--color-white);
 }
 
 .checklist__item:hover .checklist__text {
@@ -676,7 +683,7 @@
 
 /* ============================================
    Feature sections: shared split layout
-   Copy on one side, a mockup on the other, with yellow corner brackets,
+   Copy on one side, a mockup on the other, with accent corner brackets,
    a floating toast and a mockup card that lifts on hover.
    ============================================ */
 
@@ -718,7 +725,7 @@
 	z-index: 1;
 	width: 60px;
 	height: 60px;
-	border: 0 solid var(--color-yellow);
+	border: 0 solid var(--color-accent);
 	opacity: 0.6;
 }
 
@@ -766,7 +773,7 @@
 	width: 20px;
 	height: 20px;
 	fill: none;
-	stroke: var(--color-yellow);
+	stroke: var(--color-accent);
 	stroke-width: 2;
 }
 
@@ -788,20 +795,21 @@
 	grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
 }
 
-/* Faint black brackets instead of yellow */
+/* Faint black brackets instead of accent */
 .feature-corner--ink {
 	border-color: var(--color-ink);
 	opacity: 0.15;
 }
 
-/* Soft yellow block peeking out behind the mockup */
+/* Soft accent block peeking out behind the mockup */
 .feature-accent {
 	position: absolute;
 	top: 5%;
 	right: -40px;
 	width: 80px;
 	height: 80px;
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 	opacity: 0.25;
 }
 
@@ -812,15 +820,16 @@
 	left: -30px;
 }
 
-.feature-toast--yellow .feature-toast__icon {
-	background: var(--color-yellow);
+.feature-toast--accent .feature-toast__icon {
+	color: var(--color-white);
+	background: var(--gradient-accent);
 }
 
-.feature-toast--yellow .feature-toast__icon svg {
-	stroke: var(--color-ink);
+.feature-toast--accent .feature-toast__icon svg {
+	stroke: var(--color-white);
 }
 
-/* The mockup card: lifts on hover, with a yellow rule drawing along the bottom */
+/* The mockup card: lifts on hover, with an accent rule drawing along the bottom */
 .mock-card {
 	position: relative;
 	background: var(--color-white);
@@ -845,7 +854,7 @@
 	left: 0;
 	z-index: 1;
 	height: 4px;
-	background: var(--color-yellow);
+	background: var(--gradient-accent);
 	transform: scaleX(0);
 	transition: transform 0.45s var(--ease-out);
 }
@@ -999,7 +1008,7 @@
 	background: var(--color-ink);
 }
 
-/* Small yellow square under booked days */
+/* Small accent square under booked days */
 .calendar__day--booked::after {
 	content: '';
 	position: absolute;
@@ -1008,7 +1017,7 @@
 	width: 5px;
 	height: 5px;
 	margin-left: -2.5px;
-	background: var(--color-yellow);
+	background: var(--gradient-accent);
 }
 
 .calendar__slots {
@@ -1049,7 +1058,7 @@
 	background: var(--color-white);
 	border-color: var(--color-ink);
 	transform: translateX(6px);
-	box-shadow: -6px 6px 0 var(--color-yellow);
+	box-shadow: -6px 6px 0 var(--color-accent);
 }
 
 .calendar__slot-time {
@@ -1081,7 +1090,8 @@
 	font-weight: 700;
 	letter-spacing: 1px;
 	text-transform: uppercase;
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 }
 
 
@@ -1185,7 +1195,8 @@
 
 .mobile-app__block {
 	position: absolute;
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 }
 
 .mobile-app__block--1 {
@@ -1248,14 +1259,15 @@
 	justify-content: center;
 	width: 40px;
 	height: 40px;
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 }
 
 .mobile-app__toast-icon svg {
 	width: 18px;
 	height: 18px;
 	fill: none;
-	stroke: var(--color-ink);
+	stroke: var(--color-white);
 	stroke-width: 2;
 }
 
@@ -1402,7 +1414,7 @@
 }
 
 .app-phone__stat:nth-child(2) strong {
-	color: var(--color-yellow-dark);
+	color: var(--color-accent-deep);
 }
 
 .app-phone__stat span {
@@ -1449,7 +1461,7 @@
 	height: 36px;
 	font-size: 12px;
 	font-weight: 700;
-	color: var(--color-yellow);
+	color: var(--color-accent);
 	background: var(--color-ink);
 }
 
@@ -1480,7 +1492,8 @@
 	padding: 5px 8px;
 	font-size: 10px;
 	font-weight: 700;
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 }
 
 @media (max-width: 1024px) {
@@ -1597,13 +1610,14 @@
 	justify-content: center;
 	width: 48px;
 	height: 48px;
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 }
 
 .chat__avatar svg {
 	width: 26px;
 	height: 26px;
-	fill: var(--color-ink);
+	fill: var(--color-white);
 }
 
 .chat__who strong {
@@ -1626,7 +1640,7 @@
 	content: '';
 	width: 8px;
 	height: 8px;
-	background: var(--color-yellow);
+	background: var(--gradient-accent);
 }
 
 .chat__messages {
@@ -1734,15 +1748,15 @@
 	justify-content: center;
 	width: 48px;
 	height: 48px;
-	color: var(--color-ink);
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 	transition:
 		color 0.3s ease,
 		background 0.3s ease;
 }
 
 .chat__send:hover {
-	color: var(--color-yellow);
+	color: var(--color-accent);
 	background: var(--color-ink);
 }
 
@@ -1933,7 +1947,7 @@
 .crm__deal:hover {
 	border-color: var(--color-ink);
 	transform: translateX(4px);
-	box-shadow: -4px 4px 0 var(--color-yellow);
+	box-shadow: -4px 4px 0 var(--color-accent);
 }
 
 .crm__deal strong {
@@ -1957,7 +1971,7 @@
 	font-style: normal;
 	font-weight: 700;
 	font-variant-numeric: tabular-nums;
-	color: var(--color-yellow-dark);
+	color: var(--color-accent-deep);
 }
 
 @media (max-width: 768px) {
@@ -2040,7 +2054,7 @@
 	width: 14px;
 	height: 14px;
 	fill: none;
-	stroke: var(--color-yellow);
+	stroke: var(--color-accent);
 	stroke-width: 2;
 }
 
@@ -2072,7 +2086,7 @@
 }
 
 .dash__stat:nth-child(2) strong {
-	color: var(--color-yellow-dark);
+	color: var(--color-accent-deep);
 }
 
 .dash__stat-label {
@@ -2148,7 +2162,7 @@
 }
 
 .dash__key--leads::before {
-	background: var(--color-yellow-dark);
+	background: var(--gradient-accent-hover);
 }
 
 .dash__chart {
@@ -2185,7 +2199,7 @@
 }
 
 .dash__line--leads {
-	stroke: var(--color-yellow-dark);
+	stroke: var(--color-accent-deep);
 }
 
 /* The plot draws in from left to right once the mockup scrolls into view */
@@ -2298,7 +2312,8 @@
 }
 
 .browser__dots span:nth-child(2) {
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 }
 
 .browser__dots span:nth-child(3) {
@@ -2322,7 +2337,7 @@
 	width: 14px;
 	height: 14px;
 	fill: none;
-	stroke: var(--color-yellow);
+	stroke: var(--color-accent);
 	stroke-width: 2;
 }
 
@@ -2479,14 +2494,15 @@ html:not(.js) .unified__stage {
 	justify-content: center;
 	width: 36px;
 	height: 36px;
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 }
 
 .platform__brand-icon svg {
 	width: 20px;
 	height: 20px;
 	fill: none;
-	stroke: var(--color-ink);
+	stroke: var(--color-white);
 	stroke-width: 2;
 }
 
@@ -2512,7 +2528,7 @@ html:not(.js) .unified__stage {
 .platform__nav--active {
 	color: var(--color-white);
 	background: rgb(255 255 255 / 0.08);
-	border-left-color: var(--color-yellow);
+	border-left-color: var(--color-accent);
 }
 
 .platform__nav svg {
@@ -2524,7 +2540,7 @@ html:not(.js) .unified__stage {
 }
 
 .platform__nav--active svg {
-	stroke: var(--color-yellow);
+	stroke: var(--color-accent);
 }
 
 /* ----- Main ----- */
@@ -2561,8 +2577,9 @@ html:not(.js) .unified__stage {
 }
 
 .platform__btn--primary {
-	background: var(--color-yellow);
-	border-color: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
+	border-color: var(--color-accent);
 }
 
 .platform__stats {
@@ -2639,7 +2656,7 @@ html:not(.js) .unified__stage {
 }
 
 .platform__stat:nth-child(2) strong {
-	color: var(--color-yellow-dark);
+	color: var(--color-accent-deep);
 }
 
 .platform__stat-label {
@@ -2698,7 +2715,7 @@ html:not(.js) .unified__stage {
 }
 
 .platform__event-icon--lead {
-	background: rgb(253 224 71 / 0.2);
+	background: rgb(224 3 72 / 0.2);
 }
 
 .platform__event-icon--booking {
@@ -2835,7 +2852,7 @@ html:not(.js) .unified__stage {
 	width: 4px;
 	height: 4px;
 	margin: 2px auto 0;
-	background: var(--color-yellow);
+	background: var(--gradient-accent);
 }
 
 .platform__task {
@@ -2860,8 +2877,9 @@ html:not(.js) .unified__stage {
 }
 
 .platform__check--done {
-	background: var(--color-yellow);
-	border-color: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
+	border-color: var(--color-accent);
 }
 
 .platform__task-text {
@@ -2896,8 +2914,9 @@ html:not(.js) .unified__stage {
 }
 
 .platform__contact:hover {
-	background: var(--color-yellow);
-	border-color: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
+	border-color: var(--color-accent);
 }
 
 .platform__contact--add {
@@ -2984,7 +3003,8 @@ html:not(.js) .unified__stage {
 .site-mock__logo span {
 	width: 28px;
 	height: 28px;
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 }
 
 .site-mock__links {
@@ -3018,7 +3038,8 @@ html:not(.js) .unified__stage {
 	font-weight: 700;
 	letter-spacing: 1.5px;
 	text-transform: uppercase;
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 }
 
 .site-mock__headline {
@@ -3085,7 +3106,7 @@ html:not(.js) .unified__stage {
 }
 
 .site-mock__stat:nth-child(2) strong {
-	color: var(--color-yellow-dark);
+	color: var(--color-accent-deep);
 }
 
 .site-mock__stat span {
@@ -3128,7 +3149,7 @@ html:not(.js) .unified__stage {
 	width: 20px;
 	height: 20px;
 	fill: none;
-	stroke: var(--color-yellow);
+	stroke: var(--color-accent);
 	stroke-width: 1.5;
 }
 
@@ -3160,8 +3181,8 @@ html:not(.js) .unified__stage {
 	flex-shrink: 0;
 	padding: 10px 20px;
 	font-size: 11px;
-	color: var(--color-ink);
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 }
 
 @media (max-width: 768px) {
@@ -3298,13 +3319,13 @@ html:not(.js) .unified__stage {
 	height: 32px;
 	font-size: 14px;
 	font-weight: 700;
-	color: var(--color-yellow);
+	color: var(--color-accent);
 	background: var(--color-ink);
 }
 
 .review__step--active .review__num {
-	color: var(--color-ink);
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 }
 
 .review__step-text {
@@ -3339,7 +3360,7 @@ html:not(.js) .unified__stage {
 
 .review__step--active .review__badge {
 	color: var(--color-ink);
-	background: rgb(253 224 71 / 0.45);
+	background: rgb(224 3 72 / 0.45);
 }
 
 .review__message {
@@ -3371,7 +3392,7 @@ html:not(.js) .unified__stage {
 	width: 18px;
 	height: 18px;
 	fill: none;
-	stroke: var(--color-yellow);
+	stroke: var(--color-accent);
 	stroke-width: 2;
 }
 
@@ -3436,7 +3457,8 @@ html:not(.js) .unified__stage {
 	padding: 4px 10px;
 	font-size: 10px;
 	font-weight: 700;
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 }
 
 .review__stars {
@@ -3451,13 +3473,14 @@ html:not(.js) .unified__stage {
 	justify-content: center;
 	width: 28px;
 	height: 28px;
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 }
 
 .review__stars svg {
 	width: 16px;
 	height: 16px;
-	fill: var(--color-ink);
+	fill: var(--color-white);
 }
 
 .review__quote {
@@ -3482,7 +3505,8 @@ html:not(.js) .unified__stage {
 	height: 32px;
 	font-size: 12px;
 	font-weight: 700;
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 }
 
 .review__author strong {
@@ -3603,7 +3627,8 @@ html:not(.js) .unified__stage {
 	padding: 6px 12px;
 	font-size: 11px;
 	font-weight: 700;
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 }
 
 .retain__tabs {
@@ -3632,7 +3657,7 @@ html:not(.js) .unified__stage {
 .retain__tabs .retain__tab--active {
 	color: var(--color-ink);
 	background: var(--color-white);
-	border-bottom-color: var(--color-yellow);
+	border-bottom-color: var(--color-accent);
 }
 
 .retain__stats {
@@ -3660,7 +3685,7 @@ html:not(.js) .unified__stage {
 }
 
 .retain__stat:nth-child(2) strong {
-	color: var(--color-yellow-dark);
+	color: var(--color-accent-deep);
 }
 
 .retain__stat span {
@@ -3740,7 +3765,7 @@ html:not(.js) .unified__stage {
 	height: 42px;
 	font-size: 13px;
 	font-weight: 700;
-	color: var(--color-yellow);
+	color: var(--color-accent);
 	background: var(--color-ink);
 }
 
@@ -3793,15 +3818,15 @@ html:not(.js) .unified__stage {
 	justify-content: center;
 	width: 36px;
 	height: 36px;
-	color: var(--color-ink);
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 	transition:
 		color 0.3s ease,
 		background 0.3s ease;
 }
 
 .retain__send:hover {
-	color: var(--color-yellow);
+	color: var(--color-accent);
 	background: var(--color-ink);
 }
 
@@ -3864,7 +3889,8 @@ html:not(.js) .unified__stage {
 	padding: 8px 14px;
 	font-size: 12px;
 	font-weight: 700;
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 }
 
 @media (max-width: 768px) {
@@ -3957,7 +3983,7 @@ html:not(.js) .unified__stage {
 	position: absolute;
 	width: 100px;
 	height: 100px;
-	border: 0 solid var(--color-yellow);
+	border: 0 solid var(--color-accent);
 	opacity: 0.2;
 }
 
@@ -3991,7 +4017,8 @@ html:not(.js) .unified__stage {
 
 .fcta__square {
 	position: absolute;
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 	opacity: 0.08;
 }
 
@@ -4023,7 +4050,7 @@ html:not(.js) .unified__stage {
 	position: absolute;
 	width: 60px;
 	height: 60px;
-	border: 2px solid var(--color-yellow);
+	border: 2px solid var(--color-accent);
 	opacity: 0.15;
 	animation: fcta-spin 20s linear infinite;
 }
@@ -4051,7 +4078,7 @@ html:not(.js) .unified__stage {
 
 .fcta__content .eyebrow {
 	margin-bottom: 24px;
-	color: var(--color-yellow);
+	color: var(--color-accent);
 }
 
 .fcta__title {
@@ -4119,7 +4146,7 @@ html:not(.js) .unified__stage {
 }
 
 .fcta__stat:nth-child(2) dd {
-	color: var(--color-yellow);
+	color: var(--color-accent);
 }
 
 .fcta__stat dt {
@@ -4162,7 +4189,7 @@ html:not(.js) .unified__stage {
 	width: 18px;
 	height: 18px;
 	fill: none;
-	stroke: var(--color-yellow);
+	stroke: var(--color-accent);
 	stroke-width: 1.5;
 }
 

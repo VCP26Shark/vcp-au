@@ -19,7 +19,7 @@
 	background: var(--color-ink);
 }
 
-/* Yellow rule along the bottom; draws across on load */
+/* Accent rule along the bottom; draws across on load */
 .contact-banner::after {
 	content: '';
 	position: absolute;
@@ -27,7 +27,7 @@
 	bottom: 0;
 	left: 0;
 	height: 4px;
-	background: var(--color-yellow);
+	background: var(--gradient-accent);
 	transform-origin: left;
 }
 
@@ -44,7 +44,7 @@
 	position: absolute;
 	width: 50px;
 	height: 50px;
-	border: 0 solid var(--color-yellow);
+	border: 0 solid var(--color-accent);
 	opacity: 0.3;
 }
 
@@ -70,7 +70,7 @@
 
 .contact-banner .eyebrow {
 	margin-bottom: 20px;
-	color: var(--color-yellow);
+	color: var(--color-accent);
 }
 
 .contact-banner .section-title {
@@ -146,14 +146,14 @@
 	right: 0;
 	left: 0;
 	height: 4px;
-	background: var(--color-yellow);
+	background: var(--gradient-accent);
 }
 
 .contact__bracket {
 	position: absolute;
 	width: 24px;
 	height: 24px;
-	border: 0 solid var(--color-yellow);
+	border: 0 solid var(--color-accent);
 	opacity: 0.5;
 	pointer-events: none;
 }
@@ -246,7 +246,7 @@
 	transform: scale(1.05);
 }
 
-/* Yellow folded corner, top right */
+/* Accent folded corner, top right */
 .flip__corner {
 	position: absolute;
 	top: 0;
@@ -254,7 +254,7 @@
 	z-index: 2;
 	width: 60px;
 	height: 60px;
-	background: linear-gradient(225deg, var(--color-yellow) 50%, transparent 50%);
+	background: linear-gradient(225deg, var(--color-accent) 50%, transparent 50%);
 }
 
 .flip__front-title {
@@ -268,7 +268,7 @@
 }
 
 .flip__front-title span {
-	color: var(--color-yellow);
+	color: var(--color-accent);
 }
 
 .flip__back {
@@ -287,7 +287,7 @@
 	right: 0;
 	left: 0;
 	height: 4px;
-	background: var(--color-yellow);
+	background: var(--gradient-accent);
 }
 
 .flip__back-title {
@@ -295,7 +295,7 @@
 	font-size: 18px;
 	font-weight: 700;
 	letter-spacing: -0.02em;
-	color: var(--color-yellow);
+	color: var(--color-accent);
 }
 
 .flip__back-text {
@@ -324,12 +324,13 @@
 
 .flip__btn:hover,
 .flip__btn:focus-visible {
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 	transform: translateX(4px);
 }
 
 .flip__btn:focus-visible {
-	outline-color: var(--color-yellow);
+	outline-color: var(--color-accent);
 }
 
 .flip__btn svg {

@@ -8,7 +8,7 @@
 	background: var(--color-ink);
 }
 
-/* Yellow rule along the top; draws across when the footer comes into view */
+/* Accent rule along the top; draws across when the footer comes into view */
 .footer__rule {
 	position: absolute;
 	top: 0;
@@ -16,7 +16,8 @@
 	left: 0;
 	z-index: 2;
 	height: 4px;
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 	transform-origin: left;
 }
 
@@ -104,11 +105,11 @@
 }
 
 .footer__social-link:hover {
-	color: var(--color-ink);
-	background: var(--color-yellow);
-	border-color: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
+	border-color: var(--color-accent);
 	transform: translateX(4px);
-	box-shadow: -4px 4px 0 rgb(253 224 71 / 0.3);
+	box-shadow: -4px 4px 0 rgb(224 3 72 / 0.3);
 }
 
 /* ----- Link columns ----- */
@@ -123,7 +124,7 @@
 	line-height: 1.6;
 	letter-spacing: 3px;
 	text-transform: uppercase;
-	color: var(--color-yellow);
+	color: var(--color-accent);
 }
 
 .footer__heading::before {
@@ -140,7 +141,7 @@
 	gap: 14px;
 }
 
-/* On hover the link slides right and a short yellow rule draws in behind it */
+/* On hover the link slides right and a short accent rule draws in behind it */
 .footer__link {
 	position: relative;
 	display: inline-block;
@@ -158,7 +159,7 @@
 	left: -18px;
 	width: 12px;
 	height: 1px;
-	background: var(--color-yellow);
+	background: var(--gradient-accent);
 	transform: scaleX(0);
 	transform-origin: left;
 	transition: transform 0.35s var(--ease-out);
@@ -212,9 +213,9 @@
 }
 
 .footer__contact-item:hover .footer__contact-icon {
-	color: var(--color-ink);
-	background: var(--color-yellow);
-	border-color: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
+	border-color: var(--color-accent);
 }
 
 .footer__contact-text {
@@ -258,7 +259,7 @@ a.footer__contact-value:hover {
 }
 
 .footer__copyright span {
-	color: var(--color-yellow);
+	color: var(--color-accent);
 }
 
 .footer__locations {
@@ -286,8 +287,8 @@ a.footer__contact-value:hover {
 }
 
 .footer__location:hover {
-	color: var(--color-yellow);
-	border-color: var(--color-yellow);
+	color: var(--color-accent);
+	border-color: var(--color-accent);
 }
 
 /* ----- Responsive ----- */

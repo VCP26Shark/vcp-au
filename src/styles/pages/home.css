@@ -122,7 +122,8 @@
 	z-index: 1;
 	width: 200px;
 	height: 200px;
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 	transform-origin: bottom left;
 	animation: hero-grow 1s var(--ease-out) 0.7s both;
 }
@@ -148,7 +149,7 @@
 	z-index: 20;
 	width: var(--corner-size);
 	height: var(--corner-size);
-	border: 0 solid var(--color-yellow);
+	border: 0 solid var(--color-accent);
 	pointer-events: none;
 }
 
@@ -220,7 +221,7 @@
 	height: var(--caption-h);
 	padding: 0 20px;
 	background: rgb(26 26 26 / 0.95);
-	border-top: 1px solid rgb(253 224 71 / 0.2);
+	border-top: 1px solid rgb(224 3 72 / 0.2);
 }
 
 .hero__caption-icon {
@@ -230,14 +231,15 @@
 	justify-content: center;
 	width: 40px;
 	height: 40px;
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 }
 
 .hero__caption-icon svg {
 	width: 20px;
 	height: 20px;
 	fill: none;
-	stroke: var(--color-ink);
+	stroke: var(--color-white);
 	stroke-width: 2;
 }
 
@@ -276,7 +278,8 @@
 	left: 0;
 	z-index: 15;
 	height: 2px;
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 	transform: scaleX(0);
 	transform-origin: left;
 }
@@ -420,7 +423,7 @@
 		margin: 0 auto;
 	}
 
-	/* Leave room at the bottom-left so the yellow accent still shows */
+	/* Leave room at the bottom-left so the accent accent still shows */
 	.hero__frame {
 		width: calc(100% - 16px);
 		height: calc(100% - 16px);
@@ -654,7 +657,7 @@
 
 .pain__card:hover {
 	transform: translateX(8px);
-	box-shadow: -8px 8px 0 var(--color-yellow);
+	box-shadow: -8px 8px 0 var(--color-accent);
 }
 
 /* Rule that draws along the bottom edge on hover */
@@ -690,7 +693,7 @@
 }
 
 .pain__card:hover .pain__num {
-	color: var(--color-yellow);
+	color: var(--color-accent);
 }
 
 .pain__icon {
@@ -715,11 +718,12 @@
 }
 
 .pain__card:hover .pain__icon {
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 }
 
 .pain__card:hover .pain__icon svg {
-	stroke: var(--color-ink);
+	stroke: var(--color-white);
 }
 
 .pain__card-title {
@@ -933,9 +937,10 @@
 	transition: color 0.3s ease;
 }
 
-/* Hover: the marker stretches into a yellow dash and the row nudges in */
+/* Hover: the marker stretches into an accent dash and the row nudges in */
 .struggle__item:hover .struggle__indicator {
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 	transform: translateX(16px) scaleX(3);
 }
 
@@ -1132,7 +1137,8 @@
 }
 
 .struggle__device-dots span:first-child {
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 }
 
 .struggle__device-title {
@@ -1231,7 +1237,7 @@
 }
 
 .struggle__visual.is-visible .struggle__notif:hover {
-	box-shadow: -6px 6px 0 var(--color-yellow);
+	box-shadow: -6px 6px 0 var(--color-accent);
 	animation-play-state: paused;
 }
 
@@ -1322,11 +1328,12 @@
 }
 
 .struggle__notif:hover .struggle__notif-icon {
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 }
 
 .struggle__notif:hover .struggle__notif-icon svg {
-	stroke: var(--color-ink);
+	stroke: var(--color-white);
 }
 
 .struggle__notif-text {
@@ -1684,7 +1691,7 @@
 	will-change: transform;
 }
 
-/* White box with the yellow block offset behind it; the block slides further out as the step lifts */
+/* White box with the accent block offset behind it; the block slides further out as the step lifts */
 .hiw__num {
 	display: flex;
 	align-items: center;
@@ -1698,7 +1705,7 @@
 	font-variant-numeric: tabular-nums;
 	background: var(--color-white);
 	border: 2px solid var(--color-ink);
-	box-shadow: 8px 8px 0 var(--color-yellow);
+	box-shadow: 8px 8px 0 var(--color-accent);
 	animation: hiw-num 4.5s ease-in-out calc(var(--i) * 1.5s) infinite;
 }
 
@@ -1737,8 +1744,8 @@
 	30% {
 		transform: translate(-4px, -4px);
 		box-shadow:
-			14px 14px 0 var(--color-yellow),
-			0 20px 40px rgb(253 224 71 / 0.4);
+			14px 14px 0 var(--color-accent),
+			0 20px 40px rgb(224 3 72 / 0.4);
 	}
 }
 
@@ -1808,7 +1815,7 @@
 		height: 90px;
 		margin-bottom: 24px;
 		font-size: 36px;
-		box-shadow: 6px 6px 0 var(--color-yellow);
+		box-shadow: 6px 6px 0 var(--color-accent);
 	}
 }
 
@@ -1914,7 +1921,7 @@
 	background-size: 50px 50px;
 }
 
-/* Yellow rule along the top; draws across when the band comes into view */
+/* Accent rule along the top; draws across when the band comes into view */
 .stats::after {
 	content: '';
 	position: absolute;
@@ -1922,7 +1929,7 @@
 	right: 0;
 	left: 0;
 	height: 4px;
-	background: var(--color-yellow);
+	background: var(--gradient-accent);
 	transform-origin: left;
 }
 
@@ -1976,7 +1983,7 @@
 	line-height: 1.1;
 	letter-spacing: -0.03em;
 	font-variant-numeric: tabular-nums;
-	color: var(--color-yellow);
+	color: var(--color-accent);
 }
 
 .stats__label {
@@ -2092,7 +2099,7 @@
 
 .quote-card:hover {
 	transform: translateX(8px);
-	box-shadow: -8px 8px 0 var(--color-yellow);
+	box-shadow: -8px 8px 0 var(--color-accent);
 	border-color: var(--color-ink);
 }
 
@@ -2103,7 +2110,7 @@
 	font-family: Georgia, 'Times New Roman', serif;
 	font-size: 96px;
 	line-height: 1;
-	color: var(--color-yellow);
+	color: var(--color-accent);
 }
 
 /* Grows so the author lines up across cards of different lengths */
@@ -2130,7 +2137,7 @@
 	height: 56px;
 	font-size: 22px;
 	font-weight: 700;
-	color: var(--color-yellow);
+	color: var(--color-accent);
 	background: var(--color-ink);
 }
 
@@ -2157,7 +2164,7 @@
 .quote-card__stars svg {
 	width: 18px;
 	height: 18px;
-	fill: var(--color-yellow);
+	fill: var(--color-accent);
 }
 
 /* ----- Responsive ----- */
@@ -2264,7 +2271,7 @@
 .ind-card:hover,
 .ind-card:focus-visible {
 	transform: translateX(8px);
-	box-shadow: -8px 8px 0 var(--color-yellow);
+	box-shadow: -8px 8px 0 var(--color-accent);
 	border-color: var(--color-ink);
 }
 
@@ -2330,7 +2337,7 @@
 	line-height: 1;
 	letter-spacing: -0.05em;
 	font-variant-numeric: tabular-nums;
-	color: var(--color-yellow);
+	color: var(--color-accent);
 	opacity: 0.4;
 	transition:
 		opacity 0.4s ease,
@@ -2367,19 +2374,20 @@
 	width: 22px;
 	height: 22px;
 	fill: none;
-	stroke: var(--color-yellow);
+	stroke: var(--color-accent);
 	stroke-width: 2;
 	transition: stroke 0.4s ease;
 }
 
 .ind-card:hover .ind-card__icon,
 .ind-card:focus-visible .ind-card__icon {
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 }
 
 .ind-card:hover .ind-card__icon svg,
 .ind-card:focus-visible .ind-card__icon svg {
-	stroke: var(--color-ink);
+	stroke: var(--color-white);
 }
 
 .ind-card__title {
@@ -2413,7 +2421,8 @@
 	justify-content: center;
 	width: 40px;
 	height: 40px;
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 	opacity: 0;
 	transform: translateX(-10px);
 	transition:
@@ -2425,7 +2434,7 @@
 	width: 18px;
 	height: 18px;
 	fill: none;
-	stroke: var(--color-ink);
+	stroke: var(--color-white);
 	stroke-width: 2;
 }
 

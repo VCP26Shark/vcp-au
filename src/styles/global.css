@@ -7,9 +7,10 @@
 		--color-bg: #fafafa;
 		--color-surface: #f3f3f3;
 		--color-ink: #1a1a1a;
-		--color-yellow: #fde047;
-		--color-yellow-deep: #facc15;
-		--color-yellow-dark: #eab308;
+		--color-accent: #e00348;
+		--color-accent-deep: #39044e;
+		--gradient-accent: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-deep) 100%);
+		--gradient-accent-hover: linear-gradient(135deg, #c10240 0%, #2a0339 100%);
 		--color-gray-100: #f3f4f6;
 		--color-gray-200: #e5e7eb;
 		--color-gray-300: #d1d5db;
@@ -215,7 +216,7 @@
 		left: 0;
 		z-index: -1;
 		height: var(--mark-size);
-		background: var(--color-yellow);
+		background: var(--gradient-accent);
 		transform-origin: left;
 	}
 
@@ -224,7 +225,7 @@
 	.text-highlight {
 		font-weight: 600;
 		color: var(--color-ink);
-		background: linear-gradient(rgb(253 224 71 / 0.45), rgb(253 224 71 / 0.45)) 0 100% / 100% 0.4em no-repeat;
+		background: linear-gradient(rgb(224 3 72 / 0.45), rgb(224 3 72 / 0.45)) 0 100% / 100% 0.4em no-repeat;
 		-webkit-box-decoration-break: clone;
 		box-decoration-break: clone;
 	}
@@ -232,7 +233,7 @@
 	/* ----- Buttons ----- */
 
 	.btn {
-		--btn-shadow: var(--color-yellow);
+		--btn-shadow: var(--color-accent);
 		display: inline-flex;
 		align-items: center;
 		gap: 12px;
@@ -263,18 +264,18 @@
 
 	/* Solid buttons get an offset block on hover, like a misregistered print */
 	.btn--dark {
-		color: var(--color-yellow);
+		color: var(--color-accent);
 		background: var(--color-ink);
 	}
 
-	.btn--yellow {
+	.btn--accent {
 		--btn-shadow: var(--color-ink);
-		color: var(--color-ink);
-		background: var(--color-yellow);
+		color: var(--color-white);
+		background: var(--gradient-accent);
 	}
 
 	.btn--dark:hover,
-	.btn--yellow:hover {
+	.btn--accent:hover {
 		transform: translateX(6px);
 		box-shadow: -6px 6px 0 var(--btn-shadow);
 	}
@@ -290,7 +291,7 @@
 	}
 
 	.btn--link:hover {
-		border-color: var(--color-yellow);
+		border-color: var(--color-accent);
 		transform: translateX(5px);
 	}
 
@@ -316,7 +317,7 @@
 
 	.btn--shine:hover {
 		transform: translateY(-3px);
-		box-shadow: 0 10px 30px rgb(253 224 71 / 0.3);
+		box-shadow: 0 10px 30px rgb(224 3 72 / 0.3);
 	}
 
 	/* ----- Mesh text: a fine grid printed into the letters -----

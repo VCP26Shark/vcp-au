@@ -47,7 +47,7 @@
 	letter-spacing: -0.05em;
 }
 
-/* The 0 is a yellow tile that gently floats, framed by black corner marks */
+/* The 0 is an accent tile that gently floats, framed by black corner marks */
 .notfound__zero {
 	position: relative;
 	display: flex;
@@ -56,7 +56,8 @@
 	justify-content: center;
 	width: var(--digit);
 	height: clamp(130px, 26vw, 280px);
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 	animation: notfound-float 6s ease-in-out infinite;
 	will-change: transform;
 }
@@ -150,7 +151,7 @@
 	transition: color 0.3s ease;
 }
 
-/* Yellow underline that draws in from the left */
+/* Accent underline that draws in from the left */
 .notfound__links a::after {
 	content: '';
 	position: absolute;
@@ -158,7 +159,7 @@
 	bottom: 4px;
 	left: 16px;
 	height: 2px;
-	background: var(--color-yellow);
+	background: var(--gradient-accent);
 	transform: scaleX(0);
 	transform-origin: left;
 	transition: transform 0.35s var(--ease-out);

@@ -82,7 +82,7 @@
 .tile:hover,
 .tile:focus-visible {
 	transform: translateX(6px);
-	box-shadow: -6px 6px 0 var(--color-yellow);
+	box-shadow: -6px 6px 0 var(--color-accent);
 	border-color: var(--color-ink);
 }
 
@@ -101,19 +101,20 @@
 	width: 26px;
 	height: 26px;
 	fill: none;
-	stroke: var(--color-yellow);
+	stroke: var(--color-accent);
 	stroke-width: 1.5;
 	transition: stroke 0.4s ease;
 }
 
 .tile:hover .tile__icon,
 .tile:focus-visible .tile__icon {
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 }
 
 .tile:hover .tile__icon svg,
 .tile:focus-visible .tile__icon svg {
-	stroke: var(--color-ink);
+	stroke: var(--color-white);
 }
 
 .tile__label {
@@ -160,7 +161,7 @@
 	flex-shrink: 0;
 	width: 8px;
 	height: 8px;
-	background: var(--color-yellow);
+	background: var(--gradient-accent);
 }
 
 /* "Learn more" rises in on hover */
@@ -217,7 +218,7 @@
 
 .tile:hover .tile__num,
 .tile:focus-visible .tile__num {
-	color: rgb(253 224 71 / 0.3);
+	color: rgb(224 3 72 / 0.3);
 }
 
 /* Large tile */
@@ -236,11 +237,12 @@
 	font-size: 120px;
 }
 
-/* Yellow tile */
+/* Accent tile */
 
 .tile--highlight {
-	background: var(--color-yellow);
-	border-color: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
+	border-color: var(--color-accent);
 }
 
 .tile--highlight:hover,
@@ -253,21 +255,26 @@
 	background: var(--color-white);
 }
 
+.tile--highlight:hover .tile__icon svg,
+.tile--highlight:focus-visible .tile__icon svg {
+	stroke: var(--color-accent);
+}
+
 .tile--highlight .tile__label {
-	color: rgb(26 26 26 / 0.6);
+	color: rgb(255 255 255 / 0.7);
 }
 
 .tile--highlight .tile__desc {
-	color: rgb(26 26 26 / 0.8);
+	color: rgb(255 255 255 / 0.85);
 }
 
 .tile--highlight .tile__num {
-	color: rgb(26 26 26 / 0.08);
+	color: rgb(255 255 255 / 0.1);
 }
 
 .tile--highlight:hover .tile__num,
 .tile--highlight:focus-visible .tile__num {
-	color: rgb(26 26 26 / 0.15);
+	color: rgb(255 255 255 / 0.18);
 }
 
 /* Dark tile */
@@ -279,16 +286,22 @@
 }
 
 .tile--dark .tile__icon {
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 }
 
 .tile--dark .tile__icon svg {
-	stroke: var(--color-ink);
+	stroke: var(--color-white);
 }
 
 .tile--dark:hover .tile__icon,
 .tile--dark:focus-visible .tile__icon {
 	background: var(--color-white);
+}
+
+.tile--dark:hover .tile__icon svg,
+.tile--dark:focus-visible .tile__icon svg {
+	stroke: var(--color-accent);
 }
 
 .tile--dark .tile__label,
@@ -298,7 +311,7 @@
 }
 
 .tile--dark .tile__more {
-	color: var(--color-yellow);
+	color: var(--color-accent);
 }
 
 .tile--dark .tile__num {
@@ -307,7 +320,7 @@
 
 .tile--dark:hover .tile__num,
 .tile--dark:focus-visible .tile__num {
-	color: rgb(253 224 71 / 0.15);
+	color: rgb(224 3 72 / 0.15);
 }
 
 /* ----- Responsive ----- */

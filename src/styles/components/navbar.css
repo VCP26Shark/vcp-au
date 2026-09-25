@@ -123,8 +123,8 @@
 	align-items: center;
 	font-size: 15px;
 	letter-spacing: -0.01em;
-	color: var(--color-ink);
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 }
 
 .nav__cta {
@@ -136,7 +136,8 @@
 
 .nav__cta:hover,
 .nav__panel-cta:hover {
-	background: var(--color-yellow-deep);
+	color: var(--color-white);
+	background: var(--gradient-accent-hover);
 }
 
 .nav__cta svg,
@@ -187,8 +188,9 @@
 }
 
 .nav.is-open .nav__toggle {
-	background: var(--color-yellow);
-	border-color: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
+	border-color: var(--color-accent);
 }
 
 .nav.is-open .nav__toggle-line:nth-child(1) {
@@ -288,7 +290,7 @@
 .nav__panel-link:hover .nav__panel-text,
 .nav__panel-link[aria-current='page'] .nav__panel-text,
 .nav__panel-link[aria-current='page'] .nav__panel-num {
-	color: var(--color-yellow);
+	color: var(--color-accent);
 }
 
 .nav__panel-link:hover .nav__panel-text {
@@ -303,7 +305,7 @@
 }
 
 .nav__panel :focus-visible {
-	outline-color: var(--color-yellow);
+	outline-color: var(--color-accent);
 }
 
 html.nav-locked {

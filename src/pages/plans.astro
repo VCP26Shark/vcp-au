@@ -15,7 +15,7 @@ type Plan = {
 	includesLabel: string;
 	features: string[];
 	note?: string;
-	cta: { label: string; style: 'black' | 'yellow' | 'white' };
+	cta: { label: string; style: 'black' | 'accent' | 'white' };
 };
 
 const plans: Plan[] = [
@@ -64,7 +64,7 @@ const plans: Plan[] = [
 			'Follow-up Campaign',
 			'Referral Campaign',
 		],
-		cta: { label: 'Level Up Now', style: 'yellow' },
+		cta: { label: 'Level Up Now', style: 'accent' },
 	},
 	{
 		name: 'Dominate',
@@ -344,7 +344,7 @@ const planFormId = 'EM6FhotBuN9uljNjbYsZ';
 
 				<a
 					href="#plan-enquiry"
-					class="btn btn--yellow btn--compact enterprise__btn reveal"
+					class="btn btn--accent btn--compact enterprise__btn reveal"
 					style="--d: 0.55s"
 				>
 					Let’s Talk Strategy

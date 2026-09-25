@@ -79,10 +79,11 @@
 	border-bottom-width: 2px;
 }
 
-/* Yellow blocks sliding in from each edge */
+/* Accent blocks sliding in from each edge */
 .about-hero__block {
 	position: absolute;
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 }
 
 .about-hero__block--left {
@@ -108,7 +109,8 @@
 	position: absolute;
 	width: var(--size);
 	height: var(--size);
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 	animation:
 		about-pop 0.6s var(--ease-back) var(--delay) both,
 		about-float var(--float) ease-in-out calc(var(--delay) + 0.6s) infinite;
@@ -233,7 +235,7 @@
 	font-size: 1.3em;
 	font-weight: 700;
 	line-height: 0;
-	color: var(--color-yellow-dark);
+	color: var(--color-accent-deep);
 }
 
 /* Scroll cue, links to the next section */
@@ -469,7 +471,7 @@
 
 /* ----- Copy ----- */
 
-/* Quote card with a half-yellow, half-black rule along the top */
+/* Quote card with a half-accent, half-black rule along the top */
 .vision__quote {
 	position: relative;
 	margin: 0 0 40px;
@@ -488,7 +490,7 @@
 	right: 0;
 	left: 0;
 	height: 4px;
-	background: linear-gradient(90deg, var(--color-yellow) 50%, var(--color-ink) 50%);
+	background: linear-gradient(90deg, var(--color-accent) 50%, var(--color-ink) 50%);
 }
 
 .vision__quote strong {
@@ -522,7 +524,7 @@
 	flex-shrink: 0;
 	width: 40px;
 	height: 2px;
-	background: var(--color-yellow);
+	background: var(--gradient-accent);
 }
 
 /* ----- Diagram: a person at the centre, AI tools orbiting ----- */
@@ -549,14 +551,15 @@
 	left: 0;
 	width: 180px;
 	height: 180px;
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 }
 
 .vision__corner {
 	position: absolute;
 	width: 30px;
 	height: 30px;
-	border: 0 solid rgb(253 224 71 / 0.3);
+	border: 0 solid rgb(224 3 72 / 0.3);
 }
 
 .vision__corner--tl {
@@ -587,7 +590,7 @@
 
 .vision__label--ai {
 	top: 8%;
-	color: var(--color-yellow);
+	color: var(--color-accent);
 }
 
 .vision__label--human {
@@ -609,7 +612,7 @@
 .vision__ring--outer {
 	width: calc(300px * var(--k));
 	height: calc(300px * var(--k));
-	border-color: rgb(253 224 71 / 0.3);
+	border-color: rgb(224 3 72 / 0.3);
 	animation: vision-pulse 4s ease-in-out infinite;
 }
 
@@ -623,7 +626,7 @@
 .vision__ring--inner {
 	width: calc(140px * var(--k));
 	height: calc(140px * var(--k));
-	border-color: rgb(253 224 71 / 0.2);
+	border-color: rgb(224 3 72 / 0.2);
 	animation: vision-spin 15s linear infinite reverse;
 }
 
@@ -634,15 +637,16 @@
 	justify-content: center;
 	width: calc(80px * var(--k));
 	height: calc(80px * var(--k));
-	background: var(--color-yellow);
-	box-shadow: 0 0 60px rgb(253 224 71 / 0.4);
+	color: var(--color-white);
+	background: var(--gradient-accent);
+	box-shadow: 0 0 60px rgb(224 3 72 / 0.4);
 }
 
 .vision__core svg {
 	width: 45%;
 	height: 45%;
 	fill: none;
-	stroke: var(--color-ink);
+	stroke: var(--color-white);
 	stroke-width: 2;
 }
 
@@ -651,7 +655,7 @@
 	position: absolute;
 	width: 80px;
 	height: 1px;
-	background: linear-gradient(90deg, transparent, rgb(253 224 71 / 0.3), transparent);
+	background: linear-gradient(90deg, transparent, rgb(224 3 72 / 0.3), transparent);
 	animation: vision-fade 3s ease-in-out var(--delay) infinite;
 }
 
@@ -916,7 +920,8 @@
 
 .principles__block {
 	position: absolute;
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 }
 
 .principles__block--right {
@@ -975,7 +980,7 @@
 		box-shadow 0.4s var(--ease-out);
 }
 
-/* Yellow rule that draws out from the centre on hover */
+/* Accent rule that draws out from the centre on hover */
 .principle::before {
 	content: '';
 	position: absolute;
@@ -983,14 +988,14 @@
 	right: 0;
 	left: 0;
 	height: 3px;
-	background: var(--color-yellow);
+	background: var(--gradient-accent);
 	transform: scaleX(0);
 	transition: transform 0.45s var(--ease-out);
 }
 
 .principle:hover {
 	background: var(--color-white);
-	border-color: var(--color-yellow);
+	border-color: var(--color-accent);
 	transform: translateY(-8px);
 	box-shadow: 0 20px 50px rgb(0 0 0 / 0.08);
 }
@@ -1010,7 +1015,7 @@
 }
 
 .principle:hover .principle__label {
-	color: var(--color-yellow-dark);
+	color: var(--color-accent-deep);
 }
 
 .principle__icon {
@@ -1030,8 +1035,9 @@
 }
 
 .principle:hover .principle__icon {
-	background: var(--color-yellow);
-	border-color: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
+	border-color: var(--color-accent);
 	transform: scale(1.1);
 }
 
@@ -1041,6 +1047,11 @@
 	fill: none;
 	stroke: var(--color-ink);
 	stroke-width: 1.5;
+	transition: stroke 0.4s ease;
+}
+
+.principle:hover .principle__icon svg {
+	stroke: var(--color-white);
 }
 
 .principle__title {
@@ -1203,7 +1214,7 @@
 	position: absolute;
 	width: 30px;
 	height: 30px;
-	border: 0 solid var(--color-yellow);
+	border: 0 solid var(--color-accent);
 	opacity: 0;
 	transition:
 		opacity 0.4s ease,
@@ -1250,7 +1261,7 @@
 }
 
 .purpose-card:hover .purpose-card__ring {
-	border-color: var(--color-yellow);
+	border-color: var(--color-accent);
 	animation: purpose-spin 8s linear infinite;
 }
 
@@ -1271,12 +1282,12 @@
 		border-radius 0.4s ease;
 }
 
-/* Yellow that fills up from the bottom on hover */
+/* Accent that fills up from the bottom on hover */
 .purpose-card__icon::before {
 	content: '';
 	position: absolute;
 	inset: 0;
-	background: var(--color-yellow);
+	background: var(--gradient-accent);
 	transform: translateY(101%);
 	transition: transform 0.45s var(--ease-out);
 }
@@ -1295,13 +1306,13 @@
 	width: 24px;
 	height: 24px;
 	fill: none;
-	stroke: var(--color-yellow);
+	stroke: var(--color-accent);
 	stroke-width: 1.5;
 	transition: stroke 0.4s ease;
 }
 
 .purpose-card:hover .purpose-card__icon svg {
-	stroke: var(--color-ink);
+	stroke: var(--color-white);
 }
 
 .purpose-card__label {
@@ -1313,7 +1324,7 @@
 	line-height: 1.3;
 	letter-spacing: 3px;
 	text-transform: uppercase;
-	color: var(--color-yellow-dark);
+	color: var(--color-accent-deep);
 }
 
 /* Underline that draws out from the centre on hover */
@@ -1324,7 +1335,7 @@
 	bottom: -4px;
 	left: 0;
 	height: 2px;
-	background: var(--color-yellow);
+	background: var(--gradient-accent);
 	transform: scaleX(0);
 	transition: transform 0.45s var(--ease-out);
 }
@@ -1355,7 +1366,8 @@
 	right: 20px;
 	width: 6px;
 	height: 6px;
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 	transform: translateY(-20px);
 }
 
@@ -1381,7 +1393,7 @@
 	animation: purpose-bob 4s ease-in-out 1.1s infinite;
 }
 
-/* Divider: two rules drawing out from a yellow diamond */
+/* Divider: two rules drawing out from an accent diamond */
 .purpose__divider {
 	display: flex;
 	align-items: center;
@@ -1418,7 +1430,8 @@
 	flex-shrink: 0;
 	width: 8px;
 	height: 8px;
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 	transform: rotate(45deg);
 }
 
@@ -1550,7 +1563,8 @@
 	bottom: 80px;
 	width: 40px;
 	height: 40px;
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 	animation: about-float 4s ease-in-out infinite;
 }
 
@@ -1568,7 +1582,8 @@
 	right: 6%;
 	width: 6px;
 	height: 6px;
-	background: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
 	animation: about-float 3s ease-in-out 0.5s infinite;
 }
 
@@ -1625,7 +1640,7 @@
 	font-size: 1.2em;
 	font-weight: 700;
 	line-height: 0;
-	color: var(--color-yellow-dark);
+	color: var(--color-accent-deep);
 }
 
 /* Uses the shared lift + sheen (btn--shine), plus a black offset block */
@@ -1637,7 +1652,7 @@
 .about-cta__btn:hover {
 	transform: translateY(-4px);
 	box-shadow:
-		0 12px 30px rgb(253 224 71 / 0.4),
+		0 12px 30px rgb(224 3 72 / 0.4),
 		-6px 6px 0 var(--color-ink);
 }
 
@@ -1703,7 +1718,7 @@
 	bottom: 0;
 	left: 0;
 	height: 3px;
-	background: var(--color-yellow);
+	background: var(--gradient-accent);
 	transform: scaleX(0);
 	transition: transform 0.45s var(--ease-out);
 }
@@ -1738,8 +1753,9 @@ a.contact-card:focus-visible::after {
 }
 
 .contact-card:hover .contact-card__icon {
-	background: var(--color-yellow);
-	border-color: var(--color-yellow);
+	color: var(--color-white);
+	background: var(--gradient-accent);
+	border-color: var(--color-accent);
 	transform: scale(1.1) rotate(-5deg);
 }
 
@@ -1749,6 +1765,11 @@ a.contact-card:focus-visible::after {
 	fill: none;
 	stroke: var(--color-ink);
 	stroke-width: 1.5;
+	transition: stroke 0.4s ease;
+}
+
+.contact-card:hover .contact-card__icon svg {
+	stroke: var(--color-white);
 }
 
 .contact-card__label {
@@ -1762,7 +1783,7 @@ a.contact-card:focus-visible::after {
 }
 
 .contact-card:hover .contact-card__label {
-	color: var(--color-yellow-dark);
+	color: var(--color-accent-deep);
 }
 
 .contact-card__value {
