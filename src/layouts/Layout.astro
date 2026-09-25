@@ -1,23 +1,91 @@
+---
+import { Font } from 'astro:assets';
+// Global styles first, so component and page styles come later in the cascade
+import '../styles/global.css';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+	title?: string;
+	description?: string;
+	/** Keep the page out of search results (e.g. client-only pages) */
+	noindex?: boolean;
+}
+
+const { title = 'VCPility', description = '', noindex = false } = Astro.props;
+---
+
 <!doctype html>
-<html lang="en">
+<html lang="en-AU">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
+		{description && <meta name="description" content={description} />}
+		{noindex && <meta name="robots" content="noindex" />}
+		<title>{title}</title>
+		{/* Preload the upright face only; italic loads on demand where it is used */}
+		<Font cssVariable="--font-sans" preload={[{ style: 'normal' }]} />
+		<script is:inline>
+			document.documentElement.classList.add('js');
+		</script>
 	</head>
 	<body>
-		<slot />
+		<Navbar />
+		<main>
+			<slot />
+		</main>
+		<Footer />
+
+		<script>
+			const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+			/* Count-up for [data-count] numbers. The final value is already rendered, so
+			   nothing is lost without JS. Options: data-decimals, data-prefix, data-suffix,
+			   data-count-delay (ms). */
+			const countUp = (el: HTMLElement) => {
+				const { count = '0', decimals = '0', prefix = '', suffix = '', countDelay = '0' } = el.dataset;
+				const target = Number(count);
+				const places = Number(decimals);
+				const start = performance.now() + Number(countDelay);
+				const duration = 1600;
+
+				const tick = (now: number) => {
+					const t = Math.min(Math.max((now - start) / duration, 0), 1);
+					const eased = 1 - (1 - t) ** 3;
+					el.textContent = prefix + (target * eased).toFixed(places) + suffix;
+					if (t < 1) requestAnimationFrame(tick);
+				};
+				requestAnimationFrame(tick);
+			};
+
+			/* Scroll reveal: adds .is-visible the first time an element enters view.
+			   .reveal / .reveal-lines come with default styles; [data-reveal] just gets the class. */
+			const observer = new IntersectionObserver(
+				(entries) => {
+					for (const entry of entries) {
+						if (!entry.isIntersecting) continue;
+						const el = entry.target as HTMLElement;
+						el.classList.add('is-visible');
+						if (el.dataset.count && !reduceMotion) countUp(el);
+						observer.unobserve(el);
+					}
+				},
+				{ threshold: 0.1, rootMargin: '0px 0px -50px 0px' },
+			);
+
+			document
+				.querySelectorAll('.reveal, .reveal-lines, [data-reveal], [data-count]')
+				.forEach((el) => observer.observe(el));
+
+			/* Pause looping animations in [data-pause-offscreen] containers while they're out of view */
+			const pauser = new IntersectionObserver((entries) => {
+				for (const entry of entries) entry.target.classList.toggle('is-offscreen', !entry.isIntersecting);
+			});
+
+			document.querySelectorAll('[data-pause-offscreen]').forEach((el) => pauser.observe(el));
+		</script>
 	</body>
 </html>
-
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>

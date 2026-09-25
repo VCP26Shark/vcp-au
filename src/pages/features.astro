@@ -1,0 +1,1578 @@
+---
+import Layout from '../layouts/Layout.astro';
+import '../styles/components/bento.css';
+import '../styles/pages/features.css';
+
+const arrow = '<path d="M5 12h14M12 5l7 7-7 7"/>';
+
+/* ----- Hero ----- */
+
+// Each tile links down to that feature's section on this page
+const heroTiles = [
+	{
+		size: 'lg',
+		label: 'Core Feature',
+		title: 'All-in-One CRM',
+		href: '#crm',
+		desc: 'Manage leads, track deals, and nurture customer relationships from a single powerful dashboard.',
+		list: ['Contact Management', 'Pipeline Tracking', 'Deal Insights'],
+		icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>',
+	},
+	{
+		size: 'md',
+		label: 'Automation',
+		title: 'AI Chatbot',
+		href: '#chatbot',
+		desc: 'Engage visitors 24/7 with intelligent conversations that qualify leads.',
+		icon: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h.01M12 10h.01M16 10h.01"/>',
+	},
+	{
+		size: 'sm',
+		variant: 'highlight',
+		label: 'Scheduling',
+		title: 'Smart Booking',
+		href: '#smart-booking',
+		desc: 'Automated scheduling with reminders.',
+		icon: '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+	},
+	{
+		size: 'sm',
+		label: 'Communication',
+		title: 'AI Voice',
+		href: '#ai-voice',
+		desc: 'Automated calls that sound human.',
+		icon: '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>',
+	},
+	{
+		size: 'md',
+		label: 'Insights',
+		title: 'AI Dashboard',
+		href: '#ai-dashboard',
+		desc: 'Real-time insights and performance tracking for smarter decisions.',
+		icon: '<path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/>',
+	},
+];
+
+/* ----- Tools marquee ----- */
+
+const tools = [
+	{ label: 'StoryBrand Website', icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/>' },
+	{ label: 'Mobile App', icon: '<rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/>' },
+	{ label: 'AI Chat Bot', icon: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h.01M12 10h.01M16 10h.01"/>' },
+	{ label: 'AI Call Bot', icon: '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/><path d="M14.05 2a9 9 0 0 1 8 7.94M14.05 6A5 5 0 0 1 18 10"/>' },
+	{ label: 'Forms', icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>' },
+	{ label: 'Appointment Booking', icon: '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M9 16l2 2 4-4"/>' },
+	{ label: 'Contacts', icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>' },
+	{ label: 'CRM', icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>' },
+	{ label: 'Auto Reminders', icon: '<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/><circle cx="18" cy="8" r="3"/>' },
+	{ label: 'WhatsApp Campaigns', icon: '<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>' },
+	{ label: 'Email Campaigns', icon: '<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="M22 6l-10 7L2 6"/>' },
+	{ label: 'Internal Chats', icon: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 9h8M8 13h6"/>' },
+	{ label: 'Document Storage', icon: '<path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><path d="M12 11v6M9 14h6"/>' },
+	{ label: 'Review Management', icon: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>' },
+	{ label: 'Payment Options', icon: '<rect x="1" y="4" width="22" height="16" rx="2"/><path d="M1 10h22"/>' },
+	{ label: 'Analytics', icon: '<path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/>' },
+	{ label: 'Reports', icon: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8"/><circle cx="10" cy="9" r="2"/>' },
+	{ label: 'Digital Marketing', icon: '<polygon points="3 11 22 2 13 21 11 13 3 11"/>' },
+	{ label: 'Plans & Packages', icon: '<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96 12 12.01l8.73-5.05M12 22.08V12"/>' },
+	{ label: 'Webinars & Classes', icon: '<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><polygon points="10 8 16 11 10 14 10 8"/>' },
+];
+
+const toolStats = [
+	{ value: 20, suffix: '+', label: 'Business Tools' },
+	{ value: 70, suffix: '%', label: 'Cost Savings' },
+	{ value: 1, suffix: '', label: 'Subscription' },
+];
+
+/* ----- Smart booking ----- */
+
+const check = '<polyline points="20 6 9 17 4 12"/>';
+const checkCircle = '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>';
+
+const bookingPoints = [
+	{ title: 'Automated Confirmations', desc: 'Instant booking confirmations via Email and SMS' },
+	{ title: 'Easy Rescheduling', desc: 'Let customers reschedule or cancel with ease' },
+	{ title: 'Smart Reminders', desc: 'Reduce no-shows with automated appointment reminders' },
+];
+
+const bookingSlots = [
+	{ time: '9:00 AM', name: 'Sarah Mitchell', service: 'Consultation Call' },
+	{ time: '2:00 PM', name: 'James Wilson', service: 'Strategy Session' },
+];
+
+// The calendar mockup shows the month the site was built in, with weekdays in the right columns.
+// Booked days sit around "today", including tomorrow to match the floating confirmation card.
+const now = new Date();
+const calYear = now.getFullYear();
+const calMonth = now.getMonth();
+const calToday = now.getDate();
+const calLabel = now.toLocaleString('en-AU', { month: 'long', year: 'numeric' });
+const firstWeekday = new Date(calYear, calMonth, 1).getDay();
+const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+const daysInPrevMonth = new Date(calYear, calMonth, 0).getDate();
+const bookedDays = new Set([-14, -12, -8, -6, 1, 3, 6, 11].map((offset) => calToday + offset));
+
+type CalendarDay = { day: number; outside?: boolean; today?: boolean; booked?: boolean };
+
+const calendarDays: CalendarDay[] = [
+	...Array.from({ length: firstWeekday }, (_, i) => ({
+		day: daysInPrevMonth - firstWeekday + i + 1,
+		outside: true,
+	})),
+	...Array.from({ length: daysInMonth }, (_, i) => ({
+		day: i + 1,
+		today: i + 1 === calToday,
+		booked: bookedDays.has(i + 1),
+	})),
+];
+// Finish the last week with the start of next month
+const trailing = (7 - (calendarDays.length % 7)) % 7;
+calendarDays.push(...Array.from({ length: trailing }, (_, i) => ({ day: i + 1, outside: true })));
+
+const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+/* ----- Mobile app ----- */
+
+const appPoints = [
+	{ title: 'Manage On-the-Go', desc: 'View and manage appointments and online activity' },
+	{ title: 'Instant Alerts', desc: 'Get real-time notifications for leads and bookings' },
+	{ title: 'Track Performance', desc: 'Monitor key analytics from your smartphone' },
+];
+
+const appStats = [
+	{ value: '12', label: 'Leads' },
+	{ value: '5', label: 'Bookings' },
+	{ value: '$4.2k', label: 'Revenue' },
+];
+
+/* ----- AI chatbot ----- */
+
+const chatPoints = [
+	{ title: '24/7 Availability', desc: 'Engage visitors around the clock, even while you sleep' },
+	{ title: 'Auto Scheduling', desc: 'Book appointments directly through the chat interface' },
+	{ title: 'Smart Responses', desc: 'AI learns your business to provide accurate answers' },
+];
+
+const chatMessages = [
+	{ from: 'bot', text: 'Hi there! 👋 Welcome to Smith Dental. How can I help you today?', time: '10:23 AM' },
+	{ from: 'user', text: "I'd like to book a teeth cleaning appointment", time: '10:24 AM' },
+	{
+		from: 'bot',
+		text: "I'd be happy to help you book a cleaning! 🦷 We have availability this week on Wednesday at 2pm or Thursday at 10am. Which works better for you?",
+		time: '10:24 AM',
+	},
+	{ from: 'user', text: 'Thursday at 10am please', time: '10:25 AM' },
+];
+
+const robot =
+	'<path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2M7.5 13A1.5 1.5 0 0 0 6 14.5 1.5 1.5 0 0 0 7.5 16 1.5 1.5 0 0 0 9 14.5 1.5 1.5 0 0 0 7.5 13m9 0a1.5 1.5 0 0 0-1.5 1.5 1.5 1.5 0 0 0 1.5 1.5 1.5 1.5 0 0 0 1.5-1.5 1.5 1.5 0 0 0-1.5-1.5z"/>';
+
+/* ----- All-in-one CRM ----- */
+
+const crmPoints = [
+	{ title: 'Contact Management', desc: 'Store, track, and organise customer information in one place' },
+	{ title: 'Automated Follow-Ups', desc: 'Schedule reminders, emails, and SMS campaigns' },
+	{ title: 'Performance Insights', desc: 'Analyse customer data to improve conversions' },
+];
+
+const pipeline = [
+	{
+		stage: 'New Leads',
+		count: 4,
+		deals: [
+			{ name: 'Sarah Mitchell', email: 'sarah@email.com', value: '$2,500' },
+			{ name: 'Mike Chen', email: 'mike@company.io', value: '$1,800' },
+		],
+	},
+	{ stage: 'Contacted', count: 3, deals: [{ name: 'Emma Wilson', email: 'emma.w@gmail.com', value: '$3,200' }] },
+	{ stage: 'Qualified', count: 2, deals: [{ name: 'James Taylor', email: 'jtaylor@biz.com', value: '$5,400' }] },
+	{ stage: 'Won', count: 5, deals: [{ name: 'Lisa Brown', email: 'lisa@corp.com', value: '$4,100' }] },
+];
+
+/* ----- Analytics dashboard ----- */
+
+const dashPoints = [
+	{ title: 'Real-Time Metrics', desc: 'Monitor leads, bookings, and revenue as they happen' },
+	{ title: 'Custom Reports', desc: 'Generate detailed reports tailored to your needs' },
+	{ title: 'Trend Analysis', desc: 'Identify patterns and opportunities for growth' },
+];
+
+const dashStats = [
+	{ label: 'Total Leads', value: 248, change: '+18%' },
+	{ label: 'Revenue', value: 42.5, prefix: '$', suffix: 'k', decimals: 1, change: '+24%' },
+	{ label: 'Bookings', value: 156, change: '+12%' },
+	{ label: 'Conversion', value: 68, suffix: '%', change: '-3%', down: true },
+];
+
+// Chart points on a 400 × 120 canvas
+const revenueLine = 'M0,70 L57,55 L114,65 L171,40 L228,50 L285,30 L342,35 L400,20';
+const leadsLine = 'M0,85 L57,75 L114,80 L171,60 L228,70 L285,55 L342,50 L400,40';
+
+/* ----- Unified platform ----- */
+
+const platformNav = [
+	{ label: 'Dashboard', active: true, icon: '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>' },
+	{ label: 'Contacts', icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>' },
+	{ label: 'Bookings', icon: '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>' },
+	{ label: 'Messages', icon: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>' },
+	{ label: 'Analytics', icon: '<path d="M18 20V10M12 20V4M6 20v-6"/>' },
+	{ label: 'Settings', icon: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>' },
+];
+
+const platformStats = [
+	{ label: 'Active Leads', value: '156', change: '+12%', icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>' },
+	{ label: 'Revenue', value: '$28.4k', change: '+24%', icon: '<path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>' },
+	{ label: 'Bookings Today', value: '42', change: '+8%', icon: '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>' },
+];
+
+const platformActivity = [
+	{ kind: 'lead', title: 'New lead:', text: 'Emma Wilson submitted enquiry', time: '2 minutes ago', icon: '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>' },
+	{ kind: 'booking', title: 'Booking confirmed:', text: 'James Taylor - 2:00 PM', time: '15 minutes ago', icon: '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>' },
+	{ kind: 'message', title: 'AI responded:', text: 'Chat with Mike Chen', time: '28 minutes ago', icon: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>' },
+];
+
+// Mini calendar: this week and next, starting on Sunday, around the build date
+const miniWeekStart = new Date(calYear, calMonth, calToday - now.getDay());
+const miniDays = Array.from({ length: 14 }, (_, i) => {
+	const date = new Date(miniWeekStart);
+	date.setDate(miniWeekStart.getDate() + i);
+	return {
+		day: date.getDate(),
+		today: i === now.getDay(),
+		booked: [2, 5, 9, 13].includes(i),
+		outside: date.getMonth() !== calMonth,
+	};
+});
+
+const inThreeDays = new Date(now);
+inThreeDays.setDate(now.getDate() + 3);
+
+const platformTasks = [
+	{ text: 'Follow up with Sarah', due: 'Due today', done: true },
+	{ text: 'Send proposal to Mike', due: 'Due tomorrow' },
+	{ text: 'Review Q4 reports', due: `Due ${inThreeDays.toLocaleString('en-US', { month: 'short', day: 'numeric' })}` },
+];
+
+/* ----- StoryBrand website ----- */
+
+const storyPoints = [
+	{ title: 'Clear Messaging', desc: 'Communicate your value instantly so visitors understand how you help' },
+	{ title: 'Conversion Focused', desc: 'Strategic CTAs and layout designed to turn visitors into leads' },
+	{ title: 'Professional Design', desc: 'Modern, mobile-responsive websites that build trust and credibility' },
+];
+
+const storyStats = [
+	{ value: '500+', label: 'Happy Clients' },
+	{ value: '98%', label: 'Satisfaction' },
+	{ value: '10+', label: 'Years Exp.' },
+];
+
+const storyFeatures = [
+	{ title: 'Trusted & Secure', desc: 'Your data is always protected', icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>' },
+	{ title: 'Save Time', desc: 'Automate your daily tasks', icon: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>' },
+	{ title: 'Proven Results', desc: 'Track record of success', icon: checkCircle },
+];
+
+/* ----- Automated reviews ----- */
+
+const reviewPoints = [
+	{ title: 'Perfect Timing', desc: 'Messages sent automatically after appointments or purchases' },
+	{ title: 'Multi-Channel Delivery', desc: 'Reach customers via SMS, email, or WhatsApp' },
+	{ title: 'Review Routing', desc: 'Direct happy customers to Google, Facebook, or your preferred platform' },
+];
+
+const star =
+	'<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>';
+
+/* ----- Recall & retention ----- */
+
+const retainPoints = [
+	{ title: 'Smart Segmentation', desc: 'Automatically identify inactive and at-risk customers' },
+	{ title: 'Personalised Outreach', desc: 'Tailored messages with special offers to win them back' },
+	{ title: 'Automated Sequences', desc: 'Multi-step campaigns that nurture customers back to you' },
+];
+
+const retainStats = [
+	{ value: 156, label: 'At Risk' },
+	{ value: 73, suffix: '%', label: 'Retention Rate' },
+	{ value: 42, label: 'Reactivated' },
+];
+
+const retainCustomers = [
+	{ initials: 'JT', name: 'James Taylor', meta: 'Last visit: 4 months ago', status: 'inactive', label: 'Inactive' },
+	{ initials: 'EW', name: 'Emma Wilson', meta: 'Last visit: 2 months ago', status: 'at-risk', label: 'At Risk' },
+	{ initials: 'MC', name: 'Mike Chen', meta: 'Returned after win-back campaign', status: 'reactivated', label: 'Reactivated' },
+];
+
+const send = '<path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"/>';
+
+/* ----- Closing CTA ----- */
+
+const ctaStats = [
+	{ value: 20, suffix: '+', label: 'Business Tools' },
+	{ value: 70, suffix: '%', label: 'Cost Savings' },
+	{ text: '24/7', label: 'AI Automation' },
+	{ value: 1, suffix: '', label: 'Subscription' },
+];
+
+const ctaTrust = [
+	{ label: 'Secure & Encrypted', icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>' },
+	{ label: 'No Lock-in Contracts', icon: checkCircle },
+	{ label: 'Dedicated Support', icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>' },
+];
+
+const appAppointments = [
+	{ initials: 'JD', name: 'John Davis', time: '10:30 AM · Consultation', length: '30min' },
+	{ initials: 'EM', name: 'Emily Moore', time: '2:00 PM · Follow-up', length: '15min' },
+];
+---
+
+<Layout
+	title="Features | VCPility"
+	description="20+ business management tools in one platform: CRM, AI chatbot, smart booking, AI voice and more."
+>
+	<!-- ============================================
+	     Hero
+	     ============================================ -->
+	<section class="feat-hero">
+		<div class="feat-hero__container">
+			<header class="feat-hero__header">
+				<div class="feat-hero__intro">
+					<p class="eyebrow feat-hero__eyebrow">Platform Features</p>
+
+					<h1 class="section-title section-title--sm feat-hero__title">
+						<span class="line" style="--i: 0"><span class="line__inner">Everything You Need,</span></span>
+						<span class="line" style="--i: 1">
+							<span class="line__inner"><span class="mark">One Platform</span></span>
+						</span>
+					</h1>
+
+					<p class="feat-hero__lead">
+						All your business management tools in one easy-to-use platform built for busy
+						professionals.
+					</p>
+				</div>
+
+				<p class="feat-hero__stat">
+					<span class="feat-hero__stat-num mark" data-count="20" data-suffix="+" data-count-delay="600">
+						20+
+					</span>
+					<span class="feat-hero__stat-text">
+						<strong>Business<br />Management Tools</strong>
+						<span>One subscription</span>
+					</span>
+				</p>
+			</header>
+
+			<ul class="bento">
+				{
+					heroTiles.map(({ size, variant, label, title, href, desc, list, icon }, i) => (
+						<li class={`bento__item bento__item--${size}`} style={`--i: ${i}`}>
+							<a href={href} class:list={['tile', variant && `tile--${variant}`]}>
+								<span class="tile__icon">
+									<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icon} />
+								</span>
+								<span class="tile__label">{label}</span>
+								<h2 class="tile__title">{title}</h2>
+								<p class="tile__desc">{desc}</p>
+								{list && (
+									<ul class="tile__list">
+										{list.map((item) => (
+											<li>{item}</li>
+										))}
+									</ul>
+								)}
+								<span class="tile__more">
+									Learn more
+									<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+								</span>
+								<span class="tile__num" aria-hidden="true">
+									{String(i + 1).padStart(2, '0')}
+								</span>
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+	</section>
+
+	<!-- ============================================
+	     Tools marquee
+	     ============================================ -->
+	<section class="tools">
+		<header class="tools__header">
+			<p class="eyebrow eyebrow--center reveal">All-in-One Platform</p>
+
+			<h2 class="section-title tools__title reveal-lines" style="--d: 0.1s">
+				<span class="line">
+					<span class="line__inner"><span class="mark">20+</span> Business Tools, One Subscription</span>
+				</span>
+			</h2>
+		</header>
+
+		<div class="tools__marquee reveal" style="--d: 0.2s" data-pause-offscreen>
+			<div class="tools__track">
+				{
+					/* The list is drawn twice so the loop wraps seamlessly; the copy is hidden from screen readers */
+					[false, true].map((isCopy) => (
+						<ul class="tools__set" aria-hidden={isCopy ? 'true' : undefined}>
+							{tools.map(({ label, icon }) => (
+								<li class="tool">
+									<span class="tool__icon">
+										<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icon} />
+									</span>
+									<span class="tool__label">{label}</span>
+								</li>
+							))}
+						</ul>
+					))
+				}
+			</div>
+		</div>
+
+		<dl class="tools__stats">
+			{
+				toolStats.map(({ value, suffix, label }, i) => (
+					<div class="tools__stat reveal" style={`--d: ${i * 0.1}s`}>
+						<dt>{label}</dt>
+						<dd data-count={value} data-suffix={suffix} data-count-delay={i * 150}>
+							{value}
+							{suffix}
+						</dd>
+					</div>
+				))
+			}
+		</dl>
+	</section>
+
+	<!-- ============================================
+	     Smart booking
+	     ============================================ -->
+	<section class="feature" id="smart-booking">
+		<div class="feature__grid">
+			<div class="feature-copy">
+				<p class="eyebrow reveal">Core Feature</p>
+
+				<h2 class="section-title feature-title reveal-lines" style="--d: 0.1s">
+					<span class="line">
+						<span class="line__inner">Smart <span class="mark">Appointment</span> Booking</span>
+					</span>
+				</h2>
+
+				<p class="feature-desc reveal" style="--d: 0.2s">
+					AI-Powered Booking Software with full self-service for scheduling, payments, and management
+					of financial data within one platform.
+				</p>
+
+				<ul class="checklist">
+					{
+						bookingPoints.map(({ title, desc }, i) => (
+							<li class="checklist__item reveal" style={`--d: ${0.25 + i * 0.08}s`}>
+								<span class="checklist__icon">
+									<svg viewBox="0 0 24 24" aria-hidden="true" set:html={check} />
+								</span>
+								<span class="checklist__text">
+									<strong>{title}</strong>
+									<span>{desc}</span>
+								</span>
+							</li>
+						))
+					}
+				</ul>
+			</div>
+
+			<div class="feature-visual reveal" style="--d: 0.15s" aria-hidden="true" data-pause-offscreen>
+				<span class="feature-corner feature-corner--tl"></span>
+				<span class="feature-corner feature-corner--br"></span>
+
+				<div class="feature-toast">
+					<span class="feature-toast__icon">
+						<svg viewBox="0 0 24 24" set:html={check} />
+					</span>
+					<span class="feature-toast__text">
+						<strong>Booking Confirmed</strong>
+						<span>Tomorrow at 2:00 PM</span>
+					</span>
+				</div>
+
+				<div class="calendar mock-card">
+					<div class="calendar__header">
+						<span class="calendar__month">{calLabel}</span>
+						<span class="calendar__nav">
+							<span><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></span>
+							<span><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+						</span>
+					</div>
+
+					<div class="calendar__grid">
+						{weekdays.map((d) => <span class="calendar__weekday">{d}</span>)}
+						{
+							calendarDays.map(({ day, outside, today, booked }) => (
+								<span
+									class:list={[
+										'calendar__day',
+										{
+											'calendar__day--outside': outside,
+											'calendar__day--today': today,
+											'calendar__day--booked': booked,
+										},
+									]}
+								>
+									{day}
+								</span>
+							))
+						}
+					</div>
+
+					<div class="calendar__slots">
+						<p class="calendar__slots-title">Today's Appointments</p>
+						{
+							bookingSlots.map(({ time, name, service }) => (
+								<div class="calendar__slot">
+									<span class="calendar__slot-time">{time}</span>
+									<span class="calendar__slot-info">
+										<strong>{name}</strong>
+										<span>{service}</span>
+									</span>
+									<span class="calendar__slot-status">Confirmed</span>
+								</div>
+							))
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- ============================================
+	     Mobile app
+	     ============================================ -->
+	<section class="mobile-app" id="mobile-app">
+		<span class="mobile-app__corner mobile-app__corner--tl" aria-hidden="true"></span>
+		<span class="mobile-app__corner mobile-app__corner--br" aria-hidden="true"></span>
+		<span class="mobile-app__block mobile-app__block--1" aria-hidden="true"></span>
+		<span class="mobile-app__block mobile-app__block--2" aria-hidden="true"></span>
+
+		<div class="mobile-app__grid">
+			<div class="mobile-app__visual reveal" aria-hidden="true" data-pause-offscreen>
+				<div class="mobile-app__toast">
+					<span class="mobile-app__toast-icon">
+						<svg viewBox="0 0 24 24">
+							<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 0 1-3.46 0"></path>
+						</svg>
+					</span>
+					<span class="mobile-app__toast-text">
+						<strong>New Lead Alert</strong>
+						<span>Just now</span>
+					</span>
+				</div>
+
+				<div class="app-phone">
+					<div class="app-phone__screen">
+						<div class="app-phone__status">
+							<span>9:41</span>
+							<span class="app-phone__island"></span>
+							<span class="app-phone__status-icons">
+								<svg viewBox="0 0 24 24">
+									<path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"></path>
+								</svg>
+								<span class="app-phone__battery"></span>
+							</span>
+						</div>
+
+						<div class="app-phone__header">
+							<span class="app-phone__greeting">Good morning</span>
+							<span class="app-phone__user">Sarah 👋</span>
+						</div>
+
+						<div class="app-phone__stats">
+							{
+								appStats.map(({ value, label }) => (
+									<span class="app-phone__stat">
+										<strong>{value}</strong>
+										<span>{label}</span>
+									</span>
+								))
+							}
+						</div>
+
+						<div class="app-phone__content">
+							<p class="app-phone__heading">Upcoming Today</p>
+							{
+								appAppointments.map(({ initials, name, time, length }) => (
+									<div class="app-phone__appt">
+										<span class="app-phone__avatar">{initials}</span>
+										<span class="app-phone__appt-info">
+											<strong>{name}</strong>
+											<span>{time}</span>
+										</span>
+										<span class="app-phone__badge">{length}</span>
+									</div>
+								))
+							}
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="mobile-app__content feature-copy">
+				<p class="eyebrow reveal">Core Feature</p>
+
+				<h2 class="section-title feature-title reveal-lines" style="--d: 0.1s">
+					<span class="line">
+						<span class="line__inner"
+							><span class="mark">Mobile App</span> – Manage Your Business on the Go</span
+						>
+					</span>
+				</h2>
+
+				<p class="feature-desc reveal" style="--d: 0.2s">
+					Stay connected to your business anytime, anywhere with the VCPility mobile application.
+					Designed for busy professionals, manage schedules, track performance and close deals from
+					your smartphone.
+				</p>
+
+				<ul class="checklist">
+					{
+						appPoints.map(({ title, desc }, i) => (
+							<li class="checklist__item reveal" style={`--d: ${0.25 + i * 0.08}s`}>
+								<span class="checklist__icon">
+									<svg viewBox="0 0 24 24" aria-hidden="true" set:html={check} />
+								</span>
+								<span class="checklist__text">
+									<strong>{title}</strong>
+									<span>{desc}</span>
+								</span>
+							</li>
+						))
+					}
+				</ul>
+			</div>
+		</div>
+	</section>
+
+	<!-- ============================================
+	     AI chatbot
+	     ============================================ -->
+	<section class="feature" id="chatbot">
+		<div class="feature__grid">
+			<div class="feature-copy">
+				<p class="eyebrow reveal">Core Feature</p>
+
+				<h2 class="section-title feature-title reveal-lines" style="--d: 0.1s">
+					<span class="line">
+						<span class="line__inner"><span class="mark">AI Chatbot</span> for Instant Engagement</span>
+					</span>
+				</h2>
+
+				<p class="feature-desc reveal" style="--d: 0.2s">
+					Never miss a lead with our AI-powered chatbot. It handles customer queries on your behalf in
+					real-time. From responding to enquiries across your website and social media, to converting
+					leads into booked appointments — automating customer engagement without compromising human
+					touch.
+				</p>
+
+				<ul class="checklist">
+					{
+						chatPoints.map(({ title, desc }, i) => (
+							<li class="checklist__item reveal" style={`--d: ${0.25 + i * 0.08}s`}>
+								<span class="checklist__icon">
+									<svg viewBox="0 0 24 24" aria-hidden="true" set:html={check} />
+								</span>
+								<span class="checklist__text">
+									<strong>{title}</strong>
+									<span>{desc}</span>
+								</span>
+							</li>
+						))
+					}
+				</ul>
+			</div>
+
+			<div class="feature-visual reveal" style="--d: 0.15s" aria-hidden="true" data-pause-offscreen>
+				<span class="feature-corner feature-corner--tl"></span>
+				<span class="feature-corner feature-corner--br"></span>
+
+				<div class="feature-toast">
+					<span class="feature-toast__icon">
+						<svg viewBox="0 0 24 24">
+							<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+						</svg>
+					</span>
+					<span class="feature-toast__text">
+						<strong>Client Enquiry</strong>
+						<span>AI responded in 2s</span>
+					</span>
+				</div>
+
+				<div class="chat mock-card">
+					<div class="chat__header">
+						<span class="chat__avatar">
+							<svg viewBox="0 0 24 24" set:html={robot} />
+						</span>
+						<span class="chat__who">
+							<strong>VCPility AI Assistant</strong>
+							<span class="chat__status">Online</span>
+						</span>
+					</div>
+
+					<div class="chat__messages">
+						{
+							chatMessages.map(({ from, text, time }, i) => (
+								<div class={`chat__msg chat__msg--${from}`} style={`--i: ${i}`}>
+									<p class="chat__bubble">{text}</p>
+									<span class="chat__time">{time}</span>
+								</div>
+							))
+						}
+						<div class="chat__typing" style={`--i: ${chatMessages.length}`}>
+							<span></span>
+							<span></span>
+							<span></span>
+						</div>
+					</div>
+
+					<div class="chat__input">
+						<span class="chat__field">Type a message...</span>
+						<span class="chat__send">
+							<svg viewBox="0 0 24 24"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4z"></path></svg>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- ============================================
+	     All-in-one CRM
+	     ============================================ -->
+	<section class="feature feature--tint" id="crm">
+		<div class="feature__grid feature__grid--wide-visual">
+			<div class="feature-visual reveal" aria-hidden="true" data-pause-offscreen>
+				<span class="feature-corner feature-corner--ink feature-corner--tl"></span>
+				<span class="feature-corner feature-corner--ink feature-corner--br"></span>
+				<span class="feature-accent"></span>
+
+				<div class="feature-toast feature-toast--bottom-left feature-toast--yellow">
+					<span class="feature-toast__icon">
+						<svg viewBox="0 0 24 24" set:html={checkCircle} />
+					</span>
+					<span class="feature-toast__text">
+						<strong>Deal Closed</strong>
+						<span>$5,400 won</span>
+					</span>
+				</div>
+
+				<div class="crm mock-card">
+					<div class="crm__header">
+						<span class="crm__title">Sales Pipeline</span>
+						<span class="crm__search">
+							<svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
+							Search contacts...
+						</span>
+					</div>
+
+					<div class="crm__pipeline">
+						{
+							pipeline.map(({ stage, count, deals }) => (
+								<div class="crm__column">
+									<div class="crm__column-head">
+										<span class="crm__stage">{stage}</span>
+										<span class="crm__count">{count}</span>
+									</div>
+									{deals.map(({ name, email, value }) => (
+										<div class="crm__deal">
+											<strong>{name}</strong>
+											<span>{email}</span>
+											<em>{value}</em>
+										</div>
+									))}
+								</div>
+							))
+						}
+					</div>
+				</div>
+			</div>
+
+			<div class="feature-copy">
+				<p class="eyebrow reveal">Core Feature</p>
+
+				<h2 class="section-title feature-title reveal-lines" style="--d: 0.1s">
+					<span class="line">
+						<span class="line__inner"><span class="mark">All-in-One CRM</span> – Organise & Optimise</span>
+					</span>
+				</h2>
+
+				<p class="feature-desc reveal" style="--d: 0.2s">
+					Our powerful CRM brings your customer interactions into one place, making it simple to
+					follow-up, nurture leads, and manage your customer relationships. Track engagement, automate
+					communications, and close more deals with less effort.
+				</p>
+
+				<ul class="checklist">
+					{
+						crmPoints.map(({ title, desc }, i) => (
+							<li class="checklist__item reveal" style={`--d: ${0.25 + i * 0.08}s`}>
+								<span class="checklist__icon">
+									<svg viewBox="0 0 24 24" aria-hidden="true" set:html={check} />
+								</span>
+								<span class="checklist__text">
+									<strong>{title}</strong>
+									<span>{desc}</span>
+								</span>
+							</li>
+						))
+					}
+				</ul>
+			</div>
+		</div>
+	</section>
+
+	<!-- ============================================
+	     Analytics dashboard
+	     ============================================ -->
+	<section class="feature" id="ai-dashboard">
+		<div class="feature__grid">
+			<div class="feature-copy">
+				<p class="eyebrow reveal">Core Feature</p>
+
+				<h2 class="section-title feature-title reveal-lines" style="--d: 0.1s">
+					<span class="line">
+						<span class="line__inner"
+							><span class="mark">Analytics Dashboard</span> – Data-Driven Decisions</span
+						>
+					</span>
+				</h2>
+
+				<p class="feature-desc reveal" style="--d: 0.2s">
+					Get a complete view of your business performance at a glance. Our intuitive dashboard puts
+					the metrics that matter most right at your fingertips — from lead sources to revenue trends,
+					make informed decisions backed by real-time data.
+				</p>
+
+				<ul class="checklist">
+					{
+						dashPoints.map(({ title, desc }, i) => (
+							<li class="checklist__item reveal" style={`--d: ${0.25 + i * 0.08}s`}>
+								<span class="checklist__icon">
+									<svg viewBox="0 0 24 24" aria-hidden="true" set:html={check} />
+								</span>
+								<span class="checklist__text">
+									<strong>{title}</strong>
+									<span>{desc}</span>
+								</span>
+							</li>
+						))
+					}
+				</ul>
+			</div>
+
+			<div class="feature-visual reveal" style="--d: 0.15s" aria-hidden="true" data-pause-offscreen>
+				<span class="feature-corner feature-corner--tl"></span>
+				<span class="feature-corner feature-corner--br"></span>
+
+				<div class="feature-toast">
+					<span class="feature-toast__icon">
+						<svg viewBox="0 0 24 24"><path d="m23 6-9.5 9.5-5-5L1 18M17 6h6v6"></path></svg>
+					</span>
+					<span class="feature-toast__text">
+						<strong>Revenue Up</strong>
+						<span>+24% this month</span>
+					</span>
+				</div>
+
+				<div class="dash mock-card">
+					<div class="dash__header">
+						<span class="dash__title">Business Overview</span>
+						<span class="dash__period">
+							<svg viewBox="0 0 24 24"
+								><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg
+							>
+							Last 30 Days
+						</span>
+					</div>
+
+					<div class="dash__stats">
+						{
+							dashStats.map(({ label, value, prefix = '', suffix = '', decimals = 0, change, down }) => (
+								<div class="dash__stat">
+									<strong
+										data-count={value}
+										data-prefix={prefix}
+										data-suffix={suffix}
+										data-decimals={decimals}
+										data-count-delay="400"
+									>
+										{prefix}
+										{value.toFixed(decimals)}
+										{suffix}
+									</strong>
+									<span class="dash__stat-label">{label}</span>
+									<span class:list={['dash__change', { 'dash__change--down': down }]}>
+										<svg viewBox="0 0 24 24">
+											<polyline points={down ? '6 9 12 15 18 9' : '18 15 12 9 6 15'} />
+										</svg>
+										{change}
+									</span>
+								</div>
+							))
+						}
+					</div>
+
+					<div class="dash__chart-area">
+						<div class="dash__chart-head">
+							<span class="dash__chart-title">Revenue & Leads Trend</span>
+							<span class="dash__legend">
+								<span class="dash__key dash__key--revenue">Revenue</span>
+								<span class="dash__key dash__key--leads">Leads</span>
+							</span>
+						</div>
+
+						<svg class="dash__chart" viewBox="0 0 400 120" preserveAspectRatio="none">
+							{[30, 60, 90].map((y) => <line class="dash__grid" x1="0" y1={y} x2="400" y2={y} />)}
+							<path class="dash__fill" d={`${revenueLine} L400,100 L0,100 Z`} />
+							<path class="dash__line dash__line--revenue" d={revenueLine} />
+							<path class="dash__line dash__line--leads" d={leadsLine} />
+						</svg>
+
+						<div class="dash__weeks">
+							{['Week 1', 'Week 2', 'Week 3', 'Week 4'].map((w) => <span>{w}</span>)}
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- ============================================
+	     Unified platform
+	     ============================================ -->
+	<section class="unified">
+		<div class="unified__container">
+			<header class="unified__header">
+				<p class="eyebrow eyebrow--center reveal">Unified Platform</p>
+
+				<h2 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
+					<span class="line">
+						<span class="line__inner">Seamless Business Management <span class="mark">in One View</span></span>
+					</span>
+				</h2>
+
+				<p class="section-lead reveal" style="--d: 0.25s">
+					Everything you need to run your business — CRM, bookings, messaging, analytics — all
+					connected in one powerful dashboard. No more switching between apps.
+				</p>
+			</header>
+
+			<!-- The mockup is laid out at 1100px and zoomed down to fit smaller screens (script below) -->
+			<div class="unified__stage reveal" style="--d: 0.2s" aria-hidden="true" data-platform-stage data-pause-offscreen>
+				<span class="unified__corner unified__corner--tl"></span>
+				<span class="unified__corner unified__corner--br"></span>
+
+				<div class="feature-toast unified__toast unified__toast--synced feature-toast--yellow">
+					<span class="feature-toast__icon"><svg viewBox="0 0 24 24" set:html={checkCircle} /></span>
+					<span class="feature-toast__text"><strong>All Synced</strong><span>Real-time updates</span></span>
+				</div>
+
+				<div class="feature-toast unified__toast unified__toast--one">
+					<span class="feature-toast__icon">
+						<svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M3 9h18M9 21V9"></path></svg>
+					</span>
+					<span class="feature-toast__text"><strong>One Dashboard</strong><span>Zero app-switching</span></span>
+				</div>
+
+				<div class="platform mock-card" data-platform>
+					<div class="browser">
+						<span class="browser__dots"><span></span><span></span><span></span></span>
+						<span class="browser__url">
+							<svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+							app.vcpility.com/dashboard
+						</span>
+					</div>
+
+					<div class="platform__layout">
+						<div class="platform__sidebar">
+							<div class="platform__brand">
+								<span class="platform__brand-icon">
+									<svg viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+								</span>
+								VCPility
+							</div>
+							{
+								platformNav.map(({ label, icon, active }) => (
+									<span class:list={['platform__nav', { 'platform__nav--active': active }]}>
+										<svg viewBox="0 0 24 24" set:html={icon} />
+										{label}
+									</span>
+								))
+							}
+						</div>
+
+						<div class="platform__main">
+							<div class="platform__main-head">
+								<span class="platform__greeting">Good morning, Sarah 👋</span>
+								<span class="platform__actions">
+									<span class="platform__btn">Export</span>
+									<span class="platform__btn platform__btn--primary">+ New Lead</span>
+								</span>
+							</div>
+
+							<div class="platform__stats">
+								{
+									platformStats.map(({ label, value, change, icon }) => (
+										<div class="platform__stat">
+											<span class="platform__stat-head">
+												<span class="platform__stat-icon"><svg viewBox="0 0 24 24" set:html={icon} /></span>
+												<span class="platform__change">
+													<svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15" /></svg>
+													{change}
+												</span>
+											</span>
+											<strong>{value}</strong>
+											<span class="platform__stat-label">{label}</span>
+										</div>
+									))
+								}
+							</div>
+
+							<div class="platform__activity">
+								<div class="platform__activity-head">
+									<strong>Recent Activity</strong>
+									<span>View All</span>
+								</div>
+								{
+									platformActivity.map(({ kind, title, text, time, icon }) => (
+										<div class="platform__event">
+											<span class={`platform__event-icon platform__event-icon--${kind}`}>
+												<svg viewBox="0 0 24 24" set:html={icon} />
+											</span>
+											<span class="platform__event-info">
+												<span class="platform__event-text">
+													<strong>{title}</strong> {text}
+												</span>
+												<span class="platform__event-time">{time}</span>
+											</span>
+										</div>
+									))
+								}
+							</div>
+						</div>
+
+						<div class="platform__panel">
+							<div class="platform__panel-block">
+								<p class="platform__panel-title">Calendar</p>
+								<div class="platform__cal">
+									<div class="platform__cal-head">
+										<strong>{calLabel}</strong>
+										<span class="platform__cal-nav">
+											<span><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></span>
+											<span><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+										</span>
+									</div>
+									<div class="platform__cal-grid">
+										{['S', 'M', 'T', 'W', 'T', 'F', 'S'].map((d) => <span class="platform__cal-weekday">{d}</span>)}
+										{
+											miniDays.map(({ day, today, booked, outside }) => (
+												<span
+													class:list={[
+														'platform__cal-day',
+														{
+															'platform__cal-day--today': today,
+															'platform__cal-day--booked': booked,
+															'platform__cal-day--outside': outside,
+														},
+													]}
+												>
+													{day}
+												</span>
+											))
+										}
+									</div>
+								</div>
+							</div>
+
+							<div class="platform__panel-block">
+								<p class="platform__panel-title">Upcoming Tasks</p>
+								{
+									platformTasks.map(({ text, due, done }) => (
+										<div class="platform__task">
+											<span class:list={['platform__check', { 'platform__check--done': done }]} />
+											<span>
+												<span class="platform__task-text">{text}</span>
+												<span class="platform__task-due">{due}</span>
+											</span>
+										</div>
+									))
+								}
+							</div>
+
+							<div class="platform__panel-block">
+								<p class="platform__panel-title">Quick Contacts</p>
+								<div class="platform__contacts">
+									{['SM', 'JT', 'EW'].map((c) => <span class="platform__contact">{c}</span>)}
+									<span class="platform__contact platform__contact--add">
+										<svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"></path></svg>
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script>
+		/* Unified platform: zoom the 1100px-wide mockup down to fit narrower screens.
+		   zoom (unlike transform: scale) shrinks the layout box too, so no height hacks are needed. */
+		const stage = document.querySelector<HTMLElement>('[data-platform-stage]');
+		const platform = stage?.querySelector<HTMLElement>('[data-platform]');
+
+		if (stage && platform) {
+			const DESIGN_WIDTH = 1100;
+			const fit = () => {
+				const scale = Math.min(1, stage.clientWidth / DESIGN_WIDTH);
+				platform.style.zoom = scale < 1 ? String(scale) : '';
+			};
+			new ResizeObserver(fit).observe(stage);
+		}
+	</script>
+
+	<!-- ============================================
+	     StoryBrand website
+	     ============================================ -->
+	<section class="feature feature--tint" id="storybrand-website">
+		<div class="feature__grid feature__grid--visual-first">
+			<div class="feature-copy">
+				<p class="eyebrow reveal">Core Feature</p>
+
+				<h2 class="section-title feature-title reveal-lines" style="--d: 0.1s">
+					<span class="line">
+						<span class="line__inner"><span class="mark">StoryBrand</span> Website That Converts</span>
+					</span>
+				</h2>
+
+				<p class="feature-desc reveal" style="--d: 0.2s">
+					Your website should do more than look good — it should guide visitors to take action. Built
+					on the proven StoryBrand framework, we create websites that position your customer as the hero
+					and your business as the trusted guide.
+				</p>
+
+				<ul class="checklist">
+					{
+						storyPoints.map(({ title, desc }, i) => (
+							<li class="checklist__item reveal" style={`--d: ${0.25 + i * 0.08}s`}>
+								<span class="checklist__icon">
+									<svg viewBox="0 0 24 24" aria-hidden="true" set:html={check} />
+								</span>
+								<span class="checklist__text">
+									<strong>{title}</strong>
+									<span>{desc}</span>
+								</span>
+							</li>
+						))
+					}
+				</ul>
+			</div>
+
+			<div class="feature-visual reveal" style="--d: 0.15s" aria-hidden="true" data-pause-offscreen>
+				<span class="feature-corner feature-corner--ink feature-corner--tl"></span>
+				<span class="feature-corner feature-corner--ink feature-corner--br"></span>
+				<span class="feature-accent"></span>
+
+				<div class="feature-toast feature-toast--bottom-left feature-toast--yellow">
+					<span class="feature-toast__icon">
+						<svg viewBox="0 0 24 24"><path d="m23 6-9.5 9.5-5-5L1 18M17 6h6v6"></path></svg>
+					</span>
+					<span class="feature-toast__text">
+						<strong>2x More Leads</strong>
+						<span>StoryBrand certified</span>
+					</span>
+				</div>
+
+				<div class="site-mock mock-card">
+					<div class="browser browser--sm">
+						<span class="browser__dots"><span></span><span></span><span></span></span>
+						<span class="browser__url">
+							<svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+							yourbusiness.com
+						</span>
+					</div>
+
+					<div class="site-mock__nav">
+						<span class="site-mock__logo"><span></span>YourBrand</span>
+						<span class="site-mock__links">
+							<span>Services</span>
+							<span>About</span>
+							<span>Contact</span>
+							<span class="site-mock__nav-cta">Get Started</span>
+						</span>
+					</div>
+
+					<div class="site-mock__hero">
+						<span class="site-mock__label">For Busy Business Owners</span>
+						<p class="site-mock__headline">Grow Your Business Without the Overwhelm</p>
+						<p class="site-mock__sub">
+							You deserve more time to focus on what you love. We handle the rest so you can scale with
+							confidence.
+						</p>
+						<span class="site-mock__buttons">
+							<span class="site-mock__btn site-mock__btn--primary">Schedule a Call</span>
+							<span class="site-mock__btn">Learn More</span>
+						</span>
+					</div>
+
+					<div class="site-mock__stats">
+						{
+							storyStats.map(({ value, label }) => (
+								<span class="site-mock__stat">
+									<strong>{value}</strong>
+									<span>{label}</span>
+								</span>
+							))
+						}
+					</div>
+
+					<div class="site-mock__features">
+						{
+							storyFeatures.map(({ title, desc, icon }) => (
+								<span class="site-mock__feature">
+									<span class="site-mock__feature-icon">
+										<svg viewBox="0 0 24 24" set:html={icon} />
+									</span>
+									<strong>{title}</strong>
+									<span>{desc}</span>
+								</span>
+							))
+						}
+					</div>
+
+					<div class="site-mock__cta">
+						<span>Ready to transform your business?</span>
+						<span class="site-mock__cta-btn">Get Your Free Quote</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- ============================================
+	     Automated thank you & review requests
+	     ============================================ -->
+	<section class="feature" id="review-management">
+		<div class="feature__grid">
+			<div class="feature-copy">
+				<p class="eyebrow reveal">Core Feature</p>
+
+				<h2 class="section-title feature-title reveal-lines" style="--d: 0.1s">
+					<span class="line">
+						<span class="line__inner"><span class="mark">Automated</span> Thank You & Review Requests</span>
+					</span>
+				</h2>
+
+				<p class="feature-desc reveal" style="--d: 0.2s">
+					Turn every customer interaction into an opportunity to build your reputation. Our automated
+					system sends personalised thank you messages and review requests at the perfect moment —
+					helping you collect more 5-star reviews without lifting a finger.
+				</p>
+
+				<ul class="checklist">
+					{
+						reviewPoints.map(({ title, desc }, i) => (
+							<li class="checklist__item reveal" style={`--d: ${0.25 + i * 0.08}s`}>
+								<span class="checklist__icon">
+									<svg viewBox="0 0 24 24" aria-hidden="true" set:html={check} />
+								</span>
+								<span class="checklist__text">
+									<strong>{title}</strong>
+									<span>{desc}</span>
+								</span>
+							</li>
+						))
+					}
+				</ul>
+			</div>
+
+			<div class="feature-visual reveal" style="--d: 0.15s" aria-hidden="true" data-pause-offscreen>
+				<span class="feature-corner feature-corner--tl"></span>
+				<span class="feature-corner feature-corner--br"></span>
+
+				<div class="feature-toast feature-toast--yellow">
+					<span class="feature-toast__icon"><svg viewBox="0 0 24 24" set:html={star} /></span>
+					<span class="feature-toast__text">
+						<strong>+47% More Reviews</strong>
+						<span>Average increase</span>
+					</span>
+				</div>
+
+				<div class="review mock-card">
+					<div class="review__flow">
+						<div class="review__step" style="--i: 0">
+							<span class="review__num">1</span>
+							<span class="review__step-text">
+								<strong>Appointment Completed</strong>
+								<span>Sarah Mitchell finished her consultation</span>
+							</span>
+							<span class="review__badge">Trigger</span>
+						</div>
+
+						<div class="review__step review__step--active" style="--i: 1">
+							<span class="review__num">2</span>
+							<span class="review__step-text">
+								<strong>Thank You Message Sent</strong>
+								<span>Personalised SMS delivered automatically</span>
+							</span>
+							<span class="review__badge">Sent</span>
+						</div>
+
+						<div class="review__message" style="--i: 2">
+							<div class="review__message-head">
+								<span class="review__message-icon">
+									<svg viewBox="0 0 24 24">
+										<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+									</svg>
+								</span>
+								<span class="review__message-info">
+									<strong>SMS Message</strong>
+									<span>Sent 2 min ago</span>
+								</span>
+								<span class="review__delivered">Delivered</span>
+							</div>
+							<p class="review__message-body">
+								Hi <strong>Sarah</strong>! 👋 Thank you for visiting <strong>Smith Dental</strong> today.
+								We hope you had a great experience! If you have a moment, we'd love to hear your feedback:
+								<strong>[Review Link]</strong>
+							</p>
+						</div>
+
+						<div class="review__step" style="--i: 3">
+							<span class="review__num">3</span>
+							<span class="review__step-text">
+								<strong>Review Request Sent</strong>
+								<span>Follow-up after 24 hours if no response</span>
+							</span>
+							<span class="review__badge">Scheduled</span>
+						</div>
+					</div>
+
+					<div class="review__result" style="--i: 4">
+						<div class="review__result-head">
+							<strong>New Google Review</strong>
+							<span>Just Posted</span>
+						</div>
+						<div class="review__stars">
+							{Array.from({ length: 5 }, () => <span><svg viewBox="0 0 24 24" set:html={star} /></span>)}
+						</div>
+						<p class="review__quote">
+							“Excellent service! The team was professional and friendly. Highly recommend to anyone
+							looking for quality dental care.”
+						</p>
+						<div class="review__author">
+							<span class="review__avatar">SM</span>
+							<span>
+								<strong>Sarah Mitchell</strong>
+								<span>Posted 5 minutes ago</span>
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- ============================================
+	     Recall & retention
+	     ============================================ -->
+	<section class="feature feature--tint" id="recall-retention">
+		<div class="feature__grid">
+			<div class="feature-visual reveal" aria-hidden="true" data-pause-offscreen>
+				<span class="feature-corner feature-corner--ink feature-corner--tl"></span>
+				<span class="feature-corner feature-corner--ink feature-corner--br"></span>
+
+				<div class="feature-toast feature-toast--bottom-left feature-toast--yellow">
+					<span class="feature-toast__icon">
+						<svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg>
+					</span>
+					<span class="feature-toast__text">
+						<strong>Customer Reactivated</strong>
+						<span>Win-back successful</span>
+					</span>
+				</div>
+
+				<div class="retain mock-card">
+					<div class="retain__header">
+						<strong>Retention Campaigns</strong>
+						<span>3 Active</span>
+					</div>
+
+					<div class="retain__tabs">
+						<span>Recall</span>
+						<span class="retain__tab--active">Retention</span>
+						<span>Reactivation</span>
+					</div>
+
+					<div class="retain__stats">
+						{
+							retainStats.map(({ value, suffix = '', label }) => (
+								<span class="retain__stat">
+									<strong data-count={value} data-suffix={suffix} data-count-delay="400">
+										{value}
+										{suffix}
+									</strong>
+									<span>{label}</span>
+								</span>
+							))
+						}
+					</div>
+
+					<div class="retain__customers">
+						<div class="retain__customers-head">
+							<strong>Customers Needing Attention</strong>
+							<span class="retain__filter">
+								<svg viewBox="0 0 24 24"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+								Filter
+							</span>
+						</div>
+						{
+							retainCustomers.map(({ initials, name, meta, status, label }) => (
+								<div class="retain__customer">
+									<span class="retain__avatar">{initials}</span>
+									<span class="retain__info">
+										<strong>{name}</strong>
+										<span>{meta}</span>
+									</span>
+									<span class={`retain__status retain__status--${status}`}>{label}</span>
+									<span class="retain__send">
+										<svg viewBox="0 0 24 24" set:html={send} />
+									</span>
+								</div>
+							))
+						}
+					</div>
+
+					<div class="retain__campaign">
+						<div class="retain__campaign-head">
+							<strong>Win-Back Campaign</strong>
+							<span>Running</span>
+						</div>
+						<div class="retain__campaign-body">
+							<p>
+								Hi <strong>James</strong>! 👋 We've missed you at <strong>Smith Dental</strong>. It's been a
+								while since your last visit, and we'd love to see you again. As a thank you for being a
+								valued customer, here's something special:
+							</p>
+							<span class="retain__offer">20% Off Your Next Visit</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="feature-copy">
+				<p class="eyebrow reveal">Core Feature</p>
+
+				<h2 class="section-title feature-title reveal-lines" style="--d: 0.1s">
+					<span class="line">
+						<span class="line__inner">Customer <span class="mark">Recall & Retention</span> Campaigns</span>
+					</span>
+				</h2>
+
+				<p class="feature-desc reveal" style="--d: 0.2s">
+					Stop losing customers to inactivity. Our intelligent retention system identifies at-risk
+					customers before they leave and automatically sends personalised win-back campaigns — turning
+					dormant contacts into loyal, returning customers.
+				</p>
+
+				<ul class="checklist">
+					{
+						retainPoints.map(({ title, desc }, i) => (
+							<li class="checklist__item reveal" style={`--d: ${0.25 + i * 0.08}s`}>
+								<span class="checklist__icon">
+									<svg viewBox="0 0 24 24" aria-hidden="true" set:html={check} />
+								</span>
+								<span class="checklist__text">
+									<strong>{title}</strong>
+									<span>{desc}</span>
+								</span>
+							</li>
+						))
+					}
+				</ul>
+			</div>
+		</div>
+	</section>
+
+	<!-- ============================================
+	     Closing CTA
+	     ============================================ -->
+	<section class="fcta">
+		<div class="fcta__decor" aria-hidden="true" data-pause-offscreen>
+			<span class="fcta__corner fcta__corner--tl"></span>
+			<span class="fcta__corner fcta__corner--tr"></span>
+			<span class="fcta__corner fcta__corner--bl"></span>
+			<span class="fcta__corner fcta__corner--br"></span>
+			<span class="fcta__square fcta__square--1"></span>
+			<span class="fcta__square fcta__square--2"></span>
+			<span class="fcta__square fcta__square--3"></span>
+			<span class="fcta__spinner fcta__spinner--1"></span>
+			<span class="fcta__spinner fcta__spinner--2"></span>
+		</div>
+
+		<div class="fcta__content">
+			<p class="eyebrow eyebrow--center reveal">Get Started Today</p>
+
+			<h2 class="section-title fcta__title reveal-lines" style="--d: 0.1s">
+				<span class="line">
+					<span class="line__inner">Ready to <span class="mark">Automate</span> Your Business?</span>
+				</span>
+			</h2>
+
+			<p class="fcta__lead reveal" style="--d: 0.25s">
+				Join hundreds of Australian businesses already saving time and growing faster with VCPility. Get
+				started with a free consultation — no commitment, no pressure.
+			</p>
+
+			<div class="fcta__buttons reveal" style="--d: 0.35s">
+				<a href="/contact" class="btn btn--yellow btn--shine">
+					Talk to Our Team
+					<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+				</a>
+				<a href="/plans" class="btn fcta__btn-outline">
+					<svg viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+					Our Plans
+				</a>
+			</div>
+
+			<dl class="fcta__stats">
+				{
+					ctaStats.map(({ value, suffix = '', text, label }, i) => (
+						<div class="fcta__stat reveal" style={`--d: ${i * 0.08}s`}>
+							<dt>{label}</dt>
+							{value === undefined ? (
+								<dd>{text}</dd>
+							) : (
+								<dd data-count={value} data-suffix={suffix} data-count-delay={i * 150}>
+									{value}
+									{suffix}
+								</dd>
+							)}
+						</div>
+					))
+				}
+			</dl>
+
+			<ul class="fcta__trust">
+				{
+					ctaTrust.map(({ label, icon }, i) => (
+						<li class="reveal" style={`--d: ${0.1 + i * 0.08}s`}>
+							<span class="fcta__trust-icon">
+								<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icon} />
+							</span>
+							{label}
+						</li>
+					))
+				}
+			</ul>
+		</div>
+	</section>
+</Layout>

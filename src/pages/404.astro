@@ -1,0 +1,72 @@
+---
+import Layout from '../layouts/Layout.astro';
+import '../styles/pages/404.css';
+
+const arrow = '<path d="M5 12h14M12 5l7 7-7 7"/>';
+
+const quickLinks = [
+	{ href: '/about-us', label: 'About Us' },
+	{ href: '/features', label: 'Features' },
+	{ href: '/plans', label: 'Plans' },
+	{ href: '/contact', label: 'Contact Us' },
+];
+---
+
+<Layout title="404 - Page Not Found | VCPility" noindex>
+	<!-- ============================================
+	     Not found
+	     ============================================ -->
+	<section class="notfound grid-bg">
+		<div class="notfound__container">
+			<p class="eyebrow eyebrow--center reveal">Error 404</p>
+
+			<!-- Big 404, with the 0 as a floating yellow tile -->
+			<p class="notfound__code reveal" style="--d: 0.1s" aria-label="404">
+				<span aria-hidden="true">4</span>
+				<span class="notfound__zero" aria-hidden="true">
+					<span class="notfound__corner notfound__corner--tl"></span>
+					<span class="notfound__corner notfound__corner--tr"></span>
+					<span class="notfound__corner notfound__corner--bl"></span>
+					<span class="notfound__corner notfound__corner--br"></span>
+					<span class="notfound__zero-digit">0</span>
+				</span>
+				<span aria-hidden="true">4</span>
+			</p>
+
+			<h1 class="section-title section-title--sm reveal-lines" style="--d: 0.2s">
+				<span class="line">
+					<span class="line__inner">This Page Took a <span class="mark">Day Off</span></span>
+				</span>
+			</h1>
+
+			<p class="section-lead reveal" style="--d: 0.3s">
+				The page you're looking for doesn't exist or has moved. Let's get you back to growing your
+				business.
+			</p>
+
+			<div class="notfound__buttons reveal" style="--d: 0.4s">
+				<a href="/" class="btn btn--dark">
+					Back to Home
+					<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+				</a>
+				<a href="/contact" class="btn btn--link notfound__support">
+					<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+					Contact Support
+				</a>
+			</div>
+
+			<nav class="notfound__links reveal" style="--d: 0.5s" aria-label="Popular pages">
+				<p class="notfound__links-label">Or jump to</p>
+				<ul class="notfound__links-list">
+					{
+						quickLinks.map(({ href, label }) => (
+							<li>
+								<a href={href}>{label}</a>
+							</li>
+						))
+					}
+				</ul>
+			</nav>
+		</div>
+	</section>
+</Layout>

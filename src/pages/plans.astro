@@ -1,0 +1,470 @@
+---
+import Layout from '../layouts/Layout.astro';
+import '../styles/pages/plans.css';
+
+/* ----- Plans ----- */
+
+type Plan = {
+	name: string;
+	type: string;
+	variant: 'highlight' | 'featured' | 'premium';
+	badge?: { label: string; style: 'popular' | 'value' | 'enterprise' };
+	startingFrom?: boolean;
+	price: { annual: number; monthly: number };
+	pitch: { title: string; text: string };
+	includesLabel: string;
+	features: string[];
+	note?: string;
+	cta: { label: string; style: 'black' | 'yellow' | 'white' };
+};
+
+const plans: Plan[] = [
+	{
+		name: 'Launch',
+		type: 'Foundation Package',
+		variant: 'highlight',
+		price: { annual: 280, monthly: 360 },
+		pitch: {
+			title: 'AI-Powered Marketing Partner',
+			text: 'Perfect for sole traders ready to establish their digital footprint with professional support.',
+		},
+		includesLabel: 'Includes',
+		features: [
+			'Chat Widget',
+			'Appointment Calendar',
+			'CRM',
+			'GBP Integration',
+			'Facebook Integration',
+			'Instagram Integration',
+			'Centralised Inbox',
+			'Mobile App',
+		],
+		cta: { label: 'Start Your Journey', style: 'black' },
+	},
+	{
+		name: 'Elevate',
+		type: 'Professional Package',
+		variant: 'featured',
+		badge: { label: 'Most Popular', style: 'popular' },
+		price: { annual: 850, monthly: 980 },
+		pitch: {
+			title: 'AI-Powered Growth Team',
+			text: 'Designed for established traders and medium-sized businesses ready to dominate their market.',
+		},
+		includesLabel: 'Everything in Launch, plus',
+		features: [
+			'StoryBrand Website',
+			'AI Chat',
+			'Basic SEO',
+			'Funnel',
+			'GBP Management',
+			'Reputation Management',
+			'Weekly Social Media',
+			'LinkedIn Profile',
+			'Follow-up Campaign',
+			'Referral Campaign',
+		],
+		cta: { label: 'Level Up Now', style: 'yellow' },
+	},
+	{
+		name: 'Dominate',
+		type: 'Premium Package',
+		variant: 'highlight',
+		badge: { label: 'Best Value', style: 'value' },
+		price: { annual: 1450, monthly: 1680 },
+		pitch: {
+			title: 'AI-Powered Marketing Department',
+			text: 'Built for multi-site businesses that need enterprise-level marketing execution across multiple locations.',
+		},
+		includesLabel: 'Everything in Elevate, plus',
+		features: [
+			'New webpage monthly',
+			'Landing Pages',
+			'Advanced SEO',
+			'AI Search Optimisation',
+			'Social Media Management',
+			'LinkedIn Management',
+			'Google Ads Management',
+			'Meta Ads Management',
+		],
+		cta: { label: 'Scale Your Business', style: 'black' },
+	},
+	{
+		name: 'Apex',
+		type: 'Enterprise Package',
+		variant: 'premium',
+		badge: { label: 'Enterprise', style: 'enterprise' },
+		startingFrom: true,
+		price: { annual: 5760, monthly: 7200 },
+		pitch: {
+			title: 'AI-Powered Marketing Command Center',
+			text: 'Engineered for national brands, multi-site networks, and enterprise organisations demanding peak performance.',
+		},
+		includesLabel: 'Everything in Dominate, plus',
+		features: [
+			'Custom AI Workflows',
+			'Multi-site Dashboard',
+			'Campaign Intelligence',
+			'Predictive Analytics',
+			'LinkedIn Ads Management',
+			'Dedicated Account Director',
+			'Monthly Strategy Sessions',
+			'Enterprise SLA & Priority Support',
+		],
+		note: 'Custom pricing for multi-site deployments',
+		cta: { label: 'Book a Strategy Call', style: 'white' },
+	},
+];
+
+const money = (n: number) => n.toLocaleString('en-AU');
+const check = '<polyline points="20 6 9 17 4 12"/>';
+const arrow = '<path d="M5 12h14M12 5l7 7-7 7"/>';
+
+/* ----- Add-ons ----- */
+
+const addOns = [
+	{
+		title: 'Additional Sites',
+		price: 'AU$198/month per site',
+		text: 'Expand your reach with multi-location support. Each additional site gets full platform access.',
+		icon: '<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>',
+	},
+	{
+		title: 'Ad Budget Management',
+		price: '15% of ad spend (min AU$500/month)',
+		text: 'Expert management of your advertising campaigns across Google, Meta, and LinkedIn.',
+		icon: '<path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>',
+	},
+	{
+		title: 'Custom Integrations',
+		price: 'AU$500 one-time setup',
+		text: 'Connect your existing tools and workflows with custom API integrations built for your business.',
+		icon: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+	},
+];
+
+/* ----- Enterprise ----- */
+
+const enterprisePoints = [
+	'Create your own monthly scope of work tailored to your goals',
+	'Share your goals and KPIs — we’ll recommend the best options',
+	'Strategic and tactical programmes designed for scale',
+	'Comprehensive KPI mapping and real-time tracking',
+];
+
+const users =
+	'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>';
+
+/* ----- Tailored plan form (LeadConnector, served from the AccrualOS domain) ----- */
+
+const formHost = 'https://payments.accrualos.com.au';
+const planFormId = 'EM6FhotBuN9uljNjbYsZ';
+---
+
+<Layout
+	title="Plans | VCPility"
+	description="Flexible VCPility plans for every business, from sole traders to national brands. Annual and monthly billing."
+>
+	<!-- ============================================
+	     Hero
+	     ============================================ -->
+	<section class="plans-hero">
+		<div class="plans-hero__container">
+			<p class="eyebrow eyebrow--center reveal">Pricing Plans</p>
+
+			<h1 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
+				<span class="line">
+					<span class="line__inner"><span class="mark">Flexible Plans</span> for Every Business</span>
+				</span>
+			</h1>
+
+			<p class="section-lead reveal" style="--d: 0.25s">
+				Choose the right plan to grow your business. All plans include our core platform features.
+			</p>
+
+			<div class="billing-toggle reveal" style="--d: 0.35s" role="group" aria-label="Billing period" data-billing-toggle>
+				<button type="button" aria-pressed="true" data-billing="annual">
+					Annual
+					<span class="billing-toggle__badge">Save 27%</span>
+				</button>
+				<button type="button" aria-pressed="false" data-billing="monthly">Monthly</button>
+			</div>
+			<p class="sr-only" aria-live="polite" data-billing-status></p>
+		</div>
+	</section>
+
+	<!-- ============================================
+	     Plans
+	     ============================================ -->
+	<section class="plans">
+		<ul class="plans__grid">
+			{
+				plans.map(
+					({ name, type, variant, badge, startingFrom, price, pitch, includesLabel, features, note, cta }, i) => (
+						<li class="reveal" style={`--d: ${0.1 + i * 0.08}s`}>
+							<article class:list={['plan', `plan--${variant}`, { 'plan--badged': badge }]}>
+								{variant === 'highlight' && (
+									<>
+										<span class="plan__bracket plan__bracket--tl" aria-hidden="true" />
+										<span class="plan__bracket plan__bracket--br" aria-hidden="true" />
+									</>
+								)}
+								{badge && <span class={`plan__badge plan__badge--${badge.style}`}>{badge.label}</span>}
+
+								<header class="plan__header">
+									<div>
+										<h2 class="plan__name">{name}</h2>
+										<p class="plan__type">{type}</p>
+									</div>
+									<div class="plan__price">
+										{startingFrom && <p class="plan__from">Starting from</p>}
+										<p class="plan__amount">
+											<span class="plan__currency">AU$</span>
+											<span
+												class="plan__value"
+												data-annual={money(price.annual)}
+												data-monthly={money(price.monthly)}
+											>
+												{money(price.annual)}
+											</span>
+											<span class="plan__period">/month</span>
+										</p>
+										<p class="plan__billing" data-annual="billed yearly" data-monthly="billed monthly">
+											billed yearly
+										</p>
+									</div>
+								</header>
+
+								<div class="plan__pitch">
+									<h3>{pitch.title}</h3>
+									<p>{pitch.text}</p>
+								</div>
+
+								<div class="plan__features">
+									<p class="plan__features-title">{includesLabel}</p>
+									<ul>
+										{features.map((feature) => (
+											<li>
+												<svg viewBox="0 0 24 24" aria-hidden="true" set:html={check} />
+												{feature}
+											</li>
+										))}
+									</ul>
+								</div>
+
+								{note && <p class="plan__note">{note}</p>}
+								<a href="#plan-enquiry" class={`plan__btn plan__btn--${cta.style}`}>
+									{cta.label}
+								</a>
+							</article>
+						</li>
+					),
+				)
+			}
+		</ul>
+	</section>
+
+	<!-- ============================================
+	     Add-ons
+	     ============================================ -->
+	<section class="addons grid-bg" data-reveal>
+		<span class="addons__bracket addons__bracket--tl" aria-hidden="true"></span>
+		<span class="addons__bracket addons__bracket--br" aria-hidden="true"></span>
+
+		<div class="addons__container">
+			<header class="addons__header">
+				<p class="eyebrow eyebrow--center reveal">Enhance Your Plan</p>
+
+				<h2 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
+					<span class="line">
+						<span class="line__inner">Optional <span class="mark">Add-Ons</span></span>
+					</span>
+				</h2>
+
+				<p class="addons__lead reveal" style="--d: 0.2s">
+					Supercharge your plan with powerful extras tailored to your growth needs.
+				</p>
+			</header>
+
+			<ul class="addons__grid">
+				{
+					addOns.map(({ title, price, text, icon }, i) => (
+						<li class="addon reveal" style={`--d: ${0.25 + i * 0.1}s`}>
+							<span class="addon__icon" aria-hidden="true">
+								<svg viewBox="0 0 24 24" set:html={icon} />
+							</span>
+							<h3 class="addon__title">{title}</h3>
+							<p class="addon__price">{price}</p>
+							<p class="addon__text">{text}</p>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+	</section>
+
+	<!-- ============================================
+	     Enterprise
+	     ============================================ -->
+	<section class="enterprise">
+		<div class="enterprise__grid">
+			<div class="enterprise__copy">
+				<p class="eyebrow reveal">For Large Teams</p>
+
+				<h2 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
+					<span class="line">
+						<span class="line__inner">Enterprise &amp; Custom</span>
+					</span>
+					<span class="line" style="--i: 1">
+						<span class="line__inner"><span class="mark">Solutions</span></span>
+					</span>
+				</h2>
+
+				<p class="enterprise__kicker reveal" style="--d: 0.2s">
+					Dedicated Customer Relations Manager for Any Industry
+				</p>
+
+				<p class="enterprise__text reveal" style="--d: 0.25s">
+					For marketing teams requiring bespoke services and paid media management. Choose from a
+					comprehensive range of solutions tailored to your specific requirements.
+				</p>
+
+				<ul class="enterprise__list">
+					{
+						enterprisePoints.map((point, i) => (
+							<li class="reveal" style={`--d: ${0.3 + i * 0.06}s`}>
+								<span class="enterprise__tick" aria-hidden="true">
+									<svg viewBox="0 0 24 24" set:html={check} />
+								</span>
+								{point}
+							</li>
+						))
+					}
+				</ul>
+
+				<a
+					href="#plan-enquiry"
+					class="btn btn--yellow btn--compact enterprise__btn reveal"
+					style="--d: 0.55s"
+				>
+					Let’s Talk Strategy
+					<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+				</a>
+			</div>
+
+			<div class="enterprise__visual reveal" style="--d: 0.2s">
+				<span class="enterprise__bracket" aria-hidden="true"></span>
+
+				<div class="scale-card">
+					<p class="scale-card__badge">Enterprise Ready</p>
+					<h3 class="scale-card__title">Built for Scale</h3>
+					<p class="scale-card__text">
+						Whether you’re managing 5 locations or 500, our enterprise solutions grow with you. Get
+						dedicated support, custom workflows, and priority access to new features.
+					</p>
+
+					<dl class="scale-card__stats">
+						<div>
+							<dt>Sites Managed</dt>
+							<dd data-count="500" data-suffix="+">500+</dd>
+						</div>
+						<div>
+							<dt>Uptime</dt>
+							<dd data-count="99.9" data-decimals="1" data-suffix="%">99.9%</dd>
+						</div>
+					</dl>
+				</div>
+
+				<div class="scale-toast">
+					<span class="scale-toast__icon" aria-hidden="true">
+						<svg viewBox="0 0 24 24" set:html={users} />
+					</span>
+					<div>
+						<p class="scale-toast__title">Dedicated Support</p>
+						<p class="scale-toast__text">Your success team awaits</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- ============================================
+	     Tailored plan form
+	     ============================================ -->
+	<section class="plan-enquiry" id="plan-enquiry">
+		<div class="plan-enquiry__container">
+			<h2 class="plan-enquiry__title reveal">
+				Get a plan <span class="mark">tailored</span> to your business
+			</h2>
+
+			<div class="plan-enquiry__form reveal" style="--d: 0.15s">
+				<iframe
+					src={`${formHost}/widget/form/${planFormId}`}
+					class="plan-enquiry__iframe"
+					id={`inline-${planFormId}`}
+					title="Pricing enquiry form"
+					data-layout="{'id':'INLINE'}"
+					data-trigger-type="alwaysShow"
+					data-trigger-value=""
+					data-activation-type="alwaysActivated"
+					data-activation-value=""
+					data-deactivation-type="neverDeactivate"
+					data-deactivation-value=""
+					data-form-name="Website Pricing Page Form Latest"
+					data-height="573"
+					data-layout-iframe-id={`inline-${planFormId}`}
+					data-form-id={planFormId}
+					data-cookie-consent="true"
+					data-cookie-consent-provider="auto"></iframe>
+			</div>
+		</div>
+	</section>
+
+	<script is:inline src={`${formHost}/js/form_embed.js`} async></script>
+
+	<script>
+		/* Plans: switch every price between annual and monthly billing */
+		const toggle = document.querySelector<HTMLElement>('[data-billing-toggle]');
+		const status = document.querySelector<HTMLElement>('[data-billing-status]');
+
+		if (toggle) {
+			const buttons = [...toggle.querySelectorAll<HTMLButtonElement>('[data-billing]')];
+			const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+			const swap = (el: HTMLElement, text: string) => {
+				if (reduceMotion) {
+					el.textContent = text;
+					return;
+				}
+				const out = el.animate(
+					[{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(-6px) scale(0.9)' }],
+					{ duration: 150, easing: 'ease-in', fill: 'forwards' },
+				);
+				out.finished.then(() => {
+					el.textContent = text;
+					out.cancel();
+					el.animate([{ opacity: 0, transform: 'translateY(6px) scale(0.9)' }, { opacity: 1, transform: 'none' }], {
+						duration: 250,
+						easing: 'cubic-bezier(0.2, 0.7, 0.2, 1)',
+					});
+				});
+			};
+
+			const setBilling = (period: 'annual' | 'monthly') => {
+				buttons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.billing === period)));
+				document.querySelectorAll<HTMLElement>('.plan__value').forEach((el) => swap(el, el.dataset[period] ?? ''));
+				document.querySelectorAll<HTMLElement>('.plan__billing').forEach((el) => {
+					el.textContent = el.dataset[period] ?? '';
+				});
+				if (status) status.textContent = `Showing ${period} prices`;
+			};
+
+			buttons.forEach((button) =>
+				button.addEventListener('click', () => {
+					if (button.getAttribute('aria-pressed') === 'true') return;
+					setBilling(button.dataset.billing as 'annual' | 'monthly');
+				}),
+			);
+		}
+	</script>
+</Layout>

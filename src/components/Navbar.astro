@@ -1,0 +1,115 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.png';
+import '../styles/components/navbar.css';
+
+const links = [
+	{ href: '/', label: 'Home' },
+	{ href: '/about-us', label: 'About Us' },
+	{ href: '/features', label: 'Features' },
+	{ href: '/plans', label: 'Plans' },
+	{ href: '/contact', label: 'Contact Us' },
+];
+
+const path = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isCurrent = (href: string) => (href === '/' ? path === '/' : path.startsWith(href));
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+
+<header class="nav" data-nav>
+	<div class="nav__bar">
+		<a href="/" class="nav__logo">
+			<Image src={logo} alt="VCPility" height={100} loading="eager" />
+		</a>
+
+		<div class="nav__right">
+			<nav aria-label="Main">
+				<ul class="nav__menu">
+					{
+						links.map(({ href, label }) => (
+							<li>
+								<a href={href} class="nav__link" aria-current={isCurrent(href) ? 'page' : undefined}>
+									{label}
+								</a>
+							</li>
+						))
+					}
+				</ul>
+			</nav>
+			<a href="/contact" class="nav__cta">
+				Enquire Now
+				<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+			</a>
+		</div>
+
+		<button
+			class="nav__toggle"
+			type="button"
+			aria-label="Open menu"
+			aria-expanded="false"
+			aria-controls="nav-panel"
+			data-nav-toggle
+		>
+			<span class="nav__toggle-line"></span>
+			<span class="nav__toggle-line"></span>
+		</button>
+	</div>
+
+	<div class="nav__panel" id="nav-panel" inert>
+		<nav aria-label="Mobile">
+			<ul>
+				{
+					links.map(({ href, label }, i) => (
+						<li class="nav__panel-item" style={`--i: ${i}`}>
+							<a href={href} class="nav__panel-link" aria-current={isCurrent(href) ? 'page' : undefined}>
+								<span class="nav__panel-num" aria-hidden="true">{pad(i + 1)}</span>
+								<span class="nav__panel-text">{label}</span>
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</nav>
+		<a href="/contact" class="nav__panel-cta" style={`--i: ${links.length}`}>
+			Enquire Now
+			<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+		</a>
+	</div>
+</header>
+
+<script>
+	const nav = document.querySelector<HTMLElement>('[data-nav]');
+	const toggle = nav?.querySelector<HTMLButtonElement>('[data-nav-toggle]');
+	const panel = document.getElementById('nav-panel');
+
+	if (nav && toggle && panel) {
+		let open = false;
+
+		const setOpen = (next: boolean, { restoreFocus = false } = {}) => {
+			if (open === next) return;
+			open = next;
+			nav.classList.toggle('is-open', open);
+			document.documentElement.classList.toggle('nav-locked', open);
+			toggle.setAttribute('aria-expanded', String(open));
+			toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+			panel.inert = !open;
+			if (open) panel.querySelector('a')?.focus({ preventScroll: true });
+			else if (restoreFocus) toggle.focus();
+		};
+
+		toggle.addEventListener('click', () => setOpen(!open));
+		panel.addEventListener('click', (e) => {
+			if ((e.target as Element).closest('a')) setOpen(false);
+		});
+		document.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape') setOpen(false, { restoreFocus: true });
+		});
+		matchMedia('(min-width: 1025px)').addEventListener('change', (e) => {
+			if (e.matches) setOpen(false);
+		});
+
+		const onScroll = () => nav.classList.toggle('is-scrolled', window.scrollY > 80);
+		window.addEventListener('scroll', onScroll, { passive: true });
+		onScroll();
+	}
+</script>

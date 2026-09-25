@@ -1,0 +1,143 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import '../styles/pages/contact.css';
+
+import careersPhoto from '../assets/contact/careers.jpg';
+import partnershipsPhoto from '../assets/contact/partnerships.jpg';
+
+const arrow = '<path d="M5 12h14M12 5l7 7-7 7"/>';
+
+/* ----- Flip cards ----- */
+
+const flipCards = [
+	{
+		label: 'Careers',
+		photo: careersPhoto,
+		alt: 'Team collaborating around a laptop',
+		front: ['Join the Vision.', 'Build the Future.'],
+		title: 'Grow. Create. Lead.',
+		text: 'Be part of a team that values ideas, energy, and the drive to make things happen.',
+		href: 'https://sharktech.com.au/career',
+	},
+	{
+		label: 'Partnerships',
+		photo: partnershipsPhoto,
+		alt: 'Business partners in a meeting',
+		front: ['Partner With Us.', 'Achieve More.'],
+		title: 'Unlock New Opportunities.',
+		text: 'Join forces with us to leverage cutting-edge solutions and drive growth for both our businesses.',
+		href: 'https://sharktech.com.au/partnerships-and-alliances',
+	},
+];
+
+const formId = 'DiM1RLgmUaDmgQWSJZ6f';
+---
+
+<Layout
+	title="Contact Us | VCPility"
+	description="Talk to VCPility. Send us a message and our team will get back to you within 24 hours."
+>
+	<!-- ============================================
+	     Banner
+	     ============================================ -->
+	<section class="contact-banner" data-reveal>
+		<span class="contact-banner__bracket contact-banner__bracket--tl" aria-hidden="true"></span>
+		<span class="contact-banner__bracket contact-banner__bracket--br" aria-hidden="true"></span>
+
+		<div class="contact-banner__content">
+			<p class="eyebrow eyebrow--center reveal">Contact Us</p>
+
+			<h1 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
+				<span class="line">
+					<span class="line__inner">Let’s <span class="mark">Talk</span></span>
+				</span>
+			</h1>
+
+			<p class="contact-banner__lead reveal" style="--d: 0.25s">
+				Have a question or ready to transform your business? Fill out the form and our team will get
+				back to you within 24 hours.
+			</p>
+		</div>
+	</section>
+
+	<!-- ============================================
+	     Form + flip cards
+	     ============================================ -->
+	<section class="contact">
+		<div class="contact__grid">
+			<header class="contact__header">
+				<p class="eyebrow reveal">Get in Touch</p>
+
+				<h2 class="section-title contact__title reveal-lines" style="--d: 0.1s">
+					<span class="line">
+						<span class="line__inner">Send Us a <span class="mark">Message</span></span>
+					</span>
+				</h2>
+
+				<p class="contact__lead reveal" style="--d: 0.2s">
+					We'd love to hear from you. Fill in the details below and we'll be in touch soon.
+				</p>
+			</header>
+
+			<div class="contact__form reveal" style="--d: 0.25s">
+				<span class="contact__bracket contact__bracket--tl" aria-hidden="true"></span>
+				<span class="contact__bracket contact__bracket--br" aria-hidden="true"></span>
+
+				<!-- LeadConnector form: attributes are read by form_embed.js, which also auto-sizes the iframe -->
+				<iframe
+					src={`https://api.leadconnectorhq.com/widget/form/${formId}`}
+					class="contact__iframe"
+					id={`inline-${formId}`}
+					title="Contact form"
+					data-layout="{'id':'INLINE'}"
+					data-trigger-type="alwaysShow"
+					data-trigger-value=""
+					data-activation-type="alwaysActivated"
+					data-activation-value=""
+					data-deactivation-type="neverDeactivate"
+					data-deactivation-value=""
+					data-form-name="Website Contact Us form latest"
+					data-height="586"
+					data-layout-iframe-id={`inline-${formId}`}
+					data-form-id={formId}></iframe>
+			</div>
+
+			<ul class="contact__cards">
+				{
+					flipCards.map(({ label, photo, alt, front, title, text, href }, i) => (
+						<li class="reveal" style={`--d: ${0.35 + i * 0.1}s`}>
+							<div class="flip" tabindex="0" role="group" aria-label={label}>
+								<div class="flip__inner">
+									<div class="flip__front">
+										<Image
+											class="flip__photo"
+											src={photo}
+											alt={alt}
+											widths={[400, 800]}
+											sizes="(max-width: 1024px) 92vw, 380px"
+										/>
+										<span class="flip__corner" aria-hidden="true" />
+										<h3 class="flip__front-title">
+											{front[0]} <span>{front[1]}</span>
+										</h3>
+									</div>
+									<div class="flip__back">
+										<p class="flip__back-title">{title}</p>
+										<p class="flip__back-text">{text}</p>
+										<a href={href} class="flip__btn" target="_blank" rel="noopener">
+											Learn More
+											<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+										</a>
+									</div>
+								</div>
+							</div>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+	</section>
+
+	<script is:inline src="https://link.msgsndr.com/js/form_embed.js" async></script>
+</Layout>

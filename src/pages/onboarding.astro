@@ -1,0 +1,75 @@
+---
+import Layout from '../layouts/Layout.astro';
+import '../styles/pages/onboarding.css';
+
+const steps = ['Fill the form', 'We build your system', 'You grow'];
+const formId = '2FSuzzr2EK0YWz3PCz3A';
+---
+
+<Layout
+	title="Onboarding | VCPility"
+	description="Welcome aboard. Share a few details and we'll start building your AI-powered system."
+	noindex
+>
+	<!-- ============================================
+	     Onboarding
+	     ============================================ -->
+	<section class="onboarding grid-bg">
+		<div class="onboarding__container">
+			<header class="onboarding__header">
+				<p class="eyebrow eyebrow--center reveal">Welcome Aboard</p>
+
+				<h1 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
+					<span class="line">
+						<span class="line__inner">Let’s Get You <span class="mark">Set Up</span></span>
+					</span>
+				</h1>
+
+				<p class="section-lead reveal" style="--d: 0.25s">
+					A few quick details and we'll start building your AI-powered system. The more we know, the
+					faster you'll be up and running.
+				</p>
+
+				<ol class="onboarding__steps" role="list">
+					{
+						steps.map((step, i) => (
+							<li class="reveal" style={`--d: ${0.35 + i * 0.08}s`}>
+								<span class="onboarding__step-num" aria-hidden="true">
+									{i + 1}
+								</span>
+								{step}
+							</li>
+						))
+					}
+				</ol>
+			</header>
+
+			<div class="onboarding__form reveal" style="--d: 0.4s">
+				<span class="onboarding__corner onboarding__corner--tl" aria-hidden="true"></span>
+				<span class="onboarding__corner onboarding__corner--tr" aria-hidden="true"></span>
+				<span class="onboarding__corner onboarding__corner--bl" aria-hidden="true"></span>
+				<span class="onboarding__corner onboarding__corner--br" aria-hidden="true"></span>
+
+				<!-- LeadConnector form: attributes are read by form_embed.js, which also auto-sizes the iframe -->
+				<iframe
+					src={`https://api.leadconnectorhq.com/widget/form/${formId}`}
+					class="onboarding__iframe"
+					id={`inline-${formId}`}
+					title="Onboarding form"
+					data-layout="{'id':'INLINE'}"
+					data-trigger-type="alwaysShow"
+					data-trigger-value=""
+					data-activation-type="alwaysActivated"
+					data-activation-value=""
+					data-deactivation-type="neverDeactivate"
+					data-deactivation-value=""
+					data-form-name="1 AU - Latest Onboarding Form - GENERAL"
+					data-height="4230"
+					data-layout-iframe-id={`inline-${formId}`}
+					data-form-id={formId}></iframe>
+			</div>
+		</div>
+	</section>
+
+	<script is:inline src="https://link.msgsndr.com/js/form_embed.js" async></script>
+</Layout>

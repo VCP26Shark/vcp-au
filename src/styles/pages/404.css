@@ -1,0 +1,240 @@
+/* ============================================
+   404 page
+   ============================================ */
+
+.notfound {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	min-height: 100vh;
+	min-height: 100svh;
+	padding: 120px var(--gutter) 100px;
+	background: var(--color-bg);
+}
+
+.notfound__container {
+	width: 100%;
+	max-width: 760px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.notfound .eyebrow {
+	margin-bottom: 40px;
+}
+
+.notfound .section-title {
+	margin-bottom: 22px;
+}
+
+.notfound .section-lead {
+	max-width: 500px;
+	margin: 0 auto 44px;
+}
+
+/* ----- Big 404 ----- */
+
+.notfound__code {
+	--digit: clamp(110px, 22vw, 240px);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: clamp(8px, 2vw, 24px);
+	margin-bottom: 30px;
+	font-size: var(--digit);
+	font-weight: 800;
+	line-height: 0.85;
+	letter-spacing: -0.05em;
+}
+
+/* The 0 is a yellow tile that gently floats, framed by black corner marks */
+.notfound__zero {
+	position: relative;
+	display: flex;
+	flex-shrink: 0;
+	align-items: center;
+	justify-content: center;
+	width: var(--digit);
+	height: clamp(130px, 26vw, 280px);
+	background: var(--color-yellow);
+	animation: notfound-float 6s ease-in-out infinite;
+	will-change: transform;
+}
+
+.notfound__zero-digit {
+	font-size: clamp(90px, 18vw, 200px);
+}
+
+.notfound__corner {
+	position: absolute;
+	width: 26px;
+	height: 26px;
+	border: 0 solid var(--color-ink);
+	pointer-events: none;
+}
+
+.notfound__corner--tl {
+	top: 12px;
+	left: 12px;
+	border-top-width: 3px;
+	border-left-width: 3px;
+}
+
+.notfound__corner--tr {
+	top: 12px;
+	right: 12px;
+	border-top-width: 3px;
+	border-right-width: 3px;
+}
+
+.notfound__corner--bl {
+	bottom: 12px;
+	left: 12px;
+	border-bottom-width: 3px;
+	border-left-width: 3px;
+}
+
+.notfound__corner--br {
+	right: 12px;
+	bottom: 12px;
+	border-right-width: 3px;
+	border-bottom-width: 3px;
+}
+
+/* ----- Buttons ----- */
+
+.notfound__buttons {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: 16px;
+}
+
+/* The support link's arrow points back, and nudges back on hover */
+.notfound__support svg {
+	scale: -1 1;
+}
+
+/* ----- Quick links ----- */
+
+.notfound__links {
+	margin-top: 56px;
+	padding-top: 32px;
+	border-top: 1px solid var(--color-gray-200);
+}
+
+.notfound__links-label {
+	margin-bottom: 18px;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	color: var(--color-gray-500);
+}
+
+.notfound__links-list {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 8px;
+}
+
+.notfound__links a {
+	position: relative;
+	display: block;
+	padding: 8px 16px;
+	font-size: 15px;
+	font-weight: 500;
+	color: var(--color-gray-600);
+	transition: color 0.3s ease;
+}
+
+/* Yellow underline that draws in from the left */
+.notfound__links a::after {
+	content: '';
+	position: absolute;
+	right: 16px;
+	bottom: 4px;
+	left: 16px;
+	height: 2px;
+	background: var(--color-yellow);
+	transform: scaleX(0);
+	transform-origin: left;
+	transition: transform 0.35s var(--ease-out);
+}
+
+.notfound__links a:hover,
+.notfound__links a:focus-visible {
+	color: var(--color-ink);
+}
+
+.notfound__links a:hover::after,
+.notfound__links a:focus-visible::after {
+	transform: none;
+}
+
+@keyframes notfound-float {
+	50% {
+		transform: translateY(-12px);
+	}
+}
+
+/* ----- Responsive ----- */
+
+@media (max-width: 768px) {
+	.notfound {
+		padding: 100px var(--gutter) 80px;
+	}
+
+	.notfound .eyebrow {
+		margin-bottom: 30px;
+	}
+
+	.notfound .section-lead {
+		margin-bottom: 36px;
+		font-size: 16px;
+	}
+
+	.notfound__buttons {
+		flex-direction: column;
+	}
+
+	.notfound__buttons .btn--dark {
+		justify-content: center;
+		width: 100%;
+		max-width: 300px;
+	}
+
+	.notfound__corner {
+		width: 18px;
+		height: 18px;
+	}
+
+	.notfound__corner--tl,
+	.notfound__corner--tr {
+		top: 8px;
+	}
+
+	.notfound__corner--bl,
+	.notfound__corner--br {
+		bottom: 8px;
+	}
+
+	.notfound__corner--tl,
+	.notfound__corner--bl {
+		left: 8px;
+	}
+
+	.notfound__corner--tr,
+	.notfound__corner--br {
+		right: 8px;
+	}
+}
+
+@media (max-width: 480px) {
+	.notfound__links-list {
+		flex-direction: column;
+		gap: 4px;
+	}
+}

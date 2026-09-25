@@ -1,11 +1,935 @@
 ---
-import Welcome from '../components/Welcome.astro';
+import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
+import '../styles/components/bento.css';
+import '../styles/pages/home.css';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import booking from '../assets/home/hero/booking.webp';
+import mobileApp from '../assets/home/hero/mobile-app.webp';
+import chatbot from '../assets/home/hero/chatbot.webp';
+import crm from '../assets/home/hero/crm.webp';
+import dashboard from '../assets/home/hero/dashboard.webp';
+import website from '../assets/home/hero/website.webp';
+import reviews from '../assets/home/hero/reviews.webp';
+import reactivation from '../assets/home/hero/reactivation.webp';
+
+import accountingPhoto from '../assets/home/industries/accounting.jpg';
+import realEstatePhoto from '../assets/home/industries/real-estate.jpg';
+import solarPhoto from '../assets/home/industries/solar.jpg';
+import dentalPhoto from '../assets/home/industries/dental.jpg';
+import wellnessPhoto from '../assets/home/industries/wellness.jpg';
+import tradesPhoto from '../assets/home/industries/trades.jpg';
+
+const arrow = '<path d="M5 12h14M12 5l7 7-7 7"/>';
+
+// Icons used by more than one section
+const icons = {
+	calendar: '<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',
+	chat: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+	users: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>',
+	star: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
+	clock: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+	mobile: '<rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/>',
+	chart: '<path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/>',
+	phone: '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>',
+};
+
+/* ----- Hero ----- */
+
+const heroTitle = [
+	['Stop Drowning'],
+	['in ', 'Admin'],
+	['Start Growing'],
+	['Your ', 'Business'],
+];
+
+const heroStats = [
+	{ value: 15, suffix: '+', label: 'Hours Saved Weekly' },
+	{ value: 98, suffix: '%', label: 'Response Rate' },
+	{ value: 2.4, suffix: 'x', decimals: 1, label: 'More Leads' },
+];
+
+const heroSlides = [
+	{
+		image: booking,
+		title: 'Online Appointment Booking Calendar',
+		subtitle: '24/7 Automated Scheduling',
+		icon: icons.calendar,
+	},
+	{
+		image: mobileApp,
+		title: 'Mobile App',
+		subtitle: 'Manage Business On-the-Go',
+		icon: icons.mobile,
+	},
+	{
+		image: chatbot,
+		title: 'AI Chatbot',
+		subtitle: 'Instant Lead Engagement',
+		icon: icons.chat,
+	},
+	{
+		image: crm,
+		title: 'All-in-One CRM',
+		subtitle: 'Unified Customer Management',
+		icon: icons.users,
+	},
+	{
+		image: dashboard,
+		title: 'AI-Powered Dashboard',
+		subtitle: 'Real-Time Business Insights',
+		icon: icons.chart,
+	},
+	{
+		image: website,
+		title: 'StoryBrand Website',
+		subtitle: 'Conversion-Optimized Design',
+		icon: '<circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
+	},
+	{
+		image: reviews,
+		title: 'Review & Reputation Management',
+		subtitle: '5-Star Rating Automation',
+		icon: icons.star,
+	},
+	{
+		image: reactivation,
+		title: 'Recall, Retention & Reactivation',
+		subtitle: 'Automated Win-Back Campaigns',
+		icon: '<polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/>',
+	},
+];
+
+// The first slide is repeated at the end so the loop can wrap seamlessly
+const heroTrack = [...heroSlides, heroSlides[0]];
+
+/* ----- Pain points ----- */
+
+const painTitle = [["You're Great at What You Do."], ['But the Business Side?'], ['', 'Exhausting.']];
+
+const painPoints = [
+	{
+		title: 'Leads Slipping Away',
+		desc: 'Another missed call. Another lead gone to your competitor who answered first.',
+		icon: icons.phone + '<path d="m23 1-6 6M17 1l6 6"/>',
+	},
+	{
+		title: 'Nights & Weekends',
+		desc: 'Catching up on admin when you should be resting.',
+		icon: '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>',
+	},
+	{
+		title: 'Firefighting',
+		desc: 'Stuck in survival mode.',
+		icon: '<path d="M12 2c.5 2.5 2 4.5 2 6.5a4 4 0 0 1-8 0c0-2 1.5-4 2-6.5C7 5 4 8 4 12a8 8 0 0 0 16 0c0-4-3-7-8-10z"/>',
+	},
+	{
+		title: 'Money Left Behind',
+		desc: 'No follow-up system means lost revenue opportunities.',
+		icon: '<path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>',
+	},
+	{
+		title: 'Tool Overload',
+		desc: "10 apps that don't talk to each other. Nothing syncs properly.",
+		icon: '<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>',
+	},
+	{
+		title: 'Review Anxiety',
+		desc: 'Bad reviews linger.',
+		icon: '<path d="M11.05 2.93c.3-.92 1.6-.92 1.9 0l1.52 4.67a1 1 0 0 0 .95.7h4.91c.97 0 1.37 1.24.59 1.8l-3.97 2.9a1 1 0 0 0-.37 1.11l1.52 4.68c.3.92-.76 1.69-1.54 1.12l-3.98-2.89a1 1 0 0 0-1.17 0l-3.98 2.89c-.78.57-1.84-.2-1.54-1.12l1.52-4.68a1 1 0 0 0-.36-1.11L3.03 10.1c-.78-.57-.38-1.81.59-1.81h4.91a1 1 0 0 0 .95-.69z"/><path d="m4 4 16 16"/>',
+	},
+];
+
+/* ----- Daily struggle ----- */
+
+const struggles = [
+	{ title: 'Missed calls & slow responses', desc: 'Leads go cold within 5 minutes', value: 78, suffix: '%' },
+	{ title: 'Hours lost to repetitive tasks', desc: 'Every single week', value: 15, suffix: '+' },
+	{ title: 'Revenue from poor follow-up', desc: 'Left on the table annually', value: 47, prefix: '$', suffix: 'K' },
+	{ title: 'Disconnected tools & apps', desc: 'Creating data silos', value: 10, suffix: '+' },
+	{ title: 'Bad reviews without response', desc: 'Damaging your reputation', value: 3.2, decimals: 1, suffix: '★' },
+];
+
+const notifications = [
+	{ count: 5, title: 'Missed Calls', meta: 'New leads waiting', icon: icons.phone },
+	{
+		count: 47,
+		title: 'Unread Emails',
+		meta: 'Waiting for reply',
+		icon: '<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>',
+	},
+	{ count: 3, title: 'Bad Reviews', meta: 'Needs response', icon: icons.star },
+	{ count: 8, title: 'Overdue Quotes', meta: 'Clients waiting', icon: icons.clock },
+	{ count: 12, title: 'Lost Leads', meta: 'Went to competitors', icon: icons.users },
+	{ count: 4, title: 'Double-Booked', meta: 'Schedule conflict', icon: icons.calendar },
+	{ count: 23, title: 'Unanswered', meta: "Where's my invoice?", icon: icons.chat },
+];
+
+// Dashed connectors from each notification to the device (500 × 420 stage)
+const struggleLines = [
+	'M90,50 Q170,100 250,130',
+	'M410,40 Q330,90 250,130',
+	'M50,170 Q130,190 250,210',
+	'M450,160 Q370,190 250,210',
+	'M70,310 Q150,270 250,250',
+	'M430,300 Q350,270 250,250',
+	'M250,400 Q250,340 250,270',
+];
+
+/* ----- How it works ----- */
+
+const steps = [
+	{
+		title: 'Tell Us Your Goals',
+		desc: 'Quick strategy call to understand your business, challenges, and what success looks like for you.',
+	},
+	{
+		title: 'We Build Your System',
+		desc: 'Our team sets up your AI-powered automation, customised exactly to how your business works.',
+	},
+	{
+		title: 'Watch Your Business Grow',
+		desc: 'Sit back and relax as leads convert, bookings fill up, and reviews roll in – all on autopilot.',
+	},
+];
+
+/* ----- Features ----- */
+
+const dots = (y: number) => `<path d="M8 ${y}h.01M12 ${y}h.01M16 ${y}h.01"/>`;
+
+const features = [
+	{
+		size: 'lg',
+		variant: 'dark',
+		label: 'Core Feature',
+		title: 'All-in-One CRM',
+		href: '/features#crm',
+		desc: 'Manage leads, track deals, and nurture customer relationships from a single powerful dashboard.',
+		list: ['Contact Management', 'Pipeline Tracking', 'Deal Insights'],
+		icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>',
+	},
+	{
+		size: 'md',
+		label: 'Automation',
+		title: 'AI Chatbot',
+		href: '/features#chatbot',
+		desc: 'Engage visitors 24/7 with intelligent conversations that qualify leads and book appointments.',
+		icon: icons.chat + dots(10),
+	},
+	{
+		size: 'sm',
+		variant: 'highlight',
+		label: 'Scheduling',
+		title: 'Smart Booking',
+		href: '/features#smart-booking',
+		desc: 'Automated scheduling with reminders.',
+		icon: icons.calendar + dots(14),
+	},
+	{
+		size: 'sm',
+		label: 'On The Go',
+		title: 'Mobile App',
+		href: '/features#mobile-app',
+		desc: 'Manage your business from anywhere.',
+		icon: icons.mobile,
+	},
+	{
+		size: 'md',
+		label: 'Analytics',
+		title: 'AI Dashboard',
+		href: '/features#ai-dashboard',
+		desc: 'Real-time insights and performance tracking to make smarter business decisions.',
+		icon: icons.chart,
+	},
+];
+
+/* ----- Stats band ----- */
+
+const bandStats = [
+	{ value: 32, suffix: '%', label: 'Time Saved Weekly' },
+	{ text: '24/7', label: 'Lead Response' },
+	{ value: 22, suffix: '%', label: 'Cost Savings' },
+	{ value: 6, suffix: '+', label: 'Industries Served' },
+];
+
+/* ----- Testimonials ----- */
+
+const testimonials = [
+	{
+		quote:
+			"I used to spend 3 hours every night on follow-ups. Now the AI handles it while I'm with my family. Best investment I've made for my business.",
+		name: 'Michael T.',
+		role: 'Solar Installation Business',
+	},
+	{
+		quote:
+			"Our bookings increased by 40% in the first month. The chatbot answers questions and books appointments even when we're with patients.",
+		name: 'Dr. Sarah K.',
+		role: 'Dental Practice Owner',
+	},
+	{
+		quote:
+			'Finally, I have a system that works. No more lost leads, no more forgotten follow-ups. My stress levels have dropped dramatically.',
+		name: 'James R.',
+		role: 'Real Estate Agent',
+	},
+];
+
+const starPath =
+	'M10 15l-5.878 3.09 1.123-6.545L.489 6.91l6.572-.955L10 0l2.939 5.955 6.572.955-4.756 4.635 1.123 6.545z';
+
+/* ----- Industries ----- */
+
+const industries = [
+	{
+		title: 'LYD Accrual OS',
+		desc: 'Automate invoicing, reminders, and client workflows with smarter financial operations.',
+		photo: accountingPhoto,
+		icon: '<rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h4"/>',
+	},
+	{
+		title: 'LYD Assist',
+		desc: 'Run your NDIS business with participant management, rostering, and compliance in one suite.',
+		// No photo yet: the card shows a plain ink panel until one is added
+		photo: undefined,
+		icon: '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="7" r="1"/><path d="M8 10h8M12 10v4l-2 4M12 14l2 4"/>',
+	},
+	{
+		title: 'LYD Solar',
+		desc: 'Convert inquiries to installations with automated quote delivery and smart scheduling.',
+		photo: solarPhoto,
+		icon: '<circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>',
+	},
+	{
+		title: 'Real Estate',
+		desc: 'Never miss a lead. Automate follow-ups and fill your calendar with qualified buyers.',
+		photo: realEstatePhoto,
+		icon: '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',
+	},
+	{
+		title: 'Dental',
+		desc: 'Fill your chairs with smart appointment reminders and review management.',
+		photo: dentalPhoto,
+		icon: icons.clock,
+	},
+	{
+		title: 'Wellness',
+		desc: 'Nurture client relationships with personalized follow-ups and membership management.',
+		photo: wellnessPhoto,
+		icon: '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>',
+	},
+	{
+		title: 'Trades',
+		desc: 'Streamline job requests, dispatch teams efficiently, and get paid faster.',
+		photo: tradesPhoto,
+		icon: '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
+	},
+];
 ---
 
 <Layout>
-	<Welcome />
+	<!-- ============================================
+	     Hero
+	     ============================================ -->
+	<section class="hero grid-bg">
+		<div class="hero__container">
+			<div class="hero__content">
+				<p class="eyebrow hero__eyebrow">AI-Powered Automation</p>
+
+				<h1 class="hero__title" aria-label="Stop drowning in admin. Start growing your business.">
+					{
+						heroTitle.map(([text, mark], i) => (
+							<span class="line" style={`--i: ${i}`} aria-hidden="true">
+								<span class="line__inner">
+									{text}
+									{mark && <span class="mark">{mark}</span>}
+								</span>
+							</span>
+						))
+					}
+				</h1>
+
+				<p class="hero__subtitle">
+					You didn't start your business to chase leads or spend weekends on paperwork. Let AI
+					handle the busy work while you focus on what you do best.
+				</p>
+
+				<div class="hero__buttons">
+					<a href="#three-steps" class="btn btn--dark">
+						See How It Works
+						<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+					</a>
+					<a href="/contact" class="btn btn--link">
+						Book Free Strategy Call
+						<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+					</a>
+				</div>
+
+				<dl class="hero__stats">
+					{
+						heroStats.map(({ value, suffix, decimals = 0, label }) => (
+							<div class="hero__stat">
+								<dt class="hero__stat-label">{label}</dt>
+								<dd
+									class="hero__stat-value"
+									data-count={value}
+									data-decimals={decimals}
+									data-suffix={suffix}
+									data-count-delay="900"
+								>
+									{value.toFixed(decimals)}
+									{suffix}
+								</dd>
+							</div>
+						))
+					}
+				</dl>
+			</div>
+
+			<div class="hero__visual" data-pause-offscreen>
+				<div class="hero__accent"></div>
+
+				<div
+					class="hero__frame"
+					role="region"
+					aria-roledescription="carousel"
+					aria-label="VCPility features"
+					data-hero-carousel
+				>
+					<span class="hero__corner hero__corner--tl"></span>
+					<span class="hero__corner hero__corner--tr"></span>
+					<span class="hero__corner hero__corner--bl"></span>
+					<span class="hero__corner hero__corner--br"></span>
+
+					<div class="hero__track" data-hero-track>
+						{
+							heroTrack.map(({ image, title, subtitle, icon }, i) => {
+								const isClone = i === heroSlides.length;
+								return (
+									<div
+										class="hero__slide"
+										role="group"
+										aria-roledescription="slide"
+										aria-label={`${i + 1} of ${heroSlides.length}`}
+										aria-hidden={i === 0 ? undefined : 'true'}
+									>
+										<div class="hero__slide-image">
+											<Image
+												src={image}
+												alt={isClone ? '' : title}
+												width={960}
+												widths={[480, 960]}
+												sizes="440px"
+												loading="eager"
+												fetchpriority={i === 0 ? 'high' : 'low'}
+											/>
+										</div>
+										<div class="hero__caption">
+											<span class="hero__caption-icon">
+												<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icon} />
+											</span>
+											<span class="hero__caption-text">
+												<span class="hero__caption-title">{title}</span>
+												<span class="hero__caption-subtitle">{subtitle}</span>
+											</span>
+										</div>
+									</div>
+								);
+							})
+						}
+					</div>
+
+					<span class="hero__progress" data-hero-progress></span>
+				</div>
+
+				<div class="hero__card hero__card--leads">
+					<span class="hero__card-icon">
+						<svg viewBox="0 0 24 24" aria-hidden="true">
+							<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+							<polyline points="22 4 12 14.01 9 11.01"></polyline>
+						</svg>
+					</span>
+					<span>
+						<span class="hero__card-value">117</span>
+						<span class="hero__card-label">Leads This Week</span>
+					</span>
+				</div>
+
+				<div class="hero__card hero__card--active">
+					<span class="hero__card-icon">
+						<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icons.clock} />
+					</span>
+					<span>
+						<span class="hero__card-value">24/7</span>
+						<span class="hero__card-label">Always Active</span>
+					</span>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script>
+		/* Hero: carousel steps through the slides, with a progress rule timing each one */
+		const carousel = document.querySelector<HTMLElement>('[data-hero-carousel]');
+		const track = carousel?.querySelector<HTMLElement>('[data-hero-track]');
+		const bar = carousel?.querySelector<HTMLElement>('[data-hero-progress]');
+
+		if (carousel && track && bar) {
+			const INTERVAL = 4000;
+			const slides = [...track.children] as HTMLElement[];
+			const last = slides.length - 1; // index of the clone of the first slide
+			let index = 0;
+			let hovered = false;
+			let inView = true;
+
+			const moveTo = (next: number) => {
+				index = next;
+				track.style.transform = `translateX(${-index * 100}%)`;
+				slides.forEach((slide, i) => slide.setAttribute('aria-hidden', String(i !== index)));
+			};
+
+			const progress = bar.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], {
+				duration: INTERVAL,
+				easing: 'linear',
+			});
+
+			const sync = () => {
+				if (hovered || !inView || document.hidden) progress.pause();
+				else progress.play();
+			};
+
+			progress.onfinish = () => {
+				// Sitting on the clone looks identical to slide one, so jump back without animating
+				if (index === last) {
+					track.style.transition = 'none';
+					moveTo(0);
+					void track.offsetWidth;
+					track.style.transition = '';
+				}
+				moveTo(index + 1);
+				progress.currentTime = 0;
+				sync();
+			};
+
+			carousel.addEventListener('pointerenter', () => {
+				hovered = true;
+				sync();
+			});
+			carousel.addEventListener('pointerleave', () => {
+				hovered = false;
+				sync();
+			});
+			document.addEventListener('visibilitychange', sync);
+			new IntersectionObserver(([entry]) => {
+				inView = entry.isIntersecting;
+				sync();
+			}).observe(carousel);
+		}
+	</script>
+
+	<!-- ============================================
+	     Pain points
+	     ============================================ -->
+	<section class="pain grid-bg">
+		<div class="pain__container">
+			<header class="pain__header">
+				<p class="eyebrow reveal">Sound Familiar?</p>
+
+				<h2 class="section-title reveal-lines" style="--d: 0.1s">
+					{
+						painTitle.map(([text, mark], i) => (
+							<span class="line" style={`--i: ${i}`}>
+								<span class="line__inner">
+									{text}
+									{mark && <span class="mark">{mark}</span>}
+								</span>
+							</span>
+						))
+					}
+				</h2>
+
+				<p class="section-lead reveal" style="--d: 0.3s">
+					Every day, brilliant business owners like you lose hours to tasks that never seem to end.
+					It's exhausting, frustrating, and holds you back from real growth.
+				</p>
+			</header>
+
+			<ul class="pain__grid">
+				{
+					painPoints.map(({ title, desc, icon }, i) => (
+						<li class="reveal" style={`--d: ${i * 0.08}s`}>
+							<article class="pain__card">
+								<span class="pain__num" aria-hidden="true">
+									{String(i + 1).padStart(2, '0')}
+								</span>
+								<span class="pain__icon">
+									<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icon} />
+								</span>
+								<h3 class="pain__card-title">{title}</h3>
+								<p class="pain__card-desc">{desc}</p>
+							</article>
+						</li>
+					))
+				}
+			</ul>
+
+			<div class="pain__cta reveal">
+				<a href="/contact" class="btn btn--yellow">
+					See How We Fix This
+					<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+				</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- ============================================
+	     Daily struggle
+	     ============================================ -->
+	<section class="struggle grid-bg">
+		<div class="struggle__container">
+			<header class="struggle__header">
+				<p class="eyebrow eyebrow--center reveal">The Daily Struggle</p>
+
+				<h2 class="section-title section-title--compact reveal-lines" style="--d: 0.1s">
+					<span class="line">
+						<span class="line__inner">You're Drowning in <span class="mark">Busywork</span></span>
+					</span>
+				</h2>
+
+				<p class="section-lead reveal" style="--d: 0.25s">
+					While you're juggling admin tasks, your competitors are closing deals. Every hour spent on
+					manual work is revenue slipping through your fingers.
+				</p>
+
+				<div class="struggle__cta reveal" style="--d: 0.35s">
+					<a href="/features" class="btn btn--yellow btn--compact">
+						View All Features
+						<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+					</a>
+				</div>
+			</header>
+
+			<div class="struggle__content">
+				<ul class="struggle__list">
+					{
+						struggles.map(({ title, desc, value, prefix = '', suffix = '', decimals = 0 }, i) => (
+							<li class="struggle__item reveal" style={`--d: ${0.1 + i * 0.1}s`}>
+								<span class="struggle__indicator"></span>
+								<span class="struggle__item-body">
+									<strong class="struggle__item-title">{title}</strong>
+									<span class="struggle__item-desc">{desc}</span>
+								</span>
+								<span
+									class="struggle__stat"
+									data-count={value}
+									data-decimals={decimals}
+									data-prefix={prefix}
+									data-suffix={suffix}
+								>
+									{prefix}
+									{value.toFixed(decimals)}
+									{suffix}
+								</span>
+							</li>
+						))
+					}
+				</ul>
+
+				<div class="struggle__visual reveal" style="--d: 0.2s" data-pause-offscreen>
+					<p class="struggle__status">
+						<span class="struggle__status-dot"></span>
+						Your Day Without Automation
+					</p>
+
+					<div class="struggle__stage" aria-hidden="true">
+						<svg class="struggle__lines" viewBox="0 0 500 420" preserveAspectRatio="none">
+							{struggleLines.map((d) => <path d={d} />)}
+						</svg>
+
+						<div class="struggle__device">
+							<div class="struggle__screen">
+								<div class="struggle__statusbar">
+									<span>9:41</span>
+									<span class="struggle__island"></span>
+									<span class="struggle__battery"></span>
+								</div>
+								<div class="struggle__device-bar">
+									<span class="struggle__device-dots"><span></span><span></span><span></span></span>
+									<span class="struggle__device-title">Your Day</span>
+								</div>
+								<div class="struggle__device-body">
+									<span class="struggle__emoji">😰</span>
+									<span class="struggle__device-text">Overwhelmed</span>
+									<span class="struggle__bars">
+										<span style="--w: 85%; --n: 0"></span>
+										<span style="--w: 60%; --n: 1"></span>
+										<span style="--w: 40%; --n: 2"></span>
+									</span>
+								</div>
+								<span class="struggle__home"></span>
+							</div>
+						</div>
+
+						{
+							notifications.map(({ count, title, meta, icon }, i) => (
+								<div class={`struggle__notif struggle__notif--${i + 1}`} style={`--i: ${i}`}>
+									<span class="struggle__notif-badge">{count}</span>
+									<span class="struggle__notif-icon">
+										<svg viewBox="0 0 24 24" set:html={icon} />
+									</span>
+									<span class="struggle__notif-text">
+										<strong>{title}</strong>
+										<span>{meta}</span>
+									</span>
+								</div>
+							))
+						}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- ============================================
+	     How it works
+	     ============================================ -->
+	<section class="hiw grid-bg" id="three-steps">
+		<div class="hiw__container">
+			<header class="hiw__header">
+				<p class="eyebrow eyebrow--center reveal">Simple as 1-2-3</p>
+
+				<h2 class="section-title section-title--compact reveal-lines" style="--d: 0.1s">
+					<span class="line">
+						<span class="line__inner">Get Your Time Back in <span class="mark">3 Steps</span></span>
+					</span>
+				</h2>
+
+				<p class="section-lead reveal" style="--d: 0.25s">
+					No tech skills needed. We handle the setup. You enjoy the results.
+				</p>
+			</header>
+
+			<ol class="hiw__steps" role="list" data-reveal data-pause-offscreen>
+				{
+					steps.map(({ title, desc }, i) => (
+						<li class="reveal" style={`--d: ${0.1 + i * 0.12}s; --i: ${i}`}>
+							<div class="hiw__step">
+								<span class="hiw__num" aria-hidden="true">
+									{i + 1}
+								</span>
+								<h3 class="hiw__title">{title}</h3>
+								<p class="hiw__desc">{desc}</p>
+							</div>
+						</li>
+					))
+				}
+			</ol>
+		</div>
+	</section>
+
+	<!-- ============================================
+	     Features
+	     ============================================ -->
+	<section class="features grid-bg">
+		<div class="features__container">
+			<header class="features__header">
+				<div class="features__intro">
+					<p class="eyebrow reveal">Platform Features</p>
+
+					<h2 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
+						<span class="line" style="--i: 0"><span class="line__inner">Everything You Need,</span></span>
+						<span class="line" style="--i: 1">
+							<span class="line__inner"><span class="mark">One Platform</span></span>
+						</span>
+					</h2>
+
+					<p class="features__lead reveal" style="--d: 0.25s">
+						<strong>20+ business management tools</strong> — all in one easy-to-use platform.
+					</p>
+				</div>
+
+				<div class="features__cta reveal" style="--d: 0.3s">
+					<a href="/features" class="btn btn--yellow btn--compact">
+						View All Features
+						<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+					</a>
+				</div>
+			</header>
+
+			<ul class="bento">
+				{
+					features.map(({ size, variant, label, title, href, desc, list, icon }, i) => (
+						<li class={`bento__item bento__item--${size} reveal`} style={`--d: ${0.1 + i * 0.06}s`}>
+							<a href={href} class:list={['tile', variant && `tile--${variant}`]}>
+								<span class="tile__icon">
+									<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icon} />
+								</span>
+								<span class="tile__label">{label}</span>
+								<h3 class="tile__title">{title}</h3>
+								<p class="tile__desc">{desc}</p>
+								{list && (
+									<ul class="tile__list">
+										{list.map((item) => (
+											<li>{item}</li>
+										))}
+									</ul>
+								)}
+								<span class="tile__more">
+									Learn more
+									<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+								</span>
+								<span class="tile__num" aria-hidden="true">
+									{String(i + 1).padStart(2, '0')}
+								</span>
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+	</section>
+
+	<!-- ============================================
+	     Stats band
+	     ============================================ -->
+	<section class="stats" data-reveal>
+		<dl class="stats__grid">
+			{
+				bandStats.map(({ value, suffix = '', text, label }, i) => (
+					<div class="stats__item reveal" style={`--d: ${i * 0.1}s`}>
+						<dt class="stats__label">{label}</dt>
+						{value === undefined ? (
+							<dd class="stats__value mesh-text">{text}</dd>
+						) : (
+							<dd
+								class="stats__value mesh-text"
+								data-count={value}
+								data-suffix={suffix}
+								data-count-delay={i * 150}
+							>
+								{value}
+								{suffix}
+							</dd>
+						)}
+					</div>
+				))
+			}
+		</dl>
+	</section>
+
+	<!-- ============================================
+	     Testimonials
+	     ============================================ -->
+	<section class="testimonials grid-bg">
+		<div class="testimonials__container">
+			<header class="testimonials__header">
+				<p class="eyebrow eyebrow--center reveal">Real Results</p>
+
+				<h2 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
+					<span class="line">
+						<span class="line__inner">Businesses Like Yours Are <span class="mark">Thriving</span></span>
+					</span>
+				</h2>
+
+				<p class="section-lead reveal" style="--d: 0.25s">
+					Don't just take our word for it. Here's what our clients say.
+				</p>
+
+				<div class="testimonials__cta reveal" style="--d: 0.35s">
+					<a href="/contact" class="btn btn--yellow btn--compact">
+						Get Results Like These
+						<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+					</a>
+				</div>
+			</header>
+
+			<ul class="testimonials__grid">
+				{
+					testimonials.map(({ quote, name, role }, i) => (
+						<li class="reveal" style={`--d: ${i * 0.1}s`}>
+							<figure class="quote-card">
+								<span class="quote-card__mark" aria-hidden="true">
+									“
+								</span>
+								<blockquote class="quote-card__text">
+									<p>{quote}</p>
+								</blockquote>
+								<figcaption class="quote-card__author">
+									<span class="quote-card__avatar" aria-hidden="true">
+										{name.replace(/^Dr\.\s*/, '')[0]}
+									</span>
+									<span>
+										<strong>{name}</strong>
+										<span>{role}</span>
+									</span>
+								</figcaption>
+								<span class="quote-card__stars" role="img" aria-label="Rated 5 out of 5">
+									{Array.from({ length: 5 }, () => (
+										<svg viewBox="0 0 20 20" aria-hidden="true">
+											<path d={starPath} />
+										</svg>
+									))}
+								</span>
+							</figure>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+	</section>
+
+	<!-- ============================================
+	     Industries
+	     ============================================ -->
+	<section class="industries grid-bg" id="built-for-you">
+		<div class="industries__container">
+			<header class="industries__header">
+				<p class="eyebrow eyebrow--center reveal">Built For You</p>
+
+				<h2 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
+					<span class="line">
+						<span class="line__inner">We Speak Your <span class="mark">Industry's Language</span></span>
+					</span>
+				</h2>
+
+				<p class="section-lead reveal" style="--d: 0.25s">
+					Custom solutions designed for how your business actually works.
+				</p>
+			</header>
+
+			<ul class="industries__grid">
+				{
+					industries.map(({ title, desc, photo, icon }, i) => (
+						<li class="reveal" style={`--d: ${0.1 + i * 0.08}s`}>
+							<a href="/contact" class:list={['ind-card', !photo && 'ind-card--no-photo']}>
+								{photo && (
+									<Image
+										class="ind-card__photo"
+										src={photo}
+										alt=""
+										width={960}
+										widths={[480, 960]}
+										sizes="(max-width: 768px) 92vw, (max-width: 1024px) 46vw, 420px"
+									/>
+								)}
+								<span class="ind-card__num mesh-text" aria-hidden="true">
+									{String(i + 1).padStart(2, '0')}
+								</span>
+								<span class="ind-card__content">
+									<span class="ind-card__icon">
+										<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icon} />
+									</span>
+									<h3 class="ind-card__title">{title}</h3>
+									<p class="ind-card__desc">{desc}</p>
+								</span>
+								<span class="ind-card__arrow" aria-hidden="true">
+									<svg viewBox="0 0 24 24" set:html={arrow} />
+								</span>
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+	</section>
 </Layout>
