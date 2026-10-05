@@ -1,0 +1,498 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import teamPhoto from '../assets/contact/careers.jpg';
+import '../styles/pages/built-by-sharktech.css';
+
+/* Swap in a real headshot when there is one — an empty string renders the
+   initials instead of requesting a file that isn't there. */
+const leaderPhoto = '';
+
+/* ----- Orbit diagram -----
+   Positions are percentages of the square orbit, and double as the SVG
+   end points because the viewBox is 0 0 100 100. */
+
+const satellites = [
+	{ name: 'AccrualOS', sector: 'Accounting', x: 85.2, y: 38.6 },
+	{ name: 'Flagman', sector: 'Industrial', x: 71.7, y: 79.9 },
+	{ name: 'Motivo360', sector: 'Wellness', x: 28.3, y: 79.9 },
+	{ name: 'eTakeaway Max', sector: 'Hospitality', x: 14.8, y: 38.6 },
+];
+
+/* ----- Marquee -----
+   Rendered twice back to back, so the -50% loop lands seamlessly. */
+
+const marquee = [
+	{ label: 'CRM & Pipeline', ai: false },
+	{ label: 'Unified Inbox', ai: false },
+	{ label: 'Automatic Bookings', ai: false },
+	{ label: 'Reputation Management', ai: false },
+	{ label: 'Recall Campaigns', ai: false },
+	{ label: 'Landing Pages', ai: false },
+	{ label: 'AI Chatbot', ai: true },
+	{ label: 'AI Voice Assistant', ai: true },
+	{ label: 'Built By Sharktech Global', ai: false },
+];
+
+/* ----- What it means for you ----- */
+
+const points = [
+	{
+		title: 'Enterprise Engineering',
+		desc: "VCPility's architecture, AI agents and integrations are built by Sharktech's in-house technology team, led by its CTO. You're not on a reseller's white-label.",
+	},
+	{
+		title: 'Shared AI Infrastructure',
+		desc: 'Improvements made across the Sharktech portfolio, from voice AI to automation, flow into VCPility. Every product in the group makes the others stronger.',
+	},
+	{
+		title: 'Australian Base',
+		desc: 'Headquartered in Sydney with an office in Melbourne. Support runs on AEST business hours and your data stays under an Australian company.',
+	},
+	{
+		title: 'Long-Term Backing',
+		desc: 'Sharktech Global is seed funded and in its scale year. VCPility has a roadmap and a team funded to deliver it.',
+	},
+];
+
+const stats = [
+	{ value: 50, suffix: '+', label: "Clients scaled with Sharktech's AI-first platforms" },
+	{ value: 5, suffix: '', label: 'AI platforms in production or active development' },
+	{ value: 4, suffix: '', label: 'Industry verticals served across the portfolio' },
+];
+
+/* ----- Portfolio ----- */
+
+const vcpModules = [
+	{ label: 'CRM & pipeline', ai: false },
+	{ label: 'Unified inbox', ai: false },
+	{ label: 'Bookings', ai: false },
+	{ label: 'Reviews', ai: false },
+	{ label: 'Campaigns', ai: false },
+	{ label: 'Landing pages', ai: false },
+	{ label: 'AI chatbot', ai: true },
+	{ label: 'AI voice assistant', ai: true },
+];
+
+const siblings = [
+	{
+		name: 'AccrualOS',
+		sector: 'Accounting',
+		desc: 'Unifies accounting tools into one AI-powered ecosystem for practices.',
+		icon: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/>',
+	},
+	{
+		name: 'Flagman',
+		sector: 'Industrial',
+		desc: 'Turns industrial signals into safety, process and quality intelligence.',
+		icon: '<path d="M5 21V4M5 4h11l-2 4 2 4H5"/>',
+	},
+	{
+		name: 'Motivo360',
+		sector: 'Wellness',
+		desc: 'Daily routines that adapt to you and build lasting consistency.',
+		icon: '<path d="M20 12a8 8 0 1 1-2.3-5.6"/><path d="M20 4v4h-4"/>',
+	},
+	{
+		name: 'eTakeaway Max',
+		sector: 'Hospitality',
+		desc: 'Online ordering platform for food businesses.',
+		icon: '<path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/>',
+	},
+];
+
+/* ----- Journey ----- */
+
+const timeline = [
+	{
+		when: '2024 Q1',
+		title: 'Sharktech Global Founded',
+		desc: 'Incorporated in Sydney, NSW with a vision for a multi-product AI platform group.',
+		milestone: false,
+	},
+	{
+		when: '2024 Q2',
+		title: 'VCPility MVP Begins',
+		desc: 'The architecture for an AI-powered growth and marketing platform is defined.',
+		milestone: true,
+	},
+	{
+		when: '2024 Q3',
+		title: 'Portfolio Expansion',
+		desc: 'eTakeaway Max and Flagman enter development and the multi-product strategy is formalised.',
+		milestone: false,
+	},
+	{
+		when: '2025 Q1',
+		title: 'First Clients',
+		desc: 'Initial clients onboarded on VCPility, with live revenue from day one.',
+		milestone: true,
+	},
+	{
+		when: '2025 Q3',
+		title: 'AI Agents Go Live',
+		desc: 'AI agent capabilities deployed across VCPility and automation goes live for clients.',
+		milestone: true,
+	},
+	{
+		when: '2026',
+		title: 'Scale Year',
+		desc: 'Five products live or in active build. Seed funded and going global.',
+		milestone: false,
+	},
+];
+
+/* ----- FAQ ----- */
+
+const faqs = [
+	{
+		q: 'Is VCPility owned by Sharktech Global?',
+		a: 'Yes. VCPility is one of five AI platforms built and operated by Sharktech Global, an Australian AI platform group headquartered in Sydney.',
+	},
+	{
+		q: 'Who do I contact for support?',
+		a: "The VCPility team handles onboarding and day-to-day support, backed by Sharktech's engineering team for anything technical. Support runs Monday to Friday, 9 AM to 6 PM AEST.",
+	},
+	{
+		q: 'Does being part of a group change my pricing or contract?',
+		a: 'No. You sign up for and pay for VCPility directly. Sharktech provides the technology and backing behind it.',
+	},
+	{
+		q: 'Can VCPility work with other Sharktech products?',
+		a: 'Yes. Products in the portfolio share AI infrastructure, so businesses that use more than one, like accounting practices on AccrualOS, get a connected setup.',
+	},
+];
+
+const offices = [
+	{ label: 'Sydney (Headquarters)', detail: 'Level 1, 244 Macquarie St, Liverpool NSW 2170' },
+	{ label: 'Melbourne', detail: 'Suite 383, 11 Wilson St, South Yarra VIC 3141' },
+	{ label: 'Hours', detail: 'Mon–Fri, 9 AM – 6 PM AEST' },
+];
+---
+
+<Layout
+	title="Built by Sharktech Global | VCPility"
+	description="VCPility is the growth platform inside Sharktech Global, a Sydney-based AI platform group. The same team engineers, hosts and supports your CRM, inbox, bookings and AI agents."
+	keywords="Sharktech Global, VCPility parent company, Australian AI platform group, Sydney AI company"
+>
+	<div class="vst">
+		<!-- ===== Hero ===== -->
+		<section class="vst-hero">
+			<div class="vst-wrap vst-hero-grid">
+				<div class="reveal">
+					<p class="vst-tag">Our parent company</p>
+					<h1 class="vst-h">VCPility Is Built By <span class="vst-u">Sharktech Global</span></h1>
+					<p class="vst-lead">
+						VCPility is the growth platform inside Sharktech Global, a Sydney-based AI platform group. That means
+						the CRM, inbox, bookings and AI agents you use are engineered, hosted and supported by the same team
+						building five AI products across four industries.
+					</p>
+
+					<div class="vst-btns">
+						<a
+							class="vst-btn vst-btn--dark"
+							href="https://sharktech.com.au/vcpility"
+							target="_blank"
+							rel="noopener"
+						>
+							See VCPility on Sharktech <span aria-hidden="true">↗</span>
+						</a>
+						<a class="vst-btn" href="#vst-faq">
+							How the relationship works <span aria-hidden="true">↓</span>
+						</a>
+					</div>
+
+					<div class="vst-leader">
+						<div class="vst-leader-ava">
+							{
+								leaderPhoto ? (
+									<img src={leaderPhoto} alt="Dainu Devis" width="52" height="52" loading="lazy" />
+								) : (
+									<span aria-hidden="true">DD</span>
+								)
+							}
+						</div>
+						<p>
+							<b>Led by Dainu Devis,</b> CEO of Sharktech Global. VCPility is built and run by the same leadership
+							team behind every platform in the group.
+						</p>
+					</div>
+				</div>
+
+				<div
+					class="vst-tree reveal"
+					style="--d: 0.15s"
+					role="img"
+					aria-label="Sharktech Global at the centre, connected to its five AI platforms: VCPility, AccrualOS, Flagman, Motivo360 and eTakeaway Max. VCPility is highlighted."
+					data-pause-offscreen
+				>
+					<div class="vst-orbit">
+						<svg viewBox="0 0 100 100" aria-hidden="true">
+							<defs>
+								<linearGradient id="vstBeam" gradientUnits="userSpaceOnUse" x1="50" y1="33" x2="50" y2="13">
+									<stop offset="0" class="vst-beam-from"></stop>
+									<stop offset="1" class="vst-beam-to"></stop>
+								</linearGradient>
+							</defs>
+
+							<circle class="vst-ring" cx="50" cy="50" r="37"></circle>
+							<circle class="vst-ring vst-ring--dash" cx="50" cy="50" r="27"></circle>
+							<circle class="vst-ring vst-ring--dash" cx="50" cy="50" r="46"></circle>
+
+							{satellites.map(({ x, y }) => <line class="vst-wire" x1="50" y1="50" x2={x} y2={y} />)}
+
+							<line class="vst-wire vst-wire--on" x1="50" y1="33" x2="50" y2="13"></line>
+							<circle class="vst-pulse" cx="50" cy="33" r="1.1"></circle>
+						</svg>
+
+						<div class="vst-core">
+							<i aria-hidden="true"></i>
+							<b>Sharktech<br />Global</b>
+							<small>AI platform group<br />Sydney, NSW</small>
+						</div>
+
+						<div class="vst-node vst-node--on" style="left: 50%; top: 13%">
+							VCPility<small>You're here</small>
+						</div>
+
+						{
+							satellites.map(({ name, sector, x, y }) => (
+								<div class="vst-node" style={`left: ${x}%; top: ${y}%`}>
+									{name}
+									<small>{sector}</small>
+								</div>
+							))
+						}
+					</div>
+					<p class="vst-tree-note">First platform in the group live with paying clients</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- ===== Marquee ===== -->
+		<div class="vst-marquee" aria-hidden="true" data-pause-offscreen>
+			<div class="vst-mq-track">
+				{
+					[...marquee, ...marquee].map(({ label, ai }) => (
+						<span class={ai ? 'vst-mq-ai' : undefined}>{label}</span>
+					))
+				}
+			</div>
+		</div>
+
+		<!-- ===== What it means for you ===== -->
+		<section class="vst-sec">
+			<div class="vst-wrap vst-split">
+				<div class="vst-split-l reveal">
+					<p class="vst-tag">What it means for you</p>
+					<h2 class="vst-h vst-h--sm">A Product Team Behind Your <span class="vst-u">Growth Engine</span></h2>
+					<figure class="vst-split-img">
+						<Image
+							src={teamPhoto}
+							alt="The Sharktech Global team building VCPility"
+							width={960}
+							widths={[480, 960]}
+							sizes="(max-width: 960px) 92vw, 520px"
+						/>
+						<figcaption>Engineered by Sharktech Global, Sydney</figcaption>
+					</figure>
+				</div>
+
+				<div class="vst-points">
+					{
+						points.map(({ title, desc }, i) => (
+							<div class="vst-point reveal" style={`--d: ${i * 0.08}s`}>
+								<h3>
+									<em>{String(i + 1).padStart(2, '0')}</em>
+									{title}
+								</h3>
+								<p>{desc}</p>
+							</div>
+						))
+					}
+				</div>
+			</div>
+		</section>
+
+		<!-- ===== Stats ===== -->
+		<div class="vst-wrap">
+			<dl class="vst-stats">
+				{
+					stats.map(({ value, suffix, label }, i) => (
+						<div class="reveal" style={`--d: ${i * 0.1}s`}>
+							<dd data-count={value} data-suffix={suffix} data-count-delay={i * 150}>
+								{value}
+								{suffix}
+							</dd>
+							<dt>{label}</dt>
+						</div>
+					))
+				}
+			</dl>
+		</div>
+
+		<!-- ===== Portfolio ===== -->
+		<section class="vst-sec">
+			<div class="vst-wrap">
+				<div class="vst-port-head reveal">
+					<div>
+						<p class="vst-tag">The Sharktech portfolio</p>
+						<h2 class="vst-h vst-h--sm">Where <span class="vst-u">VCPility</span> Fits</h2>
+					</div>
+					<p>
+						Five AI platforms, one engineering team. VCPility handles growth; its siblings cover accounting,
+						industry, wellness and hospitality.
+					</p>
+				</div>
+
+				<div class="vst-port">
+					<article class="vst-feat reveal">
+						<div class="vst-feat-top">
+							<span class="vst-here">You're here</span>
+							<span class="vst-live">Live with clients since 2025</span>
+						</div>
+						<h3>VCPility</h3>
+						<p>The growth engine of the group. Every enquiry answered, booked and followed up from one platform.</p>
+						<div class="vst-mods">
+							{vcpModules.map(({ label, ai }) => <span class={ai ? 'is-ai' : undefined}>{label}</span>)}
+						</div>
+						<div class="vst-feat-foot">
+							<span>Growth &amp; marketing</span>
+							<span>Flagship platform</span>
+						</div>
+					</article>
+
+					{
+						siblings.map(({ name, sector, desc, icon }, i) => (
+							<article class="vst-sib reveal" style={`--d: ${(i + 1) * 0.08}s`}>
+								<div class="vst-sib-top">
+									<span class="vst-ico">
+										<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icon} />
+									</span>
+									<small>{sector}</small>
+								</div>
+								<h3>{name}</h3>
+								<p>{desc}</p>
+							</article>
+						))
+					}
+				</div>
+			</div>
+		</section>
+
+		<!-- ===== Journey ===== -->
+		<section class="vst-sec vst-dark">
+			<div class="vst-wrap">
+				<p class="vst-tag">Our journey together</p>
+				<h2 class="vst-h vst-h--sm">From One Idea To A <span class="vst-u">Platform Group</span></h2>
+				<ol class="vst-tl">
+					{
+						timeline.map(({ when, title, desc, milestone }, i) => (
+							<li class:list={['reveal', { 'vst-tl-on': milestone }]} style={`--d: ${i * 0.06}s`}>
+								<time>{when}</time>
+								<div>
+									<h3>{title}</h3>
+									<p>{desc}</p>
+								</div>
+							</li>
+						))
+					}
+				</ol>
+			</div>
+		</section>
+
+		<!-- ===== FAQ ===== -->
+		<section class="vst-sec" id="vst-faq">
+			<div class="vst-wrap" style="text-align: center">
+				<p class="vst-tag">FAQ</p>
+				<h2 class="vst-h vst-h--sm vst-h--center">About VCPility And Sharktech</h2>
+			</div>
+			<div class="vst-wrap">
+				<div class="vst-faq reveal">
+					{
+						faqs.map(({ q, a }, i) => (
+							<details open={i === 0}>
+								<summary>{q}</summary>
+								<p>{a}</p>
+							</details>
+						))
+					}
+				</div>
+			</div>
+		</section>
+
+		<!-- ===== CTA + offices ===== -->
+		<section class="vst-sec" style="padding-top: 0">
+			<div class="vst-wrap">
+				<div class="vst-cta reveal">
+					<div>
+						<p class="vst-tag">Connect with us</p>
+						<h2 class="vst-h vst-h--sm">Grow With VCPility, <span class="vst-u">Backed By Sharktech</span></h2>
+						<p class="vst-lead">
+							One platform to manage leads, bookings, reviews and campaigns, so every enquiry gets an instant
+							response.
+						</p>
+					</div>
+					<div class="vst-cta-links">
+						<a class="vst-btn" href="https://sharktech.com.au" target="_blank" rel="noopener">
+							Visit Sharktech Global <span aria-hidden="true">↗</span>
+						</a>
+						<a class="vst-btn vst-btn--dark" href="/contact">
+							Book a VCPility demo <span aria-hidden="true">→</span>
+						</a>
+					</div>
+				</div>
+
+				<div class="vst-addr reveal">
+					{
+						offices.map(({ label, detail }) => (
+							<div>
+								<b>{label}</b>
+								{detail}
+							</div>
+						))
+					}
+				</div>
+			</div>
+		</section>
+	</div>
+</Layout>
+
+<script>
+	/* Scroll reveal and the stat count-up are handled globally in Layout.astro.
+	   What's left is this page's two scroll/pointer-driven flourishes. */
+	const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+	/* Timeline: fill the rail down to the reading line and light the nodes behind it */
+	const timeline = document.querySelector<HTMLElement>('.vst-tl');
+
+	if (timeline) {
+		const rows = [...timeline.querySelectorAll('li')];
+
+		const drawRail = () => {
+			const box = timeline.getBoundingClientRect();
+			const readingLine = innerHeight * 0.6;
+			const progress = Math.min(Math.max((readingLine - box.top) / box.height, 0), 1);
+
+			timeline.style.setProperty('--p', `${progress * 100}%`);
+			for (const row of rows) {
+				row.classList.toggle('is-past', row.getBoundingClientRect().top + 30 < readingLine);
+			}
+		};
+
+		addEventListener('scroll', drawRail, { passive: true });
+		addEventListener('resize', drawRail);
+		drawRail();
+	}
+
+	/* Cursor spotlight on the VCPility tile */
+	const feature = document.querySelector<HTMLElement>('.vst-feat');
+
+	if (feature && !reduceMotion) {
+		feature.addEventListener('pointermove', (e) => {
+			const box = feature.getBoundingClientRect();
+			feature.style.setProperty('--mx', `${e.clientX - box.left}px`);
+			feature.style.setProperty('--my', `${e.clientY - box.top}px`);
+		});
+	}
+</script>

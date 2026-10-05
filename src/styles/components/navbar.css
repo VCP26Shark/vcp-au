@@ -314,6 +314,24 @@ html.nav-locked {
 
 /* ----- Responsive ----- */
 
+/* Tighten the menu before it hands over to the hamburger, so the longest
+   label still fits on one row */
+@media (max-width: 1200px) {
+	.nav__right {
+		gap: 16px;
+	}
+
+	.nav__link {
+		padding: 10px 12px;
+		font-size: 14px;
+	}
+
+	.nav__link::after {
+		right: 12px;
+		left: 12px;
+	}
+}
+
 @media (max-width: 1024px) {
 	.nav__right {
 		display: none;

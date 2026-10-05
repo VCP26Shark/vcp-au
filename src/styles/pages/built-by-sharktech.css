@@ -1,0 +1,1384 @@
+/* ============================================
+   Built by Sharktech Global page
+   Everything is scoped under .vst so the page's dark panels and gradient
+   treatments can't leak into the shared components.
+   ============================================ */
+
+.vst {
+	/* Neutrals stay explicit: this page's palette is flat grey, not the slate
+	   greys of --color-gray-*. Ink, accent and surface come from the globals. */
+	--vst-ink: var(--color-ink);
+	--vst-ink-2: #3a3a3a;
+	--vst-line: #e3e3e3;
+	--vst-paper: var(--color-white);
+	--vst-wash: var(--color-surface);
+	--vst-night: #1c1c1c;
+	--vst-acc: var(--color-accent);
+	--vst-acc-deep: var(--color-accent-deep);
+	--vst-acc-tint: #ff8fb3;
+	/* Channel lists, so the accents can be mixed at any opacity */
+	--vst-acc-rgb: 224 3 72;
+	--vst-acc-deep-rgb: 57 4 78;
+	--vst-grad: var(--gradient-accent);
+	/* Dot grid shared by every dark panel */
+	--vst-dots: radial-gradient(#2a2a2a 1px, transparent 1px) 0 0 / 18px 18px;
+
+	font-family: var(--font-sans);
+	line-height: 1.55;
+	color: var(--vst-ink);
+	background: var(--vst-paper);
+}
+
+.vst a:focus-visible,
+.vst summary:focus-visible {
+	border-radius: 6px;
+	outline: 2px solid var(--vst-acc);
+	outline-offset: 3px;
+}
+
+.vst-wrap {
+	max-width: 1280px;
+	margin: 0 auto;
+	padding: 0 var(--gutter);
+}
+
+.vst-sec {
+	padding: 96px 0;
+}
+
+/* ----- Eyebrow ----- */
+
+.vst-tag {
+	display: inline-flex;
+	gap: 6px;
+	align-items: center;
+	margin-bottom: 14px;
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: 0.02em;
+	color: var(--vst-ink-2);
+}
+
+.vst-tag::after {
+	content: '↗';
+	font-size: 11px;
+}
+
+/* ----- Headings -----
+   Two-tone fade, so the tail of each headline drops back into grey. */
+
+.vst-h {
+	margin-bottom: -0.06em;
+	padding-bottom: 0.14em;
+	font-size: clamp(34px, 5vw, 60px);
+	font-weight: 700;
+	line-height: 1.12;
+	letter-spacing: -0.045em;
+	color: transparent;
+	background: linear-gradient(90deg, var(--vst-ink) 0 38%, #9a9a9a 62%);
+	-webkit-background-clip: text;
+	background-clip: text;
+}
+
+.vst-h--sm {
+	font-size: clamp(28px, 3.6vw, 44px);
+}
+
+.vst-h--center {
+	background-position: center;
+}
+
+/* Gradient rule under a key phrase */
+.vst-u {
+	padding-bottom: 0.1em;
+	background: var(--vst-grad) left bottom / 100% 0.07em no-repeat;
+	-webkit-box-decoration-break: clone;
+	box-decoration-break: clone;
+}
+
+.vst-lead {
+	max-width: 60ch;
+	margin-top: 18px;
+	font-size: 17px;
+	color: var(--vst-ink-2);
+}
+
+/* ----- Buttons ----- */
+
+.vst-btns {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-top: 30px;
+}
+
+.vst-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 12px;
+	padding: 12px 14px 12px 20px;
+	font-size: 14px;
+	font-weight: 600;
+	border: 1px solid var(--vst-line);
+	border-radius: 999px;
+	background: var(--vst-paper);
+	transition:
+		transform 0.25s var(--ease-out),
+		box-shadow 0.25s ease,
+		border-color 0.25s ease;
+}
+
+.vst-btn span {
+	display: grid;
+	place-items: center;
+	width: 28px;
+	height: 28px;
+	font-size: 13px;
+	color: var(--color-white);
+	border-radius: 50%;
+	background: var(--vst-ink);
+	transition: transform 0.25s var(--ease-out);
+}
+
+.vst-btn:hover {
+	border-color: var(--vst-ink);
+	box-shadow: 0 10px 24px -10px rgb(0 0 0 / 0.35);
+	transform: translateY(-2px);
+}
+
+.vst-btn:hover span {
+	transform: translateX(3px);
+}
+
+.vst-btn--dark {
+	color: var(--color-white);
+	border-color: var(--vst-ink);
+	background: var(--vst-ink);
+}
+
+.vst-btn--dark span {
+	background: var(--vst-grad);
+}
+
+/* ============================================
+   Hero
+   ============================================ */
+
+.vst-hero {
+	position: relative;
+	overflow: hidden;
+	padding: 140px 0 88px;
+	/* Aurora wash in the two opposite corners */
+	background:
+		radial-gradient(640px 420px at 12% 0%, rgb(var(--vst-acc-rgb) / 0.1), transparent 70%),
+		radial-gradient(560px 420px at 95% 100%, rgb(var(--vst-acc-deep-rgb) / 0.1), transparent 70%),
+		var(--vst-wash);
+}
+
+/* Grid that dissolves away from the headline */
+.vst-hero::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	background-image:
+		linear-gradient(rgb(0 0 0 / 0.05) 1px, transparent 1px),
+		linear-gradient(90deg, rgb(0 0 0 / 0.05) 1px, transparent 1px);
+	background-size: 64px 64px;
+	-webkit-mask: radial-gradient(ellipse at 30% 40%, #000 10%, transparent 70%);
+	mask: radial-gradient(ellipse at 30% 40%, #000 10%, transparent 70%);
+}
+
+.vst-hero > .vst-wrap {
+	position: relative;
+	z-index: 1;
+}
+
+.vst-hero-grid {
+	display: grid;
+	grid-template-columns: 1.1fr 0.9fr;
+	gap: 56px;
+	align-items: center;
+}
+
+/* The hero eyebrow is a live-status pill rather than a plain label */
+.vst-hero .vst-tag {
+	padding: 6px 14px 6px 10px;
+	border: 1px solid var(--vst-line);
+	border-radius: 999px;
+	background: rgb(255 255 255 / 0.8);
+	backdrop-filter: blur(6px);
+}
+
+.vst-hero .vst-tag::before {
+	content: '';
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: var(--vst-acc);
+	box-shadow: 0 0 0 0 rgb(var(--vst-acc-rgb) / 0.5);
+	animation: vst-ping 2s infinite;
+}
+
+@keyframes vst-ping {
+	70% {
+		box-shadow: 0 0 0 7px rgb(var(--vst-acc-rgb) / 0);
+	}
+
+	100% {
+		box-shadow: 0 0 0 0 rgb(var(--vst-acc-rgb) / 0);
+	}
+}
+
+/* ----- Orbital hub diagram ----- */
+
+.vst-tree {
+	position: relative;
+	padding: 20px;
+	overflow: hidden;
+	color: var(--color-white);
+	border-radius: 32px;
+	background:
+		radial-gradient(circle at 50% 50%, rgb(var(--vst-acc-rgb) / 0.22), transparent 55%),
+		var(--vst-dots),
+		#141414;
+}
+
+.vst-orbit {
+	position: relative;
+	width: 100%;
+	max-width: 480px;
+	margin: 0 auto;
+	aspect-ratio: 1;
+}
+
+.vst-orbit svg {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+}
+
+.vst-ring {
+	fill: none;
+	stroke: #2f2f2f;
+	stroke-width: 1;
+	vector-effect: non-scaling-stroke;
+}
+
+.vst-ring--dash {
+	stroke: #3a3a3a;
+	stroke-dasharray: 2 6;
+}
+
+.vst-wire {
+	stroke: #555;
+	stroke-width: 1;
+	stroke-dasharray: 3 5;
+	vector-effect: non-scaling-stroke;
+}
+
+/* The one live wire: core to VCPility */
+.vst-wire--on {
+	stroke: url(#vstBeam);
+	stroke-width: 2;
+	stroke-dasharray: none;
+}
+
+.vst-beam-from {
+	stop-color: var(--vst-acc);
+	stop-opacity: 0.35;
+}
+
+.vst-beam-to {
+	stop-color: var(--vst-acc-tint);
+}
+
+.vst-pulse {
+	fill: var(--vst-acc-tint);
+	filter: drop-shadow(0 0 3px var(--vst-acc));
+	animation: vst-pulse 2.4s cubic-bezier(0.5, 0, 0.3, 1) infinite;
+}
+
+@keyframes vst-pulse {
+	0% {
+		opacity: 0;
+		transform: translateY(0);
+	}
+
+	15%,
+	85% {
+		opacity: 1;
+	}
+
+	100% {
+		opacity: 0;
+		transform: translateY(-17px);
+	}
+}
+
+/* Core: the same black engine box as the VCPility hero */
+.vst-core {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	display: grid;
+	place-content: center;
+	gap: 6px;
+	width: 34%;
+	padding: 8px;
+	aspect-ratio: 1;
+	text-align: center;
+	border: 1px solid #3a3a3a;
+	border-radius: 24%;
+	background: linear-gradient(145deg, #2a2a2a, #0d0d0d);
+	box-shadow:
+		0 0 0 8px rgb(var(--vst-acc-rgb) / 0.06),
+		0 20px 40px rgb(0 0 0 / 0.6),
+		inset 0 1px 0 rgb(255 255 255 / 0.08);
+	transform: translate(-50%, -50%);
+}
+
+.vst-core i {
+	width: 34px;
+	height: 34px;
+	margin: 0 auto 4px;
+	border: 2px solid var(--vst-acc);
+	border-radius: 50%;
+	box-shadow:
+		0 0 18px rgb(var(--vst-acc-rgb) / 0.8),
+		inset 0 0 10px rgb(var(--vst-acc-rgb) / 0.6);
+}
+
+.vst-core b {
+	font-size: clamp(12px, 2.4vw, 15px);
+	line-height: 1.15;
+	letter-spacing: -0.02em;
+}
+
+.vst-core small {
+	font-size: clamp(9px, 1.6vw, 11px);
+	line-height: 1.3;
+	color: #9a9a9a;
+}
+
+.vst-core::after {
+	content: '';
+	position: absolute;
+	right: 32%;
+	bottom: 6%;
+	left: 32%;
+	height: 2px;
+	border-radius: 2px;
+	background: var(--vst-acc);
+	box-shadow: 0 0 10px var(--vst-acc);
+}
+
+/* ----- Satellites ----- */
+
+.vst-node {
+	position: absolute;
+	padding: 8px 12px;
+	font-size: 12px;
+	font-weight: 600;
+	white-space: nowrap;
+	text-align: center;
+	color: #d0d0d0;
+	border: 1px solid #333;
+	border-radius: 12px;
+	background: rgb(30 30 30 / 0.92);
+	backdrop-filter: blur(4px);
+	transform: translate(-50%, -50%);
+}
+
+.vst-node small {
+	display: block;
+	margin-top: 1px;
+	font-size: 10px;
+	font-weight: 500;
+	color: #7d7d7d;
+}
+
+.vst-node--on {
+	padding: 12px 18px;
+	font-size: 15px;
+	color: var(--color-white);
+	border-color: var(--vst-acc-tint);
+	border-radius: 14px;
+	background: linear-gradient(180deg, var(--vst-acc), var(--vst-acc-deep));
+	box-shadow:
+		0 0 0 6px rgb(var(--vst-acc-rgb) / 0.15),
+		0 0 40px rgb(var(--vst-acc-rgb) / 0.55);
+}
+
+.vst-node--on small {
+	color: #ffd1df;
+}
+
+.vst-tree-note {
+	position: relative;
+	max-width: 36ch;
+	margin: 6px auto 4px;
+	font-size: 13px;
+	text-align: center;
+	text-wrap: balance;
+	color: #a8a8a8;
+}
+
+.vst-tree-note::before {
+	content: '';
+	display: inline-block;
+	width: 6px;
+	height: 6px;
+	margin: 0 8px 2px 0;
+	vertical-align: middle;
+	border-radius: 50%;
+	background: var(--color-green);
+	box-shadow: 0 0 8px var(--color-green);
+}
+
+/* ----- Leadership strip ----- */
+
+.vst-leader {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	max-width: 520px;
+	margin-top: 32px;
+	padding-top: 24px;
+	border-top: 1px solid var(--vst-line);
+}
+
+.vst-leader-ava {
+	position: relative;
+	flex: none;
+	width: 52px;
+	height: 52px;
+	padding: 2px;
+	border-radius: 50%;
+	background: var(--vst-grad);
+}
+
+.vst-leader-ava img,
+.vst-leader-ava span {
+	display: grid;
+	place-items: center;
+	width: 100%;
+	height: 100%;
+	font-size: 16px;
+	font-weight: 700;
+	color: var(--color-white);
+	border: 2px solid var(--vst-wash);
+	border-radius: 50%;
+	background: var(--vst-night);
+	object-fit: cover;
+}
+
+.vst-leader p {
+	font-size: 14px;
+	line-height: 1.45;
+	color: var(--vst-ink-2);
+}
+
+.vst-leader b {
+	color: var(--vst-ink);
+}
+
+/* ============================================
+   Marquee
+   ============================================ */
+
+.vst-marquee {
+	overflow: hidden;
+	padding: 22px 0;
+	border-block: 1px solid var(--vst-line);
+	background: var(--vst-paper);
+	-webkit-mask: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+	mask: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+
+/* The track holds the list twice over, so -50% lands on a seamless loop */
+.vst-mq-track {
+	display: flex;
+	width: max-content;
+	animation: vst-marquee 40s linear infinite;
+}
+
+.vst-marquee:hover .vst-mq-track {
+	animation-play-state: paused;
+}
+
+.vst-mq-track span {
+	display: inline-flex;
+	align-items: center;
+	gap: 28px;
+	padding-right: 28px;
+	font-size: clamp(18px, 2vw, 24px);
+	font-weight: 600;
+	letter-spacing: -0.02em;
+	white-space: nowrap;
+	color: var(--vst-ink);
+}
+
+.vst-mq-track span::after {
+	content: '✦';
+	font-size: 0.7em;
+	color: transparent;
+	background: var(--vst-grad);
+	-webkit-background-clip: text;
+	background-clip: text;
+}
+
+.vst-mq-ai {
+	color: var(--vst-acc);
+}
+
+@keyframes vst-marquee {
+	to {
+		transform: translateX(-50%);
+	}
+}
+
+/* ============================================
+   What it means for you
+   ============================================ */
+
+.vst-split {
+	display: grid;
+	/* minmax(0,…) stops the long point rows from pushing the columns out of
+	   proportion, so the two halves keep the same split at every width */
+	grid-template-columns: minmax(0, 1fr) minmax(0, 1.06fr);
+	gap: 64px;
+	align-items: start;
+}
+
+.vst-split-l {
+	position: sticky;
+	top: 110px;
+	align-self: start;
+}
+
+.vst-split-img {
+	position: relative;
+	margin-top: 32px;
+	overflow: hidden;
+	aspect-ratio: 16 / 11;
+	border-radius: 24px;
+	background:
+		radial-gradient(circle at 70% 30%, rgb(var(--vst-acc-rgb) / 0.35), transparent 55%),
+		var(--vst-dots),
+		#141414;
+}
+
+/* Gradient hairline, drawn as a masked ring so it follows the radius */
+.vst-split-img::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	z-index: 2;
+	padding: 1.5px;
+	pointer-events: none;
+	border-radius: inherit;
+	background: var(--vst-grad);
+	-webkit-mask:
+		linear-gradient(#000 0 0) content-box,
+		linear-gradient(#000 0 0);
+	-webkit-mask-composite: xor;
+	mask-composite: exclude;
+}
+
+.vst-split-img img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/* Scrim so the caption stays readable over a bright photo */
+.vst-split-img::after {
+	content: '';
+	position: absolute;
+	inset: 50% 0 0;
+	pointer-events: none;
+	background: linear-gradient(transparent, rgb(0 0 0 / 0.55));
+}
+
+.vst-split-img figcaption {
+	position: absolute;
+	bottom: 16px;
+	left: 16px;
+	z-index: 1;
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	padding: 8px 14px;
+	font-size: 12px;
+	font-weight: 600;
+	color: var(--color-white);
+	border-radius: 999px;
+	background: rgb(0 0 0 / 0.55);
+	backdrop-filter: blur(8px);
+}
+
+.vst-split-img figcaption::before {
+	content: '';
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: var(--vst-acc);
+	box-shadow: 0 0 8px var(--vst-acc);
+}
+
+.vst-points {
+	border-top: 1px solid var(--vst-line);
+}
+
+.vst-point {
+	position: relative;
+	display: grid;
+	grid-template-columns: minmax(150px, 200px) minmax(0, 1fr);
+	gap: 24px;
+	padding: 30px 0;
+	border-bottom: 1px solid var(--vst-line);
+}
+
+/* The first row sits tight to its rule so the list starts level with the
+   eyebrow in the left column */
+.vst-point:first-child {
+	padding-top: 14px;
+}
+
+/* Accent rule that draws across the row's top border on hover */
+.vst-point::after {
+	content: '';
+	position: absolute;
+	top: -1px;
+	left: 0;
+	width: 0;
+	height: 2px;
+	background: var(--vst-grad);
+	transition: width 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.vst-point:hover::after {
+	width: 100%;
+}
+
+.vst-point h3 {
+	font-size: 18px;
+	letter-spacing: -0.02em;
+	transition: transform 0.35s var(--ease-out);
+}
+
+.vst-point:hover h3 {
+	transform: translateX(6px);
+}
+
+.vst-point h3 em {
+	display: block;
+	margin-bottom: 6px;
+	font-size: 12px;
+	font-style: normal;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	color: var(--vst-acc);
+}
+
+.vst-point p {
+	font-size: 14px;
+	color: var(--vst-ink-2);
+}
+
+/* ============================================
+   Stats
+   ============================================ */
+
+.vst-stats {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 14px;
+}
+
+.vst-stats > div {
+	position: relative;
+	overflow: hidden;
+	padding: 36px 30px;
+	border-radius: 24px;
+	background: var(--vst-wash);
+}
+
+/* Accent bloom in the corner of each card */
+.vst-stats > div::after {
+	content: '';
+	position: absolute;
+	top: -60px;
+	right: -60px;
+	width: 180px;
+	height: 180px;
+	border-radius: 50%;
+	background: radial-gradient(rgb(var(--vst-acc-rgb) / 0.1), transparent 70%);
+}
+
+.vst-stats dd {
+	margin: 0;
+	padding-bottom: 0.08em;
+	font-size: clamp(56px, 7vw, 92px);
+	font-weight: 600;
+	line-height: 1;
+	letter-spacing: -0.05em;
+	font-variant-numeric: tabular-nums;
+	color: transparent;
+	background: var(--vst-grad);
+	-webkit-background-clip: text;
+	background-clip: text;
+}
+
+.vst-stats dt {
+	position: relative;
+	margin-top: 12px;
+	font-size: 15px;
+	color: var(--vst-ink-2);
+}
+
+/* ============================================
+   Portfolio
+   ============================================ */
+
+.vst-port-head {
+	display: flex;
+	justify-content: space-between;
+	align-items: end;
+	flex-wrap: wrap;
+	gap: 24px;
+}
+
+.vst-port-head > p {
+	max-width: 42ch;
+	font-size: 15px;
+	color: var(--vst-ink-2);
+}
+
+.vst-port {
+	display: grid;
+	grid-template-columns: 1.25fr 1fr 1fr;
+	grid-template-rows: auto auto;
+	gap: 14px;
+	margin-top: 40px;
+}
+
+/* ----- Feature tile: VCPility ----- */
+
+.vst-feat {
+	position: relative;
+	grid-row: span 2;
+	display: flex;
+	flex-direction: column;
+	gap: 22px;
+	min-height: 440px;
+	padding: 32px;
+	overflow: hidden;
+	color: var(--color-white);
+	border-radius: 28px;
+	/* --mx/--my track the pointer (set in the page script); the defaults put
+	   the glow in the top-right corner before anyone hovers */
+	background:
+		radial-gradient(420px circle at var(--mx, 90%) var(--my, 0%), rgb(var(--vst-acc-rgb) / 0.38), transparent 60%),
+		var(--vst-dots),
+		#111;
+}
+
+.vst-feat::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	padding: 1.5px;
+	pointer-events: none;
+	border-radius: inherit;
+	background: var(--vst-grad);
+	-webkit-mask:
+		linear-gradient(#000 0 0) content-box,
+		linear-gradient(#000 0 0);
+	-webkit-mask-composite: xor;
+	mask-composite: exclude;
+}
+
+.vst-feat-top {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 12px;
+}
+
+.vst-here {
+	padding: 6px 12px;
+	font-size: 11px;
+	font-weight: 600;
+	border-radius: 999px;
+	background: var(--vst-grad);
+	box-shadow: 0 0 20px rgb(var(--vst-acc-rgb) / 0.5);
+}
+
+.vst-live {
+	display: inline-flex;
+	align-items: center;
+	gap: 7px;
+	font-size: 12px;
+	color: #bdbdbd;
+}
+
+.vst-live::before {
+	content: '';
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: var(--color-green);
+	box-shadow: 0 0 8px var(--color-green);
+}
+
+.vst-feat h3 {
+	font-size: clamp(36px, 4vw, 52px);
+	line-height: 1;
+	letter-spacing: -0.05em;
+}
+
+.vst-feat > p {
+	max-width: 34ch;
+	font-size: 16px;
+	color: #c9c9c9;
+}
+
+.vst-mods {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-top: auto;
+}
+
+.vst-mods span {
+	padding: 7px 12px;
+	font-size: 12px;
+	color: #e5e5e5;
+	border: 1px solid #3a3a3a;
+	border-radius: 999px;
+	background: rgb(255 255 255 / 0.04);
+}
+
+.vst-mods .is-ai {
+	color: #ffd1df;
+	border-color: rgb(var(--vst-acc-rgb) / 0.7);
+	background: rgb(var(--vst-acc-rgb) / 0.14);
+}
+
+.vst-feat-foot {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-top: 20px;
+	font-size: 13px;
+	color: var(--vst-acc-tint);
+	border-top: 1px solid #2c2c2c;
+}
+
+/* ----- Sibling tiles ----- */
+
+.vst-sib {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	padding: 24px;
+	border: 1px solid var(--vst-line);
+	border-radius: 22px;
+	background: var(--vst-paper);
+	transition:
+		transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+		box-shadow 0.35s ease,
+		border-color 0.2s ease;
+}
+
+.vst-sib:hover {
+	border-color: transparent;
+	box-shadow: 0 18px 40px -22px rgb(0 0 0 / 0.35);
+	transform: translateY(-4px);
+	background:
+		linear-gradient(var(--vst-paper), var(--vst-paper)) padding-box,
+		var(--vst-grad) border-box;
+}
+
+.vst-sib-top {
+	display: flex;
+	justify-content: space-between;
+	align-items: start;
+}
+
+.vst-ico {
+	display: grid;
+	place-items: center;
+	width: 44px;
+	height: 44px;
+	border-radius: 12px;
+	background: var(--vst-wash);
+	transition: background 0.3s ease;
+}
+
+.vst-ico svg {
+	width: 22px;
+	height: 22px;
+	fill: none;
+	stroke: var(--vst-ink);
+	stroke-width: 1.6;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	transition: stroke 0.3s ease;
+}
+
+.vst-sib:hover .vst-ico {
+	background: var(--vst-grad);
+}
+
+.vst-sib:hover .vst-ico svg {
+	stroke: var(--color-white);
+}
+
+.vst-sib small {
+	padding: 5px 10px;
+	font-size: 11px;
+	font-weight: 600;
+	color: var(--vst-ink-2);
+	border: 1px solid var(--vst-line);
+	border-radius: 999px;
+}
+
+.vst-sib h3 {
+	margin-top: auto;
+	font-size: 20px;
+	letter-spacing: -0.03em;
+}
+
+.vst-sib p {
+	font-size: 14px;
+	color: var(--vst-ink-2);
+}
+
+/* ============================================
+   Timeline (dark)
+   ============================================ */
+
+.vst-dark {
+	color: var(--color-white);
+	background: var(--vst-night);
+}
+
+.vst-dark .vst-tag {
+	color: #cfcfcf;
+}
+
+.vst-dark .vst-h {
+	background: linear-gradient(90deg, var(--color-white) 0 40%, #7a7a7a 70%);
+	-webkit-background-clip: text;
+	background-clip: text;
+}
+
+.vst-tl {
+	position: relative;
+	margin-top: 48px;
+	padding-left: 44px;
+}
+
+/* The unlit rail */
+.vst-tl::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 8px;
+	width: 2px;
+	border-radius: 2px;
+	background: #333;
+}
+
+/* …and the progress fill over it, driven by --p from the page script */
+.vst-tl::after {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 8px;
+	width: 2px;
+	height: var(--p, 0%);
+	border-radius: 2px;
+	background: var(--vst-grad);
+	box-shadow: 0 0 12px rgb(var(--vst-acc-rgb) / 0.6);
+	transition: height 0.15s linear;
+}
+
+.vst-tl li {
+	position: relative;
+	display: grid;
+	grid-template-columns: 120px 1fr;
+	gap: 24px;
+	padding: 26px 0;
+	border-bottom: 1px solid #2a2a2a;
+}
+
+/* Node on the rail, filled once the row is behind the reading line */
+.vst-tl li::before {
+	content: '';
+	position: absolute;
+	top: 31px;
+	left: -41px;
+	width: 12px;
+	height: 12px;
+	border: 2px solid #555;
+	border-radius: 50%;
+	background: var(--vst-night);
+	transition:
+		background 0.4s ease,
+		border-color 0.4s ease,
+		box-shadow 0.4s ease;
+}
+
+.vst-tl li.is-past::before {
+	border-color: var(--vst-acc);
+	background: var(--vst-acc);
+	box-shadow: 0 0 0 5px rgb(var(--vst-acc-rgb) / 0.2);
+}
+
+.vst-tl li h3,
+.vst-tl li p {
+	transition: opacity 0.4s ease;
+}
+
+/* Rows ahead of the reading line sit back. Only with JS, so the whole
+   timeline stays legible if the script never runs. */
+.js .vst-tl li:not(.is-past) h3,
+.js .vst-tl li:not(.is-past) p {
+	opacity: 0.45;
+}
+
+.vst-tl time {
+	padding-top: 4px;
+	font-size: 12px;
+	font-weight: 600;
+	color: #a8a8a8;
+}
+
+.vst-tl h3 {
+	font-size: 19px;
+	letter-spacing: -0.02em;
+}
+
+.vst-tl p {
+	max-width: 62ch;
+	margin-top: 6px;
+	font-size: 14px;
+	color: #b5b5b5;
+}
+
+.vst-tl-on h3::after {
+	content: 'VCPility milestone';
+	margin-left: 10px;
+	padding: 3px 8px;
+	font-size: 10px;
+	font-weight: 600;
+	letter-spacing: 0;
+	vertical-align: middle;
+	border-radius: 999px;
+	background: var(--vst-grad);
+}
+
+/* ============================================
+   FAQ
+   ============================================ */
+
+.vst-faq {
+	display: grid;
+	gap: 10px;
+	max-width: 760px;
+	margin: 40px auto 0;
+}
+
+.vst-faq details {
+	padding: 0 24px;
+	border: 1px solid #cfcfcf;
+	border-radius: 14px;
+	/* Lets the answer animate to its natural height. Browsers without
+	   ::details-content support just snap open, as they always did. */
+	interpolate-size: allow-keywords;
+	transition:
+		background 0.3s ease,
+		border-color 0.3s ease;
+}
+
+.vst-faq details::details-content {
+	height: 0;
+	overflow: clip;
+	transition:
+		height 0.35s ease,
+		content-visibility 0.35s allow-discrete;
+}
+
+.vst-faq details[open]::details-content {
+	height: auto;
+}
+
+.vst-faq summary {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 16px;
+	padding: 20px 0;
+	font-size: 15px;
+	font-weight: 600;
+	list-style: none;
+	cursor: pointer;
+}
+
+.vst-faq summary::-webkit-details-marker {
+	display: none;
+}
+
+.vst-faq summary::after {
+	content: '+';
+	display: grid;
+	place-items: center;
+	flex: none;
+	width: 26px;
+	height: 26px;
+	font-weight: 400;
+	border: 1px solid var(--vst-ink);
+	border-radius: 50%;
+	transition:
+		background 0.3s ease,
+		color 0.3s ease;
+}
+
+.vst-faq details[open] {
+	border-color: transparent;
+	background:
+		linear-gradient(var(--vst-paper), var(--vst-paper)) padding-box,
+		var(--vst-grad) border-box;
+}
+
+.vst-faq details[open] summary {
+	border-bottom: 1px solid var(--vst-line);
+}
+
+.vst-faq details[open] summary::after {
+	content: '–';
+	color: var(--color-white);
+	background: var(--vst-ink);
+}
+
+.vst-faq p {
+	padding: 18px 0 22px;
+	font-size: 15px;
+	color: var(--vst-ink-2);
+}
+
+/* ============================================
+   CTA + offices
+   ============================================ */
+
+.vst-cta {
+	display: grid;
+	grid-template-columns: 1.3fr 1fr;
+	gap: 40px;
+	align-items: center;
+	padding: 56px;
+	border: 1.5px solid transparent;
+	border-radius: 32px;
+	color: var(--color-white);
+	/* Dark aurora card: two glows over near-black, with the accent gradient
+	   riding the border via border-box */
+	background:
+		radial-gradient(520px 300px at 0% 100%, rgb(var(--vst-acc-rgb) / 0.35), transparent 70%) padding-box,
+		radial-gradient(420px 300px at 100% 0%, rgb(var(--vst-acc-deep-rgb) / 0.6), transparent 70%) padding-box,
+		linear-gradient(#111, #111) padding-box,
+		var(--vst-grad) border-box;
+}
+
+.vst-cta .vst-tag {
+	color: #cfcfcf;
+}
+
+.vst-cta .vst-h {
+	background: linear-gradient(90deg, var(--color-white) 0 45%, #8a8a8a 80%);
+	-webkit-background-clip: text;
+	background-clip: text;
+}
+
+.vst-cta .vst-lead {
+	color: #bdbdbd;
+}
+
+.vst-cta-links {
+	display: grid;
+	gap: 10px;
+}
+
+.vst-cta-links .vst-btn {
+	justify-content: space-between;
+	padding: 16px 16px 16px 22px;
+	border-radius: 14px;
+	color: var(--color-white);
+	border-color: #3a3a3a;
+	background: rgb(255 255 255 / 0.06);
+}
+
+.vst-cta-links .vst-btn span {
+	color: var(--vst-ink);
+	background: var(--color-white);
+}
+
+.vst-cta-links .vst-btn--dark {
+	color: var(--vst-ink);
+	border-color: var(--color-white);
+	background: var(--color-white);
+}
+
+.vst-cta-links .vst-btn--dark span {
+	color: var(--color-white);
+	background: var(--vst-grad);
+}
+
+.vst-addr {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 24px;
+	margin-top: 48px;
+	font-size: 14px;
+	color: var(--vst-ink-2);
+}
+
+.vst-addr b {
+	display: block;
+	margin-bottom: 4px;
+	color: var(--vst-ink);
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+
+@media (max-width: 960px) {
+	.vst-hero-grid,
+	.vst-split,
+	.vst-cta {
+		grid-template-columns: 1fr;
+	}
+
+	.vst-split-l {
+		position: static;
+	}
+
+	.vst-port {
+		grid-template-columns: 1fr 1fr;
+	}
+
+	.vst-feat {
+		grid-column: 1 / -1;
+		grid-row: auto;
+		min-height: 0;
+	}
+
+	.vst-addr {
+		grid-template-columns: 1fr;
+	}
+}
+
+@media (max-width: 640px) {
+	.vst-sec {
+		padding: 64px 0;
+	}
+
+	.vst-hero {
+		padding: 120px 0 64px;
+	}
+
+	.vst-tree {
+		padding: 12px;
+		border-radius: 24px;
+	}
+
+	/* Satellites wrap to two lines and drop their sub-labels to stay legible */
+	.vst-node {
+		max-width: 78px;
+		padding: 6px 9px;
+		font-size: 11px;
+		line-height: 1.2;
+		white-space: normal;
+	}
+
+	.vst-node small {
+		display: none;
+	}
+
+	.vst-node--on {
+		max-width: none;
+		padding: 9px 13px;
+		font-size: 13px;
+	}
+
+	.vst-node--on small {
+		display: block;
+	}
+
+	.vst-point,
+	.vst-tl li {
+		grid-template-columns: 1fr;
+		gap: 8px;
+	}
+
+	.vst-stats,
+	.vst-port {
+		grid-template-columns: 1fr;
+	}
+
+	.vst-stats > div {
+		padding: 28px 24px;
+	}
+
+	/* Pull the rail in, and keep the nodes centred on it */
+	.vst-tl {
+		padding-left: 32px;
+	}
+
+	.vst-tl li::before {
+		top: 28px;
+		left: -29px;
+	}
+
+	.vst-feat {
+		padding: 24px;
+		border-radius: 22px;
+	}
+
+	.vst-port-head > p {
+		font-size: 14px;
+	}
+
+	.vst-cta {
+		padding: 32px 22px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.vst-pulse {
+		opacity: 0;
+		animation: none;
+	}
+
+	.vst-mq-track,
+	.vst-hero .vst-tag::before {
+		animation: none;
+	}
+
+	.vst-btn:hover,
+	.vst-sib:hover {
+		transform: none;
+	}
+
+	.vst-point:hover h3 {
+		transform: none;
+	}
+}
