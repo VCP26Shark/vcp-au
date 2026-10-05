@@ -424,6 +424,7 @@
 	text-align: center;
 	text-wrap: balance;
 	color: #a8a8a8;
+	display:none;
 }
 
 .vst-tree-note::before {
