@@ -196,16 +196,6 @@
 		display: block;
 	}
 
-	/* ----- Inline highlight for phrases inside body copy; wraps cleanly across lines ----- */
-
-	.text-highlight {
-		font-weight: 600;
-		color: var(--color-ink);
-		background: linear-gradient(rgb(224 3 72 / 0.45), rgb(224 3 72 / 0.45)) 0 100% / 100% 0.4em no-repeat;
-		-webkit-box-decoration-break: clone;
-		box-decoration-break: clone;
-	}
-
 	/* ----- Buttons ----- */
 
 	.btn {
@@ -294,6 +284,72 @@
 	.btn--shine:hover {
 		transform: translateY(-3px);
 		box-shadow: 0 10px 30px rgb(224 3 72 / 0.3);
+	}
+
+	/* ----- Page sections: gutter, vertical rhythm and the standard header
+	   (title left, lead and optional link right) ----- */
+
+	.container {
+		padding-inline: var(--gutter);
+	}
+
+	.sec {
+		padding-block: clamp(96px, 10vw, 160px);
+	}
+
+	.sec-head {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+		align-items: end;
+		gap: 28px 80px;
+		margin-bottom: clamp(48px, 5vw, 80px);
+	}
+
+	.sec-head .eyebrow {
+		margin-bottom: 24px;
+	}
+
+	.sec-head__lead,
+	.sec-head__lead p {
+		font-size: 17px;
+		line-height: 1.75;
+		color: var(--color-gray-500);
+	}
+
+	.sec-head__lead strong {
+		color: var(--color-ink);
+	}
+
+	.sec-head__lead .btn {
+		margin-top: 20px;
+	}
+
+	/* White button for dark panels */
+	.btn--light {
+		--btn-shadow: var(--color-accent);
+		color: var(--color-ink);
+		background: var(--color-white);
+	}
+
+	.btn--light:hover {
+		transform: translateY(-3px);
+		box-shadow: 0 12px 32px rgb(0 0 0 / 0.35);
+	}
+
+	/* ----- Mesh-gradient shader canvas (driven by src/scripts/shader.ts) -----
+	   Fades in once WebGL is running; the container's own background is the fallback. */
+
+	.shader {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		opacity: 0;
+		transition: opacity 1.2s ease;
+	}
+
+	.shader.is-live {
+		opacity: 1;
 	}
 
 	/* ----- Mesh text: a fine grid printed into the letters -----
@@ -413,6 +469,13 @@
 	/* ============================================
 	   Responsive
 	   ============================================ */
+
+	@media (max-width: 1024px) {
+		.sec-head {
+			grid-template-columns: 1fr;
+			align-items: start;
+		}
+	}
 
 	@media (max-width: 480px) {
 		.eyebrow {

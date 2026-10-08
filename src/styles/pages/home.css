@@ -3,70 +3,6 @@
    Type, eyebrows, buttons and reveal hooks come from global.css.
    ============================================ */
 
-.container {
-	padding-inline: var(--gutter);
-}
-
-.sec {
-	padding-block: clamp(96px, 10vw, 160px);
-}
-
-/* Shared section header: title left, lead (and optional link) right */
-.sec-head {
-	display: grid;
-	grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
-	align-items: end;
-	gap: 28px 80px;
-	margin-bottom: clamp(48px, 5vw, 80px);
-}
-
-.sec-head .eyebrow {
-	margin-bottom: 24px;
-}
-
-.sec-head__lead,
-.sec-head__lead p {
-	font-size: 17px;
-	line-height: 1.75;
-	color: var(--color-gray-500);
-}
-
-.sec-head__lead strong {
-	color: var(--color-ink);
-}
-
-.sec-head__lead .btn {
-	margin-top: 20px;
-}
-
-/* White button for dark panels (the closing CTA) */
-.btn--light {
-	--btn-shadow: var(--color-accent);
-	color: var(--color-ink);
-	background: var(--color-white);
-}
-
-.btn--light:hover {
-	transform: translateY(-3px);
-	box-shadow: 0 12px 32px rgb(0 0 0 / 0.35);
-}
-
-/* ----- Mesh-gradient shader canvas -----
-   The gradient underneath is the fallback (no WebGL, or before the first frame). */
-
-.shader {
-	position: absolute;
-	inset: 0;
-	width: 100%;
-	height: 100%;
-	opacity: 0;
-	transition: opacity 1.2s ease;
-}
-
-.shader.is-live {
-	opacity: 1;
-}
-
 /* ============================================
    Hero
    ============================================ */
@@ -1214,13 +1150,8 @@
 @media (max-width: 1024px) {
 	.hero__container,
 	.struggle__grid,
-	.ind,
-	.sec-head {
+	.ind {
 		grid-template-columns: 1fr;
-	}
-
-	.sec-head {
-		align-items: start;
 	}
 
 	.hero__visual {
