@@ -439,7 +439,6 @@ const industries = [
 			const slides = [...track.children] as HTMLElement[];
 			const last = slides.length - 1; // index of the clone of the first slide
 			let index = 0;
-			let hovered = false;
 			let inView = true;
 
 			const moveTo = (next: number) => {
@@ -454,7 +453,7 @@ const industries = [
 			});
 
 			const sync = () => {
-				if (hovered || !inView || document.hidden) progress.pause();
+				if (!inView || document.hidden) progress.pause();
 				else progress.play();
 			};
 
@@ -471,14 +470,6 @@ const industries = [
 				sync();
 			};
 
-			carousel.addEventListener('pointerenter', () => {
-				hovered = true;
-				sync();
-			});
-			carousel.addEventListener('pointerleave', () => {
-				hovered = false;
-				sync();
-			});
 			document.addEventListener('visibilitychange', sync);
 			new IntersectionObserver(([entry]) => {
 				inView = entry.isIntersecting;
