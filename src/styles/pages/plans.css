@@ -329,8 +329,9 @@
 }
 
 .plan__billing {
-	margin-top: 4px;
-	font-size: 11px;
+	margin: -8px 0 20px;
+	font-size: 13px;
+	line-height: 1.55;
 	color: var(--color-gray-500);
 }
 

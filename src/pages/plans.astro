@@ -23,7 +23,7 @@ const plans: Plan[] = [
 		name: 'Launch',
 		type: 'Foundation Package',
 		variant: 'highlight',
-		price: { annual: 280, monthly: 360 },
+		price: { annual: 165, monthly: 220 },
 		pitch: {
 			title: 'AI-Powered Marketing Partner',
 			text: 'Perfect for sole traders ready to establish their digital footprint with professional support.',
@@ -46,7 +46,7 @@ const plans: Plan[] = [
 		type: 'Professional Package',
 		variant: 'featured',
 		badge: { label: 'Most Popular', style: 'popular' },
-		price: { annual: 850, monthly: 980 },
+		price: { annual: 590, monthly: 790 },
 		pitch: {
 			title: 'AI-Powered Growth Team',
 			text: 'Designed for established traders and medium-sized businesses ready to dominate their market.',
@@ -71,7 +71,7 @@ const plans: Plan[] = [
 		type: 'Premium Package',
 		variant: 'highlight',
 		badge: { label: 'Best Value', style: 'value' },
-		price: { annual: 1450, monthly: 1680 },
+		price: { annual: 940, monthly: 1250 },
 		pitch: {
 			title: 'AI-Powered Marketing Department',
 			text: 'Built for multi-site businesses that need enterprise-level marketing execution across multiple locations.',
@@ -117,6 +117,14 @@ const plans: Plan[] = [
 ];
 
 const money = (n: number) => n.toLocaleString('en-AU');
+
+// Annual saving versus paying monthly, as a whole percentage
+const saving = ({ annual, monthly }: Plan['price']) => Math.round((1 - annual / monthly) * 100);
+
+const billingNote = (plan: Plan) => ({
+	annual: `Billed ${plan.startingFrom ? 'from' : 'at'} $${money(plan.price.annual * 12)} + GST per year — save up to ${saving(plan.price)}% versus paying monthly.`,
+	monthly: `Paid monthly, or switch to annual billing to save up to ${saving(plan.price)}%.`,
+});
 const check = '<polyline points="20 6 9 17 4 12"/>';
 const arrow = '<path d="M5 12h14M12 5l7 7-7 7"/>';
 
@@ -183,11 +191,11 @@ const planFormId = 'EM6FhotBuN9uljNjbYsZ';
 			</p>
 
 			<div class="billing-toggle reveal" style="--d: 0.35s" role="group" aria-label="Billing period" data-billing-toggle>
-				<button type="button" aria-pressed="true" data-billing="annual">
-					Annual
-					<span class="billing-toggle__badge">Save 27%</span>
-				</button>
 				<button type="button" aria-pressed="false" data-billing="monthly">Monthly</button>
+				<button type="button" aria-pressed="true" data-billing="annual">
+					Annually
+					<span class="billing-toggle__badge">Save up to 25%</span>
+				</button>
 			</div>
 			<p class="sr-only" aria-live="polite" data-billing-status></p>
 		</div>
@@ -199,8 +207,9 @@ const planFormId = 'EM6FhotBuN9uljNjbYsZ';
 	<section class="plans">
 		<ul class="plans__grid">
 			{
-				plans.map(
-					({ name, type, variant, badge, startingFrom, price, pitch, includesLabel, features, note, cta }, i) => (
+				plans.map((plan, i) => {
+					const { name, type, variant, badge, startingFrom, price, pitch, includesLabel, features, note, cta } = plan;
+					return (
 						<li class="reveal" style={`--d: ${0.1 + i * 0.08}s`}>
 							<article class:list={['plan', `plan--${variant}`, { 'plan--badged': badge }]}>
 								{variant === 'highlight' && (
@@ -219,7 +228,7 @@ const planFormId = 'EM6FhotBuN9uljNjbYsZ';
 									<div class="plan__price">
 										{startingFrom && <p class="plan__from">Starting from</p>}
 										<p class="plan__amount">
-											<span class="plan__currency">AU$</span>
+											<span class="plan__currency">$</span>
 											<span
 												class="plan__value"
 												data-annual={money(price.annual)}
@@ -227,13 +236,14 @@ const planFormId = 'EM6FhotBuN9uljNjbYsZ';
 											>
 												{money(price.annual)}
 											</span>
-											<span class="plan__period">/month</span>
-										</p>
-										<p class="plan__billing" data-annual="billed yearly" data-monthly="billed monthly">
-											billed yearly
+											<span class="plan__period">+ GST / month</span>
 										</p>
 									</div>
 								</header>
+
+								<p class="plan__billing" data-annual={billingNote(plan).annual} data-monthly={billingNote(plan).monthly}>
+									{billingNote(plan).annual}
+								</p>
 
 								<div class="plan__pitch">
 									<h3>{pitch.title}</h3>
@@ -258,8 +268,8 @@ const planFormId = 'EM6FhotBuN9uljNjbYsZ';
 								</a>
 							</article>
 						</li>
-					),
-				)
+					);
+				})
 			}
 		</ul>
 	</section>
