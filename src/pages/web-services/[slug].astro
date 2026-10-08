@@ -1,0 +1,268 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { Image } from 'astro:assets';
+import Layout from '../../layouts/Layout.astro';
+import { services, type Service } from '../../data/services';
+import '../../styles/pages/service.css';
+
+export const getStaticPaths = (() =>
+	services.map((service, i) => ({
+		params: { slug: service.slug },
+		props: { service, index: i },
+	}))) satisfies GetStaticPaths;
+
+interface Props {
+	service: Service;
+	index: number;
+}
+
+const { service, index } = Astro.props;
+const { title, headline, lead, facts, overview, image, included, steps, stack, faqs } = service;
+const others = services.filter((s) => s.slug !== service.slug);
+
+const pad = (n: number) => String(n).padStart(2, '0');
+const arrow = '<path d="M5 12h14M12 5l7 7-7 7"/>';
+---
+
+<Layout title={`${title} | VCPility Web Services`} description={lead}>
+	<!-- ============================================
+	     Hero
+	     ============================================ -->
+	<section class="svc-hero">
+		<canvas class="svc-hero__grid" aria-hidden="true" data-flicker-grid></canvas>
+
+		<div class="container svc-hero__content">
+			<nav class="svc-crumbs reveal" aria-label="Breadcrumb">
+				<a href="/web-services">Web Services</a>
+				<span aria-hidden="true">/</span>
+				<span aria-current="page">{title}</span>
+			</nav>
+
+			<p class="eyebrow svc-hero__eyebrow reveal" style="--d: 0.05s">
+				Service {pad(index + 1)} of {pad(services.length)}
+			</p>
+
+			<h1 class="svc-hero__title reveal-lines" style="--d: 0.1s">
+				{
+					headline.map((text, i) => (
+						<span class="line" style={`--i: ${i}`}>
+							<span class="line__inner">{text}</span>
+						</span>
+					))
+				}
+			</h1>
+
+			<p class="svc-hero__lead reveal" style="--d: 0.35s">{lead}</p>
+
+			<div class="svc-hero__actions reveal" style="--d: 0.45s">
+				<a href="/contact" class="btn btn--accent btn--shine">
+					Start a project
+					<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+				</a>
+				<a href="#included" class="btn btn--link">What's included</a>
+			</div>
+		</div>
+
+		<dl class="container svc-facts reveal" style="--d: 0.55s">
+			{
+				facts.map(({ label, value }) => (
+					<div>
+						<dt>{label}</dt>
+						<dd>{value}</dd>
+					</div>
+				))
+			}
+		</dl>
+	</section>
+
+	<!-- ============================================
+	     Overview
+	     ============================================ -->
+	<section class="sec svc-overview">
+		<div class="container">
+			<p class="eyebrow reveal">Overview</p>
+			<p class="svc-overview__statement reveal" style="--d: 0.1s">{overview}</p>
+
+			<figure class="svc-figure" data-reveal>
+				<div class="svc-figure__frame">
+					<Image
+						src={image.src}
+						alt={image.alt}
+						widths={[800, 1400, 2000, 2400]}
+						sizes="90vw"
+						style={image.position ? `object-position: ${image.position}` : undefined}
+					/>
+				</div>
+				<figcaption><span>{image.label}</span> {image.caption}</figcaption>
+			</figure>
+		</div>
+	</section>
+
+	<!-- ============================================
+	     What's included
+	     ============================================ -->
+	<section class="sec svc-included" id="included">
+		<div class="container">
+			<header class="sec-head">
+				<div>
+					<p class="eyebrow reveal">What's included</p>
+					<h2 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
+						<span class="line"><span class="line__inner">Everything it takes,</span></span>
+						<span class="line" style="--i: 1"><span class="line__inner">done properly.</span></span>
+					</h2>
+				</div>
+				<p class="sec-head__lead reveal" style="--d: 0.2s">
+					One team handles every part, so nothing falls between suppliers and you always know who to call.
+				</p>
+			</header>
+
+			<ul class="svc-grid">
+				{
+					included.map(({ title: item, desc }, i) => (
+						<li class="svc-grid__item reveal" style={`--d: ${(i % 3) * 0.08}s`}>
+							<span class="svc-grid__num">{pad(i + 1)}</span>
+							<h3>{item}</h3>
+							<p>{desc}</p>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+	</section>
+
+	<!-- ============================================
+	     How we deliver (Animated Beam)
+	     ============================================ -->
+	<section class="sec svc-process">
+		<div class="container">
+			<header class="sec-head">
+				<div>
+					<p class="eyebrow reveal">How we deliver</p>
+					<h2 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
+						<span class="line"><span class="line__inner">Four clear steps.</span></span>
+					</h2>
+				</div>
+				<p class="sec-head__lead reveal" style="--d: 0.2s">
+					You'll know what's happening, what's next and what it costs at every stage.
+				</p>
+			</header>
+
+			<ol class="svc-steps" data-reveal data-pause-offscreen>
+				<li class="svc-steps__beam" aria-hidden="true"></li>
+				{
+					steps.map(({ title: step, desc }, i) => (
+						<li class="svc-step" style={`--i: ${i}`}>
+							<span class="svc-step__node" aria-hidden="true">
+								{pad(i + 1)}
+							</span>
+							<h3>{step}</h3>
+							<p>{desc}</p>
+						</li>
+					))
+				}
+			</ol>
+		</div>
+	</section>
+
+	<!-- ============================================
+	     Technologies
+	     ============================================ -->
+	<section class="svc-stack">
+		<div class="container svc-stack__inner">
+			<p class="svc-stack__label reveal">Technologies we use</p>
+			<ul class="svc-stack__list reveal" style="--d: 0.1s">
+				{stack.map((item) => <li>{item}</li>)}
+			</ul>
+		</div>
+	</section>
+
+	<!-- ============================================
+	     FAQ
+	     ============================================ -->
+	<section class="sec svc-faq">
+		<div class="container svc-faq__grid">
+			<div class="svc-faq__head">
+				<p class="eyebrow reveal">FAQ</p>
+				<h2 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
+					<span class="line"><span class="line__inner">Questions,</span></span>
+					<span class="line" style="--i: 1"><span class="line__inner">answered.</span></span>
+				</h2>
+			</div>
+			<div class="svc-faq__list reveal" style="--d: 0.15s">
+				{
+					faqs.map(({ q, a }, i) => (
+						<details open={i === 0}>
+							<summary>{q}</summary>
+							<p>{a}</p>
+						</details>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<!-- ============================================
+	     CTA (shader band)
+	     ============================================ -->
+	<section class="svc-cta" data-pause-offscreen>
+		<canvas class="shader" aria-hidden="true" data-shader></canvas>
+		<div class="container svc-cta__inner reveal">
+			<h2 class="section-title section-title--sm">Let's talk about your project.</h2>
+			<p>Tell us what you're planning. We'll come back with clear next steps and an honest estimate.</p>
+			<div class="svc-cta__actions">
+				<a href="/contact" class="btn btn--light btn--shine">
+					Start a project
+					<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+				</a>
+				<a href="mailto:growth@vcpility.com.au" class="btn btn--link svc-cta__link">growth@vcpility.com.au</a>
+			</div>
+		</div>
+	</section>
+
+	<!-- ============================================
+	     Other services
+	     ============================================ -->
+	<section class="sec svc-more">
+		<div class="container">
+			<header class="sec-head">
+				<div>
+					<p class="eyebrow reveal">More services</p>
+					<h2 class="section-title section-title--sm reveal-lines">
+						<span class="line"><span class="line__inner">Explore what else we do.</span></span>
+					</h2>
+				</div>
+				<p class="sec-head__lead reveal" style="--d: 0.15s">
+					<a href="/web-services" class="btn btn--link">
+						All web services
+						<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+					</a>
+				</p>
+			</header>
+
+			<ul class="svc-more__list">
+				{
+					others.map(({ slug, title: name, summary }, i) => (
+						<li class="reveal" style={`--d: ${i * 0.05}s`}>
+							<a href={`/web-services/${slug}`} class="svc-more__item">
+								<span class="svc-more__num">{pad(services.findIndex((s) => s.slug === slug) + 1)}</span>
+								<span class="svc-more__body">
+									<span class="svc-more__title">{name}</span>
+									<span class="svc-more__desc">{summary}</span>
+								</span>
+								<svg class="svc-more__arrow" viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+	</section>
+</Layout>
+
+<script>
+	import { initFlickerGrids } from '../../scripts/flicker-grid';
+	import { initShaders } from '../../scripts/shader';
+
+	initFlickerGrids();
+	initShaders();
+</script>

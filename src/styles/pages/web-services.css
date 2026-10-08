@@ -309,10 +309,29 @@
 .ws-service {
 	position: relative;
 	display: grid;
-	grid-template-columns: 72px minmax(0, 1fr) minmax(0, 1.1fr);
+	grid-template-columns: 72px minmax(0, 1fr) minmax(0, 1.1fr) 24px;
 	gap: 16px 40px;
 	padding-block: 44px;
 	border-bottom: 1px solid rgb(26 26 26 / 0.12);
+}
+
+/* The title link stretches over the whole row, so any part of it is clickable */
+.ws-service__title a::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+}
+
+.ws-service__arrow {
+	width: 22px;
+	height: 22px;
+	margin-top: 8px;
+	fill: none;
+	stroke: var(--color-ink);
+	stroke-width: 2;
+	transition:
+		transform 0.4s var(--ease-out),
+		stroke 0.3s ease;
 }
 
 /* Accent rule that draws across the row on hover */
@@ -380,6 +399,70 @@
 
 	.ws-service:hover .ws-service__title {
 		transform: translateX(8px);
+	}
+
+	.ws-service:hover .ws-service__arrow {
+		stroke: var(--color-accent);
+		transform: translateX(6px);
+	}
+}
+
+/* ============================================
+   Technologies: five ruled columns
+   ============================================ */
+
+.ws-stack {
+	padding-block: clamp(100px, 10vw, 160px);
+}
+
+.ws-stack__grid {
+	display: grid;
+	grid-template-columns: repeat(5, minmax(0, 1fr));
+	border-top: 1px solid var(--color-ink);
+}
+
+.ws-stack__col {
+	padding: 28px 28px 8px 0;
+}
+
+.ws-stack__col + .ws-stack__col {
+	padding-left: 28px;
+	border-left: 1px solid rgb(26 26 26 / 0.12);
+}
+
+.ws-stack__col h3 {
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	color: var(--color-accent);
+}
+
+.ws-stack__col ul {
+	margin: 20px 0 0;
+	padding: 0;
+	list-style: none;
+}
+
+.ws-stack__col li {
+	padding-block: 14px;
+	font-size: clamp(18px, 0.5vw + 15px, 22px);
+	font-weight: 700;
+	letter-spacing: -0.02em;
+	border-bottom: 1px solid rgb(26 26 26 / 0.08);
+	transition:
+		color 0.3s ease,
+		transform 0.4s var(--ease-out);
+}
+
+.ws-stack__col li:last-child {
+	border-bottom: 0;
+}
+
+@media (hover: hover) {
+	.ws-stack__col li:hover {
+		color: var(--color-accent);
+		transform: translateX(6px);
 	}
 }
 
@@ -668,6 +751,16 @@
 		grid-column: 2;
 	}
 
+	.ws-service {
+		padding-right: 40px;
+	}
+
+	.ws-service__arrow {
+		position: absolute;
+		top: 44px;
+		right: 0;
+	}
+
 	.ws-principles {
 		grid-template-columns: 1fr;
 		gap: 40px;
@@ -697,6 +790,19 @@
 	.ws-steps {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 		row-gap: 56px;
+	}
+
+	.ws-stack__grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.ws-stack__col:nth-child(odd) {
+		padding-left: 0;
+		border-left: 0;
+	}
+
+	.ws-stack__col:nth-child(n + 3) {
+		border-top: 1px solid rgb(26 26 26 / 0.12);
 	}
 
 	.ws-step p {
@@ -733,6 +839,10 @@
 		padding-block: 36px;
 	}
 
+	.ws-service__arrow {
+		top: 36px;
+	}
+
 	.ws-service__num {
 		padding-top: 0;
 	}
@@ -757,8 +867,19 @@
 
 @media (max-width: 560px) {
 	.ws-stats,
-	.ws-steps {
+	.ws-steps,
+	.ws-stack__grid {
 		grid-template-columns: 1fr;
+	}
+
+	.ws-stack__col,
+	.ws-stack__col + .ws-stack__col {
+		padding-left: 0;
+		border-left: 0;
+	}
+
+	.ws-stack__col + .ws-stack__col {
+		border-top: 1px solid rgb(26 26 26 / 0.12);
 	}
 
 	.ws-stat,
