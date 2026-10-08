@@ -8,15 +8,15 @@ import '../styles/pages/built-by-sharktech.css';
    initials instead of requesting a file that isn't there. */
 const leaderPhoto = '';
 
-/* ----- Orbit diagram -----
-   Positions are percentages of the square orbit, and double as the SVG
-   end points because the viewBox is 0 0 100 100. */
+/* ----- Hero fact file -----
+   Every fact here is also stated elsewhere on the page. */
 
-const satellites = [
-	{ name: 'AccrualOS', sector: 'Accounting', x: 85.2, y: 38.6 },
-	{ name: 'Flagman', sector: 'Industrial', x: 71.7, y: 79.9 },
-	{ name: 'Motivo360', sector: 'Wellness', x: 28.3, y: 79.9 },
-	{ name: 'eTakeaway Max', sector: 'Hospitality', x: 14.8, y: 38.6 },
+const facts = [
+	{ label: 'Founded', value: '2024, Sydney NSW' },
+	{ label: 'Headquarters', value: 'Liverpool, NSW' },
+	{ label: 'Offices', value: 'Sydney · Melbourne' },
+	{ label: 'Platforms', value: 'VCPility, AccrualOS, Flagman, Motivo360, eTakeaway Max' },
+	{ label: 'Industries', value: 'Growth, accounting, industrial, wellness, hospitality' },
 ];
 
 /* ----- Marquee -----
@@ -168,6 +168,14 @@ const offices = [
 	{ label: 'Melbourne', detail: 'Suite 383, 11 Wilson St, South Yarra VIC 3141' },
 	{ label: 'Hours', detail: 'Mon–Fri, 9 AM – 6 PM AEST' },
 ];
+
+const icons = {
+	arrow: '<path d="M5 12h14M12 5l7 7-7 7"/>',
+	external: '<path d="M7 17 17 7M8 7h9v9"/>',
+	down: '<path d="M12 5v14M5 12l7 7 7-7"/>',
+};
+
+const pad = (n: number) => String(n).padStart(2, '0');
 ---
 
 <Layout
@@ -176,174 +184,165 @@ const offices = [
 	keywords="Sharktech Global, VCPility parent company, Australian AI platform group, Sydney AI company"
 >
 	<div class="vst">
-		<!-- ===== Hero ===== -->
+		<!-- ============================================
+		     Hero
+		     ============================================ -->
 		<section class="vst-hero">
-			<div class="vst-wrap vst-hero-grid">
-				<div class="reveal">
-					<p class="vst-tag">Our parent company</p>
-					<h1 class="vst-h">VCPility Is Built By <span class="vst-u">Sharktech Global</span></h1>
-					<p class="vst-lead">
-						VCPility is the growth platform inside Sharktech Global, a Sydney-based AI platform group. That means
-						the CRM, inbox, bookings and AI agents you use are engineered, hosted and supported by the same team
-						building five AI products across four industries.
-					</p>
+			<div class="vst-wrap">
+				<p class="eyebrow vst-eyebrow reveal">Our parent company</p>
+				<h1 class="vst-hero__title reveal-lines" style="--d: 0.1s">
+					<span class="line"><span class="line__inner">Serious Engineering</span></span>
+					<span class="line" style="--i: 1"
+						><span class="line__inner">Behind Every Enquiry</span></span
+					>
+				</h1>
 
-					<div class="vst-btns">
-						<a
-							class="vst-btn vst-btn--dark"
-							href="https://sharktech.com.au/vcpility"
-							target="_blank"
-							rel="noopener"
-						>
-							See VCPility on Sharktech <span aria-hidden="true">↗</span>
-						</a>
-						<a class="vst-btn" href="#vst-faq">
-							How the relationship works <span aria-hidden="true">↓</span>
-						</a>
-					</div>
-
-					<div class="vst-leader">
-						<div class="vst-leader-ava">
-							{
-								leaderPhoto ? (
-									<img src={leaderPhoto} alt="Dainu Devis" width="52" height="52" loading="lazy" />
-								) : (
-									<span aria-hidden="true">DD</span>
-								)
-							}
-						</div>
-						<p>
-							<b>Led by Dainu Devis,</b> CEO of Sharktech Global. VCPility is built and run by the same leadership
-							team behind every platform in the group.
+				<div class="vst-hero-grid">
+					<div>
+						<p class="vst-lead reveal" style="--d: 0.35s">
+							VCPility is the growth platform inside Sharktech Global, a Sydney-based AI platform group. That means the
+							CRM, inbox, bookings and AI agents you use are engineered, hosted and supported by the same team building
+							five AI products across four industries.
 						</p>
-					</div>
-				</div>
 
-				<div
-					class="vst-tree reveal"
-					style="--d: 0.15s"
-					role="img"
-					aria-label="Sharktech Global at the centre, connected to its five AI platforms: VCPility, AccrualOS, Flagman, Motivo360 and eTakeaway Max. VCPility is highlighted."
-					data-pause-offscreen
-				>
-					<div class="vst-orbit">
-						<svg viewBox="0 0 100 100" aria-hidden="true">
-							<defs>
-								<linearGradient id="vstBeam" gradientUnits="userSpaceOnUse" x1="50" y1="33" x2="50" y2="13">
-									<stop offset="0" class="vst-beam-from"></stop>
-									<stop offset="1" class="vst-beam-to"></stop>
-								</linearGradient>
-							</defs>
-
-							<circle class="vst-ring" cx="50" cy="50" r="37"></circle>
-							<circle class="vst-ring vst-ring--dash" cx="50" cy="50" r="27"></circle>
-							<circle class="vst-ring vst-ring--dash" cx="50" cy="50" r="46"></circle>
-
-							{satellites.map(({ x, y }) => <line class="vst-wire" x1="50" y1="50" x2={x} y2={y} />)}
-
-							<line class="vst-wire vst-wire--on" x1="50" y1="33" x2="50" y2="13"></line>
-							<circle class="vst-pulse" cx="50" cy="33" r="1.1"></circle>
-						</svg>
-
-						<div class="vst-core">
-							<i aria-hidden="true"></i>
-							<b>Sharktech<br />Global</b>
-							<small>AI platform group<br />Sydney, NSW</small>
+						<div class="vst-btns reveal" style="--d: 0.45s">
+							<a class="btn btn--accent btn--shine" href="https://sharktech.com.au/vcpility" target="_blank" rel="noopener">
+								See VCPility on Sharktech
+								<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icons.external} />
+							</a>
+							<a class="btn btn--link vst-btn-down" href="#vst-faq">
+								How the relationship works
+								<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icons.down} />
+							</a>
 						</div>
 
-						<div class="vst-node vst-node--on" style="left: 50%; top: 13%">
-							VCPility<small>You're here</small>
+						<div class="vst-leader reveal" style="--d: 0.55s">
+							<div class="vst-leader-ava">
+								{
+									leaderPhoto ? (
+										<img src={leaderPhoto} alt="Dainu Devis" width="52" height="52" loading="lazy" />
+									) : (
+										<span aria-hidden="true">DD</span>
+									)
+								}
+							</div>
+							<p>
+								<b>Led by Dainu Devis,</b> CEO of Sharktech Global. VCPility is built and run by the same leadership team
+								behind every platform in the group.
+							</p>
 						</div>
-
-						{
-							satellites.map(({ name, sector, x, y }) => (
-								<div class="vst-node" style={`left: ${x}%; top: ${y}%`}>
-									{name}
-									<small>{sector}</small>
-								</div>
-							))
-						}
 					</div>
-					<p class="vst-tree-note">First platform in the group live with paying clients</p>
+
+					<aside class="vst-file reveal" style="--d: 0.4s" aria-labelledby="vst-file-title">
+						<header class="vst-file__head">
+							<span>Fact file</span>
+							<h2 id="vst-file-title">Sharktech Global</h2>
+						</header>
+						<dl>
+							{
+								facts.map(({ label, value }) => (
+									<div>
+										<dt>{label}</dt>
+										<dd>{value}</dd>
+									</div>
+								))
+							}
+						</dl>
+						<div class="vst-file__here">
+							<span>You're here</span>
+							<p><b>VCPility</b>, the group's growth platform. Live with clients since 2025.</p>
+						</div>
+					</aside>
 				</div>
 			</div>
 		</section>
 
-		<!-- ===== Marquee ===== -->
+		<!-- ============================================
+		     Marquee
+		     ============================================ -->
 		<div class="vst-marquee" aria-hidden="true" data-pause-offscreen>
 			<div class="vst-mq-track">
-				{
-					[...marquee, ...marquee].map(({ label, ai }) => (
-						<span class={ai ? 'vst-mq-ai' : undefined}>{label}</span>
-					))
-				}
+				{[...marquee, ...marquee].map(({ label, ai }) => <span class={ai ? 'vst-mq-ai' : undefined}>{label}</span>)}
 			</div>
 		</div>
 
-		<!-- ===== What it means for you ===== -->
+		<!-- ============================================
+		     What it means for you
+		     ============================================ -->
 		<section class="vst-sec">
 			<div class="vst-wrap vst-split">
-				<div class="vst-split-l reveal">
-					<p class="vst-tag">What it means for you</p>
-					<h2 class="vst-h vst-h--sm">A Product Team Behind Your <span class="vst-u">Growth Engine</span></h2>
-					<figure class="vst-split-img">
-						<Image
-							src={teamPhoto}
-							alt="The Sharktech Global team building VCPility"
-							width={960}
-							widths={[480, 960]}
-							sizes="(max-width: 960px) 92vw, 520px"
-						/>
-						<figcaption>Engineered by Sharktech Global, Sydney</figcaption>
+				<div class="vst-split-l">
+					<p class="eyebrow reveal">What it means for you</p>
+					<h2 class="section-title section-title--sm reveal-lines">
+						<span class="line"><span class="line__inner">A Product Team Behind</span></span>
+						<span class="line" style="--i: 1"
+							><span class="line__inner">Your Growth Engine</span></span
+						>
+					</h2>
+					<figure class="vst-split-img" data-reveal>
+						<div class="vst-split-img__frame">
+							<Image
+								src={teamPhoto}
+								alt="The Sharktech Global team building VCPility"
+								width={960}
+								widths={[480, 960]}
+								sizes="(max-width: 960px) 90vw, 45vw"
+							/>
+						</div>
+						<figcaption><span>Sydney</span> Engineered by Sharktech Global</figcaption>
 					</figure>
 				</div>
 
-				<div class="vst-points">
+				<ol class="vst-points">
 					{
 						points.map(({ title, desc }, i) => (
-							<div class="vst-point reveal" style={`--d: ${i * 0.08}s`}>
-								<h3>
-									<em>{String(i + 1).padStart(2, '0')}</em>
-									{title}
-								</h3>
+							<li class="vst-point reveal" style={`--d: ${i * 0.08}s`}>
+								<span class="vst-point__num">{pad(i + 1)}</span>
+								<h3>{title}</h3>
 								<p>{desc}</p>
-							</div>
+							</li>
 						))
 					}
-				</div>
+				</ol>
 			</div>
 		</section>
 
-		<!-- ===== Stats ===== -->
+		<!-- ============================================
+		     Stats
+		     ============================================ -->
 		<div class="vst-wrap">
 			<dl class="vst-stats">
 				{
 					stats.map(({ value, suffix, label }, i) => (
-						<div class="reveal" style={`--d: ${i * 0.1}s`}>
+						<div class="vst-stat reveal" style={`--d: ${i * 0.1}s`}>
+							<dt>{label}</dt>
 							<dd data-count={value} data-suffix={suffix} data-count-delay={i * 150}>
 								{value}
 								{suffix}
 							</dd>
-							<dt>{label}</dt>
 						</div>
 					))
 				}
 			</dl>
 		</div>
 
-		<!-- ===== Portfolio ===== -->
+		<!-- ============================================
+		     Portfolio
+		     ============================================ -->
 		<section class="vst-sec">
 			<div class="vst-wrap">
-				<div class="vst-port-head reveal">
+				<header class="vst-head">
 					<div>
-						<p class="vst-tag">The Sharktech portfolio</p>
-						<h2 class="vst-h vst-h--sm">Where <span class="vst-u">VCPility</span> Fits</h2>
+						<p class="eyebrow reveal">The Sharktech portfolio</p>
+						<h2 class="section-title section-title--sm reveal-lines">
+							<span class="line"><span class="line__inner">Where VCPility Fits</span></span>
+						</h2>
 					</div>
-					<p>
-						Five AI platforms, one engineering team. VCPility handles growth; its siblings cover accounting,
-						industry, wellness and hospitality.
+					<p class="vst-head__lead reveal" style="--d: 0.15s">
+						Five AI platforms, one engineering team. VCPility handles growth; its siblings cover accounting, industry,
+						wellness and hospitality.
 					</p>
-				</div>
+				</header>
 
 				<div class="vst-port">
 					<article class="vst-feat reveal">
@@ -353,9 +352,9 @@ const offices = [
 						</div>
 						<h3>VCPility</h3>
 						<p>The growth engine of the group. Every enquiry answered, booked and followed up from one platform.</p>
-						<div class="vst-mods">
-							{vcpModules.map(({ label, ai }) => <span class={ai ? 'is-ai' : undefined}>{label}</span>)}
-						</div>
+						<ul class="vst-mods">
+							{vcpModules.map(({ label, ai }) => <li class={ai ? 'is-ai' : undefined}>{label}</li>)}
+						</ul>
 						<div class="vst-feat-foot">
 							<span>Growth &amp; marketing</span>
 							<span>Flagship platform</span>
@@ -380,11 +379,16 @@ const offices = [
 			</div>
 		</section>
 
-		<!-- ===== Journey ===== -->
+		<!-- ============================================
+		     Journey
+		     ============================================ -->
 		<section class="vst-sec vst-dark">
 			<div class="vst-wrap">
-				<p class="vst-tag">Our journey together</p>
-				<h2 class="vst-h vst-h--sm">From One Idea To A <span class="vst-u">Platform Group</span></h2>
+				<p class="eyebrow reveal">Our journey together</p>
+				<h2 class="section-title section-title--sm reveal-lines">
+					<span class="line"><span class="line__inner">From One Idea To A</span></span>
+					<span class="line" style="--i: 1"><span class="line__inner">Platform Group</span></span>
+				</h2>
 				<ol class="vst-tl">
 					{
 						timeline.map(({ when, title, desc, milestone }, i) => (
@@ -401,14 +405,19 @@ const offices = [
 			</div>
 		</section>
 
-		<!-- ===== FAQ ===== -->
+		<!-- ============================================
+		     FAQ
+		     ============================================ -->
 		<section class="vst-sec" id="vst-faq">
-			<div class="vst-wrap" style="text-align: center">
-				<p class="vst-tag">FAQ</p>
-				<h2 class="vst-h vst-h--sm vst-h--center">About VCPility And Sharktech</h2>
-			</div>
-			<div class="vst-wrap">
-				<div class="vst-faq reveal">
+			<div class="vst-wrap vst-faq-grid">
+				<div class="vst-faq-head">
+					<p class="eyebrow reveal">FAQ</p>
+					<h2 class="section-title section-title--sm reveal-lines">
+						<span class="line"><span class="line__inner">About VCPility</span></span>
+						<span class="line" style="--i: 1"><span class="line__inner">And Sharktech</span></span>
+					</h2>
+				</div>
+				<div class="vst-faq reveal" style="--d: 0.15s">
 					{
 						faqs.map(({ q, a }, i) => (
 							<details open={i === 0}>
@@ -421,38 +430,43 @@ const offices = [
 			</div>
 		</section>
 
-		<!-- ===== CTA + offices ===== -->
-		<section class="vst-sec" style="padding-top: 0">
+		<!-- ============================================
+		     CTA + offices
+		     ============================================ -->
+		<section class="vst-sec vst-sec--flush">
 			<div class="vst-wrap">
 				<div class="vst-cta reveal">
 					<div>
-						<p class="vst-tag">Connect with us</p>
-						<h2 class="vst-h vst-h--sm">Grow With VCPility, <span class="vst-u">Backed By Sharktech</span></h2>
+						<p class="eyebrow">Connect with us</p>
+						<h2 class="section-title section-title--sm">
+							Grow With VCPility, Backed By Sharktech
+						</h2>
 						<p class="vst-lead">
-							One platform to manage leads, bookings, reviews and campaigns, so every enquiry gets an instant
-							response.
+							One platform to manage leads, bookings, reviews and campaigns, so every enquiry gets an instant response.
 						</p>
 					</div>
 					<div class="vst-cta-links">
-						<a class="vst-btn" href="https://sharktech.com.au" target="_blank" rel="noopener">
-							Visit Sharktech Global <span aria-hidden="true">↗</span>
+						<a class="btn btn--accent btn--shine" href="/contact">
+							Book a VCPility demo
+							<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icons.arrow} />
 						</a>
-						<a class="vst-btn vst-btn--dark" href="/contact">
-							Book a VCPility demo <span aria-hidden="true">→</span>
+						<a class="btn btn--link vst-btn-light" href="https://sharktech.com.au" target="_blank" rel="noopener">
+							Visit Sharktech Global
+							<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icons.external} />
 						</a>
 					</div>
 				</div>
 
-				<div class="vst-addr reveal">
+				<dl class="vst-addr reveal">
 					{
 						offices.map(({ label, detail }) => (
 							<div>
-								<b>{label}</b>
-								{detail}
+								<dt>{label}</dt>
+								<dd>{detail}</dd>
 							</div>
 						))
 					}
-				</div>
+				</dl>
 			</div>
 		</section>
 	</div>

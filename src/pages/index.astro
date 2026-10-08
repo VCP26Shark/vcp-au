@@ -1,7 +1,6 @@
 ---
 import { Image } from 'astro:assets';
 import Layout from '../layouts/Layout.astro';
-import '../styles/components/bento.css';
 import '../styles/pages/home.css';
 
 import booking from '../assets/home/hero/booking.webp';
@@ -36,12 +35,7 @@ const icons = {
 
 /* ----- Hero ----- */
 
-const heroTitle = [
-	['Stop Drowning'],
-	['in ', 'Admin'],
-	['Start Growing'],
-	['Your ', 'Business'],
-];
+const heroTitle = ['Stop Drowning', 'in Admin', 'Start Growing', 'Your Business'];
 
 const heroStats = [
 	{ value: 15, suffix: '+', label: 'Hours Saved Weekly' },
@@ -105,7 +99,7 @@ const heroTrack = [...heroSlides, heroSlides[0]];
 
 /* ----- Pain points ----- */
 
-const painTitle = [["You're Great at What You Do."], ['But the Business Side?'], ['', 'Exhausting.']];
+const painTitle = ["You're Great at What You Do.", 'But the Business Side?', 'Exhausting.'];
 
 const painPoints = [
 	{
@@ -165,17 +159,6 @@ const notifications = [
 	{ count: 23, title: 'Unanswered', meta: "Where's my invoice?", icon: icons.chat },
 ];
 
-// Dashed connectors from each notification to the device (500 × 420 stage)
-const struggleLines = [
-	'M90,50 Q170,100 250,130',
-	'M410,40 Q330,90 250,130',
-	'M50,170 Q130,190 250,210',
-	'M450,160 Q370,190 250,210',
-	'M70,310 Q150,270 250,250',
-	'M430,300 Q350,270 250,250',
-	'M250,400 Q250,340 250,270',
-];
-
 /* ----- How it works ----- */
 
 const steps = [
@@ -199,7 +182,6 @@ const dots = (y: number) => `<path d="M8 ${y}h.01M12 ${y}h.01M16 ${y}h.01"/>`;
 
 const features = [
 	{
-		size: 'lg',
 		variant: 'dark',
 		label: 'Core Feature',
 		title: 'All-in-One CRM',
@@ -209,7 +191,6 @@ const features = [
 		icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>',
 	},
 	{
-		size: 'md',
 		label: 'Automation',
 		title: 'AI Chatbot',
 		href: '/features#chatbot',
@@ -217,8 +198,6 @@ const features = [
 		icon: icons.chat + dots(10),
 	},
 	{
-		size: 'sm',
-		variant: 'highlight',
 		label: 'Scheduling',
 		title: 'Smart Booking',
 		href: '/features#smart-booking',
@@ -226,7 +205,6 @@ const features = [
 		icon: icons.calendar + dots(14),
 	},
 	{
-		size: 'sm',
 		label: 'On The Go',
 		title: 'Mobile App',
 		href: '/features#mobile-app',
@@ -234,7 +212,6 @@ const features = [
 		icon: icons.mobile,
 	},
 	{
-		size: 'md',
 		label: 'Analytics',
 		title: 'AI Dashboard',
 		href: '/features#ai-dashboard',
@@ -335,31 +312,32 @@ const industries = [
 	<!-- ============================================
 	     Hero
 	     ============================================ -->
-	<section class="hero grid-bg">
+	<section class="hero">
 		<div class="hero__container">
 			<div class="hero__content">
-				<p class="eyebrow hero__eyebrow">AI-Powered Automation</p>
+				<p class="eyebrow hero__eyebrow reveal">AI-Powered Automation</p>
 
-				<h1 class="hero__title" aria-label="Stop drowning in admin. Start growing your business.">
+				<h1
+					class="hero__title reveal-lines"
+					style="--d: 0.1s"
+					aria-label="Stop drowning in admin. Start growing your business."
+				>
 					{
-						heroTitle.map(([text, mark], i) => (
+						heroTitle.map((text, i) => (
 							<span class="line" style={`--i: ${i}`} aria-hidden="true">
-								<span class="line__inner">
-									{text}
-									{mark && <span class="mark">{mark}</span>}
-								</span>
+								<span class="line__inner">{text}</span>
 							</span>
 						))
 					}
 				</h1>
 
-				<p class="hero__subtitle">
-					You didn't start your business to chase leads or spend weekends on paperwork. Let AI
-					handle the busy work while you focus on what you do best.
+				<p class="hero__subtitle reveal" style="--d: 0.45s">
+					You didn't start your business to chase leads or spend weekends on paperwork. Let AI handle the busy work
+					while you focus on what you do best.
 				</p>
 
-				<div class="hero__buttons">
-					<a href="#three-steps" class="btn btn--dark">
+				<div class="hero__buttons reveal" style="--d: 0.55s">
+					<a href="#three-steps" class="btn btn--accent btn--shine">
 						See How It Works
 						<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
 					</a>
@@ -369,18 +347,12 @@ const industries = [
 					</a>
 				</div>
 
-				<dl class="hero__stats">
+				<dl class="hero__stats reveal" style="--d: 0.65s">
 					{
 						heroStats.map(({ value, suffix, decimals = 0, label }) => (
 							<div class="hero__stat">
-								<dt class="hero__stat-label">{label}</dt>
-								<dd
-									class="hero__stat-value"
-									data-count={value}
-									data-decimals={decimals}
-									data-suffix={suffix}
-									data-count-delay="900"
-								>
+								<dt>{label}</dt>
+								<dd data-count={value} data-decimals={decimals} data-suffix={suffix} data-count-delay="700">
 									{value.toFixed(decimals)}
 									{suffix}
 								</dd>
@@ -390,8 +362,9 @@ const industries = [
 				</dl>
 			</div>
 
-			<div class="hero__visual" data-pause-offscreen>
-				<div class="hero__accent"></div>
+			<!-- Product carousel over a live mesh-gradient shader -->
+			<div class="hero__visual reveal" style="--d: 0.2s" data-pause-offscreen>
+				<canvas class="shader" aria-hidden="true" data-shader></canvas>
 
 				<div
 					class="hero__frame"
@@ -400,11 +373,6 @@ const industries = [
 					aria-label="VCPility features"
 					data-hero-carousel
 				>
-					<span class="hero__corner hero__corner--tl"></span>
-					<span class="hero__corner hero__corner--tr"></span>
-					<span class="hero__corner hero__corner--bl"></span>
-					<span class="hero__corner hero__corner--br"></span>
-
 					<div class="hero__track" data-hero-track>
 						{
 							heroTrack.map(({ image, title, subtitle, icon }, i) => {
@@ -423,7 +391,7 @@ const industries = [
 												alt={isClone ? '' : title}
 												width={960}
 												widths={[480, 960]}
-												sizes="440px"
+												sizes="(max-width: 1024px) 80vw, 520px"
 												loading="eager"
 												fetchpriority={i === 0 ? 'high' : 'low'}
 											/>
@@ -432,7 +400,7 @@ const industries = [
 											<span class="hero__caption-icon">
 												<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icon} />
 											</span>
-											<span class="hero__caption-text">
+											<span>
 												<span class="hero__caption-title">{title}</span>
 												<span class="hero__caption-subtitle">{subtitle}</span>
 											</span>
@@ -442,35 +410,23 @@ const industries = [
 							})
 						}
 					</div>
-
 					<span class="hero__progress" data-hero-progress></span>
-				</div>
-
-				<div class="hero__card hero__card--leads">
-					<span class="hero__card-icon">
-						<svg viewBox="0 0 24 24" aria-hidden="true">
-							<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-							<polyline points="22 4 12 14.01 9 11.01"></polyline>
-						</svg>
-					</span>
-					<span>
-						<span class="hero__card-value">117</span>
-						<span class="hero__card-label">Leads This Week</span>
-					</span>
-				</div>
-
-				<div class="hero__card hero__card--active">
-					<span class="hero__card-icon">
-						<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icons.clock} />
-					</span>
-					<span>
-						<span class="hero__card-value">24/7</span>
-						<span class="hero__card-label">Always Active</span>
-					</span>
 				</div>
 			</div>
 		</div>
 	</section>
+
+	<!-- ----- Capability marquee (rendered twice for a seamless -50% loop) ----- -->
+	<div class="marquee" aria-hidden="true" data-pause-offscreen>
+		<div class="marquee__track">
+			{[...heroSlides, ...heroSlides].map(({ title, icon }) => (
+				<span class="marquee__item">
+					<svg viewBox="0 0 24 24" set:html={icon} />
+					{title}
+				</span>
+			))}
+		</div>
+	</div>
 
 	<script>
 		/* Hero: carousel steps through the slides, with a progress rule timing each one */
@@ -534,51 +490,43 @@ const industries = [
 	<!-- ============================================
 	     Pain points
 	     ============================================ -->
-	<section class="pain grid-bg">
-		<div class="pain__container">
-			<header class="pain__header">
-				<p class="eyebrow reveal">Sound Familiar?</p>
-
-				<h2 class="section-title reveal-lines" style="--d: 0.1s">
-					{
-						painTitle.map(([text, mark], i) => (
-							<span class="line" style={`--i: ${i}`}>
-								<span class="line__inner">
-									{text}
-									{mark && <span class="mark">{mark}</span>}
+	<section class="sec pain">
+		<div class="container">
+			<header class="sec-head">
+				<div>
+					<p class="eyebrow reveal">Sound Familiar?</p>
+					<h2 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
+						{
+							painTitle.map((text, i) => (
+								<span class="line" style={`--i: ${i}`}>
+									<span class="line__inner">{text}</span>
 								</span>
-							</span>
-						))
-					}
-				</h2>
-
-				<p class="section-lead reveal" style="--d: 0.3s">
-					Every day, brilliant business owners like you lose hours to tasks that never seem to end.
-					It's exhausting, frustrating, and holds you back from real growth.
+							))
+						}
+					</h2>
+				</div>
+				<p class="sec-head__lead reveal" style="--d: 0.3s">
+					Every day, brilliant business owners like you lose hours to tasks that never seem to end. It's exhausting,
+					frustrating, and holds you back from real growth.
 				</p>
 			</header>
 
 			<ul class="pain__grid">
 				{
 					painPoints.map(({ title, desc, icon }, i) => (
-						<li class="reveal" style={`--d: ${i * 0.08}s`}>
-							<article class="pain__card">
-								<span class="pain__num" aria-hidden="true">
-									{String(i + 1).padStart(2, '0')}
-								</span>
-								<span class="pain__icon">
-									<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icon} />
-								</span>
-								<h3 class="pain__card-title">{title}</h3>
-								<p class="pain__card-desc">{desc}</p>
-							</article>
+						<li class="pain__item reveal" style={`--d: ${(i % 3) * 0.08}s`}>
+							<span class="pain__icon">
+								<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icon} />
+							</span>
+							<h3>{title}</h3>
+							<p>{desc}</p>
 						</li>
 					))
 				}
 			</ul>
 
 			<div class="pain__cta reveal">
-				<a href="/contact" class="btn btn--accent">
+				<a href="/contact" class="btn btn--link">
 					See How We Fix This
 					<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
 				</a>
@@ -587,41 +535,28 @@ const industries = [
 	</section>
 
 	<!-- ============================================
-	     Daily struggle
+	     Daily struggle (Animated List)
 	     ============================================ -->
-	<section class="struggle grid-bg">
-		<div class="struggle__container">
-			<header class="struggle__header">
-				<p class="eyebrow eyebrow--center reveal">The Daily Struggle</p>
-
-				<h2 class="section-title section-title--compact reveal-lines" style="--d: 0.1s">
-					<span class="line">
-						<span class="line__inner">You're Drowning in <span class="mark">Busywork</span></span>
-					</span>
+	<section class="sec struggle">
+		<div class="container struggle__grid">
+			<div>
+				<p class="eyebrow reveal">The Daily Struggle</p>
+				<h2 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
+					<span class="line"><span class="line__inner">You're Drowning</span></span>
+					<span class="line" style="--i: 1"><span class="line__inner">in Busywork</span></span>
 				</h2>
-
-				<p class="section-lead reveal" style="--d: 0.25s">
-					While you're juggling admin tasks, your competitors are closing deals. Every hour spent on
-					manual work is revenue slipping through your fingers.
+				<p class="sec-head__lead struggle__lead reveal" style="--d: 0.25s">
+					While you're juggling admin tasks, your competitors are closing deals. Every hour spent on manual work is
+					revenue slipping through your fingers.
 				</p>
 
-				<div class="struggle__cta reveal" style="--d: 0.35s">
-					<a href="/features" class="btn btn--accent btn--compact">
-						View All Features
-						<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
-					</a>
-				</div>
-			</header>
-
-			<div class="struggle__content">
 				<ul class="struggle__list">
 					{
 						struggles.map(({ title, desc, value, prefix = '', suffix = '', decimals = 0 }, i) => (
-							<li class="struggle__item reveal" style={`--d: ${0.1 + i * 0.1}s`}>
-								<span class="struggle__indicator"></span>
-								<span class="struggle__item-body">
-									<strong class="struggle__item-title">{title}</strong>
-									<span class="struggle__item-desc">{desc}</span>
+							<li class="struggle__item reveal" style={`--d: ${0.1 + i * 0.06}s`}>
+								<span>
+									<strong>{title}</strong>
+									<span>{desc}</span>
 								</span>
 								<span
 									class="struggle__stat"
@@ -639,91 +574,69 @@ const industries = [
 					}
 				</ul>
 
-				<div class="struggle__visual reveal" style="--d: 0.2s" data-pause-offscreen>
-					<p class="struggle__status">
-						<span class="struggle__status-dot"></span>
-						Your Day Without Automation
-					</p>
-
-					<div class="struggle__stage" aria-hidden="true">
-						<svg class="struggle__lines" viewBox="0 0 500 420" preserveAspectRatio="none">
-							{struggleLines.map((d) => <path d={d} />)}
-						</svg>
-
-						<div class="struggle__device">
-							<div class="struggle__screen">
-								<div class="struggle__statusbar">
-									<span>9:41</span>
-									<span class="struggle__island"></span>
-									<span class="struggle__battery"></span>
-								</div>
-								<div class="struggle__device-bar">
-									<span class="struggle__device-dots"><span></span><span></span><span></span></span>
-									<span class="struggle__device-title">Your Day</span>
-								</div>
-								<div class="struggle__device-body">
-									<span class="struggle__emoji">😰</span>
-									<span class="struggle__device-text">Overwhelmed</span>
-									<span class="struggle__bars">
-										<span style="--w: 85%; --n: 0"></span>
-										<span style="--w: 60%; --n: 1"></span>
-										<span style="--w: 40%; --n: 2"></span>
-									</span>
-								</div>
-								<span class="struggle__home"></span>
-							</div>
-						</div>
-
-						{
-							notifications.map(({ count, title, meta, icon }, i) => (
-								<div class={`struggle__notif struggle__notif--${i + 1}`} style={`--i: ${i}`}>
-									<span class="struggle__notif-badge">{count}</span>
-									<span class="struggle__notif-icon">
-										<svg viewBox="0 0 24 24" set:html={icon} />
-									</span>
-									<span class="struggle__notif-text">
-										<strong>{title}</strong>
-										<span>{meta}</span>
-									</span>
-								</div>
-							))
-						}
-					</div>
+				<div class="struggle__cta reveal">
+					<a href="/features" class="btn btn--link">
+						View All Features
+						<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+					</a>
 				</div>
+			</div>
+
+			<div class="alist reveal" style="--d: 0.2s" aria-hidden="true" data-pause-offscreen>
+				<div class="alist__bar">
+					<span class="alist__live"></span>
+					Your day without automation
+					<span class="alist__time">Today</span>
+				</div>
+				<ul class="alist__list" data-alist>
+					{
+						notifications.map(({ count, title, meta, icon }) => (
+							<li class="alist__item">
+								<span class="alist__icon">
+									<svg viewBox="0 0 24 24" set:html={icon} />
+								</span>
+								<span class="alist__text">
+									<strong>{title}</strong>
+									<span>{meta}</span>
+								</span>
+								<span class="alist__count">{count}</span>
+							</li>
+						))
+					}
+				</ul>
+				<div class="alist__fade"></div>
 			</div>
 		</div>
 	</section>
 
 	<!-- ============================================
-	     How it works
+	     How it works (Animated Beam)
 	     ============================================ -->
-	<section class="hiw grid-bg" id="three-steps">
-		<div class="hiw__container">
-			<header class="hiw__header">
-				<p class="eyebrow eyebrow--center reveal">Simple as 1-2-3</p>
-
-				<h2 class="section-title section-title--compact reveal-lines" style="--d: 0.1s">
-					<span class="line">
-						<span class="line__inner">Get Your Time Back in <span class="mark">3 Steps</span></span>
-					</span>
-				</h2>
-
-				<p class="section-lead reveal" style="--d: 0.25s">
+	<section class="sec hiw" id="three-steps">
+		<div class="container">
+			<header class="sec-head">
+				<div>
+					<p class="eyebrow reveal">Simple as 1-2-3</p>
+					<h2 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
+						<span class="line"><span class="line__inner">Get Your Time Back</span></span>
+						<span class="line" style="--i: 1"><span class="line__inner">in 3 Steps</span></span>
+					</h2>
+				</div>
+				<p class="sec-head__lead reveal" style="--d: 0.25s">
 					No tech skills needed. We handle the setup. You enjoy the results.
 				</p>
 			</header>
 
-			<ol class="hiw__steps" role="list" data-reveal data-pause-offscreen>
+			<ol class="hiw__steps" data-reveal data-pause-offscreen>
+				<li class="hiw__beam" aria-hidden="true"></li>
 				{
 					steps.map(({ title, desc }, i) => (
-						<li class="reveal" style={`--d: ${0.1 + i * 0.12}s; --i: ${i}`}>
-							<div class="hiw__step">
-								<span class="hiw__num" aria-hidden="true">
-									{i + 1}
-								</span>
-								<h3 class="hiw__title">{title}</h3>
-								<p class="hiw__desc">{desc}</p>
-							</div>
+						<li class="hiw__step" style={`--i: ${i}`}>
+							<span class="hiw__node" aria-hidden="true">
+								{String(i + 1).padStart(2, '0')}
+							</span>
+							<h3>{title}</h3>
+							<p>{desc}</p>
 						</li>
 					))
 				}
@@ -732,58 +645,48 @@ const industries = [
 	</section>
 
 	<!-- ============================================
-	     Features
+	     Features (Bento grid + Magic Card spotlight)
 	     ============================================ -->
-	<section class="features grid-bg">
-		<div class="features__container">
-			<header class="features__header">
-				<div class="features__intro">
+	<section class="sec features">
+		<div class="container">
+			<header class="sec-head">
+				<div>
 					<p class="eyebrow reveal">Platform Features</p>
-
 					<h2 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
-						<span class="line" style="--i: 0"><span class="line__inner">Everything You Need,</span></span>
-						<span class="line" style="--i: 1">
-							<span class="line__inner"><span class="mark">One Platform</span></span>
-						</span>
+						<span class="line"><span class="line__inner">Everything You Need,</span></span>
+						<span class="line" style="--i: 1"><span class="line__inner">One Platform</span></span>
 					</h2>
-
-					<p class="features__lead reveal" style="--d: 0.25s">
-						<strong>20+ business management tools</strong> — all in one easy-to-use platform.
-					</p>
 				</div>
-
-				<div class="features__cta reveal" style="--d: 0.3s">
-					<a href="/features" class="btn btn--accent btn--compact">
+				<div class="sec-head__lead reveal" style="--d: 0.25s">
+					<p><strong>20+ business management tools</strong>, all in one easy-to-use platform.</p>
+					<a href="/features" class="btn btn--link">
 						View All Features
 						<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
 					</a>
 				</div>
 			</header>
 
-			<ul class="bento">
+			<ul class="fbento">
 				{
-					features.map(({ size, variant, label, title, href, desc, list, icon }, i) => (
-						<li class={`bento__item bento__item--${size} reveal`} style={`--d: ${0.1 + i * 0.06}s`}>
-							<a href={href} class:list={['tile', variant && `tile--${variant}`]}>
-								<span class="tile__icon">
+					features.map(({ variant, label, title, href, desc, list, icon }, i) => (
+						<li class={`fbento__item fbento__item--${i + 1} reveal`} style={`--d: ${i * 0.06}s`}>
+							<a href={href} class:list={['mcard', variant === 'dark' && 'mcard--dark']} data-spotlight>
+								<span class="mcard__icon">
 									<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icon} />
 								</span>
-								<span class="tile__label">{label}</span>
-								<h3 class="tile__title">{title}</h3>
-								<p class="tile__desc">{desc}</p>
+								<span class="mcard__label">{label}</span>
+								<h3 class="mcard__title">{title}</h3>
+								<p class="mcard__desc">{desc}</p>
 								{list && (
-									<ul class="tile__list">
+									<ul class="mcard__list">
 										{list.map((item) => (
 											<li>{item}</li>
 										))}
 									</ul>
 								)}
-								<span class="tile__more">
+								<span class="mcard__more">
 									Learn more
 									<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
-								</span>
-								<span class="tile__num" aria-hidden="true">
-									{String(i + 1).padStart(2, '0')}
 								</span>
 							</a>
 						</li>
@@ -796,70 +699,67 @@ const industries = [
 	<!-- ============================================
 	     Stats band
 	     ============================================ -->
-	<section class="stats" data-reveal>
-		<dl class="stats__grid">
-			{
-				bandStats.map(({ value, suffix = '', text, label }, i) => (
-					<div class="stats__item reveal" style={`--d: ${i * 0.1}s`}>
-						<dt class="stats__label">{label}</dt>
-						{value === undefined ? (
-							<dd class="stats__value mesh-text">{text}</dd>
-						) : (
-							<dd
-								class="stats__value mesh-text"
-								data-count={value}
-								data-suffix={suffix}
-								data-count-delay={i * 150}
-							>
-								{value}
-								{suffix}
-							</dd>
-						)}
-					</div>
-				))
-			}
-		</dl>
+	<section class="stats">
+		<div class="container">
+			<dl class="stats__grid">
+				{
+					bandStats.map(({ value, suffix = '', text, label }, i) => (
+						<div class="stats__item reveal" style={`--d: ${i * 0.08}s`}>
+							<dt>{label}</dt>
+							{value === undefined ? (
+								<dd>{text}</dd>
+							) : (
+								<dd data-count={value} data-suffix={suffix} data-count-delay={i * 120}>
+									{value}
+									{suffix}
+								</dd>
+							)}
+						</div>
+					))
+				}
+			</dl>
+		</div>
 	</section>
 
 	<!-- ============================================
 	     Testimonials
 	     ============================================ -->
-	<section class="testimonials grid-bg">
-		<div class="testimonials__container">
-			<header class="testimonials__header">
-				<p class="eyebrow eyebrow--center reveal">Real Results</p>
-
-				<h2 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
-					<span class="line">
-						<span class="line__inner">Businesses Like Yours Are <span class="mark">Thriving</span></span>
-					</span>
-				</h2>
-
-				<p class="section-lead reveal" style="--d: 0.25s">
-					Don't just take our word for it. Here's what our clients say.
-				</p>
-
-				<div class="testimonials__cta reveal" style="--d: 0.35s">
-					<a href="/contact" class="btn btn--accent btn--compact">
+	<section class="sec testimonials">
+		<div class="container">
+			<header class="sec-head">
+				<div>
+					<p class="eyebrow reveal">Real Results</p>
+					<h2 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
+						<span class="line"><span class="line__inner">Businesses Like Yours</span></span>
+						<span class="line" style="--i: 1"><span class="line__inner">Are Thriving</span></span>
+					</h2>
+				</div>
+				<div class="sec-head__lead reveal" style="--d: 0.25s">
+					<p>Don't just take our word for it. Here's what our clients say.</p>
+					<a href="/contact" class="btn btn--link">
 						Get Results Like These
 						<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
 					</a>
 				</div>
 			</header>
 
-			<ul class="testimonials__grid">
+			<ul class="quotes">
 				{
 					testimonials.map(({ quote, name, role }, i) => (
 						<li class="reveal" style={`--d: ${i * 0.1}s`}>
-							<figure class="quote-card">
-								<span class="quote-card__mark" aria-hidden="true">
-									“
+							<figure class="quote" data-spotlight>
+								<span class="quote__stars" role="img" aria-label="Rated 5 out of 5">
+									{Array.from({ length: 5 }, () => (
+										<svg viewBox="0 0 20 20" aria-hidden="true">
+											<path d={starPath} />
+										</svg>
+									))}
 								</span>
-								<blockquote class="quote-card__text">
+								<blockquote>
 									<p>{quote}</p>
 								</blockquote>
-								<figcaption class="quote-card__author">
-									<span class="quote-card__avatar" aria-hidden="true">
+								<figcaption>
+									<span class="quote__avatar" aria-hidden="true">
 										{name.replace(/^Dr\.\s*/, '')[0]}
 									</span>
 									<span>
@@ -867,13 +767,6 @@ const industries = [
 										<span>{role}</span>
 									</span>
 								</figcaption>
-								<span class="quote-card__stars" role="img" aria-label="Rated 5 out of 5">
-									{Array.from({ length: 5 }, () => (
-										<svg viewBox="0 0 20 20" aria-hidden="true">
-											<path d={starPath} />
-										</svg>
-									))}
-								</span>
 							</figure>
 						</li>
 					))
@@ -883,57 +776,242 @@ const industries = [
 	</section>
 
 	<!-- ============================================
-	     Industries
+	     Industries (hover list with image preview)
 	     ============================================ -->
-	<section class="industries grid-bg" id="built-for-you">
-		<div class="industries__container">
-			<header class="industries__header">
-				<p class="eyebrow eyebrow--center reveal">Built For You</p>
-
-				<h2 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
-					<span class="line">
-						<span class="line__inner">We Speak Your <span class="mark">Industry's Language</span></span>
-					</span>
-				</h2>
-
-				<p class="section-lead reveal" style="--d: 0.25s">
+	<section class="sec industries" id="built-for-you">
+		<div class="container">
+			<header class="sec-head">
+				<div>
+					<p class="eyebrow reveal">Built For You</p>
+					<h2 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
+						<span class="line"><span class="line__inner">We Speak Your</span></span>
+						<span class="line" style="--i: 1"><span class="line__inner">Industry's Language</span></span>
+					</h2>
+				</div>
+				<p class="sec-head__lead reveal" style="--d: 0.25s">
 					Custom solutions designed for how your business actually works.
 				</p>
 			</header>
 
-			<ul class="industries__grid">
-				{
-					industries.map(({ title, desc, photo, icon }, i) => (
-						<li class="reveal" style={`--d: ${0.1 + i * 0.08}s`}>
-							<a href="/contact" class:list={['ind-card', !photo && 'ind-card--no-photo']}>
-								{photo && (
-									<Image
-										class="ind-card__photo"
-										src={photo}
-										alt=""
-										width={960}
-										widths={[480, 960]}
-										sizes="(max-width: 768px) 92vw, (max-width: 1024px) 46vw, 420px"
-									/>
-								)}
-								<span class="ind-card__num mesh-text" aria-hidden="true">
-									{String(i + 1).padStart(2, '0')}
-								</span>
-								<span class="ind-card__content">
-									<span class="ind-card__icon">
-										<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icon} />
+			<div class="ind" data-ind>
+				<ol class="ind__list">
+					{
+						industries.map(({ title, desc, icon }, i) => (
+							<li class="reveal" style={`--d: ${i * 0.05}s`}>
+								<a href="/contact" class:list={['ind__item', i === 0 && 'is-active']} data-ind-item={i}>
+									<span class="ind__num">{String(i + 1).padStart(2, '0')}</span>
+									<span class="ind__body">
+										<span class="ind__title">
+											<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icon} />
+											{title}
+										</span>
+										<span class="ind__desc"><span>{desc}</span></span>
 									</span>
-									<h3 class="ind-card__title">{title}</h3>
-									<p class="ind-card__desc">{desc}</p>
-								</span>
-								<span class="ind-card__arrow" aria-hidden="true">
-									<svg viewBox="0 0 24 24" set:html={arrow} />
-								</span>
-							</a>
-						</li>
-					))
-				}
-			</ul>
+									<svg class="ind__arrow" viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+								</a>
+							</li>
+						))
+					}
+				</ol>
+
+				<div class="ind__media reveal" style="--d: 0.15s" aria-hidden="true">
+					{
+						industries.map(({ title, photo, icon }, i) => (
+							<figure class:list={['ind__figure', i === 0 && 'is-active']} data-ind-media={i}>
+								{photo ? (
+									<Image src={photo} alt="" width={1200} widths={[640, 1200]} sizes="(max-width: 1024px) 0px, 45vw" />
+								) : (
+									<span class="ind__placeholder">
+										<svg viewBox="0 0 24 24" set:html={icon} />
+									</span>
+								)}
+								<figcaption>{title}</figcaption>
+							</figure>
+						))
+					}
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- ============================================
+	     Closing CTA (same shader as the hero)
+	     ============================================ -->
+	<section class="cta" data-pause-offscreen>
+		<canvas class="shader" aria-hidden="true" data-shader></canvas>
+		<div class="container cta__inner reveal">
+			<h2 class="section-title section-title--sm">Ready to Get Your Time Back?</h2>
+			<p>Book a free strategy call and see what VCPility can take off your plate.</p>
+			<div class="cta__buttons">
+				<a href="/contact" class="btn btn--light btn--shine">
+					Book Free Strategy Call
+					<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+				</a>
+				<a href="/plans" class="btn btn--link cta__link">
+					View Plans
+					<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+				</a>
+			</div>
 		</div>
 	</section>
 </Layout>
+
+<script>
+	const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+	/* ----- Mesh-gradient shader -----
+	   Domain-warped noise in the brand colours, drawn at reduced resolution.
+	   Pauses off screen; draws one still frame for reduced motion. Without WebGL
+	   the canvas stays empty and the CSS gradient underneath shows instead. */
+	const VERT = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
+	const FRAG = `
+		precision mediump float;
+		uniform vec2 r;
+		uniform float t;
+		float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+		float noise(vec2 p){
+			vec2 i=floor(p),f=fract(p),u=f*f*(3.-2.*f);
+			return mix(mix(hash(i),hash(i+vec2(1,0)),u.x),mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),u.x),u.y);
+		}
+		float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<4;i++){v+=a*noise(p);p*=2.;a*=.5;}return v;}
+		void main(){
+			vec2 uv=gl_FragCoord.xy/r;
+			vec2 p=gl_FragCoord.xy/max(r.x,r.y)*2.6;
+			float s=t*.045;
+			vec2 q=vec2(fbm(p+s),fbm(p+vec2(5.2,1.3)-s));
+			vec2 w=vec2(fbm(p+2.*q+vec2(1.7,9.2)+s*1.4),fbm(p+2.*q+vec2(8.3,2.8)-s));
+			float n=fbm(p+1.8*w);
+			vec3 ink=vec3(.06,.05,.07),deep=vec3(.224,.016,.306),acc=vec3(.878,.012,.282),pink=vec3(1.,.55,.7);
+			vec3 c=mix(ink,deep,smoothstep(.18,.5,n));
+			c=mix(c,acc,smoothstep(.42,.72,n)*.9);
+			c=mix(c,pink,smoothstep(.68,.9,n+.08*w.x)*.32);
+			c*=1.-.3*length(uv-.5);
+			c+=(hash(gl_FragCoord.xy)-.5)*.025;
+			gl_FragColor=vec4(c,1.);
+		}`;
+
+	const startShader = (canvas: HTMLCanvasElement) => {
+		const gl = canvas.getContext('webgl', { antialias: false, alpha: false, powerPreference: 'low-power' });
+		if (!gl) return;
+
+		const compile = (type: number, src: string) => {
+			const shader = gl.createShader(type)!;
+			gl.shaderSource(shader, src);
+			gl.compileShader(shader);
+			return shader;
+		};
+		const program = gl.createProgram()!;
+		gl.attachShader(program, compile(gl.VERTEX_SHADER, VERT));
+		gl.attachShader(program, compile(gl.FRAGMENT_SHADER, FRAG));
+		gl.linkProgram(program);
+		if (!gl.getProgramParameter(program, gl.LINK_STATUS)) return;
+		gl.useProgram(program);
+
+		gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+		gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+		const loc = gl.getAttribLocation(program, 'p');
+		gl.enableVertexAttribArray(loc);
+		gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+		const uRes = gl.getUniformLocation(program, 'r');
+		const uTime = gl.getUniformLocation(program, 't');
+
+		const SCALE = 0.5; // the gradient is soft, so half resolution looks the same at a quarter of the cost
+		const seed = Math.random() * 100;
+		let frame = 0;
+		let visible = false;
+
+		const draw = (now: number) => {
+			gl.uniform1f(uTime, seed + now / 1000);
+			gl.drawArrays(gl.TRIANGLES, 0, 3);
+		};
+		const loop = (now: number) => {
+			draw(now);
+			frame = requestAnimationFrame(loop);
+		};
+		const resize = () => {
+			const { width, height } = canvas.getBoundingClientRect();
+			canvas.width = Math.max(1, Math.round(width * SCALE));
+			canvas.height = Math.max(1, Math.round(height * SCALE));
+			gl.viewport(0, 0, canvas.width, canvas.height);
+			gl.uniform2f(uRes, canvas.width, canvas.height);
+			draw(performance.now());
+		};
+		const start = () => {
+			if (!reduceMotion && !frame && visible && !document.hidden) frame = requestAnimationFrame(loop);
+		};
+		const stop = () => {
+			cancelAnimationFrame(frame);
+			frame = 0;
+		};
+
+		new ResizeObserver(resize).observe(canvas);
+		new IntersectionObserver(([entry]) => {
+			visible = entry.isIntersecting;
+			visible ? start() : stop();
+		}).observe(canvas);
+		document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
+		canvas.classList.add('is-live');
+	};
+
+	document.querySelectorAll<HTMLCanvasElement>('[data-shader]').forEach(startShader);
+
+	/* ----- Animated List (after Magic UI) -----
+	   Notifications drop in at the top one by one and the oldest falls off the
+	   bottom, looping. Without JS (or with reduced motion) the full list shows. */
+	const alist = document.querySelector<HTMLElement>('[data-alist]');
+
+	if (alist && !reduceMotion) {
+		const templates = [...alist.children] as HTMLElement[];
+		const VISIBLE = 5;
+		let next = 0;
+		let timer = 0;
+
+		alist.replaceChildren();
+		alist.classList.add('is-animated');
+
+		const push = () => {
+			const item = templates[next % templates.length].cloneNode(true) as HTMLElement;
+			next++;
+			item.classList.add('is-entering');
+			alist.prepend(item);
+			requestAnimationFrame(() => requestAnimationFrame(() => item.classList.remove('is-entering')));
+			while (alist.children.length > VISIBLE) alist.lastElementChild?.remove();
+		};
+
+		new IntersectionObserver(([entry]) => {
+			clearInterval(timer);
+			if (!entry.isIntersecting) return;
+			if (!alist.children.length) for (let k = 0; k < 3; k++) push();
+			timer = window.setInterval(push, 1800);
+		}).observe(alist);
+	}
+
+	/* ----- Magic Card spotlight: a soft glow and border light that follow the pointer ----- */
+	if (!reduceMotion) {
+		document.querySelectorAll<HTMLElement>('[data-spotlight]').forEach((card) => {
+			card.addEventListener('pointermove', (e) => {
+				const box = card.getBoundingClientRect();
+				card.style.setProperty('--mx', `${e.clientX - box.left}px`);
+				card.style.setProperty('--my', `${e.clientY - box.top}px`);
+			});
+		});
+	}
+
+	/* ----- Industries: hovering or focusing a row swaps the preview image ----- */
+	const ind = document.querySelector<HTMLElement>('[data-ind]');
+
+	if (ind) {
+		const items = [...ind.querySelectorAll<HTMLElement>('[data-ind-item]')];
+		const figures = [...ind.querySelectorAll<HTMLElement>('[data-ind-media]')];
+
+		const activate = (i: number) => {
+			items.forEach((el, n) => el.classList.toggle('is-active', n === i));
+			figures.forEach((el, n) => el.classList.toggle('is-active', n === i));
+		};
+
+		items.forEach((item, i) => {
+			item.addEventListener('pointerenter', () => activate(i));
+			item.addEventListener('focus', () => activate(i));
+		});
+	}
+</script>

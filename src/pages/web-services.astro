@@ -1,0 +1,425 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import teamPhoto from '../assets/web-services/team.jpg';
+import wireframePhoto from '../assets/web-services/wireframe.jpg';
+import codePhoto from '../assets/web-services/code.jpg';
+import '../styles/pages/web-services.css';
+
+/* Photos are CC0 (public domain) from StockSnap.io: no licence fee or credit required. */
+
+/* ----- Services ----- */
+
+const services = [
+	{
+		title: 'Website Design & Development',
+		desc: 'Custom marketing sites designed around how your customers decide. Fast, accessible, built to rank and easy for your team to update.',
+		tags: ['UX & UI design', 'Responsive build', 'CMS'],
+	},
+	{
+		title: 'Web Applications',
+		desc: 'Client portals, dashboards and internal tools, engineered by the same team that builds and runs the Sharktech platforms.',
+		tags: ['Portals', 'Dashboards', 'APIs'],
+	},
+	{
+		title: 'E-commerce',
+		desc: 'Online stores that load quickly and check out cleanly, connected to your stock, payments and shipping.',
+		tags: ['Storefronts', 'Payments', 'Inventory sync'],
+	},
+	{
+		title: 'Integrations & AI Automation',
+		desc: 'Your site wired into your CRM, bookings and inbox, with AI agents answering and qualifying every enquiry around the clock.',
+		tags: ['CRM', 'AI chatbots', 'Workflows'],
+	},
+	{
+		title: 'SEO & Performance',
+		desc: 'Technical SEO, Core Web Vitals and analytics set up from day one, so every improvement shows up in the numbers.',
+		tags: ['Technical SEO', 'Core Web Vitals', 'Analytics'],
+	},
+	{
+		title: 'Hosting, Care & Support',
+		desc: 'Secure managed hosting, updates and backups, with a team in Sydney and Melbourne on call during business hours.',
+		tags: ['Managed hosting', 'Security', 'Maintenance'],
+	},
+];
+
+/* ----- Why VCPility ----- */
+
+const principles = [
+	{
+		title: 'The Depth of a Product Company',
+		desc: 'We build and run software for a living. Your project gets the same engineering standards, infrastructure and security as the Sharktech platforms.',
+	},
+	{
+		title: 'Senior People, Start to Finish',
+		desc: 'The team that scopes your project is the team that designs and builds it. One point of contact, no hand-offs and no surprises.',
+	},
+	{
+		title: 'Measured on Results',
+		desc: 'Before we start, we agree the numbers that matter, like enquiries, bookings, speed and rankings. After launch, we report against them.',
+	},
+];
+
+/* ----- Results -----
+   Numeric entries count up from zero; `text` entries render as they are. */
+
+const results = [
+	{ count: 50, suffix: '+', label: 'Businesses grown on Sharktech-built platforms' },
+	{ count: 90, suffix: '+', label: 'Lighthouse performance score we build every site to' },
+	{ count: 2.5, decimals: 1, prefix: '<', suffix: 's', label: 'Largest Contentful Paint target at launch' },
+	{ text: 'AA', label: 'WCAG 2.2 accessibility on every build, as standard' },
+];
+
+/* ----- Process ----- */
+
+const steps = [
+	{
+		title: 'Discover',
+		desc: "We learn your business, customers and goals, then agree a scope, a timeline and the numbers we'll measure.",
+	},
+	{
+		title: 'Design',
+		desc: 'Wireframes and visual designs you can click through, refined with you before production code is written.',
+	},
+	{
+		title: 'Build',
+		desc: 'Engineered for speed, accessibility and search, tested across devices and connected to the tools you use.',
+	},
+	{
+		title: 'Launch & Grow',
+		desc: 'A careful launch, then ongoing care: monitoring, updates and improvements guided by real data.',
+	},
+];
+
+const pad = (n: number) => String(n).padStart(2, '0');
+const arrow = '<path d="M5 12h14M12 5l7 7-7 7"/>';
+---
+
+<Layout
+	title="Web Services & Development | VCPility"
+	description="VCPility is the web services and development arm of Sharktech Global. Websites, web apps, e-commerce and integrations, designed, engineered and supported by an experienced Australian team."
+	keywords="web development Australia, website design Sydney, web applications, e-commerce development, Sharktech Global, VCPility"
+>
+	<!-- ============================================
+	     Hero
+	     ============================================ -->
+	<section class="ws-hero">
+		<canvas class="ws-hero__grid" aria-hidden="true" data-flicker-grid></canvas>
+
+		<div class="ws-hero__content">
+			<p class="eyebrow ws-hero__eyebrow reveal">Sharktech Global · Web Services</p>
+
+			<h1 class="ws-hero__title reveal-lines" style="--d: 0.1s">
+				<span class="line" style="--i: 0"><span class="line__inner">Websites engineered</span></span>
+				<span class="line" style="--i: 1"
+					><span class="line__inner">to grow your business.</span></span
+				>
+			</h1>
+
+			<p class="ws-hero__lead reveal" style="--d: 0.35s">
+				VCPility is the web services and development side of Sharktech Global. We plan, design, build and look after
+				websites and web applications that bring in real, measurable results.
+			</p>
+
+			<div class="ws-hero__actions reveal" style="--d: 0.45s">
+				<a href="/contact" class="btn btn--accent btn--shine">
+					Start a project
+					<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+				</a>
+				<a href="#services" class="btn btn--link">What we build</a>
+			</div>
+		</div>
+
+		<ul class="ws-hero__facts reveal" style="--d: 0.6s">
+			<li><span>Part of</span> Sharktech Global</li>
+			<li><span>Based in</span> Sydney &amp; Melbourne</li>
+			<li><span>From</span> Strategy to support</li>
+		</ul>
+	</section>
+
+	<!-- ============================================
+	     Statement + why VCPility
+	     ============================================ -->
+	<section class="ws-intro">
+		<div class="ws-wrap">
+			<p class="eyebrow reveal">Who we are</p>
+			<p class="ws-intro__statement reveal" style="--d: 0.1s">
+				A product company's engineering depth, with <em>the care of a studio.</em> Every site we launch is built
+				to the standards we use for our own platforms.
+			</p>
+
+			<figure class="ws-figure ws-figure--wide" data-reveal>
+				<div class="ws-figure__frame">
+					<Image
+						src={teamPhoto}
+						alt="A small team working through a project together around a table with laptops and notebooks"
+						widths={[800, 1400, 2000, 2400]}
+						sizes="90vw"
+					/>
+				</div>
+				<figcaption><span>Studio</span> Strategy, design and engineering around one table</figcaption>
+			</figure>
+
+			<ol class="ws-principles">
+				{
+					principles.map(({ title, desc }, i) => (
+						<li class="ws-principle reveal" style={`--d: ${i * 0.1}s`}>
+							<span class="ws-principle__num">{pad(i + 1)}</span>
+							<h3>{title}</h3>
+							<p>{desc}</p>
+						</li>
+					))
+				}
+			</ol>
+		</div>
+	</section>
+
+	<!-- ============================================
+	     Services
+	     ============================================ -->
+	<section class="ws-services" id="services">
+		<div class="ws-wrap">
+			<header class="ws-head">
+				<div>
+					<p class="eyebrow reveal">What we do</p>
+					<h2 class="section-title section-title--sm reveal-lines">
+						<span class="line"><span class="line__inner">Everything your</span></span>
+						<span class="line" style="--i: 1"
+							><span class="line__inner">business needs online.</span></span
+						>
+					</h2>
+				</div>
+				<p class="ws-head__lead reveal" style="--d: 0.15s">
+					One team for the whole job, from the first sketch to the thousandth visitor. Take a single service or
+					hand us the lot.
+				</p>
+			</header>
+
+			<ul class="ws-service-list">
+				{
+					services.map(({ title, desc, tags }, i) => (
+						<li class="ws-service reveal" style={`--d: ${(i % 2) * 0.08}s`}>
+							<span class="ws-service__num">{pad(i + 1)}</span>
+							<h3 class="ws-service__title">{title}</h3>
+							<div class="ws-service__body">
+								<p>{desc}</p>
+								<ul class="ws-tags">
+									{tags.map((tag) => (
+										<li>{tag}</li>
+									))}
+								</ul>
+							</div>
+						</li>
+					))
+				}
+			</ul>
+
+			<div class="ws-pair">
+				<figure class="ws-figure" data-reveal>
+					<div class="ws-figure__frame">
+						<Image
+							src={wireframePhoto}
+							alt="Hand-drawn website wireframes on paper with a pen resting on top"
+							widths={[640, 1000, 1400]}
+							sizes="(max-width: 768px) 90vw, 45vw"
+						/>
+					</div>
+					<figcaption><span>Design</span> Every layout starts as a sketch</figcaption>
+				</figure>
+				<figure class="ws-figure" data-reveal style="--d: 0.15s">
+					<div class="ws-figure__frame">
+						<Image
+							src={codePhoto}
+							alt="Close-up of colourful source code on a dark editor screen"
+							widths={[640, 1000, 1400]}
+							sizes="(max-width: 768px) 90vw, 45vw"
+						/>
+					</div>
+					<figcaption><span>Build</span> Hand-written code, engineered to last</figcaption>
+				</figure>
+			</div>
+		</div>
+	</section>
+
+	<!-- ============================================
+	     Results
+	     ============================================ -->
+	<section class="ws-results">
+		<div class="ws-wrap">
+			<header class="ws-head">
+				<div>
+					<p class="eyebrow reveal">Results</p>
+					<h2 class="section-title section-title--sm reveal-lines">
+						<span class="line"><span class="line__inner">Quality you can</span></span>
+						<span class="line" style="--i: 1"><span class="line__inner">measure.</span></span>
+					</h2>
+				</div>
+				<p class="ws-head__lead reveal" style="--d: 0.15s">
+					Good-looking is the starting point. We hold every build to clear standards for speed, accessibility and
+					search, because that's what turns visitors into enquiries.
+				</p>
+			</header>
+
+			<dl class="ws-stats">
+				{
+					results.map(({ count, decimals, prefix = '', suffix = '', text, label }, i) => (
+						<div class="ws-stat reveal" style={`--d: ${i * 0.08}s`}>
+							<dt class="ws-stat__label">{label}</dt>
+							{count !== undefined ? (
+								<dd
+									class="ws-stat__value"
+									data-count={count}
+									data-decimals={decimals}
+									data-prefix={prefix}
+									data-suffix={suffix}
+									data-count-delay={i * 120}
+								>
+									{prefix}
+									{count}
+									{suffix}
+								</dd>
+							) : (
+								<dd class="ws-stat__value">{text}</dd>
+							)}
+						</div>
+					))
+				}
+			</dl>
+		</div>
+	</section>
+
+	<!-- ============================================
+	     Process
+	     ============================================ -->
+	<section class="ws-process">
+		<div class="ws-wrap">
+			<header class="ws-head">
+				<div>
+					<p class="eyebrow reveal">How we work</p>
+					<h2 class="section-title section-title--sm reveal-lines">
+						<span class="line"><span class="line__inner">A clear process,</span></span>
+						<span class="line" style="--i: 1"
+							><span class="line__inner">start to launch.</span></span
+						>
+					</h2>
+				</div>
+				<p class="ws-head__lead reveal" style="--d: 0.15s">
+					You'll always know what's happening, what's next and what it costs. No jargon, no black boxes.
+				</p>
+			</header>
+
+			<ol class="ws-steps" data-reveal>
+				{
+					steps.map(({ title, desc }, i) => (
+						<li class="ws-step" style={`--i: ${i}`}>
+							<span class="ws-step__num">{pad(i + 1)}</span>
+							<h3>{title}</h3>
+							<p>{desc}</p>
+						</li>
+					))
+				}
+			</ol>
+		</div>
+	</section>
+
+	<!-- ============================================
+	     CTA (Border Beam)
+	     ============================================ -->
+	<section class="ws-cta-section">
+		<div class="ws-wrap">
+			<div class="ws-cta reveal" data-pause-offscreen>
+				<span class="ws-cta__beam" aria-hidden="true"></span>
+				<span class="ws-cta__beam ws-cta__beam--trail" aria-hidden="true"></span>
+
+				<p class="eyebrow eyebrow--center">Let's build it</p>
+				<h2 class="section-title section-title--compact">Have a project in mind?</h2>
+				<p class="ws-cta__lead">
+					Tell us what you're planning. We'll come back with clear next steps and an honest estimate.
+				</p>
+				<div class="ws-cta__actions">
+					<a href="/contact" class="btn btn--accent btn--shine">
+						Start a project
+						<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+					</a>
+					<a href="mailto:growth@vcpility.com.au" class="btn btn--link">growth@vcpility.com.au</a>
+				</div>
+			</div>
+		</div>
+	</section>
+</Layout>
+
+<script>
+	/* Flickering Grid (after Magic UI): a canvas of small squares that randomly
+	   fade in and out. Pauses off screen and draws a still frame for reduced motion. */
+	const canvas = document.querySelector<HTMLCanvasElement>('[data-flicker-grid]');
+	const ctx = canvas?.getContext('2d');
+
+	if (canvas && ctx) {
+		const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+		const square = 4;
+		const gap = 6;
+		const cell = square + gap;
+		const maxOpacity = 0.32;
+		const flickerChance = 0.25; // per square, per second
+		const color = '224, 3, 72';
+
+		let cols = 0;
+		let rows = 0;
+		let dpr = 1;
+		let squares = new Float32Array(0);
+		let frame = 0;
+		let last = 0;
+		let visible = false;
+
+		const draw = () => {
+			ctx.clearRect(0, 0, canvas.width, canvas.height);
+			const size = square * dpr;
+			for (let x = 0; x < cols; x++) {
+				for (let y = 0; y < rows; y++) {
+					ctx.fillStyle = `rgba(${color}, ${squares[x * rows + y]})`;
+					ctx.fillRect(x * cell * dpr, y * cell * dpr, size, size);
+				}
+			}
+		};
+
+		const resize = () => {
+			dpr = Math.min(devicePixelRatio || 1, 2);
+			const { width, height } = canvas.getBoundingClientRect();
+			canvas.width = width * dpr;
+			canvas.height = height * dpr;
+			cols = Math.ceil(width / cell);
+			rows = Math.ceil(height / cell);
+			squares = new Float32Array(cols * rows).map(() => Math.random() * maxOpacity);
+			draw();
+		};
+
+		const tick = (now: number) => {
+			const dt = Math.min((now - last) / 1000, 0.1);
+			last = now;
+			for (let i = 0; i < squares.length; i++) {
+				if (Math.random() < flickerChance * dt) squares[i] = Math.random() * maxOpacity;
+			}
+			draw();
+			frame = requestAnimationFrame(tick);
+		};
+
+		const start = () => {
+			if (reduceMotion || frame) return;
+			last = performance.now();
+			frame = requestAnimationFrame(tick);
+		};
+
+		const stop = () => {
+			cancelAnimationFrame(frame);
+			frame = 0;
+		};
+
+		new ResizeObserver(resize).observe(canvas);
+		new IntersectionObserver(([entry]) => {
+			visible = entry.isIntersecting;
+			visible ? start() : stop();
+		}).observe(canvas);
+
+		document.addEventListener('visibilitychange', () => (document.hidden ? stop() : visible && start()));
+	}
+</script>

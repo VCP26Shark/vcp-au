@@ -1,442 +1,107 @@
 /* ============================================
    Built by Sharktech Global page
-   Everything is scoped under .vst so the page's dark panels and gradient
-   treatments can't leak into the shared components.
+   Scoped under .vst. Type, eyebrows and buttons come from
+   the shared classes in global.css; this file adds the page's own pieces.
    ============================================ */
 
 .vst {
-	/* Neutrals stay explicit: this page's palette is flat grey, not the slate
-	   greys of --color-gray-*. Ink, accent and surface come from the globals. */
-	--vst-ink: var(--color-ink);
-	--vst-ink-2: #3a3a3a;
-	--vst-line: #e3e3e3;
-	--vst-paper: var(--color-white);
-	--vst-wash: var(--color-surface);
-	--vst-night: #1c1c1c;
-	--vst-acc: var(--color-accent);
-	--vst-acc-deep: var(--color-accent-deep);
+	--vst-ink-2: var(--color-gray-600);
+	--vst-line: rgb(26 26 26 / 0.12);
+	--vst-night: #161616;
 	--vst-acc-tint: #ff8fb3;
 	/* Channel lists, so the accents can be mixed at any opacity */
 	--vst-acc-rgb: 224 3 72;
 	--vst-acc-deep-rgb: 57 4 78;
-	--vst-grad: var(--gradient-accent);
-	/* Dot grid shared by every dark panel */
+	/* Dot grid shared by the dark panels */
 	--vst-dots: radial-gradient(#2a2a2a 1px, transparent 1px) 0 0 / 18px 18px;
-
-	font-family: var(--font-sans);
-	line-height: 1.55;
-	color: var(--vst-ink);
-	background: var(--vst-paper);
 }
 
-.vst a:focus-visible,
-.vst summary:focus-visible {
-	border-radius: 6px;
-	outline: 2px solid var(--vst-acc);
-	outline-offset: 3px;
-}
-
+/* Same gutter as the navbar, so every section shares its left edge */
 .vst-wrap {
-	max-width: 1280px;
-	margin: 0 auto;
-	padding: 0 var(--gutter);
+	padding-inline: var(--gutter);
 }
 
 .vst-sec {
-	padding: 96px 0;
+	padding-block: clamp(96px, 10vw, 160px);
 }
 
-/* ----- Eyebrow ----- */
-
-.vst-tag {
-	display: inline-flex;
-	gap: 6px;
-	align-items: center;
-	margin-bottom: 14px;
-	font-size: 12px;
-	font-weight: 600;
-	letter-spacing: 0.02em;
-	color: var(--vst-ink-2);
+.vst-sec--flush {
+	padding-top: 0;
 }
 
-.vst-tag::after {
-	content: '↗';
-	font-size: 11px;
-}
-
-/* ----- Headings -----
-   Two-tone fade, so the tail of each headline drops back into grey. */
-
-.vst-h {
-	margin-bottom: -0.06em;
-	padding-bottom: 0.14em;
-	font-size: clamp(34px, 5vw, 60px);
-	font-weight: 700;
-	line-height: 1.12;
-	letter-spacing: -0.045em;
-	color: transparent;
-	background: linear-gradient(90deg, var(--vst-ink) 0 38%, #9a9a9a 62%);
-	-webkit-background-clip: text;
-	background-clip: text;
-}
-
-.vst-h--sm {
-	font-size: clamp(28px, 3.6vw, 44px);
-}
-
-.vst-h--center {
-	background-position: center;
-}
-
-/* Gradient rule under a key phrase */
-.vst-u {
-	padding-bottom: 0.1em;
-	background: var(--vst-grad) left bottom / 100% 0.07em no-repeat;
-	-webkit-box-decoration-break: clone;
-	box-decoration-break: clone;
+.vst .eyebrow {
+	margin-bottom: 24px;
 }
 
 .vst-lead {
-	max-width: 60ch;
-	margin-top: 18px;
-	font-size: 17px;
+	max-width: 58ch;
+	margin-top: 28px;
+	font-size: clamp(17px, 0.3vw + 15px, 19px);
+	line-height: 1.7;
 	color: var(--vst-ink-2);
 }
 
-/* ----- Buttons ----- */
-
-.vst-btns {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 10px;
-	margin-top: 30px;
-}
-
-.vst-btn {
-	display: inline-flex;
-	align-items: center;
-	gap: 12px;
-	padding: 12px 14px 12px 20px;
-	font-size: 14px;
-	font-weight: 600;
-	border: 1px solid var(--vst-line);
-	border-radius: 999px;
-	background: var(--vst-paper);
-	transition:
-		transform 0.25s var(--ease-out),
-		box-shadow 0.25s ease,
-		border-color 0.25s ease;
-}
-
-.vst-btn span {
+/* Title on the left, lead on the right, aligned to the baseline */
+.vst-head {
 	display: grid;
-	place-items: center;
-	width: 28px;
-	height: 28px;
-	font-size: 13px;
-	color: var(--color-white);
-	border-radius: 50%;
-	background: var(--vst-ink);
-	transition: transform 0.25s var(--ease-out);
+	grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+	align-items: end;
+	gap: 28px 80px;
+	margin-bottom: clamp(48px, 5vw, 80px);
 }
 
-.vst-btn:hover {
-	border-color: var(--vst-ink);
-	box-shadow: 0 10px 24px -10px rgb(0 0 0 / 0.35);
-	transform: translateY(-2px);
+.vst-head__lead {
+	font-size: 17px;
+	line-height: 1.75;
+	color: var(--color-gray-500);
 }
 
-.vst-btn:hover span {
-	transform: translateX(3px);
-}
-
-.vst-btn--dark {
-	color: var(--color-white);
-	border-color: var(--vst-ink);
-	background: var(--vst-ink);
-}
-
-.vst-btn--dark span {
-	background: var(--vst-grad);
+/* The down arrow nudges down, not sideways */
+.vst-btn-down:hover svg {
+	transform: translateY(4px);
 }
 
 /* ============================================
    Hero
    ============================================ */
 
+/* Plain paper and type: the headline runs the full width, and the copy and
+   fact file sit in two columns under a hairline */
 .vst-hero {
-	position: relative;
-	overflow: hidden;
-	padding: 140px 0 88px;
-	/* Aurora wash in the two opposite corners */
-	background:
-		radial-gradient(640px 420px at 12% 0%, rgb(var(--vst-acc-rgb) / 0.1), transparent 70%),
-		radial-gradient(560px 420px at 95% 100%, rgb(var(--vst-acc-deep-rgb) / 0.1), transparent 70%),
-		var(--vst-wash);
-}
-
-/* Grid that dissolves away from the headline */
-.vst-hero::before {
-	content: '';
-	position: absolute;
-	inset: 0;
-	pointer-events: none;
-	background-image:
-		linear-gradient(rgb(0 0 0 / 0.05) 1px, transparent 1px),
-		linear-gradient(90deg, rgb(0 0 0 / 0.05) 1px, transparent 1px);
-	background-size: 64px 64px;
-	-webkit-mask: radial-gradient(ellipse at 30% 40%, #000 10%, transparent 70%);
-	mask: radial-gradient(ellipse at 30% 40%, #000 10%, transparent 70%);
-}
-
-.vst-hero > .vst-wrap {
-	position: relative;
-	z-index: 1;
+	padding: 160px 0 clamp(80px, 8vw, 120px);
 }
 
 .vst-hero-grid {
 	display: grid;
-	grid-template-columns: 1.1fr 0.9fr;
-	gap: 56px;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
+	gap: clamp(48px, 8vw, 140px);
+	align-items: start;
+	margin-top: clamp(48px, 5vw, 72px);
+	padding-top: clamp(32px, 3vw, 44px);
+	border-top: 1px solid var(--vst-line);
+}
+
+.vst-hero-grid .vst-lead {
+	margin-top: 0;
+}
+
+.vst-eyebrow {
+	color: var(--color-accent);
+}
+
+.vst-hero__title {
+	font-size: clamp(44px, 7vw + 8px, 140px);
+	font-weight: 800;
+	line-height: 1;
+	letter-spacing: -0.045em;
+}
+
+.vst-btns {
+	display: flex;
+	flex-wrap: wrap;
 	align-items: center;
-}
-
-/* The hero eyebrow is a live-status pill rather than a plain label */
-.vst-hero .vst-tag {
-	padding: 6px 14px 6px 10px;
-	border: 1px solid var(--vst-line);
-	border-radius: 999px;
-	background: rgb(255 255 255 / 0.8);
-	backdrop-filter: blur(6px);
-}
-
-.vst-hero .vst-tag::before {
-	content: '';
-	width: 7px;
-	height: 7px;
-	border-radius: 50%;
-	background: var(--vst-acc);
-	box-shadow: 0 0 0 0 rgb(var(--vst-acc-rgb) / 0.5);
-	animation: vst-ping 2s infinite;
-}
-
-@keyframes vst-ping {
-	70% {
-		box-shadow: 0 0 0 7px rgb(var(--vst-acc-rgb) / 0);
-	}
-
-	100% {
-		box-shadow: 0 0 0 0 rgb(var(--vst-acc-rgb) / 0);
-	}
-}
-
-/* ----- Orbital hub diagram ----- */
-
-.vst-tree {
-	position: relative;
-	padding: 20px;
-	overflow: hidden;
-	color: var(--color-white);
-	border-radius: 32px;
-	background:
-		radial-gradient(circle at 50% 50%, rgb(var(--vst-acc-rgb) / 0.22), transparent 55%),
-		var(--vst-dots),
-		#141414;
-}
-
-.vst-orbit {
-	position: relative;
-	width: 100%;
-	max-width: 480px;
-	margin: 0 auto;
-	aspect-ratio: 1;
-}
-
-.vst-orbit svg {
-	position: absolute;
-	inset: 0;
-	width: 100%;
-	height: 100%;
-	overflow: visible;
-}
-
-.vst-ring {
-	fill: none;
-	stroke: #2f2f2f;
-	stroke-width: 1;
-	vector-effect: non-scaling-stroke;
-}
-
-.vst-ring--dash {
-	stroke: #3a3a3a;
-	stroke-dasharray: 2 6;
-}
-
-.vst-wire {
-	stroke: #555;
-	stroke-width: 1;
-	stroke-dasharray: 3 5;
-	vector-effect: non-scaling-stroke;
-}
-
-/* The one live wire: core to VCPility */
-.vst-wire--on {
-	stroke: url(#vstBeam);
-	stroke-width: 2;
-	stroke-dasharray: none;
-}
-
-.vst-beam-from {
-	stop-color: var(--vst-acc);
-	stop-opacity: 0.35;
-}
-
-.vst-beam-to {
-	stop-color: var(--vst-acc-tint);
-}
-
-.vst-pulse {
-	fill: var(--vst-acc-tint);
-	filter: drop-shadow(0 0 3px var(--vst-acc));
-	animation: vst-pulse 2.4s cubic-bezier(0.5, 0, 0.3, 1) infinite;
-}
-
-@keyframes vst-pulse {
-	0% {
-		opacity: 0;
-		transform: translateY(0);
-	}
-
-	15%,
-	85% {
-		opacity: 1;
-	}
-
-	100% {
-		opacity: 0;
-		transform: translateY(-17px);
-	}
-}
-
-/* Core: the same black engine box as the VCPility hero */
-.vst-core {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	display: grid;
-	place-content: center;
-	gap: 6px;
-	width: 34%;
-	padding: 8px;
-	aspect-ratio: 1;
-	text-align: center;
-	border: 1px solid #3a3a3a;
-	border-radius: 24%;
-	background: linear-gradient(145deg, #2a2a2a, #0d0d0d);
-	box-shadow:
-		0 0 0 8px rgb(var(--vst-acc-rgb) / 0.06),
-		0 20px 40px rgb(0 0 0 / 0.6),
-		inset 0 1px 0 rgb(255 255 255 / 0.08);
-	transform: translate(-50%, -50%);
-}
-
-.vst-core i {
-	width: 34px;
-	height: 34px;
-	margin: 0 auto 4px;
-	border: 2px solid var(--vst-acc);
-	border-radius: 50%;
-	box-shadow:
-		0 0 18px rgb(var(--vst-acc-rgb) / 0.8),
-		inset 0 0 10px rgb(var(--vst-acc-rgb) / 0.6);
-}
-
-.vst-core b {
-	font-size: clamp(12px, 2.4vw, 15px);
-	line-height: 1.15;
-	letter-spacing: -0.02em;
-}
-
-.vst-core small {
-	font-size: clamp(9px, 1.6vw, 11px);
-	line-height: 1.3;
-	color: #9a9a9a;
-}
-
-.vst-core::after {
-	content: '';
-	position: absolute;
-	right: 32%;
-	bottom: 6%;
-	left: 32%;
-	height: 2px;
-	border-radius: 2px;
-	background: var(--vst-acc);
-	box-shadow: 0 0 10px var(--vst-acc);
-}
-
-/* ----- Satellites ----- */
-
-.vst-node {
-	position: absolute;
-	padding: 8px 12px;
-	font-size: 12px;
-	font-weight: 600;
-	white-space: nowrap;
-	text-align: center;
-	color: #d0d0d0;
-	border: 1px solid #333;
-	border-radius: 12px;
-	background: rgb(30 30 30 / 0.92);
-	backdrop-filter: blur(4px);
-	transform: translate(-50%, -50%);
-}
-
-.vst-node small {
-	display: block;
-	margin-top: 1px;
-	font-size: 10px;
-	font-weight: 500;
-	color: #7d7d7d;
-}
-
-.vst-node--on {
-	padding: 12px 18px;
-	font-size: 15px;
-	color: var(--color-white);
-	border-color: var(--vst-acc-tint);
-	border-radius: 14px;
-	background: linear-gradient(180deg, var(--vst-acc), var(--vst-acc-deep));
-	box-shadow:
-		0 0 0 6px rgb(var(--vst-acc-rgb) / 0.15),
-		0 0 40px rgb(var(--vst-acc-rgb) / 0.55);
-}
-
-.vst-node--on small {
-	color: #ffd1df;
-}
-
-.vst-tree-note {
-	position: relative;
-	max-width: 36ch;
-	margin: 6px auto 4px;
-	font-size: 13px;
-	text-align: center;
-	text-wrap: balance;
-	color: #a8a8a8;
-	display:none;
-}
-
-.vst-tree-note::before {
-	content: '';
-	display: inline-block;
-	width: 6px;
-	height: 6px;
-	margin: 0 8px 2px 0;
-	vertical-align: middle;
-	border-radius: 50%;
-	background: var(--color-green);
-	box-shadow: 0 0 8px var(--color-green);
+	gap: 20px 40px;
+	margin-top: clamp(32px, 4vw, 44px);
 }
 
 /* ----- Leadership strip ----- */
@@ -444,21 +109,19 @@
 .vst-leader {
 	display: flex;
 	align-items: center;
-	gap: 14px;
-	max-width: 520px;
-	margin-top: 32px;
+	gap: 16px;
+	max-width: 540px;
+	margin-top: clamp(40px, 4vw, 56px);
 	padding-top: 24px;
 	border-top: 1px solid var(--vst-line);
 }
 
 .vst-leader-ava {
-	position: relative;
 	flex: none;
 	width: 52px;
 	height: 52px;
 	padding: 2px;
-	border-radius: 50%;
-	background: var(--vst-grad);
+	background: var(--gradient-accent);
 }
 
 .vst-leader-ava img,
@@ -467,23 +130,102 @@
 	place-items: center;
 	width: 100%;
 	height: 100%;
-	font-size: 16px;
+	font-size: 15px;
 	font-weight: 700;
+	letter-spacing: 0.04em;
 	color: var(--color-white);
-	border: 2px solid var(--vst-wash);
-	border-radius: 50%;
-	background: var(--vst-night);
+	background: var(--color-ink);
 	object-fit: cover;
 }
 
 .vst-leader p {
 	font-size: 14px;
-	line-height: 1.45;
+	line-height: 1.55;
 	color: var(--vst-ink-2);
 }
 
 .vst-leader b {
-	color: var(--vst-ink);
+	color: var(--color-ink);
+}
+
+/* ----- Fact file: a ruled sidebar, like a magazine's company box ----- */
+
+.vst-file {
+	border-top: 2px solid var(--color-ink);
+}
+
+.vst-file__head {
+	display: flex;
+	justify-content: space-between;
+	align-items: baseline;
+	gap: 16px;
+	padding-block: 16px;
+	border-bottom: 1px solid var(--vst-line);
+}
+
+.vst-file__head span {
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	color: var(--color-accent);
+}
+
+.vst-file__head h2 {
+	font-size: 15px;
+	font-weight: 700;
+	letter-spacing: -0.01em;
+}
+
+.vst-file dl > div {
+	display: grid;
+	grid-template-columns: 120px minmax(0, 1fr);
+	gap: 16px;
+	padding-block: 14px;
+	border-bottom: 1px solid var(--vst-line);
+}
+
+.vst-file dt {
+	padding-top: 2px;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 1.5px;
+	text-transform: uppercase;
+	color: var(--color-gray-400);
+}
+
+.vst-file dd {
+	font-size: 15px;
+	line-height: 1.55;
+}
+
+/* VCPility's own line, set apart with an accent rule */
+.vst-file__here {
+	display: grid;
+	grid-template-columns: 120px minmax(0, 1fr);
+	gap: 16px;
+	padding: 16px 0 16px 16px;
+	border-bottom: 2px solid var(--color-ink);
+	background: var(--gradient-accent) left / 3px 100% no-repeat;
+}
+
+.vst-file__here span {
+	padding-top: 2px;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 1.5px;
+	text-transform: uppercase;
+	color: var(--color-accent);
+}
+
+.vst-file__here p {
+	font-size: 15px;
+	line-height: 1.55;
+	color: var(--vst-ink-2);
+}
+
+.vst-file__here b {
+	color: var(--color-ink);
 }
 
 /* ============================================
@@ -492,18 +234,17 @@
 
 .vst-marquee {
 	overflow: hidden;
-	padding: 22px 0;
+	padding: 26px 0;
 	border-block: 1px solid var(--vst-line);
-	background: var(--vst-paper);
-	-webkit-mask: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
-	mask: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+	-webkit-mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+	mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
 }
 
 /* The track holds the list twice over, so -50% lands on a seamless loop */
 .vst-mq-track {
 	display: flex;
 	width: max-content;
-	animation: vst-marquee 40s linear infinite;
+	animation: vst-marquee 45s linear infinite;
 }
 
 .vst-marquee:hover .vst-mq-track {
@@ -513,26 +254,24 @@
 .vst-mq-track span {
 	display: inline-flex;
 	align-items: center;
-	gap: 28px;
-	padding-right: 28px;
-	font-size: clamp(18px, 2vw, 24px);
-	font-weight: 600;
-	letter-spacing: -0.02em;
+	gap: 36px;
+	padding-right: 36px;
+	font-size: clamp(20px, 1.6vw + 10px, 32px);
+	font-weight: 700;
+	letter-spacing: -0.03em;
 	white-space: nowrap;
-	color: var(--vst-ink);
 }
 
+/* Small square separators, echoing the site's square marks */
 .vst-mq-track span::after {
-	content: '✦';
-	font-size: 0.7em;
-	color: transparent;
-	background: var(--vst-grad);
-	-webkit-background-clip: text;
-	background-clip: text;
+	content: '';
+	width: 8px;
+	height: 8px;
+	background: var(--gradient-accent);
 }
 
 .vst-mq-ai {
-	color: var(--vst-acc);
+	color: var(--color-accent);
 }
 
 @keyframes vst-marquee {
@@ -547,88 +286,66 @@
 
 .vst-split {
 	display: grid;
-	/* minmax(0,…) stops the long point rows from pushing the columns out of
-	   proportion, so the two halves keep the same split at every width */
 	grid-template-columns: minmax(0, 1fr) minmax(0, 1.06fr);
-	gap: 64px;
+	gap: clamp(48px, 6vw, 96px);
 	align-items: start;
 }
 
 .vst-split-l {
 	position: sticky;
 	top: 110px;
-	align-self: start;
 }
 
 .vst-split-img {
-	position: relative;
-	margin-top: 32px;
-	overflow: hidden;
-	aspect-ratio: 16 / 11;
-	border-radius: 24px;
-	background:
-		radial-gradient(circle at 70% 30%, rgb(var(--vst-acc-rgb) / 0.35), transparent 55%),
-		var(--vst-dots),
-		#141414;
+	margin-top: clamp(32px, 4vw, 48px);
 }
 
-/* Gradient hairline, drawn as a masked ring so it follows the radius */
-.vst-split-img::before {
-	content: '';
-	position: absolute;
-	inset: 0;
-	z-index: 2;
-	padding: 1.5px;
-	pointer-events: none;
-	border-radius: inherit;
-	background: var(--vst-grad);
-	-webkit-mask:
-		linear-gradient(#000 0 0) content-box,
-		linear-gradient(#000 0 0);
-	-webkit-mask-composite: xor;
-	mask-composite: exclude;
+.vst-split-img__frame {
+	aspect-ratio: 16 / 11;
+	overflow: hidden;
+	background: var(--color-surface);
 }
 
 .vst-split-img img {
-	display: block;
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
 }
 
-/* Scrim so the caption stays readable over a bright photo */
-.vst-split-img::after {
-	content: '';
-	position: absolute;
-	inset: 50% 0 0;
-	pointer-events: none;
-	background: linear-gradient(transparent, rgb(0 0 0 / 0.55));
-}
-
 .vst-split-img figcaption {
-	position: absolute;
-	bottom: 16px;
-	left: 16px;
-	z-index: 1;
-	display: inline-flex;
-	align-items: center;
-	gap: 8px;
-	padding: 8px 14px;
-	font-size: 12px;
-	font-weight: 600;
-	color: var(--color-white);
-	border-radius: 999px;
-	background: rgb(0 0 0 / 0.55);
-	backdrop-filter: blur(8px);
+	display: flex;
+	gap: 14px;
+	align-items: baseline;
+	margin-top: 16px;
+	font-size: 14px;
+	color: var(--color-gray-500);
 }
 
-.vst-split-img figcaption::before {
-	content: '';
-	width: 6px;
-	height: 6px;
-	border-radius: 50%;
-	background: var(--vst-acc);
-	box-shadow: 0 0 8px var(--vst-acc);
+.vst-split-img figcaption span {
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	color: var(--color-accent);
+}
+
+/* Frame wipes open while the photo settles from a slight zoom */
+.js .vst-split-img .vst-split-img__frame {
+	clip-path: inset(0 0 100% 0);
+	transition: clip-path 1.2s var(--ease-in-out);
+}
+
+.js .vst-split-img img {
+	transform: scale(1.12);
+	transition: transform 1.8s var(--ease-out);
+}
+
+.js .vst-split-img.is-visible .vst-split-img__frame {
+	clip-path: inset(0);
+}
+
+.js .vst-split-img.is-visible img {
+	transform: none;
 }
 
 .vst-points {
@@ -638,134 +355,122 @@
 .vst-point {
 	position: relative;
 	display: grid;
-	grid-template-columns: minmax(150px, 200px) minmax(0, 1fr);
-	gap: 24px;
-	padding: 30px 0;
+	grid-template-columns: 48px minmax(0, 1fr);
+	gap: 6px 24px;
+	padding-block: 36px;
 	border-bottom: 1px solid var(--vst-line);
 }
 
-/* The first row sits tight to its rule so the list starts level with the
-   eyebrow in the left column */
-.vst-point:first-child {
-	padding-top: 14px;
-}
-
-/* Accent rule that draws across the row's top border on hover */
+/* Accent rule that draws across the row on hover */
 .vst-point::after {
 	content: '';
 	position: absolute;
-	top: -1px;
+	right: 0;
+	bottom: -1px;
 	left: 0;
-	width: 0;
-	height: 2px;
-	background: var(--vst-grad);
-	transition: width 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+	height: 1px;
+	background: var(--gradient-accent);
+	transform: scaleX(0);
+	transform-origin: left;
+	transition: transform 0.7s var(--ease-out);
 }
 
-.vst-point:hover::after {
-	width: 100%;
+.vst-point__num {
+	grid-row: span 2;
+	padding-top: 6px;
+	font-size: 13px;
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+	color: var(--color-accent);
 }
 
 .vst-point h3 {
-	font-size: 18px;
-	letter-spacing: -0.02em;
-	transition: transform 0.35s var(--ease-out);
-}
-
-.vst-point:hover h3 {
-	transform: translateX(6px);
-}
-
-.vst-point h3 em {
-	display: block;
-	margin-bottom: 6px;
-	font-size: 12px;
-	font-style: normal;
-	font-weight: 600;
-	letter-spacing: 0.04em;
-	color: var(--vst-acc);
+	font-size: clamp(21px, 0.6vw + 17px, 26px);
+	font-weight: 700;
+	line-height: 1.2;
+	letter-spacing: -0.025em;
+	transition: transform 0.5s var(--ease-out);
 }
 
 .vst-point p {
-	font-size: 14px;
-	color: var(--vst-ink-2);
+	max-width: 54ch;
+	margin-top: 6px;
+	font-size: 16px;
+	line-height: 1.7;
+	color: var(--color-gray-500);
+}
+
+@media (hover: hover) {
+	.vst-point:hover::after {
+		transform: none;
+	}
+
+	.vst-point:hover h3 {
+		transform: translateX(6px);
+	}
 }
 
 /* ============================================
-   Stats
+   Stats: one hairline row, label under the number
    ============================================ */
 
 .vst-stats {
 	display: grid;
-	grid-template-columns: repeat(3, 1fr);
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	border-block: 1px solid var(--vst-line);
+}
+
+.vst-stat {
+	display: flex;
+	flex-direction: column-reverse;
+	justify-content: flex-end;
 	gap: 14px;
+	padding: 44px 32px 44px 0;
 }
 
-.vst-stats > div {
-	position: relative;
-	overflow: hidden;
-	padding: 36px 30px;
-	border-radius: 24px;
-	background: var(--vst-wash);
-}
-
-/* Accent bloom in the corner of each card */
-.vst-stats > div::after {
-	content: '';
-	position: absolute;
-	top: -60px;
-	right: -60px;
-	width: 180px;
-	height: 180px;
-	border-radius: 50%;
-	background: radial-gradient(rgb(var(--vst-acc-rgb) / 0.1), transparent 70%);
+.vst-stat + .vst-stat {
+	padding-left: 32px;
+	border-left: 1px solid var(--vst-line);
 }
 
 .vst-stats dd {
-	margin: 0;
-	padding-bottom: 0.08em;
-	font-size: clamp(56px, 7vw, 92px);
-	font-weight: 600;
+	font-size: clamp(56px, 5vw + 16px, 112px);
+	font-weight: 800;
 	line-height: 1;
 	letter-spacing: -0.05em;
 	font-variant-numeric: tabular-nums;
-	color: transparent;
-	background: var(--vst-grad);
-	-webkit-background-clip: text;
-	background-clip: text;
+	color: var(--color-accent);
+}
+
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+	.vst-stats dd {
+		padding-bottom: 0.06em;
+		background: var(--gradient-accent);
+		-webkit-background-clip: text;
+		background-clip: text;
+		-webkit-text-fill-color: transparent;
+	}
 }
 
 .vst-stats dt {
-	position: relative;
-	margin-top: 12px;
+	max-width: 26ch;
 	font-size: 15px;
-	color: var(--vst-ink-2);
+	line-height: 1.6;
+	color: var(--color-gray-500);
 }
 
 /* ============================================
    Portfolio
    ============================================ */
 
-.vst-port-head {
-	display: flex;
-	justify-content: space-between;
-	align-items: end;
-	flex-wrap: wrap;
-	gap: 24px;
-}
-
-.vst-port-head > p {
-	max-width: 42ch;
-	font-size: 15px;
-	color: var(--vst-ink-2);
-}
-
 .vst-port {
 	display: grid;
-	grid-template-columns: 1.25fr 1fr 1fr;
+	grid-template-columns: minmax(0, 1.25fr) repeat(2, minmax(0, 1fr));
 	grid-template-rows: auto auto;
-	gap: 14px;
-	margin-top: 40px;
+	gap: 1px;
+	/* The 1px gaps show this through, drawing hairlines between the tiles */
+	background: var(--vst-line);
+	border: 1px solid var(--vst-line);
 }
 
 /* ----- Feature tile: VCPility ----- */
@@ -776,36 +481,21 @@
 	display: flex;
 	flex-direction: column;
 	gap: 22px;
-	min-height: 440px;
-	padding: 32px;
+	min-height: 480px;
+	padding: clamp(28px, 3vw, 44px);
 	overflow: hidden;
 	color: var(--color-white);
-	border-radius: 28px;
 	/* --mx/--my track the pointer (set in the page script); the defaults put
 	   the glow in the top-right corner before anyone hovers */
 	background:
-		radial-gradient(420px circle at var(--mx, 90%) var(--my, 0%), rgb(var(--vst-acc-rgb) / 0.38), transparent 60%),
+		radial-gradient(420px circle at var(--mx, 90%) var(--my, 0%), rgb(var(--vst-acc-rgb) / 0.35), transparent 60%),
 		var(--vst-dots),
 		#111;
 }
 
-.vst-feat::before {
-	content: '';
-	position: absolute;
-	inset: 0;
-	padding: 1.5px;
-	pointer-events: none;
-	border-radius: inherit;
-	background: var(--vst-grad);
-	-webkit-mask:
-		linear-gradient(#000 0 0) content-box,
-		linear-gradient(#000 0 0);
-	-webkit-mask-composite: xor;
-	mask-composite: exclude;
-}
-
 .vst-feat-top {
 	display: flex;
+	flex-wrap: wrap;
 	justify-content: space-between;
 	align-items: center;
 	gap: 12px;
@@ -813,17 +503,17 @@
 
 .vst-here {
 	padding: 6px 12px;
-	font-size: 11px;
-	font-weight: 600;
-	border-radius: 999px;
-	background: var(--vst-grad);
-	box-shadow: 0 0 20px rgb(var(--vst-acc-rgb) / 0.5);
+	font-size: 10px;
+	font-weight: 700;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	background: var(--gradient-accent);
 }
 
 .vst-live {
 	display: inline-flex;
 	align-items: center;
-	gap: 7px;
+	gap: 8px;
 	font-size: 12px;
 	color: #bdbdbd;
 }
@@ -832,20 +522,22 @@
 	content: '';
 	width: 6px;
 	height: 6px;
-	border-radius: 50%;
 	background: var(--color-green);
 	box-shadow: 0 0 8px var(--color-green);
 }
 
 .vst-feat h3 {
-	font-size: clamp(36px, 4vw, 52px);
+	margin-top: 12px;
+	font-size: clamp(40px, 3vw + 16px, 64px);
+	font-weight: 800;
 	line-height: 1;
 	letter-spacing: -0.05em;
 }
 
 .vst-feat > p {
 	max-width: 34ch;
-	font-size: 16px;
+	font-size: 17px;
+	line-height: 1.6;
 	color: #c9c9c9;
 }
 
@@ -856,12 +548,12 @@
 	margin-top: auto;
 }
 
-.vst-mods span {
-	padding: 7px 12px;
+.vst-mods li {
+	padding: 6px 12px;
 	font-size: 12px;
+	font-weight: 600;
 	color: #e5e5e5;
 	border: 1px solid #3a3a3a;
-	border-radius: 999px;
 	background: rgb(255 255 255 / 0.04);
 }
 
@@ -874,9 +566,12 @@
 .vst-feat-foot {
 	display: flex;
 	justify-content: space-between;
-	align-items: center;
+	gap: 12px;
 	padding-top: 20px;
-	font-size: 13px;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 2px;
+	text-transform: uppercase;
 	color: var(--vst-acc-tint);
 	border-top: 1px solid #2c2c2c;
 }
@@ -884,26 +579,28 @@
 /* ----- Sibling tiles ----- */
 
 .vst-sib {
+	position: relative;
 	display: flex;
 	flex-direction: column;
 	gap: 14px;
-	padding: 24px;
-	border: 1px solid var(--vst-line);
-	border-radius: 22px;
-	background: var(--vst-paper);
-	transition:
-		transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
-		box-shadow 0.35s ease,
-		border-color 0.2s ease;
+	min-height: 240px;
+	padding: clamp(24px, 2.4vw, 36px);
+	background: var(--color-white);
+	transition: background 0.4s ease;
 }
 
-.vst-sib:hover {
-	border-color: transparent;
-	box-shadow: 0 18px 40px -22px rgb(0 0 0 / 0.35);
-	transform: translateY(-4px);
-	background:
-		linear-gradient(var(--vst-paper), var(--vst-paper)) padding-box,
-		var(--vst-grad) border-box;
+/* Accent rule drawing across the tile's top edge on hover */
+.vst-sib::before {
+	content: '';
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	height: 2px;
+	background: var(--gradient-accent);
+	transform: scaleX(0);
+	transform-origin: left;
+	transition: transform 0.6s var(--ease-out);
 }
 
 .vst-sib-top {
@@ -917,48 +614,62 @@
 	place-items: center;
 	width: 44px;
 	height: 44px;
-	border-radius: 12px;
-	background: var(--vst-wash);
-	transition: background 0.3s ease;
+	border: 1px solid var(--vst-line);
+	transition:
+		background 0.3s ease,
+		border-color 0.3s ease;
 }
 
 .vst-ico svg {
-	width: 22px;
-	height: 22px;
+	width: 20px;
+	height: 20px;
 	fill: none;
-	stroke: var(--vst-ink);
+	stroke: var(--color-ink);
 	stroke-width: 1.6;
 	stroke-linecap: round;
 	stroke-linejoin: round;
 	transition: stroke 0.3s ease;
 }
 
-.vst-sib:hover .vst-ico {
-	background: var(--vst-grad);
-}
-
-.vst-sib:hover .vst-ico svg {
-	stroke: var(--color-white);
-}
-
 .vst-sib small {
-	padding: 5px 10px;
-	font-size: 11px;
-	font-weight: 600;
-	color: var(--vst-ink-2);
-	border: 1px solid var(--vst-line);
-	border-radius: 999px;
+	font-size: 10px;
+	font-weight: 700;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	color: var(--color-gray-400);
 }
 
+/* Fixed gap rather than margin-top: auto, so titles line up across a row */
 .vst-sib h3 {
-	margin-top: auto;
-	font-size: 20px;
+	margin-top: clamp(32px, 3vw, 48px);
+	font-size: clamp(20px, 0.5vw + 17px, 24px);
+	font-weight: 700;
 	letter-spacing: -0.03em;
 }
 
 .vst-sib p {
-	font-size: 14px;
-	color: var(--vst-ink-2);
+	font-size: 15px;
+	line-height: 1.65;
+	color: var(--color-gray-500);
+}
+
+@media (hover: hover) {
+	.vst-sib:hover {
+		background: var(--color-bg);
+	}
+
+	.vst-sib:hover::before {
+		transform: none;
+	}
+
+	.vst-sib:hover .vst-ico {
+		border-color: transparent;
+		background: var(--gradient-accent);
+	}
+
+	.vst-sib:hover .vst-ico svg {
+		stroke: var(--color-white);
+	}
 }
 
 /* ============================================
@@ -967,22 +678,19 @@
 
 .vst-dark {
 	color: var(--color-white);
-	background: var(--vst-night);
+	background:
+		radial-gradient(circle at 100% 0%, rgb(var(--vst-acc-rgb) / 0.16), transparent 40%),
+		radial-gradient(circle at 0% 100%, rgb(var(--vst-acc-deep-rgb) / 0.4), transparent 45%),
+		var(--vst-night);
 }
 
-.vst-dark .vst-tag {
-	color: #cfcfcf;
-}
-
-.vst-dark .vst-h {
-	background: linear-gradient(90deg, var(--color-white) 0 40%, #7a7a7a 70%);
-	-webkit-background-clip: text;
-	background-clip: text;
+.vst-dark .eyebrow {
+	color: var(--color-accent);
 }
 
 .vst-tl {
 	position: relative;
-	margin-top: 48px;
+	margin-top: clamp(48px, 5vw, 80px);
 	padding-left: 44px;
 }
 
@@ -993,8 +701,7 @@
 	top: 0;
 	bottom: 0;
 	left: 8px;
-	width: 2px;
-	border-radius: 2px;
+	width: 1px;
 	background: #333;
 }
 
@@ -1003,34 +710,33 @@
 	content: '';
 	position: absolute;
 	top: 0;
-	left: 8px;
-	width: 2px;
+	left: 7px;
+	width: 3px;
 	height: var(--p, 0%);
-	border-radius: 2px;
-	background: var(--vst-grad);
-	box-shadow: 0 0 12px rgb(var(--vst-acc-rgb) / 0.6);
+	background: var(--gradient-accent);
+	box-shadow: 0 0 12px rgb(var(--vst-acc-rgb) / 0.5);
 	transition: height 0.15s linear;
 }
 
 .vst-tl li {
 	position: relative;
 	display: grid;
-	grid-template-columns: 120px 1fr;
+	grid-template-columns: 140px minmax(0, 1fr);
 	gap: 24px;
-	padding: 26px 0;
+	padding-block: 32px;
 	border-bottom: 1px solid #2a2a2a;
 }
 
-/* Node on the rail, filled once the row is behind the reading line */
+/* Square node on the rail, lit once the row is behind the reading line */
 .vst-tl li::before {
 	content: '';
 	position: absolute;
-	top: 31px;
-	left: -41px;
-	width: 12px;
-	height: 12px;
-	border: 2px solid #555;
-	border-radius: 50%;
+	top: 39px;
+	left: -40px;
+	z-index: 1;
+	width: 10px;
+	height: 10px;
+	border: 1px solid #555;
 	background: var(--vst-night);
 	transition:
 		background 0.4s ease,
@@ -1039,8 +745,8 @@
 }
 
 .vst-tl li.is-past::before {
-	border-color: var(--vst-acc);
-	background: var(--vst-acc);
+	border-color: var(--color-accent);
+	background: var(--color-accent);
 	box-shadow: 0 0 0 5px rgb(var(--vst-acc-rgb) / 0.2);
 }
 
@@ -1053,69 +759,79 @@
    timeline stays legible if the script never runs. */
 .js .vst-tl li:not(.is-past) h3,
 .js .vst-tl li:not(.is-past) p {
-	opacity: 0.45;
+	opacity: 0.4;
 }
 
 .vst-tl time {
-	padding-top: 4px;
+	padding-top: 6px;
 	font-size: 12px;
-	font-weight: 600;
-	color: #a8a8a8;
+	font-weight: 700;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	font-variant-numeric: tabular-nums;
+	color: #9a9a9a;
 }
 
 .vst-tl h3 {
-	font-size: 19px;
-	letter-spacing: -0.02em;
+	font-size: clamp(20px, 0.6vw + 16px, 26px);
+	font-weight: 700;
+	letter-spacing: -0.025em;
 }
 
 .vst-tl p {
 	max-width: 62ch;
-	margin-top: 6px;
-	font-size: 14px;
+	margin-top: 8px;
+	font-size: 15.5px;
+	line-height: 1.7;
 	color: #b5b5b5;
 }
 
 .vst-tl-on h3::after {
 	content: 'VCPility milestone';
-	margin-left: 10px;
-	padding: 3px 8px;
-	font-size: 10px;
-	font-weight: 600;
-	letter-spacing: 0;
-	vertical-align: middle;
-	border-radius: 999px;
-	background: var(--vst-grad);
+	display: inline-block;
+	margin-left: 12px;
+	padding: 4px 8px;
+	font-size: 9px;
+	font-weight: 700;
+	letter-spacing: 1.5px;
+	text-transform: uppercase;
+	vertical-align: 0.35em;
+	background: var(--gradient-accent);
 }
 
 /* ============================================
-   FAQ
+   FAQ: heading left, ruled accordion right
    ============================================ */
 
-.vst-faq {
+.vst-faq-grid {
 	display: grid;
-	gap: 10px;
-	max-width: 760px;
-	margin: 40px auto 0;
+	grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+	gap: clamp(40px, 6vw, 96px);
+	align-items: start;
+}
+
+.vst-faq-head {
+	position: sticky;
+	top: 110px;
+}
+
+.vst-faq {
+	border-top: 1px solid var(--color-ink);
 }
 
 .vst-faq details {
-	padding: 0 24px;
-	border: 1px solid #cfcfcf;
-	border-radius: 14px;
+	border-bottom: 1px solid var(--vst-line);
 	/* Lets the answer animate to its natural height. Browsers without
 	   ::details-content support just snap open, as they always did. */
 	interpolate-size: allow-keywords;
-	transition:
-		background 0.3s ease,
-		border-color 0.3s ease;
 }
 
 .vst-faq details::details-content {
 	height: 0;
 	overflow: clip;
 	transition:
-		height 0.35s ease,
-		content-visibility 0.35s allow-discrete;
+		height 0.4s var(--ease-out),
+		content-visibility 0.4s allow-discrete;
 }
 
 .vst-faq details[open]::details-content {
@@ -1123,56 +839,54 @@
 }
 
 .vst-faq summary {
+	position: relative;
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	gap: 16px;
-	padding: 20px 0;
-	font-size: 15px;
-	font-weight: 600;
+	gap: 24px;
+	padding: 28px 44px 28px 0;
+	font-size: clamp(17px, 0.4vw + 15px, 20px);
+	font-weight: 700;
+	letter-spacing: -0.015em;
 	list-style: none;
 	cursor: pointer;
+	transition: color 0.25s ease;
 }
 
 .vst-faq summary::-webkit-details-marker {
 	display: none;
 }
 
+/* Plus drawn from two bars; the vertical one folds away when open */
+.vst-faq summary::before,
 .vst-faq summary::after {
-	content: '+';
-	display: grid;
-	place-items: center;
-	flex: none;
-	width: 26px;
-	height: 26px;
-	font-weight: 400;
-	border: 1px solid var(--vst-ink);
-	border-radius: 50%;
-	transition:
-		background 0.3s ease,
-		color 0.3s ease;
+	content: '';
+	position: absolute;
+	top: 50%;
+	right: 6px;
+	width: 16px;
+	height: 2px;
+	background: currentColor;
+	transition: transform 0.4s var(--ease-out);
 }
 
-.vst-faq details[open] {
-	border-color: transparent;
-	background:
-		linear-gradient(var(--vst-paper), var(--vst-paper)) padding-box,
-		var(--vst-grad) border-box;
-}
-
-.vst-faq details[open] summary {
-	border-bottom: 1px solid var(--vst-line);
+.vst-faq summary::after {
+	transform: rotate(90deg);
 }
 
 .vst-faq details[open] summary::after {
-	content: '–';
-	color: var(--color-white);
-	background: var(--vst-ink);
+	transform: rotate(0deg);
+}
+
+.vst-faq summary:hover {
+	color: var(--color-accent);
 }
 
 .vst-faq p {
-	padding: 18px 0 22px;
-	font-size: 15px;
+	max-width: 62ch;
+	padding-bottom: 28px;
+	font-size: 16px;
+	line-height: 1.7;
 	color: var(--vst-ink-2);
 }
 
@@ -1181,31 +895,22 @@
    ============================================ */
 
 .vst-cta {
+	position: relative;
 	display: grid;
-	grid-template-columns: 1.3fr 1fr;
-	gap: 40px;
-	align-items: center;
-	padding: 56px;
-	border: 1.5px solid transparent;
-	border-radius: 32px;
+	grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+	gap: 48px;
+	align-items: end;
+	padding: clamp(40px, 6vw, 88px);
+	overflow: hidden;
 	color: var(--color-white);
-	/* Dark aurora card: two glows over near-black, with the accent gradient
-	   riding the border via border-box */
 	background:
-		radial-gradient(520px 300px at 0% 100%, rgb(var(--vst-acc-rgb) / 0.35), transparent 70%) padding-box,
-		radial-gradient(420px 300px at 100% 0%, rgb(var(--vst-acc-deep-rgb) / 0.6), transparent 70%) padding-box,
-		linear-gradient(#111, #111) padding-box,
-		var(--vst-grad) border-box;
+		radial-gradient(520px 320px at 0% 100%, rgb(var(--vst-acc-rgb) / 0.32), transparent 70%),
+		radial-gradient(420px 300px at 100% 0%, rgb(var(--vst-acc-deep-rgb) / 0.6), transparent 70%),
+		#111;
 }
 
-.vst-cta .vst-tag {
-	color: #cfcfcf;
-}
-
-.vst-cta .vst-h {
-	background: linear-gradient(90deg, var(--color-white) 0 45%, #8a8a8a 80%);
-	-webkit-background-clip: text;
-	background-clip: text;
+.vst-cta .eyebrow {
+	color: var(--color-accent);
 }
 
 .vst-cta .vst-lead {
@@ -1213,67 +918,77 @@
 }
 
 .vst-cta-links {
-	display: grid;
-	gap: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 24px;
 }
 
-.vst-cta-links .vst-btn {
-	justify-content: space-between;
-	padding: 16px 16px 16px 22px;
-	border-radius: 14px;
+/* Accent buttons hover onto an ink offset block; on this dark panel use white */
+.vst-cta .btn--accent {
+	--btn-shadow: var(--color-white);
+}
+
+.vst-btn-light {
 	color: var(--color-white);
-	border-color: #3a3a3a;
-	background: rgb(255 255 255 / 0.06);
-}
-
-.vst-cta-links .vst-btn span {
-	color: var(--vst-ink);
-	background: var(--color-white);
-}
-
-.vst-cta-links .vst-btn--dark {
-	color: var(--vst-ink);
 	border-color: var(--color-white);
-	background: var(--color-white);
-}
-
-.vst-cta-links .vst-btn--dark span {
-	color: var(--color-white);
-	background: var(--vst-grad);
 }
 
 .vst-addr {
 	display: grid;
-	grid-template-columns: repeat(3, 1fr);
-	gap: 24px;
-	margin-top: 48px;
-	font-size: 14px;
-	color: var(--vst-ink-2);
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	margin-top: clamp(40px, 4vw, 56px);
+	border-top: 1px solid var(--vst-line);
 }
 
-.vst-addr b {
-	display: block;
-	margin-bottom: 4px;
-	color: var(--vst-ink);
+.vst-addr > div {
+	padding: 24px 24px 0 0;
+}
+
+.vst-addr > div + div {
+	padding-left: 24px;
+	border-left: 1px solid var(--vst-line);
+}
+
+.vst-addr dt {
+	margin-bottom: 6px;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	color: var(--color-gray-400);
+}
+
+.vst-addr dd {
+	font-size: 15px;
+	line-height: 1.6;
+	color: var(--color-ink);
 }
 
 /* ============================================
    Responsive
    ============================================ */
 
-@media (max-width: 960px) {
+@media (max-width: 1024px) {
 	.vst-hero-grid,
 	.vst-split,
-	.vst-cta {
+	.vst-cta,
+	.vst-faq-grid,
+	.vst-head {
 		grid-template-columns: 1fr;
 	}
 
-	.vst-split-l {
+	.vst-head {
+		align-items: start;
+	}
+
+	.vst-split-l,
+	.vst-faq-head {
 		position: static;
 	}
 
 	.vst-port {
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 
 	.vst-feat {
@@ -1282,61 +997,69 @@
 		min-height: 0;
 	}
 
-	.vst-addr {
-		grid-template-columns: 1fr;
+	.vst-cta {
+		align-items: start;
 	}
 }
 
-@media (max-width: 640px) {
-	.vst-sec {
-		padding: 64px 0;
-	}
-
+@media (max-width: 768px) {
 	.vst-hero {
-		padding: 120px 0 64px;
+		padding-top: 120px;
 	}
 
-	.vst-tree {
-		padding: 12px;
-		border-radius: 24px;
+	.vst-stats,
+	.vst-addr {
+		grid-template-columns: 1fr;
 	}
 
-	/* Satellites wrap to two lines and drop their sub-labels to stay legible */
-	.vst-node {
-		max-width: 78px;
-		padding: 6px 9px;
-		font-size: 11px;
-		line-height: 1.2;
-		white-space: normal;
+	.vst-stat,
+	.vst-stat + .vst-stat {
+		padding: 32px 0;
+		border-left: 0;
 	}
 
-	.vst-node small {
-		display: none;
+	.vst-stat + .vst-stat {
+		border-top: 1px solid var(--vst-line);
 	}
 
-	.vst-node--on {
-		max-width: none;
-		padding: 9px 13px;
-		font-size: 13px;
+	.vst-addr > div,
+	.vst-addr > div + div {
+		padding: 20px 0;
+		border-left: 0;
 	}
 
-	.vst-node--on small {
-		display: block;
+	.vst-addr > div + div {
+		border-top: 1px solid var(--vst-line);
 	}
 
-	.vst-point,
 	.vst-tl li {
 		grid-template-columns: 1fr;
 		gap: 8px;
 	}
+}
 
-	.vst-stats,
+@media (max-width: 640px) {
+	.vst-file dl > div,
+	.vst-file__here {
+		grid-template-columns: 1fr;
+		gap: 4px;
+	}
+
+	.vst-point {
+		grid-template-columns: 1fr;
+	}
+
+	.vst-point__num {
+		grid-row: auto;
+		padding-top: 0;
+	}
+
 	.vst-port {
 		grid-template-columns: 1fr;
 	}
 
-	.vst-stats > div {
-		padding: 28px 24px;
+	.vst-sib {
+		min-height: 0;
 	}
 
 	/* Pull the rail in, and keep the nodes centred on it */
@@ -1345,41 +1068,18 @@
 	}
 
 	.vst-tl li::before {
-		top: 28px;
-		left: -29px;
+		top: 37px;
+		left: -28px;
 	}
 
-	.vst-feat {
-		padding: 24px;
-		border-radius: 22px;
-	}
-
-	.vst-port-head > p {
-		font-size: 14px;
-	}
-
-	.vst-cta {
-		padding: 32px 22px;
+	.vst-tl-on h3::after {
+		display: table;
+		margin: 10px 0 0;
 	}
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.vst-pulse {
-		opacity: 0;
+	.vst-mq-track {
 		animation: none;
-	}
-
-	.vst-mq-track,
-	.vst-hero .vst-tag::before {
-		animation: none;
-	}
-
-	.vst-btn:hover,
-	.vst-sib:hover {
-		transform: none;
-	}
-
-	.vst-point:hover h3 {
-		transform: none;
 	}
 }

@@ -21,10 +21,6 @@
 		--color-red: #ef4444;
 		--color-green: #22c55e;
 
-		/* Highlighter stroke under .mark (smaller on mobile, see Responsive) */
-		--mark-offset: 8px;
-		--mark-size: 12px;
-
 		/* Layout */
 		--gutter: 5%;
 
@@ -198,26 +194,6 @@
 
 	.line__inner {
 		display: block;
-	}
-
-	/* ----- Highlighter mark ----- */
-
-	.mark {
-		position: relative;
-		display: inline-block;
-		isolation: isolate;
-	}
-
-	.mark::after {
-		content: '';
-		position: absolute;
-		right: 0;
-		bottom: var(--mark-offset);
-		left: 0;
-		z-index: -1;
-		height: var(--mark-size);
-		background: var(--gradient-accent);
-		transform-origin: left;
 	}
 
 	/* ----- Inline highlight for phrases inside body copy; wraps cleanly across lines ----- */
@@ -421,13 +397,7 @@
 		transition: transform 1s var(--ease-out) calc(var(--d, 0s) + var(--i, 0) * 90ms);
 	}
 
-	.js .reveal-lines .mark::after {
-		transform: scaleX(0);
-		transition: transform 0.8s var(--ease-out) calc(var(--d, 0s) + 0.7s);
-	}
-
-	.js .reveal-lines.is-visible .line__inner,
-	.js .reveal-lines.is-visible .mark::after {
+	.js .reveal-lines.is-visible .line__inner {
 		transform: none;
 	}
 
@@ -443,13 +413,6 @@
 	/* ============================================
 	   Responsive
 	   ============================================ */
-
-	@media (max-width: 768px) {
-		:root {
-			--mark-offset: 4px;
-			--mark-size: 8px;
-		}
-	}
 
 	@media (max-width: 480px) {
 		.eyebrow {

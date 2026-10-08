@@ -86,6 +86,7 @@
 	font-size: 15px;
 	font-weight: 500;
 	letter-spacing: -0.01em;
+	white-space: nowrap;
 	color: var(--color-gray-600);
 	transition: color 0.2s ease;
 }
@@ -129,6 +130,7 @@
 
 .nav__cta {
 	gap: 10px;
+	white-space: nowrap;
 	padding: 13px 26px;
 	font-weight: 600;
 	transition: background 0.2s ease;
@@ -314,21 +316,26 @@ html.nav-locked {
 
 /* ----- Responsive ----- */
 
-/* Tighten the menu before it hands over to the hamburger, so the longest
-   label still fits on one row */
-@media (max-width: 1200px) {
+/* Tighten the menu before it hands over to the hamburger, so all seven
+   links stay on one row down to 1025px */
+@media (max-width: 1280px) {
 	.nav__right {
-		gap: 16px;
+		gap: 12px;
 	}
 
 	.nav__link {
-		padding: 10px 12px;
-		font-size: 14px;
+		padding-inline: 8px;
+		font-size: 13.5px;
 	}
 
 	.nav__link::after {
-		right: 12px;
-		left: 12px;
+		right: 8px;
+		left: 8px;
+	}
+
+	.nav__cta {
+		padding: 12px 18px;
+		font-size: 14px;
 	}
 }
 

@@ -188,15 +188,6 @@
 	animation: about-line 1.1s var(--ease-out) 0.5s both;
 }
 
-.about-hero__title .mark {
-	--mark-size: 0.1em;
-	--mark-offset: 0.05em;
-}
-
-.about-hero__title .mark::after {
-	animation: about-wipe 0.8s var(--ease-out) 1.2s both;
-}
-
 /* Pull quote between two short rules */
 .about-hero__quote {
 	position: relative;
@@ -277,12 +268,6 @@
 @keyframes about-line {
 	from {
 		transform: translateY(105%);
-	}
-}
-
-@keyframes about-wipe {
-	from {
-		transform: scaleX(0);
 	}
 }
 

@@ -587,12 +587,6 @@ html:not(.js) .addons__bracket {
 	margin-bottom: 18px;
 }
 
-/* The highlighter reads as a thin underline on dark, so the word stays white */
-.addons .mark::after {
-	height: calc(var(--mark-size) * 0.55);
-	bottom: calc(var(--mark-offset) - 0.05em);
-}
-
 .addons__lead {
 	font-size: 17px;
 	line-height: 1.7;

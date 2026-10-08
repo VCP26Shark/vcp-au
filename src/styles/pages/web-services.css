@@ -1,0 +1,787 @@
+/* ============================================
+   Web Services page
+   ============================================ */
+
+/* Same gutter as the navbar and hero, so every section shares one left edge */
+.ws-wrap {
+	padding-inline: var(--gutter);
+}
+
+/* Shared section header: title on the left, lead on the right, aligned to the baseline */
+.ws-head {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
+	align-items: end;
+	gap: 28px 80px;
+	margin-bottom: clamp(56px, 6vw, 88px);
+}
+
+.ws-head .eyebrow {
+	margin-bottom: 24px;
+}
+
+.ws-head__lead {
+	font-size: 17px;
+	line-height: 1.75;
+	color: var(--color-gray-500);
+}
+
+/* ============================================
+   Hero
+   ============================================ */
+
+.ws-hero {
+	position: relative;
+	display: grid;
+	grid-template-rows: 1fr auto;
+	min-height: 100vh;
+	min-height: 100svh;
+	padding: 150px var(--gutter) 0;
+	overflow: hidden;
+	isolation: isolate;
+	background: var(--color-white);
+}
+
+/* Soft accent glow behind the grid */
+.ws-hero::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	z-index: -2;
+	pointer-events: none;
+	background:
+		radial-gradient(circle at 82% 30%, rgb(224 3 72 / 0.07), transparent 42%),
+		radial-gradient(circle at 95% 75%, rgb(57 4 78 / 0.06), transparent 40%);
+}
+
+/* Flickering Grid canvas, strongest top-right and fading out before the headline */
+.ws-hero__grid {
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	-webkit-mask-image: radial-gradient(ellipse 55% 75% at 82% 38%, #000 15%, transparent 72%);
+	mask-image: radial-gradient(ellipse 55% 75% at 82% 38%, #000 15%, transparent 72%);
+}
+
+.ws-hero__content {
+	align-self: center;
+	max-width: 1080px;
+	padding-block: 40px;
+}
+
+.ws-hero__eyebrow {
+	margin-bottom: clamp(28px, 3vw, 40px);
+	color: var(--color-accent);
+}
+
+.ws-hero__title {
+	font-size: clamp(44px, 6.4vw + 10px, 124px);
+	font-weight: 800;
+	line-height: 0.98;
+	letter-spacing: -0.05em;
+}
+
+.ws-hero__lead {
+	max-width: 56ch;
+	margin-top: clamp(28px, 3vw, 40px);
+	font-size: clamp(17px, 0.4vw + 15px, 20px);
+	line-height: 1.7;
+	color: var(--color-gray-600);
+}
+
+.ws-hero__actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 20px 40px;
+	margin-top: clamp(36px, 4vw, 48px);
+}
+
+/* Fact strip pinned to the bottom of the hero */
+.ws-hero__facts {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	border-top: 1px solid rgb(26 26 26 / 0.1);
+}
+
+.ws-hero__facts li {
+	padding: 26px 0 30px;
+	font-size: 15px;
+	font-weight: 700;
+	letter-spacing: -0.01em;
+}
+
+.ws-hero__facts li + li {
+	padding-left: 32px;
+	border-left: 1px solid rgb(26 26 26 / 0.1);
+}
+
+.ws-hero__facts span {
+	display: block;
+	margin-bottom: 4px;
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	color: var(--color-gray-400);
+}
+
+/* ============================================
+   Statement + principles
+   ============================================ */
+
+.ws-intro {
+	padding-block: clamp(100px, 12vw, 180px);
+}
+
+.ws-intro__statement {
+	max-width: 24ch;
+	margin-top: 32px;
+	font-size: clamp(30px, 3vw + 14px, 62px);
+	font-weight: 700;
+	line-height: 1.1;
+	letter-spacing: -0.035em;
+	text-wrap: balance;
+}
+
+.ws-intro__statement em {
+	font-weight: 500;
+	color: var(--color-accent);
+}
+
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+	.ws-intro__statement em {
+		padding-right: 0.08em;
+		background: var(--gradient-accent);
+		-webkit-background-clip: text;
+		background-clip: text;
+		-webkit-text-fill-color: transparent;
+	}
+}
+
+.ws-principles {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 48px;
+	margin-top: clamp(64px, 8vw, 120px);
+}
+
+.ws-principle {
+	position: relative;
+	padding-top: 28px;
+	border-top: 1px solid rgb(26 26 26 / 0.12);
+}
+
+/* Short accent rule sitting on the hairline */
+.ws-principle::before {
+	content: '';
+	position: absolute;
+	top: -1px;
+	left: 0;
+	width: 48px;
+	height: 2px;
+	background: var(--gradient-accent);
+}
+
+.ws-principle__num {
+	font-size: 13px;
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+	color: var(--color-accent);
+}
+
+.ws-principle h3 {
+	margin: 20px 0 12px;
+	font-size: clamp(20px, 0.5vw + 17px, 24px);
+	font-weight: 700;
+	line-height: 1.25;
+	letter-spacing: -0.02em;
+}
+
+.ws-principle p {
+	max-width: 42ch;
+	font-size: 16px;
+	line-height: 1.7;
+	color: var(--color-gray-500);
+}
+
+/* ============================================
+   Figures (photos with an unveil-and-settle reveal)
+   ============================================ */
+
+.ws-figure--wide {
+	margin-top: clamp(56px, 7vw, 104px);
+}
+
+.ws-figure__frame {
+	aspect-ratio: 3 / 2;
+	overflow: hidden;
+	background: var(--color-surface);
+}
+
+.ws-figure--wide .ws-figure__frame {
+	aspect-ratio: 21 / 9;
+}
+
+.ws-figure img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.ws-figure--wide img {
+	object-position: 50% 60%;
+}
+
+.ws-figure figcaption {
+	display: flex;
+	gap: 14px;
+	align-items: baseline;
+	margin-top: 16px;
+	font-size: 14px;
+	color: var(--color-gray-500);
+}
+
+.ws-figure figcaption span {
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	color: var(--color-accent);
+}
+
+/* Frame wipes open top to bottom while the photo settles from a slight zoom */
+.js .ws-figure[data-reveal] .ws-figure__frame {
+	clip-path: inset(0 0 100% 0);
+	transition: clip-path 1.2s var(--ease-in-out) var(--d, 0s);
+}
+
+.js .ws-figure[data-reveal] img {
+	transform: scale(1.12);
+	transition: transform 1.8s var(--ease-out) var(--d, 0s);
+}
+
+.js .ws-figure[data-reveal] figcaption {
+	opacity: 0;
+	transition: opacity 0.8s ease calc(var(--d, 0s) + 0.6s);
+}
+
+.js .ws-figure.is-visible .ws-figure__frame {
+	clip-path: inset(0);
+}
+
+.js .ws-figure.is-visible img {
+	transform: none;
+}
+
+.js .ws-figure.is-visible figcaption {
+	opacity: 1;
+}
+
+/* Two-up under the services list, the second photo dropped for an editorial stagger */
+.ws-pair {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: clamp(20px, 3vw, 48px);
+	margin-top: clamp(64px, 8vw, 120px);
+}
+
+.ws-pair .ws-figure:nth-child(2) {
+	margin-top: clamp(40px, 6vw, 96px);
+}
+
+/* ============================================
+   Services
+   ============================================ */
+
+.ws-services {
+	padding-block: clamp(100px, 10vw, 160px);
+	background: var(--color-bg);
+}
+
+.ws-service-list {
+	border-top: 1px solid rgb(26 26 26 / 0.14);
+}
+
+.ws-service {
+	position: relative;
+	display: grid;
+	grid-template-columns: 72px minmax(0, 1fr) minmax(0, 1.1fr);
+	gap: 16px 40px;
+	padding-block: 44px;
+	border-bottom: 1px solid rgb(26 26 26 / 0.12);
+}
+
+/* Accent rule that draws across the row on hover */
+.ws-service::after {
+	content: '';
+	position: absolute;
+	right: 0;
+	bottom: -1px;
+	left: 0;
+	height: 1px;
+	background: var(--gradient-accent);
+	transform: scaleX(0);
+	transform-origin: left;
+	transition: transform 0.7s var(--ease-out);
+}
+
+.ws-service__num {
+	padding-top: 9px;
+	font-size: 14px;
+	font-weight: 700;
+	font-variant-numeric: tabular-nums;
+	color: var(--color-gray-400);
+	transition: color 0.3s ease;
+}
+
+.ws-service__title {
+	font-size: clamp(24px, 1.4vw + 15px, 34px);
+	font-weight: 700;
+	line-height: 1.15;
+	letter-spacing: -0.03em;
+	transition: transform 0.5s var(--ease-out);
+}
+
+.ws-service__body p {
+	max-width: 52ch;
+	font-size: 16.5px;
+	line-height: 1.7;
+	color: var(--color-gray-600);
+}
+
+.ws-tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-top: 20px;
+}
+
+.ws-tags li {
+	padding: 6px 12px;
+	font-size: 12px;
+	font-weight: 600;
+	color: var(--color-gray-700);
+	background: var(--color-white);
+	border: 1px solid rgb(26 26 26 / 0.1);
+}
+
+@media (hover: hover) {
+	.ws-service:hover::after {
+		transform: none;
+	}
+
+	.ws-service:hover .ws-service__num {
+		color: var(--color-accent);
+	}
+
+	.ws-service:hover .ws-service__title {
+		transform: translateX(8px);
+	}
+}
+
+/* ============================================
+   Results (dark)
+   ============================================ */
+
+.ws-results {
+	position: relative;
+	padding-block: clamp(100px, 10vw, 160px);
+	overflow: hidden;
+	color: var(--color-white);
+	background:
+		radial-gradient(circle at 100% 0%, rgb(224 3 72 / 0.22), transparent 40%),
+		radial-gradient(circle at 0% 100%, rgb(57 4 78 / 0.45), transparent 45%),
+		var(--color-ink);
+}
+
+.ws-results .eyebrow {
+	color: var(--color-accent);
+}
+
+.ws-results .ws-head__lead {
+	color: rgb(255 255 255 / 0.6);
+}
+
+.ws-stats {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	border-top: 1px solid rgb(255 255 255 / 0.14);
+}
+
+/* Label comes first in the markup (dt before dd) but sits under the number */
+.ws-stat {
+	display: flex;
+	flex-direction: column-reverse;
+	justify-content: flex-end;
+	gap: 14px;
+	padding: 44px 28px 8px 0;
+}
+
+.ws-stat + .ws-stat {
+	padding-left: 32px;
+	border-left: 1px solid rgb(255 255 255 / 0.14);
+}
+
+.ws-stat__value {
+	font-size: clamp(48px, 4.4vw + 12px, 92px);
+	font-weight: 800;
+	line-height: 1;
+	letter-spacing: -0.05em;
+	font-variant-numeric: tabular-nums;
+	white-space: nowrap;
+}
+
+@supports (background-clip: text) or (-webkit-background-clip: text) {
+	.ws-stat__value {
+		background: linear-gradient(180deg, var(--color-white) 35%, rgb(255 255 255 / 0.5));
+		-webkit-background-clip: text;
+		background-clip: text;
+		-webkit-text-fill-color: transparent;
+	}
+}
+
+.ws-stat__label {
+	max-width: 24ch;
+	font-size: 15px;
+	line-height: 1.6;
+	color: rgb(255 255 255 / 0.6);
+}
+
+/* ============================================
+   Process
+   ============================================ */
+
+.ws-process {
+	padding-block: clamp(100px, 10vw, 160px);
+}
+
+.ws-steps {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.ws-step {
+	position: relative;
+	padding: 44px 32px 0 0;
+	border-top: 1px solid rgb(26 26 26 / 0.12);
+}
+
+/* Accent rule drawing across the steps in turn, with a square marker at each start */
+.ws-step::before,
+.ws-step::after {
+	content: '';
+	position: absolute;
+	left: 0;
+}
+
+.ws-step::before {
+	top: -1px;
+	right: 0;
+	height: 2px;
+	background: var(--gradient-accent);
+	transform-origin: left;
+}
+
+.ws-step::after {
+	top: -5px;
+	width: 10px;
+	height: 10px;
+	background: var(--color-ink);
+}
+
+.ws-step__num {
+	font-size: 13px;
+	font-weight: 700;
+	letter-spacing: 0.1em;
+	font-variant-numeric: tabular-nums;
+	color: var(--color-accent);
+}
+
+.ws-step h3 {
+	margin: 16px 0 12px;
+	font-size: clamp(22px, 0.6vw + 18px, 28px);
+	font-weight: 700;
+	letter-spacing: -0.025em;
+}
+
+.ws-step p {
+	max-width: 34ch;
+	font-size: 15.5px;
+	line-height: 1.7;
+	color: var(--color-gray-500);
+}
+
+.js .ws-step {
+	--delay: calc(var(--i) * 0.18s);
+	opacity: 0;
+	transform: translateY(24px);
+	transition:
+		opacity 0.8s var(--ease-out) var(--delay),
+		transform 1s var(--ease-out) var(--delay);
+}
+
+.js .ws-step::before {
+	transform: scaleX(0);
+	transition: transform 0.9s var(--ease-in-out) calc(var(--delay) + 0.2s);
+}
+
+.js .ws-step::after {
+	transition: background-color 0.4s ease calc(var(--delay) + 0.2s);
+}
+
+.js .ws-steps.is-visible .ws-step {
+	opacity: 1;
+	transform: none;
+}
+
+.js .ws-steps.is-visible .ws-step::before {
+	transform: none;
+}
+
+.js .ws-steps.is-visible .ws-step::after {
+	background: var(--color-accent);
+}
+
+/* ============================================
+   CTA with Border Beam (after Magic UI)
+   ============================================ */
+
+.ws-cta-section {
+	padding-bottom: clamp(100px, 10vw, 160px);
+}
+
+.ws-cta {
+	position: relative;
+	padding: clamp(64px, 8vw, 120px) clamp(24px, 6vw, 96px);
+	overflow: hidden;
+	text-align: center;
+	background: var(--color-bg);
+	border: 1px solid rgb(26 26 26 / 0.08);
+}
+
+/* Faint grid fading out from the centre */
+.ws-cta::before {
+	content: '';
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	background-image:
+		linear-gradient(rgb(26 26 26 / 0.05) 1px, transparent 1px),
+		linear-gradient(90deg, rgb(26 26 26 / 0.05) 1px, transparent 1px);
+	background-size: 48px 48px;
+	-webkit-mask-image: radial-gradient(ellipse at center, #000, transparent 70%);
+	mask-image: radial-gradient(ellipse at center, #000, transparent 70%);
+}
+
+.ws-cta > :not(.ws-cta__beam) {
+	position: relative;
+}
+
+.ws-cta .eyebrow {
+	margin-bottom: 24px;
+	color: var(--color-accent);
+}
+
+.ws-cta__lead {
+	max-width: 46ch;
+	margin: 24px auto 0;
+	font-size: 18px;
+	line-height: 1.7;
+	color: var(--color-gray-500);
+}
+
+.ws-cta__actions {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: center;
+	gap: 20px 40px;
+	margin-top: 44px;
+}
+
+/* The beam: a gradient square travelling the box outline, masked down to a 2px border.
+   Two beams half a lap apart, so one is always in view. */
+.ws-cta__beam {
+	--beam-size: 280px;
+	--beam-duration: 10s;
+	position: absolute;
+	inset: -1px;
+	z-index: 1;
+	padding: 2px;
+	pointer-events: none;
+	-webkit-mask:
+		linear-gradient(#000 0 0) content-box,
+		linear-gradient(#000 0 0);
+	-webkit-mask-composite: xor;
+	mask:
+		linear-gradient(#000 0 0) content-box exclude,
+		linear-gradient(#000 0 0);
+}
+
+.ws-cta__beam::after {
+	content: '';
+	position: absolute;
+	width: var(--beam-size);
+	aspect-ratio: 1;
+	background: linear-gradient(to left, var(--color-accent), var(--color-accent-deep), transparent);
+	offset-path: rect(0 auto auto 0);
+	offset-anchor: 90% 50%;
+	animation: ws-beam var(--beam-duration) linear infinite;
+}
+
+.ws-cta__beam--trail::after {
+	background: linear-gradient(to left, var(--color-accent-deep), var(--color-accent), transparent);
+	animation-delay: calc(var(--beam-duration) * -0.5);
+}
+
+@keyframes ws-beam {
+	to {
+		offset-distance: 100%;
+	}
+}
+
+@supports not (offset-path: rect(0 auto auto 0)) {
+	.ws-cta__beam {
+		display: none;
+	}
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+
+@media (max-width: 1024px) {
+	.ws-head {
+		grid-template-columns: 1fr;
+		align-items: start;
+	}
+
+	.ws-service {
+		grid-template-columns: 56px minmax(0, 1fr);
+	}
+
+	.ws-service__body {
+		grid-column: 2;
+	}
+
+	.ws-principles {
+		grid-template-columns: 1fr;
+		gap: 40px;
+	}
+
+	.ws-principle p {
+		max-width: 60ch;
+	}
+
+	.ws-stats {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+
+	.ws-stat:nth-child(odd) {
+		padding-left: 0;
+		border-left: 0;
+	}
+
+	.ws-stat:nth-child(n + 3) {
+		border-top: 1px solid rgb(255 255 255 / 0.14);
+	}
+
+	.ws-stat {
+		padding-bottom: 44px;
+	}
+
+	.ws-steps {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		row-gap: 56px;
+	}
+
+	.ws-step p {
+		max-width: 44ch;
+	}
+}
+
+@media (max-width: 768px) {
+	.ws-hero {
+		padding-top: 120px;
+	}
+
+	.ws-hero__grid {
+		-webkit-mask-image: radial-gradient(ellipse 90% 45% at 80% 15%, #000 10%, transparent 75%);
+		mask-image: radial-gradient(ellipse 90% 45% at 80% 15%, #000 10%, transparent 75%);
+	}
+
+	.ws-hero__facts {
+		grid-template-columns: 1fr;
+	}
+
+	.ws-hero__facts li {
+		padding-block: 18px;
+	}
+
+	.ws-hero__facts li + li {
+		padding-left: 0;
+		border-top: 1px solid rgb(26 26 26 / 0.1);
+		border-left: 0;
+	}
+
+	.ws-service {
+		grid-template-columns: 1fr;
+		padding-block: 36px;
+	}
+
+	.ws-service__num {
+		padding-top: 0;
+	}
+
+	.ws-service__body {
+		grid-column: auto;
+	}
+
+	.ws-figure--wide .ws-figure__frame {
+		aspect-ratio: 3 / 2;
+	}
+
+	.ws-pair {
+		grid-template-columns: 1fr;
+		gap: 40px;
+	}
+
+	.ws-pair .ws-figure:nth-child(2) {
+		margin-top: 0;
+	}
+}
+
+@media (max-width: 560px) {
+	.ws-stats,
+	.ws-steps {
+		grid-template-columns: 1fr;
+	}
+
+	.ws-stat,
+	.ws-stat + .ws-stat {
+		padding: 32px 0;
+		border-left: 0;
+	}
+
+	.ws-stat + .ws-stat {
+		border-top: 1px solid rgb(255 255 255 / 0.14);
+	}
+
+	.ws-step {
+		padding-right: 0;
+	}
+
+	.ws-cta__actions .btn--link {
+		font-size: 14px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.ws-cta__beam {
+		display: none;
+	}
+}
