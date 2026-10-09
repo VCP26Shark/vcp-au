@@ -122,7 +122,7 @@ const money = (n: number) => n.toLocaleString('en-AU');
 const saving = ({ annual, monthly }: Plan['price']) => Math.round((1 - annual / monthly) * 100);
 
 const billingNote = (plan: Plan) => ({
-	annual: `Billed ${plan.startingFrom ? 'from' : 'at'} $${money(plan.price.annual * 12)} + GST per year — save up to ${saving(plan.price)}% versus paying monthly.`,
+	annual: `Billed ${plan.startingFrom ? 'from' : 'at'} $${money(plan.price.annual * 12)} + GST per year - save up to ${saving(plan.price)}% versus paying monthly.`,
 	monthly: `Paid monthly, or switch to annual billing to save up to ${saving(plan.price)}%.`,
 });
 const check = '<polyline points="20 6 9 17 4 12"/>';
@@ -155,7 +155,7 @@ const addOns = [
 
 const enterprisePoints = [
 	'Create your own monthly scope of work tailored to your goals',
-	'Share your goals and KPIs — we’ll recommend the best options',
+	'Share your goals and KPIs - we’ll recommend the best options',
 	'Strategic and tactical programmes designed for scale',
 	'Comprehensive KPI mapping and real-time tracking',
 ];
