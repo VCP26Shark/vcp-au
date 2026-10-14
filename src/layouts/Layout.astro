@@ -12,9 +12,11 @@ interface Props {
 	keywords?: string;
 	/** Keep the page out of search results (e.g. client-only pages) */
 	noindex?: boolean;
+	/** Open Graph type, e.g. 'article' for blog posts */
+	ogType?: string;
 }
 
-const { title = 'VCPility', description = '', keywords = '', noindex = false } = Astro.props;
+const { title = 'VCPility', description = '', keywords = '', noindex = false, ogType = 'website' } = Astro.props;
 const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
 ---
 
@@ -31,7 +33,7 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : un
 		{noindex && <meta name="robots" content="noindex" />}
 		<title>{title}</title>
 		{canonical && <link rel="canonical" href={canonical} />}
-		<meta property="og:type" content="website" />
+		<meta property="og:type" content={ogType} />
 		<meta property="og:site_name" content="VCPility" />
 		<meta property="og:locale" content="en_AU" />
 		<meta property="og:title" content={title} />

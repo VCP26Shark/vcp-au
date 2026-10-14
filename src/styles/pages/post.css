@@ -1,0 +1,426 @@
+/* ============================================
+   Blog post pages (/blog/<slug>)
+   Cards, meta line and CTA come from styles/components/blog.css.
+   ============================================ */
+
+/* ----- Reading progress: a hairline across the top that fills as you scroll.
+   Pure CSS (scroll-driven animation); browsers without support just don't show it. ----- */
+
+.post-progress {
+	display: none;
+}
+
+@supports (animation-timeline: scroll()) {
+	.post-progress {
+		display: block;
+		position: fixed;
+		inset: 0 0 auto;
+		z-index: 1001;
+		height: 3px;
+		background: var(--gradient-accent);
+		transform-origin: left;
+		animation: post-progress linear both;
+		animation-timeline: scroll(root);
+	}
+}
+
+@keyframes post-progress {
+	from {
+		transform: scaleX(0);
+	}
+
+	to {
+		transform: scaleX(1);
+	}
+}
+
+/* ============================================
+   Hero
+   ============================================ */
+
+.post-hero {
+	position: relative;
+	padding-top: 150px;
+	overflow: hidden;
+	isolation: isolate;
+}
+
+.post-hero__grid {
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	width: 100%;
+	height: 100%;
+	pointer-events: none;
+	-webkit-mask-image: radial-gradient(ellipse 55% 75% at 85% 30%, #000 15%, transparent 72%);
+	mask-image: radial-gradient(ellipse 55% 75% at 85% 30%, #000 15%, transparent 72%);
+}
+
+.post-crumbs {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-bottom: 32px;
+	font-size: 13px;
+	font-weight: 600;
+	color: var(--color-gray-500);
+}
+
+.post-crumbs a {
+	color: var(--color-ink);
+	text-decoration: underline;
+	text-decoration-thickness: 1px;
+	text-underline-offset: 4px;
+	transition: color 0.2s ease;
+}
+
+.post-crumbs a:hover {
+	color: var(--color-accent);
+}
+
+.post-crumbs [aria-current] {
+	color: var(--color-accent);
+}
+
+.post-hero__title {
+	max-width: 22ch;
+	font-size: clamp(36px, 3.8vw + 14px, 84px);
+	font-weight: 800;
+	line-height: 1.02;
+	letter-spacing: -0.045em;
+}
+
+.post-hero__lead {
+	max-width: 60ch;
+	margin-top: clamp(24px, 3vw, 36px);
+	font-size: clamp(17px, 0.4vw + 15px, 20px);
+	line-height: 1.7;
+	color: var(--color-gray-600);
+}
+
+.post-facts {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	max-width: 880px;
+	margin-top: clamp(40px, 5vw, 64px);
+}
+
+.post-facts > div {
+	padding: 22px 24px 4px 0;
+	border-top: 1px solid rgb(26 26 26 / 0.1);
+}
+
+.post-facts > div + div {
+	padding-left: 32px;
+	border-left: 1px solid rgb(26 26 26 / 0.1);
+}
+
+.post-facts dt {
+	margin-bottom: 4px;
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	color: var(--color-gray-400);
+}
+
+.post-facts dd {
+	font-size: 15px;
+	font-weight: 700;
+	letter-spacing: -0.01em;
+}
+
+/* ============================================
+   Cover: frame wipes open while the image settles from a slight zoom
+   ============================================ */
+
+.post-cover {
+	margin-top: clamp(48px, 5vw, 72px);
+}
+
+.post-cover__frame {
+	aspect-ratio: 21 / 9;
+	overflow: hidden;
+	background: var(--color-surface);
+}
+
+.post-cover img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.js .post-cover .post-cover__frame {
+	clip-path: inset(0 0 100% 0);
+	transition: clip-path 1.2s var(--ease-in-out);
+}
+
+.js .post-cover img {
+	transform: scale(1.12);
+	transition: transform 1.8s var(--ease-out);
+}
+
+.js .post-cover.is-visible .post-cover__frame {
+	clip-path: inset(0);
+}
+
+.js .post-cover.is-visible img {
+	transform: none;
+}
+
+/* ============================================
+   Article: sticky contents on the left, text column on the right
+   ============================================ */
+
+.post-layout {
+	display: grid;
+	grid-template-columns: minmax(180px, 260px) minmax(0, 1fr);
+	gap: clamp(40px, 6vw, 120px);
+	padding-block: clamp(64px, 7vw, 112px) clamp(32px, 4vw, 64px);
+}
+
+.post-toc nav {
+	position: sticky;
+	top: 120px;
+}
+
+.post-toc__label {
+	padding-bottom: 14px;
+	margin-bottom: 8px;
+	font-size: 11px;
+	font-weight: 700;
+	letter-spacing: 2px;
+	text-transform: uppercase;
+	border-bottom: 1px solid var(--color-ink);
+}
+
+.post-toc ol {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	counter-reset: toc;
+}
+
+.post-toc li {
+	counter-increment: toc;
+}
+
+.post-toc a {
+	display: grid;
+	grid-template-columns: 28px 1fr;
+	padding-block: 10px;
+	font-size: 14px;
+	font-weight: 600;
+	line-height: 1.4;
+	color: var(--color-gray-500);
+	border-bottom: 1px solid rgb(26 26 26 / 0.08);
+	transition: color 0.2s ease;
+}
+
+.post-toc a::before {
+	content: counter(toc, decimal-leading-zero);
+	font-size: 11px;
+	font-variant-numeric: tabular-nums;
+	line-height: 1.4rem;
+	color: var(--color-gray-400);
+}
+
+.post-toc a:hover,
+.post-toc a[aria-current] {
+	color: var(--color-ink);
+}
+
+.post-toc a[aria-current]::before {
+	color: var(--color-accent);
+}
+
+/* ----- Prose: the Markdown body ----- */
+
+.prose {
+	max-width: 68ch;
+	font-size: clamp(17px, 0.25vw + 16px, 19px);
+	line-height: 1.8;
+	color: var(--color-gray-700);
+	hanging-punctuation: first;
+}
+
+.prose > * + * {
+	margin-top: 1.4em;
+}
+
+/* Drop cap on the opening paragraph */
+.prose > p:first-child::first-letter {
+	float: left;
+	margin: 0.08em 0.12em 0 0;
+	font-size: 4.2em;
+	font-weight: 800;
+	line-height: 0.82;
+	letter-spacing: -0.04em;
+	color: var(--color-accent);
+}
+
+.prose h2,
+.prose h3 {
+	color: var(--color-ink);
+	letter-spacing: -0.03em;
+	scroll-margin-top: 110px;
+}
+
+.prose h2 {
+	margin-top: 2.6em;
+	padding-top: 0.9em;
+	font-size: clamp(26px, 1.2vw + 18px, 36px);
+	font-weight: 800;
+	line-height: 1.15;
+	border-top: 1px solid rgb(26 26 26 / 0.1);
+}
+
+.prose h3 {
+	margin-top: 2em;
+	font-size: clamp(20px, 0.5vw + 17px, 24px);
+	font-weight: 700;
+	line-height: 1.3;
+}
+
+.prose h2 + *,
+.prose h3 + * {
+	margin-top: 0.7em;
+}
+
+.prose strong {
+	font-weight: 700;
+	color: var(--color-ink);
+}
+
+.prose a {
+	font-weight: 600;
+	color: var(--color-ink);
+	text-decoration: underline;
+	text-decoration-color: var(--color-accent);
+	text-decoration-thickness: 2px;
+	text-underline-offset: 4px;
+	transition: color 0.2s ease;
+}
+
+.prose a:hover {
+	color: var(--color-accent);
+}
+
+.prose ul,
+.prose ol {
+	padding-left: 0;
+	list-style: none;
+}
+
+.prose li + li {
+	margin-top: 0.6em;
+}
+
+.prose li {
+	position: relative;
+	padding-left: 2em;
+}
+
+.prose ul > li::before {
+	content: '';
+	position: absolute;
+	top: 0.85em;
+	left: 0.2em;
+	width: 14px;
+	height: 2px;
+	background: var(--color-accent);
+}
+
+.prose ol {
+	counter-reset: prose-ol;
+}
+
+.prose ol > li {
+	counter-increment: prose-ol;
+}
+
+.prose ol > li::before {
+	content: counter(prose-ol, decimal-leading-zero);
+	position: absolute;
+	left: 0;
+	font-size: 0.75em;
+	font-weight: 800;
+	font-variant-numeric: tabular-nums;
+	line-height: 2.4;
+	color: var(--color-accent);
+}
+
+/* Pull quote: a large italic line hanging off an accent rule */
+.prose blockquote {
+	margin-block: 2em;
+	padding: 4px 0 4px 28px;
+	font-size: 1.2em;
+	font-style: italic;
+	line-height: 1.6;
+	color: var(--color-ink);
+	border-left: 3px solid var(--color-accent);
+}
+
+.prose blockquote p + p {
+	margin-top: 0.8em;
+}
+
+/* The closing call to action: set apart below a short rule */
+.prose > p:last-child {
+	margin-top: 2.6em;
+	padding-top: 1.6em;
+	border-top: 2px solid var(--color-ink);
+	font-weight: 500;
+	color: var(--color-ink);
+}
+
+/* ============================================
+   Keep reading
+   ============================================ */
+
+.post-more {
+	border-top: 1px solid rgb(26 26 26 / 0.1);
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+
+@media (max-width: 1024px) {
+	.post-layout {
+		grid-template-columns: 1fr;
+	}
+
+	.post-toc {
+		display: none;
+	}
+
+	.prose {
+		margin-inline: auto;
+	}
+}
+
+@media (max-width: 768px) {
+	.post-hero {
+		padding-top: 120px;
+	}
+
+	.post-hero__grid {
+		-webkit-mask-image: radial-gradient(ellipse 90% 30% at 85% 8%, #000 10%, transparent 75%);
+		mask-image: radial-gradient(ellipse 90% 30% at 85% 8%, #000 10%, transparent 75%);
+	}
+
+	.post-facts {
+		grid-template-columns: 1fr;
+	}
+
+	.post-facts > div,
+	.post-facts > div + div {
+		padding: 16px 0;
+		border-left: 0;
+	}
+
+	.post-cover__frame {
+		aspect-ratio: 3 / 2;
+	}
+}

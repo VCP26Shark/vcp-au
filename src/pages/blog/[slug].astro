@@ -1,0 +1,199 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { Image } from 'astro:assets';
+import { render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { getPosts, readingTime, formatDate, type Post } from '../../data/blog';
+import '../../styles/components/blog.css';
+import '../../styles/pages/post.css';
+
+export const getStaticPaths = (async () => {
+	const posts = await getPosts();
+	return posts.map((post) => ({
+		params: { slug: post.id },
+		props: { post, others: posts.filter((p) => p.id !== post.id) },
+	}));
+}) satisfies GetStaticPaths;
+
+interface Props {
+	post: Post;
+	others: Post[];
+}
+
+const { post, others } = Astro.props;
+const { title, description, category, date, author, cover, coverAlt } = post.data;
+const { Content, headings } = await render(post);
+const sections = headings.filter((h) => h.depth === 2);
+
+const arrow = '<path d="M5 12h14M12 5l7 7-7 7"/>';
+---
+
+<Layout title={`${title} | VCPility Blog`} description={description} ogType="article">
+	<!-- Reading progress (scroll-driven; hidden where unsupported) -->
+	<div class="post-progress" aria-hidden="true"></div>
+
+	<!-- ============================================
+	     Hero
+	     ============================================ -->
+	<section class="post-hero">
+		<canvas class="post-hero__grid" aria-hidden="true" data-flicker-grid></canvas>
+
+		<div class="container post-hero__content">
+			<nav class="post-crumbs reveal" aria-label="Breadcrumb">
+				<a href="/blog">Blog</a>
+				<span aria-hidden="true">/</span>
+				<span aria-current="page">{category}</span>
+			</nav>
+
+			<h1 class="post-hero__title reveal" style="--d: 0.1s">{title}</h1>
+			<p class="post-hero__lead reveal" style="--d: 0.25s">{description}</p>
+
+			<dl class="post-facts reveal" style="--d: 0.35s">
+				<div>
+					<dt>Written by</dt>
+					<dd>{author}</dd>
+				</div>
+				<div>
+					<dt>Published</dt>
+					<dd><time datetime={date.toISOString()}>{formatDate(date)}</time></dd>
+				</div>
+				<div>
+					<dt>Reading time</dt>
+					<dd>{readingTime(post)}</dd>
+				</div>
+			</dl>
+		</div>
+	</section>
+
+	<!-- ============================================
+	     Cover
+	     ============================================ -->
+	<figure class="container post-cover" data-reveal>
+		<div class="post-cover__frame">
+			<Image src={cover} alt={coverAlt} widths={[800, 1400, 2000, 2400]} sizes="90vw" loading="eager" />
+		</div>
+	</figure>
+
+	<!-- ============================================
+	     Article
+	     ============================================ -->
+	<div class="container post-layout">
+		{
+			sections.length > 0 && (
+				<aside class="post-toc">
+					<nav aria-label="In this article">
+						<p class="post-toc__label">In this article</p>
+						<ol>
+							{sections.map(({ slug, text }) => (
+								<li>
+									<a href={`#${slug}`} data-toc-link={slug}>
+										{text}
+									</a>
+								</li>
+							))}
+						</ol>
+					</nav>
+				</aside>
+			)
+		}
+
+		<article class="prose">
+			<Content />
+		</article>
+	</div>
+
+	<!-- ============================================
+	     Keep reading
+	     ============================================ -->
+	{
+		others.length > 0 && (
+			<section class="sec post-more">
+				<div class="container">
+					<header class="sec-head">
+						<div>
+							<p class="eyebrow reveal">Keep reading</p>
+							<h2 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
+								<span class="line">
+									<span class="line__inner">More from the journal.</span>
+								</span>
+							</h2>
+						</div>
+						<p class="sec-head__lead reveal" style="--d: 0.2s">
+							<a href="/blog" class="btn btn--link">
+								All articles
+								<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+							</a>
+						</p>
+					</header>
+
+					<ul class="post-cards">
+						{others.slice(0, 3).map((other, i) => (
+							<li class="post-card reveal" style={`--d: ${i * 0.08}s`}>
+								<a href={`/blog/${other.id}`} class="post-card__link">
+									<span class="post-card__media">
+										<Image src={other.data.cover} alt="" widths={[480, 800, 1200]} sizes="(max-width: 768px) 90vw, 30vw" />
+									</span>
+									<span class="post-meta">
+										<span>{other.data.category}</span>
+										<span>{readingTime(other)}</span>
+									</span>
+									<span class="post-card__title">{other.data.title}</span>
+									<span class="post-card__desc">{other.data.description}</span>
+									<time class="post-card__date" datetime={other.data.date.toISOString()}>
+										{formatDate(other.data.date)}
+									</time>
+								</a>
+							</li>
+						))}
+					</ul>
+				</div>
+			</section>
+		)
+	}
+
+	<!-- ============================================
+	     CTA (shader band)
+	     ============================================ -->
+	<section class="blog-cta" data-pause-offscreen>
+		<canvas class="shader" aria-hidden="true" data-shader></canvas>
+		<div class="container blog-cta__inner reveal">
+			<h2 class="section-title section-title--sm">Put the ideas to work.</h2>
+			<p>See how VCPility automates your enquiries, reviews and follow-ups, so your team can get on with the work.</p>
+			<div class="blog-cta__actions">
+				<a href="/contact" class="btn btn--light btn--shine">
+					Book a demo
+					<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+				</a>
+				<a href="/features" class="btn btn--link blog-cta__link">Explore the features</a>
+			</div>
+		</div>
+	</section>
+</Layout>
+
+<script>
+	import { initFlickerGrids } from '../../scripts/flicker-grid';
+	import { initShaders } from '../../scripts/shader';
+
+	initFlickerGrids();
+	initShaders();
+
+	/* Highlight the contents link for the section being read */
+	const links = new Map(
+		[...document.querySelectorAll<HTMLAnchorElement>('[data-toc-link]')].map((a) => [a.dataset.tocLink, a]),
+	);
+
+	if (links.size) {
+		const spy = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					if (!entry.isIntersecting) continue;
+					links.forEach((a) => a.removeAttribute('aria-current'));
+					links.get(entry.target.id)?.setAttribute('aria-current', 'true');
+				}
+			},
+			{ rootMargin: '-15% 0px -70% 0px' },
+		);
+
+		document.querySelectorAll('.prose h2[id]').forEach((h) => spy.observe(h));
+	}
+</script>

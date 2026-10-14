@@ -316,7 +316,7 @@ html.nav-locked {
 
 /* ----- Responsive ----- */
 
-/* Tighten the menu before it hands over to the hamburger, so all seven
+/* Tighten the menu before it hands over to the hamburger, so all eight
    links stay on one row down to 1025px */
 @media (max-width: 1280px) {
 	.nav__right {

@@ -1,0 +1,155 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import { getPosts, readingTime, formatDate } from '../data/blog';
+import '../styles/components/blog.css';
+import '../styles/pages/blog.css';
+
+const posts = await getPosts();
+const [featured, ...rest] = posts;
+const categories = [...new Set(posts.map((post) => post.data.category))];
+
+const pad = (n: number) => String(n).padStart(2, '0');
+const arrow = '<path d="M5 12h14M12 5l7 7-7 7"/>';
+---
+
+<Layout
+	title="Blog | VCPility"
+	description="Practical ideas on automation, reviews, websites and growth for Australian small businesses, from the VCPility team."
+	keywords="small business automation, Google reviews, speed to lead, website tips, VCPility blog"
+>
+	<!-- ============================================
+	     Hero
+	     ============================================ -->
+	<section class="blog-hero">
+		<canvas class="blog-hero__grid" aria-hidden="true" data-flicker-grid></canvas>
+
+		<div class="container">
+			<p class="eyebrow blog-hero__eyebrow reveal">The VCPility Journal</p>
+
+			<h1 class="blog-hero__title reveal-lines" style="--d: 0.1s">
+				<span class="line" style="--i: 0"><span class="line__inner">Ideas for running</span></span>
+				<span class="line" style="--i: 1"><span class="line__inner">a smarter business.</span></span>
+			</h1>
+
+			<div class="blog-hero__foot reveal" style="--d: 0.35s">
+				<p class="blog-hero__lead">
+					Practical, no-jargon advice on automation, reviews, websites and winning more work, written for
+					Australian small businesses.
+				</p>
+				<ul class="blog-hero__topics" aria-label="Topics">
+					{categories.map((category) => <li>{category}</li>)}
+				</ul>
+			</div>
+		</div>
+	</section>
+
+	<!-- ============================================
+	     Featured (latest) post
+	     ============================================ -->
+	{
+		featured && (
+			<section class="container blog-featured">
+				<article class="blog-featured__card">
+					<a href={`/blog/${featured.id}`} class="blog-featured__media" data-reveal tabindex="-1" aria-hidden="true">
+						<Image
+							src={featured.data.cover}
+							alt=""
+							widths={[640, 1000, 1400, 1800]}
+							sizes="(max-width: 900px) 90vw, 55vw"
+							loading="eager"
+						/>
+					</a>
+					<div class="blog-featured__body reveal" style="--d: 0.15s">
+						<p class="post-meta">
+							<span class="post-meta__label">Latest</span>
+							<span>{featured.data.category}</span>
+							<time datetime={featured.data.date.toISOString()}>{formatDate(featured.data.date)}</time>
+						</p>
+						<h2 class="blog-featured__title">
+							<a href={`/blog/${featured.id}`}>{featured.data.title}</a>
+						</h2>
+						<p class="blog-featured__desc">{featured.data.description}</p>
+						<a href={`/blog/${featured.id}`} class="btn btn--link" aria-hidden="true" tabindex="-1">
+							Read the article · {readingTime(featured)}
+							<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+						</a>
+					</div>
+				</article>
+			</section>
+		)
+	}
+
+	<!-- ============================================
+	     All other posts
+	     ============================================ -->
+	{
+		rest.length > 0 && (
+			<section class="sec blog-list">
+				<div class="container">
+					<header class="sec-head">
+						<div>
+							<p class="eyebrow reveal">More articles</p>
+							<h2 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
+								<span class="line">
+									<span class="line__inner">From the archive.</span>
+								</span>
+							</h2>
+						</div>
+						<p class="sec-head__lead reveal" style="--d: 0.2s">
+							Short reads you can put to work this week, from the team that builds VCPility.
+						</p>
+					</header>
+
+					<ul class="post-cards">
+						{rest.map((post, i) => (
+							<li class="post-card reveal" style={`--d: ${(i % 3) * 0.08}s`}>
+								<a href={`/blog/${post.id}`} class="post-card__link">
+									<span class="post-card__media">
+										<Image src={post.data.cover} alt="" widths={[480, 800, 1200]} sizes="(max-width: 768px) 90vw, 30vw" />
+									</span>
+									<span class="post-meta">
+										<span class="post-meta__num">{pad(i + 2)}</span>
+										<span>{post.data.category}</span>
+										<span>{readingTime(post)}</span>
+									</span>
+									<span class="post-card__title">{post.data.title}</span>
+									<span class="post-card__desc">{post.data.description}</span>
+									<time class="post-card__date" datetime={post.data.date.toISOString()}>
+										{formatDate(post.data.date)}
+									</time>
+								</a>
+							</li>
+						))}
+					</ul>
+				</div>
+			</section>
+		)
+	}
+
+	<!-- ============================================
+	     CTA (shader band)
+	     ============================================ -->
+	<section class="blog-cta" data-pause-offscreen>
+		<canvas class="shader" aria-hidden="true" data-shader></canvas>
+		<div class="container blog-cta__inner reveal">
+			<h2 class="section-title section-title--sm">Put the ideas to work.</h2>
+			<p>See how VCPility automates your enquiries, reviews and follow-ups, so your team can get on with the work.</p>
+			<div class="blog-cta__actions">
+				<a href="/contact" class="btn btn--light btn--shine">
+					Book a demo
+					<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+				</a>
+				<a href="/features" class="btn btn--link blog-cta__link">Explore the features</a>
+			</div>
+		</div>
+	</section>
+</Layout>
+
+<script>
+	import { initFlickerGrids } from '../scripts/flicker-grid';
+	import { initShaders } from '../scripts/shader';
+
+	initFlickerGrids();
+	initShaders();
+</script>
