@@ -86,8 +86,13 @@
 	gap: 40px clamp(40px, 5vw, 88px);
 }
 
-/* Frame wipes open while the image settles from a slight zoom */
+/* Frame wipes open while the image settles from a slight zoom. The clip sits on the
+   inner frame: a fully clipped observed element never counts as intersecting. */
 .blog-featured__media {
+	display: block;
+}
+
+.blog-featured__frame {
 	display: block;
 	aspect-ratio: 4 / 3;
 	overflow: hidden;
@@ -100,7 +105,7 @@
 	object-fit: cover;
 }
 
-.js .blog-featured__media {
+.js .blog-featured__frame {
 	clip-path: inset(0 0 100% 0);
 	transition: clip-path 1.2s var(--ease-in-out);
 }
@@ -110,7 +115,7 @@
 	transition: transform 1.8s var(--ease-out);
 }
 
-.js .blog-featured__media.is-visible {
+.js .blog-featured__media.is-visible .blog-featured__frame {
 	clip-path: inset(0);
 }
 
@@ -171,7 +176,7 @@
 		mask-image: radial-gradient(ellipse 90% 30% at 85% 8%, #000 10%, transparent 75%);
 	}
 
-	.blog-featured__media {
+	.blog-featured__frame {
 		aspect-ratio: 3 / 2;
 	}
 }

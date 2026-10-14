@@ -52,13 +52,15 @@ const arrow = '<path d="M5 12h14M12 5l7 7-7 7"/>';
 			<section class="container blog-featured">
 				<article class="blog-featured__card">
 					<a href={`/blog/${featured.id}`} class="blog-featured__media" data-reveal tabindex="-1" aria-hidden="true">
-						<Image
-							src={featured.data.cover}
-							alt=""
-							widths={[640, 1000, 1400, 1800]}
-							sizes="(max-width: 900px) 90vw, 55vw"
-							loading="eager"
-						/>
+						<span class="blog-featured__frame">
+							<Image
+								src={featured.data.cover}
+								alt=""
+								widths={[640, 1000, 1400, 1800]}
+								sizes="(max-width: 900px) 90vw, 55vw"
+								loading="eager"
+							/>
+						</span>
 					</a>
 					<div class="blog-featured__body reveal" style="--d: 0.15s">
 						<p class="post-meta">
