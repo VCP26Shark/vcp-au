@@ -1,30 +1,8 @@
 /* ============================================
    Web Services page
+   Hero, chapters, labels, cards, tickers and the closing panel come from
+   the design system in global.css.
    ============================================ */
-
-/* Same gutter as the navbar and hero, so every section shares one left edge */
-.ws-wrap {
-	padding-inline: var(--gutter);
-}
-
-/* Shared section header: title on the left, lead on the right, aligned to the baseline */
-.ws-head {
-	display: grid;
-	grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
-	align-items: end;
-	gap: 28px 80px;
-	margin-bottom: clamp(56px, 6vw, 88px);
-}
-
-.ws-head .eyebrow {
-	margin-bottom: 24px;
-}
-
-.ws-head__lead {
-	font-size: 17px;
-	line-height: 1.75;
-	color: var(--color-gray-500);
-}
 
 /* ============================================
    Hero
@@ -32,29 +10,11 @@
 
 .ws-hero {
 	position: relative;
-	display: grid;
-	grid-template-rows: 1fr auto;
-	min-height: 100vh;
-	min-height: 100svh;
-	padding: 150px var(--gutter) 0;
 	overflow: hidden;
 	isolation: isolate;
-	background: var(--color-white);
 }
 
-/* Soft accent glow behind the grid */
-.ws-hero::before {
-	content: '';
-	position: absolute;
-	inset: 0;
-	z-index: -2;
-	pointer-events: none;
-	background:
-		radial-gradient(circle at 82% 30%, rgb(224 3 72 / 0.07), transparent 42%),
-		radial-gradient(circle at 95% 75%, rgb(57 4 78 / 0.06), transparent 40%);
-}
-
-/* Flickering Grid canvas, strongest top-right and fading out before the headline */
+/* Flickering Grid, strongest top-right and fading out before the title */
 .ws-hero__grid {
 	position: absolute;
 	inset: 0;
@@ -62,164 +22,67 @@
 	width: 100%;
 	height: 100%;
 	pointer-events: none;
-	-webkit-mask-image: radial-gradient(ellipse 55% 75% at 82% 38%, #000 15%, transparent 72%);
-	mask-image: radial-gradient(ellipse 55% 75% at 82% 38%, #000 15%, transparent 72%);
+	opacity: 0.7;
+	-webkit-mask-image: radial-gradient(ellipse 50% 70% at 88% 25%, #000 10%, transparent 70%);
+	mask-image: radial-gradient(ellipse 50% 70% at 88% 25%, #000 10%, transparent 70%);
 }
 
-.ws-hero__content {
-	align-self: center;
-	max-width: 1080px;
-	padding-block: 40px;
-}
-
-.ws-hero__eyebrow {
-	margin-bottom: clamp(28px, 3vw, 40px);
-	color: var(--color-accent);
-}
-
-.ws-hero__title {
-	font-size: clamp(44px, 6.4vw + 10px, 124px);
-	font-weight: 800;
-	line-height: 0.98;
-	letter-spacing: -0.05em;
-}
-
-.ws-hero__lead {
-	max-width: 56ch;
-	margin-top: clamp(28px, 3vw, 40px);
-	font-size: clamp(17px, 0.4vw + 15px, 20px);
-	line-height: 1.7;
-	color: var(--color-gray-600);
-}
-
-.ws-hero__actions {
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	gap: 20px 40px;
-	margin-top: clamp(36px, 4vw, 48px);
-}
-
-/* Fact strip pinned to the bottom of the hero */
-.ws-hero__facts {
+/* Fact strip under the title: a logo-colour dot beside each label */
+.ws-facts {
 	display: grid;
 	grid-template-columns: repeat(3, minmax(0, 1fr));
-	border-top: 1px solid rgb(26 26 26 / 0.1);
+	margin-top: clamp(56px, 7vw, 112px);
+	border-top: 1px solid var(--rule);
 }
 
-.ws-hero__facts li {
-	padding: 26px 0 30px;
-	font-size: 15px;
-	font-weight: 700;
+.ws-facts li {
+	padding: 24px 24px 0 0;
+	font-size: 16px;
+	font-weight: 600;
 	letter-spacing: -0.01em;
 }
 
-.ws-hero__facts li + li {
-	padding-left: 32px;
-	border-left: 1px solid rgb(26 26 26 / 0.1);
+.ws-facts li + li {
+	padding-left: 28px;
+	border-left: 1px solid var(--rule);
 }
 
-.ws-hero__facts span {
-	display: block;
-	margin-bottom: 4px;
-	font-size: 11px;
-	font-weight: 600;
-	letter-spacing: 2px;
-	text-transform: uppercase;
-	color: var(--color-gray-400);
-}
-
-/* ============================================
-   Statement + principles
-   ============================================ */
-
-.ws-intro {
-	padding-block: clamp(100px, 12vw, 180px);
-}
-
-.ws-intro__statement {
-	max-width: 24ch;
-	margin-top: 32px;
-	font-size: clamp(30px, 3vw + 14px, 62px);
-	font-weight: 700;
-	line-height: 1.1;
-	letter-spacing: -0.035em;
-	text-wrap: balance;
-}
-
-.ws-intro__statement em {
+.ws-facts span {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	margin-bottom: 6px;
+	font-size: 13.5px;
 	font-weight: 500;
-	color: var(--color-accent);
+	letter-spacing: 0;
+	color: var(--muted);
 }
 
-@supports (background-clip: text) or (-webkit-background-clip: text) {
-	.ws-intro__statement em {
-		padding-right: 0.08em;
-		background: var(--gradient-accent);
-		-webkit-background-clip: text;
-		background-clip: text;
-		-webkit-text-fill-color: transparent;
-	}
-}
-
-.ws-principles {
-	display: grid;
-	grid-template-columns: repeat(3, minmax(0, 1fr));
-	gap: 48px;
-	margin-top: clamp(64px, 8vw, 120px);
-}
-
-.ws-principle {
-	position: relative;
-	padding-top: 28px;
-	border-top: 1px solid rgb(26 26 26 / 0.12);
-}
-
-/* Short accent rule sitting on the hairline */
-.ws-principle::before {
+.ws-facts span::before {
 	content: '';
-	position: absolute;
-	top: -1px;
-	left: 0;
-	width: 48px;
-	height: 2px;
-	background: var(--gradient-accent);
-}
-
-.ws-principle__num {
-	font-size: 13px;
-	font-weight: 700;
-	font-variant-numeric: tabular-nums;
-	color: var(--color-accent);
-}
-
-.ws-principle h3 {
-	margin: 20px 0 12px;
-	font-size: clamp(20px, 0.5vw + 17px, 24px);
-	font-weight: 700;
-	line-height: 1.25;
-	letter-spacing: -0.02em;
-}
-
-.ws-principle p {
-	max-width: 42ch;
-	font-size: 16px;
-	line-height: 1.7;
-	color: var(--color-gray-500);
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: var(--c);
 }
 
 /* ============================================
-   Figures (photos with an unveil-and-settle reveal)
+   Figures: rounded frames that wipe open while the photo settles
    ============================================ */
+
+.ws-figure {
+	margin: 0;
+}
 
 .ws-figure--wide {
-	margin-top: clamp(56px, 7vw, 104px);
+	margin-top: clamp(56px, 7vw, 112px);
 }
 
 .ws-figure__frame {
 	aspect-ratio: 3 / 2;
 	overflow: hidden;
-	background: var(--color-surface);
+	background: var(--surface);
+	border-radius: var(--radius);
 }
 
 .ws-figure--wide .ws-figure__frame {
@@ -238,39 +101,36 @@
 
 .ws-figure figcaption {
 	display: flex;
-	gap: 14px;
+	flex-wrap: wrap;
 	align-items: baseline;
+	gap: 4px 12px;
 	margin-top: 16px;
 	font-size: 14px;
-	color: var(--color-gray-500);
+	color: var(--muted);
 }
 
 .ws-figure figcaption span {
-	font-size: 11px;
-	font-weight: 700;
-	letter-spacing: 2px;
-	text-transform: uppercase;
-	color: var(--color-accent);
+	font-weight: 600;
+	color: var(--ink);
 }
 
-/* Frame wipes open top to bottom while the photo settles from a slight zoom */
 .js .ws-figure[data-reveal] .ws-figure__frame {
-	clip-path: inset(0 0 100% 0);
-	transition: clip-path 1.2s var(--ease-in-out) var(--d, 0s);
+	clip-path: inset(8% 4% 8% 4% round var(--radius));
+	transition: clip-path 1s var(--ease-out) var(--d, 0s);
 }
 
 .js .ws-figure[data-reveal] img {
-	transform: scale(1.12);
-	transition: transform 1.8s var(--ease-out) var(--d, 0s);
+	transform: scale(1.1);
+	transition: transform 1.4s var(--ease-out) var(--d, 0s);
 }
 
 .js .ws-figure[data-reveal] figcaption {
 	opacity: 0;
-	transition: opacity 0.8s ease calc(var(--d, 0s) + 0.6s);
+	transition: opacity 0.6s ease calc(var(--d, 0s) + 0.3s);
 }
 
 .js .ws-figure.is-visible .ws-figure__frame {
-	clip-path: inset(0);
+	clip-path: inset(0 round var(--radius));
 }
 
 .js .ws-figure.is-visible img {
@@ -281,12 +141,223 @@
 	opacity: 1;
 }
 
-/* Two-up under the services list, the second photo dropped for an editorial stagger */
+/* ============================================
+   01 Who we are
+   ============================================ */
+
+/* Text Reveal: each word's opacity follows --p (0 to 1) set from scroll */
+.ws-intro__statement {
+	max-width: 30ch;
+	font-size: clamp(30px, 2.4vw + 16px, 64px);
+	font-weight: 500;
+	line-height: 1.12;
+	letter-spacing: -0.04em;
+}
+
+.js .ws-intro__statement .w {
+	opacity: clamp(0.22, calc((var(--p, 0) - var(--w)) * 8 + 0.22), 1);
+}
+
+.ws-principles {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 16px;
+	margin-top: clamp(48px, 6vw, 96px);
+}
+
+.ws-principle {
+	display: flex;
+	flex-direction: column;
+	padding: 28px 28px 32px;
+	background: var(--surface);
+	border-radius: var(--radius);
+	transition: transform 0.5s var(--ease-out);
+}
+
+.ws-principle:hover {
+	transform: translateY(-4px);
+}
+
+.ws-principle__head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding-bottom: clamp(40px, 4vw, 64px);
+}
+
+.ws-principle__num {
+	font-size: 13px;
+	font-weight: 500;
+	font-variant-numeric: tabular-nums;
+	color: var(--soft);
+}
+
+.ws-principle svg {
+	width: 22px;
+	height: 22px;
+	fill: none;
+	stroke: var(--ink);
+	stroke-width: 1.6;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
+/* Strokes draw in on reveal (pathLength is set to 1 by effects.ts) */
+.js .ws-principle svg.is-drawable * {
+	stroke-dasharray: 1;
+	stroke-dashoffset: 1;
+	transition: stroke-dashoffset 0.9s var(--ease-in-out) calc(var(--d, 0s) + 0.1s);
+}
+
+.js .ws-principle.is-visible svg.is-drawable * {
+	stroke-dashoffset: 0;
+}
+
+.ws-principle h3 {
+	font-size: clamp(21px, 0.6vw + 17px, 26px);
+	font-weight: 600;
+	line-height: 1.15;
+	letter-spacing: -0.035em;
+}
+
+.ws-principle p {
+	max-width: 40ch;
+	margin-top: 12px;
+	font-size: 15.5px;
+	line-height: 1.65;
+	color: var(--muted);
+}
+
+/* ============================================
+   02 Services: ruled index rows
+   ============================================ */
+
+.ws-index {
+	border-top: 1px solid var(--rule);
+}
+
+.ws-index__row {
+	position: relative;
+	isolation: isolate;
+	display: grid;
+	grid-template-columns: 56px minmax(0, 1fr) minmax(0, 1.05fr) 40px;
+	align-items: start;
+	gap: 16px 32px;
+	padding-block: clamp(28px, 3vw, 44px);
+	border-bottom: 1px solid var(--rule);
+}
+
+/* A light wash slides up behind the row on hover */
+.ws-index__row::before {
+	content: '';
+	position: absolute;
+	inset: 0 -24px;
+	z-index: -1;
+	background: var(--surface);
+	border-radius: 16px;
+	transform: scaleY(0.6);
+	opacity: 0;
+	transition:
+		transform 0.5s var(--ease-out),
+		opacity 0.4s ease;
+}
+
+.ws-index__row:hover::before,
+.ws-index__row:focus-within::before {
+	transform: none;
+	opacity: 1;
+}
+
+/* The title link stretches over the whole row, so any part of it is clickable */
+.ws-index__title a::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+}
+
+.ws-index__title a:focus-visible {
+	outline: none;
+}
+
+.ws-index__row:has(a:focus-visible) {
+	outline: 2px solid var(--ink);
+	outline-offset: 4px;
+	border-radius: 8px;
+}
+
+.ws-index__num {
+	padding-top: 0.7em;
+	font-size: 13px;
+	font-weight: 500;
+	font-variant-numeric: tabular-nums;
+	color: var(--muted);
+}
+
+.ws-index__title {
+	font-size: clamp(28px, 1.8vw + 16px, 52px);
+	font-weight: 600;
+	line-height: 1.02;
+	letter-spacing: -0.05em;
+	transition: transform 0.5s var(--ease-out);
+}
+
+.ws-index__row:hover .ws-index__title {
+	transform: translateX(12px);
+}
+
+.ws-index__body {
+	padding-top: 6px;
+}
+
+.ws-index__body p {
+	max-width: 50ch;
+	font-size: 16px;
+	line-height: 1.65;
+	color: var(--muted);
+}
+
+.ws-tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-top: 18px;
+}
+
+.ws-tags li {
+	padding: 6px 12px;
+	font-size: 12.5px;
+	font-weight: 500;
+	color: var(--ink);
+	background: var(--color-white);
+	border: 1px solid var(--rule);
+	border-radius: 999px;
+}
+
+.ws-index__arrow {
+	justify-self: end;
+	width: 28px;
+	height: 28px;
+	margin-top: 0.4em;
+	fill: none;
+	stroke: currentColor;
+	stroke-width: 1.5;
+	transform: rotate(-45deg);
+	transition:
+		transform 0.4s var(--ease-out),
+		stroke 0.3s ease;
+}
+
+.ws-index__row:hover .ws-index__arrow {
+	transform: none;
+	stroke: var(--color-accent);
+}
+
+/* Two photos under the list, the second dropped for a stagger */
 .ws-pair {
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
-	gap: clamp(20px, 3vw, 48px);
-	margin-top: clamp(64px, 8vw, 120px);
+	gap: 16px;
+	margin-top: clamp(64px, 8vw, 128px);
 }
 
 .ws-pair .ws-figure:nth-child(2) {
@@ -294,484 +365,422 @@
 }
 
 /* ============================================
-   Services
+   03 Technologies
    ============================================ */
 
-.ws-services {
-	padding-block: clamp(100px, 10vw, 160px);
-	background: var(--color-bg);
+/* Scroll Based Velocity row: every tool, drifting, faster as the page scrolls */
+.ws-velocity {
+	overflow: hidden;
+	margin-bottom: clamp(40px, 5vw, 72px);
+	padding-block: clamp(20px, 2.4vw, 32px);
+	border-block: 1px solid var(--rule);
 }
 
-.ws-service-list {
-	border-top: 1px solid rgb(26 26 26 / 0.14);
-}
-
-.ws-service {
-	position: relative;
-	display: grid;
-	grid-template-columns: 72px minmax(0, 1fr) minmax(0, 1.1fr) 24px;
-	gap: 16px 40px;
-	padding-block: 44px;
-	border-bottom: 1px solid rgb(26 26 26 / 0.12);
-}
-
-/* The title link stretches over the whole row, so any part of it is clickable */
-.ws-service__title a::before {
-	content: '';
-	position: absolute;
-	inset: 0;
-}
-
-.ws-service__arrow {
-	width: 22px;
-	height: 22px;
-	margin-top: 8px;
-	fill: none;
-	stroke: var(--color-ink);
-	stroke-width: 2;
-	transition:
-		transform 0.4s var(--ease-out),
-		stroke 0.3s ease;
-}
-
-/* Accent rule that draws across the row on hover */
-.ws-service::after {
-	content: '';
-	position: absolute;
-	right: 0;
-	bottom: -1px;
-	left: 0;
-	height: 1px;
-	background: var(--gradient-accent);
-	transform: scaleX(0);
-	transform-origin: left;
-	transition: transform 0.7s var(--ease-out);
-}
-
-.ws-service__num {
-	padding-top: 9px;
-	font-size: 14px;
-	font-weight: 700;
-	font-variant-numeric: tabular-nums;
-	color: var(--color-gray-400);
-	transition: color 0.3s ease;
-}
-
-.ws-service__title {
-	font-size: clamp(24px, 1.4vw + 15px, 34px);
-	font-weight: 700;
-	line-height: 1.15;
-	letter-spacing: -0.03em;
-	transition: transform 0.5s var(--ease-out);
-}
-
-.ws-service__body p {
-	max-width: 52ch;
-	font-size: 16.5px;
-	line-height: 1.7;
-	color: var(--color-gray-600);
-}
-
-.ws-tags {
+.ws-velocity__track {
 	display: flex;
-	flex-wrap: wrap;
-	gap: 8px;
-	margin-top: 20px;
+	width: max-content;
+	will-change: transform;
 }
 
-.ws-tags li {
-	padding: 6px 12px;
-	font-size: 12px;
+.ws-velocity__item {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.55em;
+	padding-right: 0.55em;
+	font-size: clamp(32px, 3.6vw, 68px);
 	font-weight: 600;
-	color: var(--color-gray-700);
-	background: var(--color-white);
-	border: 1px solid rgb(26 26 26 / 0.1);
+	line-height: 1.15;
+	letter-spacing: -0.05em;
+	white-space: nowrap;
 }
 
-@media (hover: hover) {
-	.ws-service:hover::after {
-		transform: none;
-	}
-
-	.ws-service:hover .ws-service__num {
-		color: var(--color-accent);
-	}
-
-	.ws-service:hover .ws-service__title {
-		transform: translateX(8px);
-	}
-
-	.ws-service:hover .ws-service__arrow {
-		stroke: var(--color-accent);
-		transform: translateX(6px);
-	}
-}
-
-/* ============================================
-   Technologies: five ruled columns
-   ============================================ */
-
-.ws-stack {
-	padding-block: clamp(100px, 10vw, 160px);
+.ws-velocity__dot {
+	width: 0.18em;
+	height: 0.18em;
+	border-radius: 50%;
 }
 
 .ws-stack__grid {
 	display: grid;
 	grid-template-columns: repeat(5, minmax(0, 1fr));
-	border-top: 1px solid var(--color-ink);
+	gap: 16px;
 }
 
-.ws-stack__col {
-	padding: 28px 28px 8px 0;
+.ws-stack__card {
+	padding: 24px 24px 12px;
+	background: var(--surface);
+	border-radius: var(--radius);
 }
 
-.ws-stack__col + .ws-stack__col {
-	padding-left: 28px;
-	border-left: 1px solid rgb(26 26 26 / 0.12);
+.ws-stack__card h3 {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 14px;
+	font-weight: 600;
+	letter-spacing: -0.01em;
 }
 
-.ws-stack__col h3 {
-	font-size: 11px;
-	font-weight: 700;
-	letter-spacing: 2px;
-	text-transform: uppercase;
-	color: var(--color-accent);
+.ws-stack__card h3::before {
+	content: '';
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: var(--c);
 }
 
-.ws-stack__col ul {
+.ws-stack__card ul {
 	margin: 20px 0 0;
 	padding: 0;
 	list-style: none;
+	border-top: 1px solid var(--rule);
 }
 
-.ws-stack__col li {
-	padding-block: 14px;
-	font-size: clamp(18px, 0.5vw + 15px, 22px);
-	font-weight: 700;
+.ws-stack__card li {
+	padding-block: 12px;
+	font-size: clamp(16px, 0.4vw + 14px, 19px);
+	font-weight: 500;
 	letter-spacing: -0.02em;
-	border-bottom: 1px solid rgb(26 26 26 / 0.08);
-	transition:
-		color 0.3s ease,
-		transform 0.4s var(--ease-out);
+	border-bottom: 1px solid var(--rule);
+	transition: transform 0.4s var(--ease-out);
 }
 
-.ws-stack__col li:last-child {
+.ws-stack__card li:last-child {
 	border-bottom: 0;
 }
 
 @media (hover: hover) {
-	.ws-stack__col li:hover {
-		color: var(--color-accent);
+	.ws-stack__card li:hover {
 		transform: translateX(6px);
 	}
 }
 
 /* ============================================
-   Results (dark)
+   04 Results (the ink chapter)
    ============================================ */
 
 .ws-results {
-	position: relative;
-	padding-block: clamp(100px, 10vw, 160px);
 	overflow: hidden;
-	color: var(--color-white);
-	background:
-		radial-gradient(circle at 100% 0%, rgb(224 3 72 / 0.22), transparent 40%),
-		radial-gradient(circle at 0% 100%, rgb(57 4 78 / 0.45), transparent 45%),
-		var(--color-ink);
 }
 
-.ws-results .eyebrow {
-	color: var(--color-accent);
+.ws-results__grid {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0.5;
+	-webkit-mask-image: radial-gradient(ellipse at 85% 20%, #000, transparent 60%);
+	mask-image: radial-gradient(ellipse at 85% 20%, #000, transparent 60%);
 }
 
-.ws-results .ws-head__lead {
-	color: rgb(255 255 255 / 0.6);
+.ws-results .container {
+	position: relative;
 }
 
 .ws-stats {
 	display: grid;
 	grid-template-columns: repeat(4, minmax(0, 1fr));
-	border-top: 1px solid rgb(255 255 255 / 0.14);
+	border-top: 1px solid var(--rule);
 }
 
-/* Label comes first in the markup (dt before dd) but sits under the number */
+/* Label first in the markup, number below, as in the homepage band */
 .ws-stat {
 	display: flex;
-	flex-direction: column-reverse;
-	justify-content: flex-end;
-	gap: 14px;
-	padding: 44px 28px 8px 0;
+	flex-direction: column;
+	gap: 20px;
+	padding: 32px 28px 0;
+	border-left: 1px solid var(--rule);
 }
 
-.ws-stat + .ws-stat {
-	padding-left: 32px;
-	border-left: 1px solid rgb(255 255 255 / 0.14);
+.ws-stat:first-child {
+	padding-left: 0;
+	border-left: 0;
 }
 
-.ws-stat__value {
-	font-size: clamp(48px, 4.4vw + 12px, 92px);
-	font-weight: 800;
-	line-height: 1;
-	letter-spacing: -0.05em;
-	font-variant-numeric: tabular-nums;
+.ws-stat dt {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	max-width: 26ch;
+	min-height: 3.2em;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 1.6;
+	color: var(--muted);
+}
+
+.ws-stat dt::before {
+	content: '';
+	flex: none;
+	width: 8px;
+	height: 8px;
+	margin-top: 0.55em;
+	border-radius: 50%;
+	background: var(--c);
+}
+
+.ws-stat dd {
+	font-size: clamp(52px, 4.6vw + 12px, 120px);
+	font-weight: 600;
+	line-height: 1.1;
+	letter-spacing: -0.065em;
 	white-space: nowrap;
 }
 
-@supports (background-clip: text) or (-webkit-background-clip: text) {
-	.ws-stat__value {
-		background: linear-gradient(180deg, var(--color-white) 35%, rgb(255 255 255 / 0.5));
-		-webkit-background-clip: text;
-		background-clip: text;
-		-webkit-text-fill-color: transparent;
-	}
-}
-
-.ws-stat__label {
-	max-width: 24ch;
-	font-size: 15px;
-	line-height: 1.6;
-	color: rgb(255 255 255 / 0.6);
-}
-
 /* ============================================
-   Process
+   05 Process: sticky heading beside a Tracing Beam
    ============================================ */
 
-.ws-process {
-	padding-block: clamp(100px, 10vw, 160px);
+.ws-process__layout {
+	display: grid;
+	grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+	gap: clamp(48px, 7vw, 128px);
+	align-items: start;
+}
+
+.ws-process__head {
+	position: sticky;
+	top: 130px;
+}
+
+.ws-process__head .lead {
+	margin-top: 28px;
 }
 
 .ws-steps {
-	display: grid;
-	grid-template-columns: repeat(4, minmax(0, 1fr));
+	position: relative;
+	padding-left: clamp(40px, 5vw, 72px);
+}
+
+/* Track with a fill that grows with --p, ending in the one red dot */
+.ws-steps__beam {
+	position: absolute;
+	inset: 0 auto 0 0;
+	width: 1px;
+	background: var(--rule);
+}
+
+.ws-steps__beam span {
+	position: absolute;
+	inset: 0 0 auto;
+	height: calc(var(--p, 0) * 100%);
+	background: linear-gradient(to bottom, transparent, var(--ink) 40%);
+}
+
+.ws-steps__beam span::after {
+	content: '';
+	position: absolute;
+	bottom: -5px;
+	left: -5px;
+	width: 11px;
+	height: 11px;
+	border-radius: 50%;
+	background: var(--color-accent);
+	box-shadow: 0 0 0 6px rgb(224 3 72 / 0.12);
 }
 
 .ws-step {
-	position: relative;
-	padding: 44px 32px 0 0;
-	border-top: 1px solid rgb(26 26 26 / 0.12);
+	display: grid;
+	grid-template-columns: auto minmax(0, 1fr);
+	gap: clamp(24px, 3vw, 56px);
+	align-items: start;
+	padding-block: clamp(36px, 4vw, 64px);
+	border-bottom: 1px solid var(--rule);
 }
 
-/* Accent rule drawing across the steps in turn, with a square marker at each start */
-.ws-step::before,
-.ws-step::after {
-	content: '';
-	position: absolute;
-	left: 0;
+.ws-step:first-of-type {
+	padding-top: 0;
 }
 
-.ws-step::before {
-	top: -1px;
-	right: 0;
-	height: 2px;
-	background: var(--gradient-accent);
-	transform-origin: left;
+.ws-step:last-child {
+	border-bottom: 0;
 }
 
-.ws-step::after {
-	top: -5px;
-	width: 10px;
-	height: 10px;
-	background: var(--color-ink);
-}
-
+/* Light grey numerals that turn ink once the beam reaches them */
 .ws-step__num {
-	font-size: 13px;
-	font-weight: 700;
-	letter-spacing: 0.1em;
+	min-width: 1.3em;
+	font-size: clamp(64px, 5.4vw, 120px);
+	font-weight: 600;
+	line-height: 0.8;
+	letter-spacing: -0.07em;
 	font-variant-numeric: tabular-nums;
-	color: var(--color-accent);
+	color: #e6e9ee;
+	transition: color 0.6s var(--ease-out);
+}
+
+.ws-step.is-lit .ws-step__num {
+	color: var(--ink);
+}
+
+.ws-step__body {
+	padding-top: 6px;
+	transition:
+		opacity 0.6s var(--ease-out),
+		transform 0.6s var(--ease-out);
+}
+
+.js .ws-step:not(.is-lit) .ws-step__body {
+	opacity: 0.5;
+	transform: translateX(8px);
 }
 
 .ws-step h3 {
-	margin: 16px 0 12px;
-	font-size: clamp(22px, 0.6vw + 18px, 28px);
-	font-weight: 700;
-	letter-spacing: -0.025em;
+	font-size: clamp(24px, 1vw + 18px, 36px);
+	font-weight: 600;
+	line-height: 1.1;
+	letter-spacing: -0.04em;
 }
 
 .ws-step p {
-	max-width: 34ch;
-	font-size: 15.5px;
+	max-width: 42ch;
+	margin-top: 14px;
+	font-size: 16.5px;
 	line-height: 1.7;
-	color: var(--color-gray-500);
-}
-
-.js .ws-step {
-	--delay: calc(var(--i) * 0.18s);
-	opacity: 0;
-	transform: translateY(24px);
-	transition:
-		opacity 0.8s var(--ease-out) var(--delay),
-		transform 1s var(--ease-out) var(--delay);
-}
-
-.js .ws-step::before {
-	transform: scaleX(0);
-	transition: transform 0.9s var(--ease-in-out) calc(var(--delay) + 0.2s);
-}
-
-.js .ws-step::after {
-	transition: background-color 0.4s ease calc(var(--delay) + 0.2s);
-}
-
-.js .ws-steps.is-visible .ws-step {
-	opacity: 1;
-	transform: none;
-}
-
-.js .ws-steps.is-visible .ws-step::before {
-	transform: none;
-}
-
-.js .ws-steps.is-visible .ws-step::after {
-	background: var(--color-accent);
+	color: var(--muted);
 }
 
 /* ============================================
-   CTA with Border Beam (after Magic UI)
+   Closing CTA
    ============================================ */
 
-.ws-cta-section {
-	padding-bottom: clamp(100px, 10vw, 160px);
-}
-
-.ws-cta {
-	position: relative;
-	padding: clamp(64px, 8vw, 120px) clamp(24px, 6vw, 96px);
-	overflow: hidden;
-	text-align: center;
-	background: var(--color-bg);
-	border: 1px solid rgb(26 26 26 / 0.08);
-}
-
-/* Faint grid fading out from the centre */
-.ws-cta::before {
-	content: '';
-	position: absolute;
-	inset: 0;
-	pointer-events: none;
-	background-image:
-		linear-gradient(rgb(26 26 26 / 0.05) 1px, transparent 1px),
-		linear-gradient(90deg, rgb(26 26 26 / 0.05) 1px, transparent 1px);
-	background-size: 48px 48px;
-	-webkit-mask-image: radial-gradient(ellipse at center, #000, transparent 70%);
-	mask-image: radial-gradient(ellipse at center, #000, transparent 70%);
-}
-
-.ws-cta > :not(.ws-cta__beam) {
-	position: relative;
-}
-
-.ws-cta .eyebrow {
-	margin-bottom: 24px;
-	color: var(--color-accent);
-}
-
-.ws-cta__lead {
-	max-width: 46ch;
-	margin: 24px auto 0;
-	font-size: 18px;
-	line-height: 1.7;
-	color: var(--color-gray-500);
-}
-
-.ws-cta__actions {
+.ws-finale__kicker {
 	display: flex;
-	flex-wrap: wrap;
 	align-items: center;
-	justify-content: center;
-	gap: 20px 40px;
-	margin-top: 44px;
-}
-
-/* The beam: a gradient square travelling the box outline, masked down to a 2px border.
-   Two beams half a lap apart, so one is always in view. */
-.ws-cta__beam {
-	--beam-size: 280px;
-	--beam-duration: 10s;
-	position: absolute;
-	inset: -1px;
-	z-index: 1;
-	padding: 2px;
-	pointer-events: none;
-	-webkit-mask:
-		linear-gradient(#000 0 0) content-box,
-		linear-gradient(#000 0 0);
-	-webkit-mask-composite: xor;
-	mask:
-		linear-gradient(#000 0 0) content-box exclude,
-		linear-gradient(#000 0 0);
-}
-
-.ws-cta__beam::after {
-	content: '';
-	position: absolute;
-	width: var(--beam-size);
-	aspect-ratio: 1;
-	background: linear-gradient(to left, var(--color-accent), var(--color-accent-deep), transparent);
-	offset-path: rect(0 auto auto 0);
-	offset-anchor: 90% 50%;
-	animation: ws-beam var(--beam-duration) linear infinite;
-}
-
-.ws-cta__beam--trail::after {
-	background: linear-gradient(to left, var(--color-accent-deep), var(--color-accent), transparent);
-	animation-delay: calc(var(--beam-duration) * -0.5);
-}
-
-@keyframes ws-beam {
-	to {
-		offset-distance: 100%;
-	}
-}
-
-@supports not (offset-path: rect(0 auto auto 0)) {
-	.ws-cta__beam {
-		display: none;
-	}
+	gap: 14px;
+	font-size: 15px;
+	font-weight: 500;
+	color: rgb(255 255 255 / 0.78);
 }
 
 /* ============================================
    Responsive
    ============================================ */
 
+@media (max-width: 1200px) {
+	.ws-stack__grid {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+}
+
 @media (max-width: 1024px) {
-	.ws-head {
+	.ws-process__layout {
 		grid-template-columns: 1fr;
-		align-items: start;
 	}
 
-	.ws-service {
-		grid-template-columns: 56px minmax(0, 1fr);
-	}
-
-	.ws-service__body {
-		grid-column: 2;
-	}
-
-	.ws-service {
-		padding-right: 40px;
-	}
-
-	.ws-service__arrow {
-		position: absolute;
-		top: 44px;
-		right: 0;
+	.ws-process__head {
+		position: static;
 	}
 
 	.ws-principles {
 		grid-template-columns: 1fr;
-		gap: 40px;
 	}
 
 	.ws-principle p {
 		max-width: 60ch;
 	}
 
+	.ws-index__row {
+		grid-template-columns: 40px minmax(0, 1fr) 28px;
+		row-gap: 12px;
+	}
+
+	.ws-index__body {
+		grid-column: 2;
+		grid-row: 2;
+	}
+
+	.ws-index__arrow {
+		grid-column: 3;
+		grid-row: 1;
+	}
+
 	.ws-stats {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
+		row-gap: 48px;
+	}
+
+	.ws-stat:nth-child(3) {
+		padding-left: 0;
+		border-left: 0;
+	}
+}
+
+@media (max-width: 720px) {
+	.ws-hero__grid {
+		-webkit-mask-image: radial-gradient(ellipse 90% 35% at 85% 10%, #000 10%, transparent 75%);
+		mask-image: radial-gradient(ellipse 90% 35% at 85% 10%, #000 10%, transparent 75%);
+	}
+
+	.ws-facts {
+		grid-template-columns: 1fr;
+	}
+
+	.ws-facts li,
+	.ws-facts li + li {
+		padding: 18px 0;
+		border-left: 0;
+	}
+
+	.ws-facts li + li {
+		border-top: 1px solid var(--rule);
+	}
+
+	.ws-figure--wide .ws-figure__frame {
+		aspect-ratio: 3 / 2;
+	}
+
+	.ws-index__row {
+		grid-template-columns: minmax(0, 1fr) 28px;
+	}
+
+	/* Keep the hover wash inside the narrow gutter */
+	.ws-index__row::before {
+		inset: 0 -12px;
+	}
+
+	.ws-index__num {
+		grid-column: 1 / -1;
+		padding-top: 0;
+	}
+
+	.ws-index__title {
+		grid-row: 2;
+	}
+
+	.ws-index__body {
+		grid-column: 1 / -1;
+		grid-row: 3;
+	}
+
+	.ws-index__arrow {
+		grid-column: 2;
+		grid-row: 2;
+	}
+
+	.ws-pair {
+		grid-template-columns: 1fr;
+	}
+
+	.ws-stack__grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 10px;
+	}
+
+	.ws-stack__card {
+		padding: 20px 18px 8px;
+	}
+
+	.ws-pair .ws-figure:nth-child(2) {
+		margin-top: 0;
+	}
+
+	.ws-step {
+		grid-template-columns: 1fr;
+		gap: 16px;
+	}
+
+	.ws-stat {
+		padding-inline: 16px 0;
 	}
 
 	.ws-stat:nth-child(odd) {
@@ -779,130 +788,32 @@
 		border-left: 0;
 	}
 
-	.ws-stat:nth-child(n + 3) {
-		border-top: 1px solid rgb(255 255 255 / 0.14);
-	}
-
-	.ws-stat {
-		padding-bottom: 44px;
-	}
-
-	.ws-steps {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-		row-gap: 56px;
-	}
-
-	.ws-stack__grid {
-		grid-template-columns: repeat(2, minmax(0, 1fr));
-	}
-
-	.ws-stack__col:nth-child(odd) {
-		padding-left: 0;
-		border-left: 0;
-	}
-
-	.ws-stack__col:nth-child(n + 3) {
-		border-top: 1px solid rgb(26 26 26 / 0.12);
-	}
-
-	.ws-step p {
-		max-width: 44ch;
+	.ws-stat dd {
+		font-size: 52px;
 	}
 }
 
-@media (max-width: 768px) {
-	.ws-hero {
-		padding-top: 120px;
-	}
-
-	.ws-hero__grid {
-		-webkit-mask-image: radial-gradient(ellipse 90% 45% at 80% 15%, #000 10%, transparent 75%);
-		mask-image: radial-gradient(ellipse 90% 45% at 80% 15%, #000 10%, transparent 75%);
-	}
-
-	.ws-hero__facts {
+@media (max-width: 480px) {
+	.ws-stats {
 		grid-template-columns: 1fr;
-	}
-
-	.ws-hero__facts li {
-		padding-block: 18px;
-	}
-
-	.ws-hero__facts li + li {
-		padding-left: 0;
-		border-top: 1px solid rgb(26 26 26 / 0.1);
-		border-left: 0;
-	}
-
-	.ws-service {
-		grid-template-columns: 1fr;
-		padding-block: 36px;
-	}
-
-	.ws-service__arrow {
-		top: 36px;
-	}
-
-	.ws-service__num {
-		padding-top: 0;
-	}
-
-	.ws-service__body {
-		grid-column: auto;
-	}
-
-	.ws-figure--wide .ws-figure__frame {
-		aspect-ratio: 3 / 2;
-	}
-
-	.ws-pair {
-		grid-template-columns: 1fr;
-		gap: 40px;
-	}
-
-	.ws-pair .ws-figure:nth-child(2) {
-		margin-top: 0;
-	}
-}
-
-@media (max-width: 560px) {
-	.ws-stats,
-	.ws-steps,
-	.ws-stack__grid {
-		grid-template-columns: 1fr;
-	}
-
-	.ws-stack__col,
-	.ws-stack__col + .ws-stack__col {
-		padding-left: 0;
-		border-left: 0;
-	}
-
-	.ws-stack__col + .ws-stack__col {
-		border-top: 1px solid rgb(26 26 26 / 0.12);
+		row-gap: 0;
 	}
 
 	.ws-stat,
-	.ws-stat + .ws-stat {
-		padding: 32px 0;
+	.ws-stat:nth-child(n) {
+		padding: 28px 0;
 		border-left: 0;
 	}
 
 	.ws-stat + .ws-stat {
-		border-top: 1px solid rgb(255 255 255 / 0.14);
+		border-top: 1px solid var(--rule);
 	}
 
-	.ws-step {
-		padding-right: 0;
+	.ws-stat dt {
+		min-height: 0;
 	}
 
-	.ws-cta__actions .btn--link {
+	.finale__buttons .btn--link {
 		font-size: 14px;
-	}
-}
-
-@media (prefers-reduced-motion: reduce) {
-	.ws-cta__beam {
-		display: none;
 	}
 }

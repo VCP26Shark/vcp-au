@@ -9,20 +9,45 @@ import '../styles/pages/web-services.css';
 
 /* Photos are CC0 (public domain) from StockSnap.io: no licence fee or credit required. */
 
-/* ----- Why VCPility ----- */
+const pad = (n: number) => String(n).padStart(2, '0');
+const arrow = '<path d="M5 12h14M12 5l7 7-7 7"/>';
+
+// The logo's five colour bars, used as small accents (index 0-4 maps to --brand-1 … --brand-5)
+const brand = (i: number) => `var(--brand-${(i % 5) + 1})`;
+
+/* ----- Hero ----- */
+
+const heroFacts = [
+	{ label: 'Part of', value: 'Sharktech Global' },
+	{ label: 'Based in', value: 'Sydney & Melbourne' },
+	{ label: 'From', value: 'Strategy to support' },
+];
+
+/* ----- Who we are: the statement reads in word by word as it scrolls; the
+   emphasised phrase sits in a lighter tone ----- */
+
+const statement = [
+	{ text: "A product company's engineering depth, with" },
+	{ text: 'the care of a studio.', em: true },
+	{ text: 'Every site we launch is built to the standards we use for our own platforms.' },
+];
+const statementWords = statement.flatMap(({ text, em = false }) => text.split(' ').map((word) => ({ word, em })));
 
 const principles = [
 	{
 		title: 'The Depth of a Product Company',
 		desc: 'We build and run software for a living. Your project gets the same engineering standards, infrastructure and security as the Sharktech platforms.',
+		icon: '<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>',
 	},
 	{
 		title: 'Senior People, Start to Finish',
 		desc: 'The team that scopes your project is the team that designs and builds it. One point of contact, no hand-offs and no surprises.',
+		icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>',
 	},
 	{
 		title: 'Measured on Results',
 		desc: 'Before we start, we agree the numbers that matter, like enquiries, bookings, speed and rankings. After launch, we report against them.',
+		icon: '<path d="M3 3v18h18"/><path d="M18 17V9M13 17V5M8 17v-3"/>',
 	},
 ];
 
@@ -51,13 +76,15 @@ const stack = [
 	},
 ];
 
-/* ----- Results -----
-   Numeric entries count up from zero; `text` entries render as they are. */
+// Every tool in one line, for the drifting row above the columns
+const stackItems = stack.flatMap(({ items }) => items);
+
+/* ----- Results: numbers roll in on reveal; `text` entries render as they are ----- */
 
 const results = [
-	{ count: 50, suffix: '+', label: 'Businesses grown on Sharktech-built platforms' },
-	{ count: 90, suffix: '+', label: 'Lighthouse performance score we build every site to' },
-	{ count: 2.5, decimals: 1, prefix: '<', suffix: 's', label: 'Largest Contentful Paint target at launch' },
+	{ value: '50+', label: 'Businesses grown on Sharktech-built platforms' },
+	{ value: '90+', label: 'Lighthouse performance score we build every site to' },
+	{ value: '<2.5s', label: 'Largest Contentful Paint target at launch' },
 	{ text: 'AA', label: 'WCAG 2.2 accessibility on every build, as standard' },
 ];
 
@@ -81,9 +108,6 @@ const steps = [
 		desc: 'A careful launch, then ongoing care: monitoring, updates and improvements guided by real data.',
 	},
 ];
-
-const pad = (n: number) => String(n).padStart(2, '0');
-const arrow = '<path d="M5 12h14M12 5l7 7-7 7"/>';
 ---
 
 <Layout
@@ -92,51 +116,65 @@ const arrow = '<path d="M5 12h14M12 5l7 7-7 7"/>';
 	keywords="web development Australia, website design Sydney, web applications, e-commerce development, Sharktech Global, VCPility"
 >
 	<!-- ============================================
-	     Hero
+	     Hero: flickering grid behind the two-tone title
 	     ============================================ -->
-	<section class="ws-hero">
+	<section class="page-hero ws-hero" data-pause-offscreen>
 		<canvas class="ws-hero__grid" aria-hidden="true" data-flicker-grid></canvas>
 
-		<div class="ws-hero__content">
-			<p class="eyebrow ws-hero__eyebrow reveal">Sharktech Global · Web Services</p>
-
-			<h1 class="ws-hero__title reveal-lines" style="--d: 0.1s">
-				<span class="line" style="--i: 0"><span class="line__inner">Websites engineered</span></span>
-				<span class="line" style="--i: 1"
-					><span class="line__inner">to grow your business.</span></span
-				>
-			</h1>
-
-			<p class="ws-hero__lead reveal" style="--d: 0.35s">
-				VCPility is the web services and development side of Sharktech Global. We plan, design, build and look after
-				websites and web applications that bring in real, measurable results.
+		<div class="container">
+			<p class="label reveal">
+				<span class="bars" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span>
+				Sharktech Global · Web Services
 			</p>
 
-			<div class="ws-hero__actions reveal" style="--d: 0.45s">
-				<a href="/contact" class="btn btn--accent btn--shine">
-					Start a project
-					<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
-				</a>
-				<a href="#services" class="btn btn--link">What we build</a>
-			</div>
-		</div>
+			<div class="page-hero__grid">
+				<h1 class="page-hero__title reveal-lines" style="--d: 0.05s">
+					<span class="line"><span class="line__inner">Websites engineered</span></span>
+					<span class="line" style="--i: 1"><span class="line__inner muted">to grow your business.</span></span>
+				</h1>
 
-		<ul class="ws-hero__facts reveal" style="--d: 0.6s">
-			<li><span>Part of</span> Sharktech Global</li>
-			<li><span>Based in</span> Sydney &amp; Melbourne</li>
-			<li><span>From</span> Strategy to support</li>
-		</ul>
+				<div>
+					<p class="lead reveal" style="--d: 0.2s">
+						VCPility is the web services and development side of Sharktech Global. We plan, design, build and look
+						after websites and web applications that bring in real, measurable results.
+					</p>
+					<div class="page-hero__buttons reveal" style="--d: 0.28s">
+						<a href="/contact" class="btn btn--accent btn--shine" data-magnetic>
+							Start a project
+							<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+						</a>
+						<a href="#services" class="btn btn--link">What we build</a>
+					</div>
+				</div>
+			</div>
+
+			<ul class="ws-facts">
+				{
+					heroFacts.map(({ label, value }, i) => (
+						<li class="reveal" style={`--d: ${0.3 + i * 0.06}s; --c: ${brand(i * 2)}`}>
+							<span>{label}</span> {value}
+						</li>
+					))
+				}
+			</ul>
+		</div>
 	</section>
 
 	<!-- ============================================
-	     Statement + why VCPility
+	     01 Who we are: statement (Text Reveal), photo and principles
 	     ============================================ -->
-	<section class="ws-intro">
-		<div class="ws-wrap">
-			<p class="eyebrow reveal">Who we are</p>
-			<p class="ws-intro__statement reveal" style="--d: 0.1s">
-				A product company's engineering depth, with <em>the care of a studio.</em> Every site we launch is built
-				to the standards we use for our own platforms.
+	<section class="chapter ws-intro">
+		<div class="container">
+			<p class="label reveal"><span class="label__num">01</span>Who we are</p>
+
+			<p class="ws-intro__statement" data-scroll-text>
+				{
+					statementWords.map(({ word, em }, i) => (
+						<span class:list={['w', em && 'muted']} style={`--w: ${(i / statementWords.length).toFixed(3)}`}>
+							{word}{' '}
+						</span>
+					))
+				}
 			</p>
 
 			<figure class="ws-figure ws-figure--wide" data-reveal>
@@ -153,9 +191,12 @@ const arrow = '<path d="M5 12h14M12 5l7 7-7 7"/>';
 
 			<ol class="ws-principles">
 				{
-					principles.map(({ title, desc }, i) => (
-						<li class="ws-principle reveal" style={`--d: ${i * 0.1}s`}>
-							<span class="ws-principle__num">{pad(i + 1)}</span>
+					principles.map(({ title, desc, icon }, i) => (
+						<li class="ws-principle reveal" style={`--d: ${i * 0.08}s`}>
+							<div class="ws-principle__head">
+								<span class="ws-principle__num">{pad(i + 1)}</span>
+								<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icon} data-draw />
+							</div>
 							<h3>{title}</h3>
 							<p>{desc}</p>
 						</li>
@@ -166,35 +207,32 @@ const arrow = '<path d="M5 12h14M12 5l7 7-7 7"/>';
 	</section>
 
 	<!-- ============================================
-	     Services
+	     02 Services: an index of rows, each linking to its own page
 	     ============================================ -->
-	<section class="ws-services" id="services">
-		<div class="ws-wrap">
-			<header class="ws-head">
-				<div>
-					<p class="eyebrow reveal">What we do</p>
-					<h2 class="section-title section-title--sm reveal-lines">
-						<span class="line"><span class="line__inner">Everything your</span></span>
-						<span class="line" style="--i: 1"
-							><span class="line__inner">business needs online.</span></span
-						>
-					</h2>
-				</div>
-				<p class="ws-head__lead reveal" style="--d: 0.15s">
-					One team for the whole job, from the first sketch to the thousandth visitor. Take a single service or
-					hand us the lot.
-				</p>
-			</header>
+	<section class="chapter ws-services" id="services">
+		<div class="container">
+			<p class="label reveal"><span class="label__num">02</span>What we do</p>
 
-			<ul class="ws-service-list">
+			<div class="chapter__head">
+				<h2 class="display reveal-lines" style="--d: 0.1s">
+					<span class="line"><span class="line__inner">Everything your</span></span>
+					<span class="line" style="--i: 1"><span class="line__inner muted">business needs online.</span></span>
+				</h2>
+				<p class="lead reveal" style="--d: 0.2s">
+					One team for the whole job, from the first sketch to the thousandth visitor. Take a single service or hand
+					us the lot.
+				</p>
+			</div>
+
+			<ul class="ws-index">
 				{
 					services.map(({ slug, title, summary, tags }, i) => (
-						<li class="ws-service reveal" style={`--d: ${(i % 2) * 0.08}s`}>
-							<span class="ws-service__num">{pad(i + 1)}</span>
-							<h3 class="ws-service__title">
+						<li class="ws-index__row reveal" style={`--d: ${(i % 3) * 0.05}s`}>
+							<span class="ws-index__num">{pad(i + 1)}</span>
+							<h3 class="ws-index__title">
 								<a href={`/web-services/${slug}`}>{title}</a>
 							</h3>
-							<div class="ws-service__body">
+							<div class="ws-index__body">
 								<p>{summary}</p>
 								<ul class="ws-tags">
 									{tags.map((tag) => (
@@ -202,7 +240,7 @@ const arrow = '<path d="M5 12h14M12 5l7 7-7 7"/>';
 									))}
 								</ul>
 							</div>
-							<svg class="ws-service__arrow" viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+							<svg class="ws-index__arrow" viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
 						</li>
 					))
 				}
@@ -220,7 +258,7 @@ const arrow = '<path d="M5 12h14M12 5l7 7-7 7"/>';
 					</div>
 					<figcaption><span>Design</span> Every layout starts as a sketch</figcaption>
 				</figure>
-				<figure class="ws-figure" data-reveal style="--d: 0.15s">
+				<figure class="ws-figure" data-reveal style="--d: 0.1s">
 					<div class="ws-figure__frame">
 						<Image
 							src={codePhoto}
@@ -236,27 +274,44 @@ const arrow = '<path d="M5 12h14M12 5l7 7-7 7"/>';
 	</section>
 
 	<!-- ============================================
-	     Technologies
+	     03 Technologies: a drifting row of every tool (Scroll Based Velocity),
+	     then the tools grouped in cards
 	     ============================================ -->
-	<section class="ws-stack">
-		<div class="ws-wrap">
-			<header class="ws-head">
-				<div>
-					<p class="eyebrow reveal">Technologies</p>
-					<h2 class="section-title section-title--sm reveal-lines">
-						<span class="line"><span class="line__inner">The right tools</span></span>
-						<span class="line" style="--i: 1"><span class="line__inner">for every build.</span></span>
-					</h2>
-				</div>
-				<p class="ws-head__lead reveal" style="--d: 0.15s">
+	<section class="chapter ws-stack">
+		<div class="container">
+			<p class="label reveal"><span class="label__num">03</span>Technologies</p>
+
+			<div class="chapter__head">
+				<h2 class="display reveal-lines" style="--d: 0.1s">
+					<span class="line"><span class="line__inner">The right tools</span></span>
+					<span class="line" style="--i: 1"><span class="line__inner muted">for every build.</span></span>
+				</h2>
+				<p class="lead reveal" style="--d: 0.2s">
 					We pick the stack to suit the project, not the other way round. These are the platforms we build on most.
 				</p>
-			</header>
+			</div>
+		</div>
 
+		<div class="ws-velocity" aria-hidden="true" data-velocity="1">
+			<div class="ws-velocity__track">
+				{
+					[0, 1].map(() =>
+						stackItems.map((item, i) => (
+							<span class="ws-velocity__item">
+								{item}
+								<span class="ws-velocity__dot" style={`background: ${brand(i)}`} />
+							</span>
+						)),
+					)
+				}
+			</div>
+		</div>
+
+		<div class="container">
 			<div class="ws-stack__grid">
 				{
 					stack.map(({ category, items }, i) => (
-						<div class="ws-stack__col reveal" style={`--d: ${i * 0.08}s`}>
+						<div class="ws-stack__card reveal" style={`--d: ${i * 0.06}s; --c: ${brand(i)}`}>
 							<h3>{category}</h3>
 							<ul>
 								{items.map((item) => (
@@ -271,44 +326,36 @@ const arrow = '<path d="M5 12h14M12 5l7 7-7 7"/>';
 	</section>
 
 	<!-- ============================================
-	     Results
+	     04 Results: rolling figures (Number Ticker) on a Flickering Grid
 	     ============================================ -->
-	<section class="ws-results">
-		<div class="ws-wrap">
-			<header class="ws-head">
-				<div>
-					<p class="eyebrow reveal">Results</p>
-					<h2 class="section-title section-title--sm reveal-lines">
-						<span class="line"><span class="line__inner">Quality you can</span></span>
-						<span class="line" style="--i: 1"><span class="line__inner">measure.</span></span>
-					</h2>
-				</div>
-				<p class="ws-head__lead reveal" style="--d: 0.15s">
+	<section class="chapter chapter--ink ws-results" data-pause-offscreen>
+		<canvas class="ws-results__grid" aria-hidden="true" data-flicker-grid data-flicker-color="255, 255, 255"></canvas>
+
+		<div class="container">
+			<p class="label reveal"><span class="label__num">04</span>Results</p>
+
+			<div class="chapter__head">
+				<h2 class="display reveal-lines" style="--d: 0.1s">
+					<span class="line"><span class="line__inner">Quality you can</span></span>
+					<span class="line" style="--i: 1"><span class="line__inner muted">measure.</span></span>
+				</h2>
+				<p class="lead reveal" style="--d: 0.2s">
 					Good-looking is the starting point. We hold every build to clear standards for speed, accessibility and
 					search, because that's what turns visitors into enquiries.
 				</p>
-			</header>
+			</div>
 
 			<dl class="ws-stats">
 				{
-					results.map(({ count, decimals, prefix = '', suffix = '', text, label }, i) => (
-						<div class="ws-stat reveal" style={`--d: ${i * 0.08}s`}>
-							<dt class="ws-stat__label">{label}</dt>
-							{count !== undefined ? (
-								<dd
-									class="ws-stat__value"
-									data-count={count}
-									data-decimals={decimals}
-									data-prefix={prefix}
-									data-suffix={suffix}
-									data-count-delay={i * 120}
-								>
-									{prefix}
-									{count}
-									{suffix}
+					results.map(({ value, text, label }, i) => (
+						<div class="ws-stat reveal" style={`--d: ${i * 0.08}s; --c: ${brand(i)}`}>
+							<dt>{label}</dt>
+							{value ? (
+								<dd class="ticker" data-ticker data-reveal style={`--d: ${i * 0.12}s`}>
+									{value}
 								</dd>
 							) : (
-								<dd class="ws-stat__value">{text}</dd>
+								<dd>{text}</dd>
 							)}
 						</div>
 					))
@@ -318,32 +365,33 @@ const arrow = '<path d="M5 12h14M12 5l7 7-7 7"/>';
 	</section>
 
 	<!-- ============================================
-	     Process
+	     05 Process: sticky heading beside a Tracing Beam (Aceternity UI)
 	     ============================================ -->
-	<section class="ws-process">
-		<div class="ws-wrap">
-			<header class="ws-head">
-				<div>
-					<p class="eyebrow reveal">How we work</p>
-					<h2 class="section-title section-title--sm reveal-lines">
-						<span class="line"><span class="line__inner">A clear process,</span></span>
-						<span class="line" style="--i: 1"
-							><span class="line__inner">start to launch.</span></span
-						>
-					</h2>
-				</div>
-				<p class="ws-head__lead reveal" style="--d: 0.15s">
+	<section class="chapter ws-process">
+		<div class="container ws-process__layout">
+			<header class="ws-process__head">
+				<p class="label reveal"><span class="label__num">05</span>How we work</p>
+				<h2 class="display reveal-lines" style="--d: 0.1s">
+					<span class="line"><span class="line__inner">A clear process,</span></span>
+					<span class="line" style="--i: 1"><span class="line__inner muted">start to launch.</span></span>
+				</h2>
+				<p class="lead reveal" style="--d: 0.2s">
 					You'll always know what's happening, what's next and what it costs. No jargon, no black boxes.
 				</p>
 			</header>
 
-			<ol class="ws-steps" data-reveal>
+			<ol class="ws-steps" data-trace>
+				<li class="ws-steps__beam" aria-hidden="true"><span></span></li>
 				{
 					steps.map(({ title, desc }, i) => (
-						<li class="ws-step" style={`--i: ${i}`}>
-							<span class="ws-step__num">{pad(i + 1)}</span>
-							<h3>{title}</h3>
-							<p>{desc}</p>
+						<li class="ws-step" data-trace-step>
+							<span class="ws-step__num" aria-hidden="true">
+								{pad(i + 1)}
+							</span>
+							<div class="ws-step__body">
+								<h3>{title}</h3>
+								<p>{desc}</p>
+							</div>
 						</li>
 					))
 				}
@@ -352,33 +400,39 @@ const arrow = '<path d="M5 12h14M12 5l7 7-7 7"/>';
 	</section>
 
 	<!-- ============================================
-	     CTA (Border Beam)
+	     Closing CTA: shader panel with Ripple rings (Magic UI)
 	     ============================================ -->
-	<section class="ws-cta-section">
-		<div class="ws-wrap">
-			<div class="ws-cta reveal" data-pause-offscreen>
-				<span class="ws-cta__beam" aria-hidden="true"></span>
-				<span class="ws-cta__beam ws-cta__beam--trail" aria-hidden="true"></span>
+	<section class="finale">
+		<div class="container">
+			<div class="finale__panel" data-pause-offscreen>
+				<canvas class="shader" aria-hidden="true" data-shader></canvas>
+				<span class="ripple" aria-hidden="true">
+					{[0, 1, 2, 3, 4].map((n) => <span style={`--n: ${n}`} />)}
+				</span>
 
-				<p class="eyebrow eyebrow--center">Let's build it</p>
-				<h2 class="section-title section-title--compact">Have a project in mind?</h2>
-				<p class="ws-cta__lead">
-					Tell us what you're planning. We'll come back with clear next steps and an honest estimate.
-				</p>
-				<div class="ws-cta__actions">
-					<a href="/contact" class="btn btn--accent btn--shine">
-						Start a project
-						<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
-					</a>
-					<a href="mailto:growth@vcpility.com.au" class="btn btn--link">growth@vcpility.com.au</a>
+				<div class="finale__inner">
+					<p class="ws-finale__kicker reveal">
+						<span class="bars bars--light" aria-hidden="true"
+							><span></span><span></span><span></span><span></span><span></span></span
+						>
+						Let's build it
+					</p>
+					<h2 class="finale__title reveal-lines" style="--d: 0.1s">
+						<span class="line"><span class="line__inner">Have a project</span></span>
+						<span class="line" style="--i: 1"><span class="line__inner">in mind?</span></span>
+					</h2>
+					<p class="finale__text reveal" style="--d: 0.25s">
+						Tell us what you're planning. We'll come back with clear next steps and an honest estimate.
+					</p>
+					<div class="finale__buttons reveal" style="--d: 0.3s">
+						<a href="/contact" class="btn btn--light btn--shine" data-magnetic>
+							Start a project
+							<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+						</a>
+						<a href="mailto:growth@vcpility.com.au" class="btn btn--link btn--on-ink">growth@vcpility.com.au</a>
+					</div>
 				</div>
 			</div>
 		</div>
 	</section>
 </Layout>
-
-<script>
-	import { initFlickerGrids } from '../scripts/flicker-grid';
-
-	initFlickerGrids();
-</script>

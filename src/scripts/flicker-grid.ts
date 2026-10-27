@@ -1,6 +1,7 @@
 /* Flickering Grid (after Magic UI) for <canvas data-flicker-grid> elements:
    small squares that randomly fade in and out. Each canvas pauses off screen
-   and in background tabs, and draws a still frame for reduced motion. */
+   and in background tabs, and draws a still frame for reduced motion.
+   Set data-flicker-color="r, g, b" to change the square colour. */
 
 const SQUARE = 4;
 const GAP = 6;
@@ -12,6 +13,7 @@ const COLOR = '224, 3, 72';
 const start = (canvas: HTMLCanvasElement, reduceMotion: boolean) => {
 	const ctx = canvas.getContext('2d');
 	if (!ctx) return;
+	const color = canvas.dataset.flickerColor || COLOR;
 
 	let cols = 0;
 	let rows = 0;
@@ -26,7 +28,7 @@ const start = (canvas: HTMLCanvasElement, reduceMotion: boolean) => {
 		const size = SQUARE * dpr;
 		for (let x = 0; x < cols; x++) {
 			for (let y = 0; y < rows; y++) {
-				ctx.fillStyle = `rgba(${COLOR}, ${squares[x * rows + y]})`;
+				ctx.fillStyle = `rgba(${color}, ${squares[x * rows + y]})`;
 				ctx.fillRect(x * CELL * dpr, y * CELL * dpr, size, size);
 			}
 		}

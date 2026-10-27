@@ -3,173 +3,91 @@
    ============================================ */
 
 /* ============================================
-   Banner
-   Starts below the navbar: the navbar is transparent at the top of the page,
-   and its dark links would disappear against the black banner.
+   01 Form + flip cards
    ============================================ */
-
-.contact-banner {
-	position: relative;
-	/* Clears the navbar at every breakpoint (its tallest is ~86px) */
-	margin-top: 86px;
-	padding: 100px var(--gutter) 60px;
-	overflow: hidden;
-	text-align: center;
-	color: var(--color-white);
-	background: var(--color-ink);
-}
-
-/* Accent rule along the bottom; draws across on load */
-.contact-banner::after {
-	content: '';
-	position: absolute;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	height: 4px;
-	background: var(--gradient-accent);
-	transform-origin: left;
-}
-
-.js .contact-banner::after {
-	transform: scaleX(0);
-	transition: transform 1.2s var(--ease-in-out) 0.3s;
-}
-
-.js .contact-banner.is-visible::after {
-	transform: none;
-}
-
-.contact-banner__bracket {
-	position: absolute;
-	width: 50px;
-	height: 50px;
-	border: 0 solid var(--color-accent);
-	opacity: 0.3;
-}
-
-.contact-banner__bracket--tl {
-	top: 40px;
-	left: var(--gutter);
-	border-top-width: 3px;
-	border-left-width: 3px;
-}
-
-.contact-banner__bracket--br {
-	right: var(--gutter);
-	bottom: 40px;
-	border-right-width: 3px;
-	border-bottom-width: 3px;
-}
-
-.contact-banner__content {
-	position: relative;
-	max-width: 1200px;
-	margin: 0 auto;
-}
-
-.contact-banner .eyebrow {
-	margin-bottom: 20px;
-	color: var(--color-accent);
-}
-
-.contact-banner .section-title {
-	margin-bottom: 16px;
-	color: var(--color-white);
-}
-
-.contact-banner__lead {
-	max-width: 600px;
-	margin: 0 auto;
-	font-size: 17px;
-	line-height: 1.7;
-	color: var(--color-gray-400);
-}
-
-/* ============================================
-   Form + flip cards
-   The header sits above the form only, so the cards line up with the top of the form box.
-   ============================================ */
-
-.contact {
-	padding: 80px var(--gutter) 100px;
-	background: var(--color-bg);
-}
 
 .contact__grid {
 	display: grid;
 	grid-template-areas:
 		'header .'
 		'form cards';
-	grid-template-columns: minmax(0, 1.5fr) minmax(0, 0.8fr);
-	gap: 0 50px;
+	grid-template-columns: minmax(0, 1.55fr) minmax(0, 0.85fr);
+	gap: 0 clamp(32px, 4vw, 64px);
 	align-items: start;
-	max-width: 1200px;
-	margin: 0 auto;
 }
 
 .contact__header {
 	grid-area: header;
-	margin-bottom: 32px;
-}
-
-.contact__header .eyebrow {
-	margin-bottom: 20px;
+	margin-bottom: clamp(40px, 4vw, 64px);
 }
 
 .contact__title {
-	margin-bottom: 12px;
-	font-size: clamp(28px, 1.5vw + 20px, 36px);
-	line-height: 1.1;
+	margin-bottom: 20px;
+	font-size: clamp(36px, 2.6vw + 16px, 64px);
 }
 
-.contact__lead {
-	font-size: 15px;
-	line-height: 1.7;
-	color: var(--color-gray-500);
-}
-
-/* ----- Form box ----- */
+/* ----- Form panel ----- */
 
 .contact__form {
-	position: relative;
 	grid-area: form;
-	padding: 40px;
+	overflow: hidden;
 	background: var(--color-white);
-	border: 1px solid var(--color-gray-200);
+	border: 1px solid var(--rule);
+	border-radius: var(--radius);
+	box-shadow: 0 30px 60px -40px rgb(13 31 56 / 0.25);
 }
 
-.contact__form::before {
+/* Status strip: a live dot, a message being typed, the reply time */
+.contact__status {
+	display: flex;
+	align-items: center;
+	gap: 14px;
+	padding: 18px clamp(20px, 3vw, 32px);
+	font-size: 13px;
+	font-weight: 500;
+	color: var(--muted);
+	background: var(--surface);
+	border-bottom: 1px solid var(--rule);
+}
+
+.contact__dot {
+	position: relative;
+	flex-shrink: 0;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: var(--brand-2);
+}
+
+.contact__dot::after {
 	content: '';
 	position: absolute;
-	top: 0;
-	right: 0;
-	left: 0;
-	height: 4px;
-	background: var(--gradient-accent);
+	inset: 0;
+	border-radius: inherit;
+	background: inherit;
+	animation: contact-ping 2s var(--ease-out) infinite;
 }
 
-.contact__bracket {
-	position: absolute;
-	width: 24px;
-	height: 24px;
-	border: 0 solid var(--color-accent);
-	opacity: 0.5;
-	pointer-events: none;
+.contact__lines {
+	display: flex;
+	flex: 1;
+	gap: 6px;
+	min-width: 0;
 }
 
-.contact__bracket--tl {
-	top: 16px;
-	left: 16px;
-	border-top-width: 3px;
-	border-left-width: 3px;
+.contact__lines span {
+	width: var(--w);
+	height: 6px;
+	border-radius: 3px;
+	background: var(--rule);
+	transform-origin: left;
+	animation: contact-type 3.6s var(--ease-in-out) infinite;
+	animation-delay: calc(var(--k) * 0.3s);
 }
 
-.contact__bracket--br {
-	right: 16px;
-	bottom: 16px;
-	border-right-width: 3px;
-	border-bottom-width: 3px;
+.contact__reply {
+	flex-shrink: 0;
+	color: var(--ink);
 }
 
 /* Starting height from the form settings; form_embed.js then sizes it to the real content */
@@ -186,11 +104,12 @@
 	display: flex;
 	flex-direction: column;
 	grid-area: cards;
-	gap: 24px;
+	gap: 20px;
 }
 
 .flip {
-	height: 220px;
+	height: 240px;
+	border-radius: var(--radius);
 	perspective: 1000px;
 	outline-offset: 4px;
 }
@@ -213,24 +132,27 @@
 	position: absolute;
 	inset: 0;
 	overflow: hidden;
+	border-radius: var(--radius);
 	-webkit-backface-visibility: hidden;
 	backface-visibility: hidden;
 }
 
 .flip__front {
 	display: flex;
-	align-items: flex-end;
-	padding: 28px;
-	background: var(--color-ink);
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: flex-start;
+	padding: 24px;
+	background: var(--ink-deep);
 }
 
-/* Dark wash so the title reads over the photo */
+/* Navy wash so the title reads over the photo */
 .flip__front::before {
 	content: '';
 	position: absolute;
 	inset: 0;
 	z-index: 1;
-	background: linear-gradient(180deg, transparent 30%, rgb(0 0 0 / 0.8) 100%);
+	background: linear-gradient(180deg, rgb(10 23 41 / 0.1) 20%, rgb(10 23 41 / 0.85) 100%);
 }
 
 .flip__photo {
@@ -239,120 +161,105 @@
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
-	transition: transform 0.6s var(--ease-out);
+	transition: transform 0.8s var(--ease-out);
 }
 
 .flip:hover .flip__photo {
 	transform: scale(1.05);
 }
 
-/* Accent folded corner, top right */
-.flip__corner {
-	position: absolute;
-	top: 0;
-	right: 0;
+.flip__tag {
+	position: relative;
 	z-index: 2;
-	width: 60px;
-	height: 60px;
-	background: linear-gradient(225deg, var(--color-accent) 50%, transparent 50%);
+	padding: 6px 12px;
+	font-size: 12px;
+	font-weight: 500;
+	color: var(--color-white);
+	background: rgb(10 23 41 / 0.4);
+	border: 1px solid rgb(255 255 255 / 0.24);
+	border-radius: 999px;
+	-webkit-backdrop-filter: blur(8px);
+	backdrop-filter: blur(8px);
 }
 
 .flip__front-title {
 	position: relative;
 	z-index: 2;
-	font-size: 22px;
-	font-weight: 700;
-	line-height: 1.3;
-	letter-spacing: -0.02em;
+	font-size: clamp(20px, 0.6vw + 16px, 24px);
+	font-weight: 600;
+	line-height: 1.2;
+	letter-spacing: -0.03em;
 	color: var(--color-white);
 }
 
 .flip__front-title span {
-	color: var(--color-accent);
+	display: block;
+	color: rgb(255 255 255 / 0.55);
 }
 
 .flip__back {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	padding: 32px;
-	background: linear-gradient(145deg, var(--color-ink) 0%, #2d2d2d 100%);
+	align-items: flex-start;
+	padding: 28px;
+	color: var(--color-white);
+	background: var(--ink-deep);
 	transform: rotateY(180deg);
 }
 
-.flip__back::before {
-	content: '';
-	position: absolute;
-	top: 0;
-	right: 0;
-	left: 0;
-	height: 4px;
-	background: var(--gradient-accent);
-}
-
 .flip__back-title {
-	margin-bottom: 12px;
-	font-size: 18px;
-	font-weight: 700;
-	letter-spacing: -0.02em;
-	color: var(--color-accent);
+	margin-bottom: 10px;
+	font-size: 20px;
+	font-weight: 600;
+	letter-spacing: -0.03em;
 }
 
 .flip__back-text {
 	margin-bottom: 24px;
-	font-size: 14px;
+	font-size: 14.5px;
 	line-height: 1.6;
-	color: var(--color-gray-300);
+	color: rgb(255 255 255 / 0.62);
 }
 
 .flip__btn {
-	display: inline-flex;
-	align-self: flex-start;
-	align-items: center;
-	gap: 8px;
-	padding: 14px 28px;
-	font-size: 13px;
-	font-weight: 700;
-	letter-spacing: 1px;
-	text-transform: uppercase;
-	color: var(--color-ink);
-	background: var(--color-white);
-	transition:
-		background 0.3s ease,
-		transform 0.35s var(--ease-out);
-}
-
-.flip__btn:hover,
-.flip__btn:focus-visible {
-	color: var(--color-white);
-	background: var(--gradient-accent);
-	transform: translateX(4px);
-}
-
-.flip__btn:focus-visible {
-	outline-color: var(--color-accent);
+	gap: 10px;
+	padding: 12px 22px;
+	font-size: 14px;
+	font-weight: 600;
+	border-radius: 999px;
 }
 
 .flip__btn svg {
 	width: 16px;
 	height: 16px;
-	fill: none;
-	stroke: currentColor;
-	stroke-width: 2;
-	transition: transform 0.35s var(--ease-out);
 }
 
-.flip__btn:hover svg {
-	transform: translateX(4px);
+@keyframes contact-ping {
+	75%,
+	100% {
+		opacity: 0;
+		transform: scale(2.6);
+	}
+}
+
+@keyframes contact-type {
+	0% {
+		transform: scaleX(0);
+	}
+	40%,
+	80% {
+		transform: none;
+	}
+	100% {
+		transform: scaleX(0);
+		opacity: 0;
+	}
 }
 
 /* ----- Responsive ----- */
 
 @media (max-width: 1024px) {
-	.contact-banner {
-		padding: 80px var(--gutter) 50px;
-	}
-
 	.contact__grid {
 		grid-template-areas:
 			'header'
@@ -363,7 +270,7 @@
 
 	.contact__cards {
 		flex-direction: row;
-		margin-top: 50px;
+		margin-top: 32px;
 	}
 
 	.contact__cards > li {
@@ -372,66 +279,38 @@
 }
 
 @media (max-width: 768px) {
-	.contact-banner {
-		padding: 70px 4% 40px;
-	}
-
-	.contact {
-		padding: 60px 4% 80px;
-	}
-
-	.contact__form {
-		padding: 24px;
-	}
-
 	.contact__cards {
 		flex-direction: column;
 	}
 
 	.flip {
-		height: 200px;
-	}
-
-	.contact__bracket,
-	.contact-banner__bracket {
-		display: none;
+		height: 220px;
 	}
 }
 
 @media (max-width: 600px) {
-	.contact-banner {
-		padding: 60px 4% 36px;
+	.contact__lines {
+		display: none;
 	}
 
-	.contact {
-		padding: 50px 4% 60px;
+	.contact__status {
+		justify-content: flex-start;
 	}
 
-	.contact__header {
-		margin-bottom: 24px;
-	}
-
-	.contact__form {
-		padding: 20px;
-	}
-
-	.flip__front {
-		padding: 20px;
-	}
-
-	.flip__front-title {
-		font-size: 18px;
-	}
-
+	.flip__front,
 	.flip__back {
-		padding: 24px;
-	}
-
-	.flip__back-title {
-		font-size: 16px;
+		padding: 20px;
 	}
 
 	.flip__back-text {
-		font-size: 13px;
+		font-size: 13.5px;
+	}
+}
+
+/* The typing lines end hidden, so hold them still instead */
+@media (prefers-reduced-motion: reduce) {
+	.contact__lines span,
+	.contact__dot::after {
+		animation: none;
 	}
 }

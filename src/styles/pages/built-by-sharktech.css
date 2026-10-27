@@ -1,832 +1,757 @@
 /* ============================================
    Built by Sharktech Global page
-   Scoped under .vst. Type, eyebrows and buttons come from
-   the shared classes in global.css; this file adds the page's own pieces.
+   Hero, chapters, labels, cards and the closing panel come from the design
+   system in global.css; this file adds the page's own pieces.
    ============================================ */
 
-.vst {
-	--vst-ink-2: var(--color-gray-600);
-	--vst-line: rgb(26 26 26 / 0.12);
-	--vst-night: #161616;
-	--vst-acc-tint: #ff8fb3;
-	/* Channel lists, so the accents can be mixed at any opacity */
-	--vst-acc-rgb: 224 3 72;
-	--vst-acc-deep-rgb: 57 4 78;
-	/* Dot grid shared by the dark panels */
-	--vst-dots: radial-gradient(#2a2a2a 1px, transparent 1px) 0 0 / 18px 18px;
+/* "You're here": the page's one red accent, a dot before the words */
+.vst-here {
+	display: inline-flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 13px;
+	font-weight: 600;
+	white-space: nowrap;
 }
 
-/* Same gutter as the navbar, so every section shares its left edge */
-.vst-wrap {
-	padding-inline: var(--gutter);
-}
-
-.vst-sec {
-	padding-block: clamp(96px, 10vw, 160px);
-}
-
-.vst-sec--flush {
-	padding-top: 0;
-}
-
-.vst .eyebrow {
-	margin-bottom: 24px;
-}
-
-.vst-lead {
-	max-width: 58ch;
-	margin-top: 28px;
-	font-size: clamp(17px, 0.3vw + 15px, 19px);
-	line-height: 1.7;
-	color: var(--vst-ink-2);
-}
-
-/* Title on the left, lead on the right, aligned to the baseline */
-.vst-head {
-	display: grid;
-	grid-template-columns: minmax(0, 1fr) minmax(0, 420px);
-	align-items: end;
-	gap: 28px 80px;
-	margin-bottom: clamp(48px, 5vw, 80px);
-}
-
-.vst-head__lead {
-	font-size: 17px;
-	line-height: 1.75;
-	color: var(--color-gray-500);
-}
-
-/* The down arrow nudges down, not sideways */
-.vst-btn-down:hover svg {
-	transform: translateY(4px);
+.vst-here::before {
+	content: '';
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: var(--color-accent);
+	box-shadow: 0 0 0 4px rgb(224 3 72 / 0.14);
 }
 
 /* ============================================
    Hero
    ============================================ */
 
-/* Plain paper and type: the headline runs the full width, and the copy and
-   fact file sit in two columns under a hairline */
 .vst-hero {
-	padding: 160px 0 clamp(80px, 8vw, 120px);
+	padding-bottom: 0;
+	border-bottom: 0;
 }
 
-.vst-hero-grid {
-	display: grid;
-	grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr);
-	gap: clamp(48px, 8vw, 140px);
+/* The right-hand column runs long, so the title sits at the top beside it */
+.vst-hero .page-hero__grid {
 	align-items: start;
-	margin-top: clamp(48px, 5vw, 72px);
-	padding-top: clamp(32px, 3vw, 44px);
-	border-top: 1px solid var(--vst-line);
 }
 
-.vst-hero-grid .vst-lead {
-	margin-top: 0;
+/* A long two-line title, so a step smaller than the shared hero size */
+.vst-hero .page-hero__title {
+	font-size: clamp(44px, 4.4vw + 8px, 104px);
 }
 
-.vst-eyebrow {
-	color: var(--color-accent);
+/* The down arrow nudges down, not sideways */
+.vst-btn-down:hover {
+	transform: none;
 }
 
-.vst-hero__title {
-	font-size: clamp(44px, 7vw + 8px, 140px);
-	font-weight: 800;
-	line-height: 1;
-	letter-spacing: -0.045em;
+.vst-btn-down:hover svg {
+	transform: translateY(4px);
 }
 
-.vst-btns {
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	gap: 20px 40px;
-	margin-top: clamp(32px, 4vw, 44px);
-}
-
-/* ----- Leadership strip ----- */
+/* ----- Leader ----- */
 
 .vst-leader {
 	display: flex;
-	align-items: center;
+	align-items: flex-start;
 	gap: 16px;
-	max-width: 540px;
-	margin-top: clamp(40px, 4vw, 56px);
-	padding-top: 24px;
-	border-top: 1px solid var(--vst-line);
+	max-width: 46ch;
+	margin-top: 40px;
+	padding-top: 28px;
+	border-top: 1px solid var(--rule);
 }
 
-.vst-leader-ava {
-	flex: none;
-	width: 52px;
-	height: 52px;
-	padding: 2px;
-	background: var(--gradient-accent);
-}
-
-.vst-leader-ava img,
-.vst-leader-ava span {
+.vst-leader__ava {
 	display: grid;
+	flex: none;
 	place-items: center;
+	width: 56px;
+	height: 56px;
+	overflow: hidden;
+	font-size: 17px;
+	font-weight: 600;
+	letter-spacing: -0.02em;
+	color: var(--color-white);
+	background: var(--ink);
+	border-radius: 50%;
+}
+
+.vst-leader__ava img {
 	width: 100%;
 	height: 100%;
-	font-size: 15px;
-	font-weight: 700;
-	letter-spacing: 0.04em;
-	color: var(--color-white);
-	background: var(--color-ink);
 	object-fit: cover;
 }
 
 .vst-leader p {
-	font-size: 14px;
-	line-height: 1.55;
-	color: var(--vst-ink-2);
+	font-size: 15px;
+	line-height: 1.6;
+	color: var(--muted);
 }
 
 .vst-leader b {
-	color: var(--color-ink);
+	font-weight: 600;
+	color: var(--ink);
 }
 
-/* ----- Fact file: a ruled sidebar, like a magazine's company box ----- */
+/* ----- Fact file: a surface card with the facts across it ----- */
 
 .vst-file {
-	border-top: 2px solid var(--color-ink);
+	margin-top: clamp(56px, 6vw, 96px);
+	padding: clamp(24px, 2.6vw, 40px);
+	background: var(--surface);
+	border-radius: var(--radius);
 }
 
 .vst-file__head {
 	display: flex;
-	justify-content: space-between;
-	align-items: baseline;
-	gap: 16px;
-	padding-block: 16px;
-	border-bottom: 1px solid var(--vst-line);
+	flex-direction: column;
+	gap: 4px;
+	padding-bottom: 20px;
+	border-bottom: 1px solid var(--rule);
 }
 
 .vst-file__head span {
-	font-size: 11px;
-	font-weight: 700;
-	letter-spacing: 2px;
-	text-transform: uppercase;
-	color: var(--color-accent);
+	font-size: 13px;
+	font-weight: 500;
+	color: var(--muted);
 }
 
 .vst-file__head h2 {
+	font-size: clamp(22px, 0.8vw + 16px, 28px);
+	font-weight: 600;
+	letter-spacing: -0.035em;
+}
+
+.vst-file__facts {
+	display: grid;
+	grid-template-columns: repeat(5, minmax(0, 1fr));
+	gap: 24px;
+	padding-block: 24px;
+}
+
+/* Each fact label gets one of the logo colours as a small dot */
+.vst-file__facts dt {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 13px;
+	font-weight: 500;
+	color: var(--muted);
+}
+
+.vst-file__facts dt::before {
+	content: '';
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: var(--c);
+}
+
+.vst-file__facts dd {
+	margin-top: 8px;
 	font-size: 15px;
-	font-weight: 700;
+	font-weight: 600;
+	line-height: 1.45;
 	letter-spacing: -0.01em;
 }
 
-.vst-file dl > div {
-	display: grid;
-	grid-template-columns: 120px minmax(0, 1fr);
-	gap: 16px;
-	padding-block: 14px;
-	border-bottom: 1px solid var(--vst-line);
-}
-
-.vst-file dt {
-	padding-top: 2px;
-	font-size: 11px;
-	font-weight: 700;
-	letter-spacing: 1.5px;
-	text-transform: uppercase;
-	color: var(--color-gray-400);
-}
-
-.vst-file dd {
-	font-size: 15px;
-	line-height: 1.55;
-}
-
-/* VCPility's own line, set apart with an accent rule */
 .vst-file__here {
-	display: grid;
-	grid-template-columns: 120px minmax(0, 1fr);
-	gap: 16px;
-	padding: 16px 0 16px 16px;
-	border-bottom: 2px solid var(--color-ink);
-	background: var(--gradient-accent) left / 3px 100% no-repeat;
-}
-
-.vst-file__here span {
-	padding-top: 2px;
-	font-size: 11px;
-	font-weight: 700;
-	letter-spacing: 1.5px;
-	text-transform: uppercase;
-	color: var(--color-accent);
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px 20px;
+	padding-top: 20px;
+	border-top: 1px solid var(--rule);
 }
 
 .vst-file__here p {
 	font-size: 15px;
-	line-height: 1.55;
-	color: var(--vst-ink-2);
+	color: var(--muted);
 }
 
 .vst-file__here b {
-	color: var(--color-ink);
+	font-weight: 600;
+	color: var(--ink);
 }
 
 /* ============================================
-   Marquee
+   Capability row (Scroll Based Velocity)
    ============================================ */
 
-.vst-marquee {
+.vst-velocity {
 	overflow: hidden;
-	padding: 26px 0;
-	border-block: 1px solid var(--vst-line);
-	-webkit-mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-	mask: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+	margin-top: clamp(64px, 7vw, 120px);
+	padding-block: clamp(20px, 2.4vw, 32px);
+	border-block: 1px solid var(--rule);
 }
 
-/* The track holds the list twice over, so -50% lands on a seamless loop */
-.vst-mq-track {
+.vst-velocity__track {
 	display: flex;
 	width: max-content;
-	animation: vst-marquee 45s linear infinite;
+	will-change: transform;
 }
 
-.vst-marquee:hover .vst-mq-track {
-	animation-play-state: paused;
-}
-
-.vst-mq-track span {
+.vst-velocity__item {
 	display: inline-flex;
 	align-items: center;
-	gap: 36px;
-	padding-right: 36px;
-	font-size: clamp(20px, 1.6vw + 10px, 32px);
-	font-weight: 700;
-	letter-spacing: -0.03em;
+	gap: 0.5em;
+	padding-right: 0.5em;
+	font-size: clamp(30px, 3.4vw, 64px);
+	font-weight: 600;
+	line-height: 1.15;
+	letter-spacing: -0.05em;
 	white-space: nowrap;
 }
 
-/* Small square separators, echoing the site's square marks */
-.vst-mq-track span::after {
-	content: '';
-	width: 8px;
-	height: 8px;
-	background: var(--gradient-accent);
+.vst-velocity__item svg {
+	width: 0.6em;
+	height: 0.6em;
+	fill: var(--soft);
 }
 
-.vst-mq-ai {
-	color: var(--color-accent);
-}
-
-@keyframes vst-marquee {
-	to {
-		transform: translateX(-50%);
-	}
+.vst-velocity__dot {
+	width: 0.18em;
+	height: 0.18em;
+	margin-left: 0.1em;
+	border-radius: 50%;
 }
 
 /* ============================================
-   What it means for you
+   01 What it means for you
    ============================================ */
 
-.vst-split {
+/* Titles that share their row with a second column run a step smaller */
+.vst-means .display,
+.vst-faq .display {
+	font-size: clamp(40px, 3.4vw + 12px, 76px);
+}
+
+.vst-means__layout {
 	display: grid;
-	grid-template-columns: minmax(0, 1fr) minmax(0, 1.06fr);
-	gap: clamp(48px, 6vw, 96px);
+	grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+	gap: clamp(48px, 7vw, 128px);
 	align-items: start;
 }
 
-.vst-split-l {
-	position: sticky;
-	top: 110px;
+.vst-means__img {
+	margin: clamp(40px, 4vw, 64px) 0 0;
 }
 
-.vst-split-img {
-	margin-top: clamp(32px, 4vw, 48px);
-}
-
-.vst-split-img__frame {
-	aspect-ratio: 16 / 11;
+.vst-means__frame {
 	overflow: hidden;
-	background: var(--color-surface);
+	aspect-ratio: 4 / 3;
+	border-radius: var(--radius);
+	background: var(--surface);
 }
 
-.vst-split-img img {
+.vst-means__frame img {
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
+	transform: scale(1.08);
+	transition: transform 1.6s var(--ease-out) 0.2s;
 }
 
-.vst-split-img figcaption {
-	display: flex;
-	gap: 14px;
-	align-items: baseline;
-	margin-top: 16px;
-	font-size: 14px;
-	color: var(--color-gray-500);
-}
-
-.vst-split-img figcaption span {
-	font-size: 11px;
-	font-weight: 700;
-	letter-spacing: 2px;
-	text-transform: uppercase;
-	color: var(--color-accent);
-}
-
-/* Frame wipes open while the photo settles from a slight zoom */
-.js .vst-split-img .vst-split-img__frame {
-	clip-path: inset(0 0 100% 0);
-	transition: clip-path 1.2s var(--ease-in-out);
-}
-
-.js .vst-split-img img {
-	transform: scale(1.12);
-	transition: transform 1.8s var(--ease-out);
-}
-
-.js .vst-split-img.is-visible .vst-split-img__frame {
-	clip-path: inset(0);
-}
-
-.js .vst-split-img.is-visible img {
+.vst-means__img.is-visible img {
 	transform: none;
 }
 
+.vst-means__img figcaption {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+	margin-top: 16px;
+	font-size: 14px;
+	color: var(--muted);
+}
+
+.vst-means__tag {
+	padding: 4px 10px;
+	font-size: 12px;
+	font-weight: 600;
+	color: var(--ink);
+	background: var(--surface);
+	border-radius: 999px;
+}
+
 .vst-points {
-	border-top: 1px solid var(--vst-line);
+	border-top: 1px solid var(--rule-strong);
 }
 
 .vst-point {
-	position: relative;
-	display: grid;
-	grid-template-columns: 48px minmax(0, 1fr);
-	gap: 6px 24px;
-	padding-block: 36px;
-	border-bottom: 1px solid var(--vst-line);
+	padding-block: clamp(28px, 3vw, 44px);
+	border-bottom: 1px solid var(--rule);
 }
 
-/* Accent rule that draws across the row on hover */
-.vst-point::after {
-	content: '';
-	position: absolute;
-	right: 0;
-	bottom: -1px;
-	left: 0;
-	height: 1px;
-	background: var(--gradient-accent);
-	transform: scaleX(0);
-	transform-origin: left;
-	transition: transform 0.7s var(--ease-out);
+.vst-point__head {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 18px;
 }
 
 .vst-point__num {
-	grid-row: span 2;
-	padding-top: 6px;
 	font-size: 13px;
-	font-weight: 700;
+	font-weight: 500;
 	font-variant-numeric: tabular-nums;
-	color: var(--color-accent);
+	color: var(--soft);
+}
+
+.vst-point__head svg,
+.vst-sib__ico svg {
+	width: 20px;
+	height: 20px;
+	fill: none;
+	stroke: var(--ink);
+	stroke-width: 1.6;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+}
+
+/* Strokes draw in on reveal (pathLength is set to 1 by effects.ts) */
+.js .vst-point svg.is-drawable *,
+.js .vst-port__sib svg.is-drawable * {
+	stroke-dasharray: 1;
+	stroke-dashoffset: 1;
+	transition: stroke-dashoffset 0.9s var(--ease-in-out) calc(var(--d, 0s) + 0.15s);
+}
+
+.js .vst-point.is-visible svg.is-drawable *,
+.js .vst-port__sib.is-visible svg.is-drawable * {
+	stroke-dashoffset: 0;
 }
 
 .vst-point h3 {
-	font-size: clamp(21px, 0.6vw + 17px, 26px);
-	font-weight: 700;
-	line-height: 1.2;
-	letter-spacing: -0.025em;
-	transition: transform 0.5s var(--ease-out);
+	font-size: clamp(22px, 0.8vw + 16px, 30px);
+	font-weight: 600;
+	line-height: 1.1;
+	letter-spacing: -0.035em;
 }
 
 .vst-point p {
-	max-width: 54ch;
-	margin-top: 6px;
+	max-width: 48ch;
+	margin-top: 12px;
 	font-size: 16px;
 	line-height: 1.7;
-	color: var(--color-gray-500);
-}
-
-@media (hover: hover) {
-	.vst-point:hover::after {
-		transform: none;
-	}
-
-	.vst-point:hover h3 {
-		transform: translateX(6px);
-	}
+	color: var(--muted);
 }
 
 /* ============================================
-   Stats: one hairline row, label under the number
+   Stats band
    ============================================ */
 
-.vst-stats {
+.vst-band {
+	padding-block: clamp(72px, 8vw, 120px);
+	border-block: 1px solid var(--rule);
+}
+
+.vst-band__grid {
 	display: grid;
 	grid-template-columns: repeat(3, minmax(0, 1fr));
-	border-block: 1px solid var(--vst-line);
 }
 
-.vst-stat {
+.vst-band__item {
 	display: flex;
-	flex-direction: column-reverse;
-	justify-content: flex-end;
-	gap: 14px;
-	padding: 44px 32px 44px 0;
+	flex-direction: column;
+	gap: 16px;
+	padding: 4px 28px;
+	border-left: 1px solid var(--rule);
 }
 
-.vst-stat + .vst-stat {
-	padding-left: 32px;
-	border-left: 1px solid var(--vst-line);
+.vst-band__item:first-child {
+	padding-left: 0;
+	border-left: 0;
 }
 
-.vst-stats dd {
-	font-size: clamp(56px, 5vw + 16px, 112px);
-	font-weight: 800;
-	line-height: 1;
-	letter-spacing: -0.05em;
-	font-variant-numeric: tabular-nums;
-	color: var(--color-accent);
+.vst-band__item dd {
+	font-size: clamp(64px, 5vw + 24px, 136px);
+	font-weight: 600;
+	line-height: 1.1;
+	letter-spacing: -0.065em;
 }
 
-@supports (background-clip: text) or (-webkit-background-clip: text) {
-	.vst-stats dd {
-		padding-bottom: 0.06em;
-		background: var(--gradient-accent);
-		-webkit-background-clip: text;
-		background-clip: text;
-		-webkit-text-fill-color: transparent;
-	}
+/* Each label gets one of the logo colours as a small dot */
+.vst-band__item dt {
+	display: flex;
+	align-items: baseline;
+	gap: 10px;
+	max-width: 30ch;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 1.5;
+	color: var(--muted);
 }
 
-.vst-stats dt {
-	max-width: 26ch;
-	font-size: 15px;
-	line-height: 1.6;
-	color: var(--color-gray-500);
+.vst-band__item dt::before {
+	content: '';
+	flex: none;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: var(--c);
+	translate: 0 -1px;
 }
 
 /* ============================================
-   Portfolio
+   02 Portfolio: lead card plus four siblings
    ============================================ */
 
-.vst-port {
+.vst-port__grid {
 	display: grid;
-	grid-template-columns: minmax(0, 1.25fr) repeat(2, minmax(0, 1fr));
-	grid-template-rows: auto auto;
-	gap: 1px;
-	/* The 1px gaps show this through, drawing hairlines between the tiles */
-	background: var(--vst-line);
-	border: 1px solid var(--vst-line);
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	grid-auto-rows: minmax(260px, auto);
+	gap: 16px;
 }
 
-/* ----- Feature tile: VCPility ----- */
-
-.vst-feat {
-	position: relative;
+.vst-port__feat {
 	grid-row: span 2;
-	display: flex;
-	flex-direction: column;
-	gap: 22px;
-	min-height: 480px;
-	padding: clamp(28px, 3vw, 44px);
-	overflow: hidden;
-	color: var(--color-white);
-	/* --mx/--my track the pointer (set in the page script); the defaults put
-	   the glow in the top-right corner before anyone hovers */
-	background:
-		radial-gradient(420px circle at var(--mx, 90%) var(--my, 0%), rgb(var(--vst-acc-rgb) / 0.35), transparent 60%),
-		var(--vst-dots),
-		#111;
 }
 
-.vst-feat-top {
+.vst-port__grid .card {
+	padding: 28px 28px 32px;
+}
+
+.vst-port__grid h3 {
+	margin-top: auto;
+	padding-top: 32px;
+	font-size: clamp(24px, 0.8vw + 18px, 32px);
+	font-weight: 600;
+	line-height: 1.05;
+	letter-spacing: -0.045em;
+}
+
+.vst-port__grid p {
+	max-width: 40ch;
+	margin-top: 10px;
+	font-size: 15px;
+	line-height: 1.6;
+	color: var(--muted);
+}
+
+/* ----- VCPility: the dark lead story ----- */
+
+.vst-port__feat .card {
+	--ink: #ffffff;
+	--muted: rgb(255 255 255 / 0.62);
+	--soft: rgb(255 255 255 / 0.42);
+	--rule: rgb(255 255 255 / 0.12);
+	color: var(--ink);
+	background:
+		radial-gradient(circle at 85% 10%, rgb(224 3 72 / 0.22), transparent 50%),
+		var(--ink-deep);
+}
+
+.vst-port__feat .card::before {
+	background: radial-gradient(420px circle at var(--mx) var(--my), rgb(255 255 255 / 0.07), transparent 60%);
+}
+
+.vst-port__feat .card::after {
+	background: radial-gradient(260px circle at var(--mx) var(--my), rgb(255 255 255 / 0.5), transparent 70%);
+}
+
+.vst-feat__top {
 	display: flex;
 	flex-wrap: wrap;
-	justify-content: space-between;
 	align-items: center;
+	justify-content: space-between;
 	gap: 12px;
 }
 
-.vst-here {
-	padding: 6px 12px;
-	font-size: 10px;
-	font-weight: 700;
-	letter-spacing: 2px;
-	text-transform: uppercase;
-	background: var(--gradient-accent);
-}
-
-.vst-live {
+/* A small live indicator in the logo green */
+.vst-feat__live {
 	display: inline-flex;
 	align-items: center;
 	gap: 8px;
-	font-size: 12px;
-	color: #bdbdbd;
+	font-size: 13px;
+	color: var(--muted);
 }
 
-.vst-live::before {
+.vst-feat__live::before {
 	content: '';
-	width: 6px;
-	height: 6px;
-	background: var(--color-green);
-	box-shadow: 0 0 8px var(--color-green);
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: var(--brand-2);
+	animation: vst-live 2s ease-in-out infinite;
 }
 
-.vst-feat h3 {
-	margin-top: 12px;
-	font-size: clamp(40px, 3vw + 16px, 64px);
-	font-weight: 800;
-	line-height: 1;
-	letter-spacing: -0.05em;
+@keyframes vst-live {
+	50% {
+		box-shadow: 0 0 0 5px rgb(119 190 74 / 0.18);
+	}
 }
 
-.vst-feat > p {
-	max-width: 34ch;
-	font-size: 17px;
-	line-height: 1.6;
-	color: #c9c9c9;
+.vst-port__feat h3 {
+	font-size: clamp(44px, 3vw + 20px, 80px);
+	letter-spacing: -0.06em;
 }
 
-.vst-mods {
+/* Modules as chips that pop in one after another */
+.vst-feat__mods {
 	display: flex;
 	flex-wrap: wrap;
 	gap: 8px;
-	margin-top: auto;
+	margin-top: 28px;
 }
 
-.vst-mods li {
-	padding: 6px 12px;
-	font-size: 12px;
-	font-weight: 600;
-	color: #e5e5e5;
-	border: 1px solid #3a3a3a;
-	background: rgb(255 255 255 / 0.04);
+.vst-feat__mods li {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 7px 12px;
+	font-size: 13px;
+	font-weight: 500;
+	border: 1px solid var(--rule);
+	border-radius: 999px;
 }
 
-.vst-mods .is-ai {
-	color: #ffd1df;
-	border-color: rgb(var(--vst-acc-rgb) / 0.7);
-	background: rgb(var(--vst-acc-rgb) / 0.14);
+.vst-feat__mods li.is-ai {
+	color: var(--ink-deep);
+	background: var(--color-white);
+	border-color: transparent;
 }
 
-.vst-feat-foot {
+.vst-feat__mods svg {
+	width: 12px;
+	height: 12px;
+	fill: var(--brand-3);
+}
+
+.js .vst-feat__mods li {
+	opacity: 0;
+	scale: 0.85;
+	transition:
+		opacity 0.5s var(--ease-out),
+		scale 0.6s var(--ease-back);
+	transition-delay: calc(0.3s + var(--k) * 60ms);
+}
+
+.js .vst-port__feat.is-visible .vst-feat__mods li {
+	opacity: 1;
+	scale: 1;
+}
+
+.vst-feat__foot {
 	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: 8px 24px;
+	margin-top: 28px;
+	padding-top: 20px;
+	font-size: 13px;
+	color: var(--muted);
+	border-top: 1px solid var(--rule);
+}
+
+/* ----- Siblings ----- */
+
+.vst-sib__top {
+	display: flex;
+	align-items: center;
 	justify-content: space-between;
 	gap: 12px;
-	padding-top: 20px;
-	font-size: 11px;
-	font-weight: 700;
-	letter-spacing: 2px;
-	text-transform: uppercase;
-	color: var(--vst-acc-tint);
-	border-top: 1px solid #2c2c2c;
 }
 
-/* ----- Sibling tiles ----- */
-
-.vst-sib {
+.vst-sib__ico {
 	position: relative;
-	display: flex;
-	flex-direction: column;
-	gap: 14px;
-	min-height: 240px;
-	padding: clamp(24px, 2.4vw, 36px);
-	background: var(--color-white);
-	transition: background 0.4s ease;
-}
-
-/* Accent rule drawing across the tile's top edge on hover */
-.vst-sib::before {
-	content: '';
-	position: absolute;
-	top: 0;
-	right: 0;
-	left: 0;
-	height: 2px;
-	background: var(--gradient-accent);
-	transform: scaleX(0);
-	transform-origin: left;
-	transition: transform 0.6s var(--ease-out);
-}
-
-.vst-sib-top {
-	display: flex;
-	justify-content: space-between;
-	align-items: start;
-}
-
-.vst-ico {
 	display: grid;
 	place-items: center;
 	width: 44px;
 	height: 44px;
-	border: 1px solid var(--vst-line);
-	transition:
-		background 0.3s ease,
-		border-color 0.3s ease;
+	background: var(--color-white);
+	border-radius: 12px;
+	box-shadow: 0 1px 2px rgb(13 31 56 / 0.06);
 }
 
-.vst-ico svg {
-	width: 20px;
-	height: 20px;
-	fill: none;
-	stroke: var(--color-ink);
-	stroke-width: 1.6;
-	stroke-linecap: round;
-	stroke-linejoin: round;
-	transition: stroke 0.3s ease;
+/* A logo-colour dot on each product's tile */
+.vst-sib__ico::after {
+	content: '';
+	position: absolute;
+	top: -3px;
+	right: -3px;
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: var(--c);
 }
 
-.vst-sib small {
-	font-size: 10px;
-	font-weight: 700;
-	letter-spacing: 2px;
-	text-transform: uppercase;
-	color: var(--color-gray-400);
-}
-
-/* Fixed gap rather than margin-top: auto, so titles line up across a row */
-.vst-sib h3 {
-	margin-top: clamp(32px, 3vw, 48px);
-	font-size: clamp(20px, 0.5vw + 17px, 24px);
-	font-weight: 700;
-	letter-spacing: -0.03em;
-}
-
-.vst-sib p {
-	font-size: 15px;
-	line-height: 1.65;
-	color: var(--color-gray-500);
-}
-
-@media (hover: hover) {
-	.vst-sib:hover {
-		background: var(--color-bg);
-	}
-
-	.vst-sib:hover::before {
-		transform: none;
-	}
-
-	.vst-sib:hover .vst-ico {
-		border-color: transparent;
-		background: var(--gradient-accent);
-	}
-
-	.vst-sib:hover .vst-ico svg {
-		stroke: var(--color-white);
-	}
+.vst-sib__top small {
+	font-size: 13px;
+	font-weight: 500;
+	color: var(--muted);
 }
 
 /* ============================================
-   Timeline (dark)
+   03 Journey (ink chapter)
    ============================================ */
 
-.vst-dark {
-	color: var(--color-white);
-	background:
-		radial-gradient(circle at 100% 0%, rgb(var(--vst-acc-rgb) / 0.16), transparent 40%),
-		radial-gradient(circle at 0% 100%, rgb(var(--vst-acc-deep-rgb) / 0.4), transparent 45%),
-		var(--vst-night);
+.vst-journey {
+	overflow: hidden;
 }
 
-.vst-dark .eyebrow {
-	color: var(--color-accent);
+.vst-journey__grid {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0.45;
+	-webkit-mask-image: radial-gradient(ellipse at 85% 20%, #000, transparent 60%);
+	mask-image: radial-gradient(ellipse at 85% 20%, #000, transparent 60%);
+}
+
+.vst-journey .container {
+	position: relative;
 }
 
 .vst-tl {
 	position: relative;
-	margin-top: clamp(48px, 5vw, 80px);
-	padding-left: 44px;
+	margin-top: clamp(56px, 6vw, 96px);
+	padding-left: clamp(36px, 4vw, 64px);
 }
 
-/* The unlit rail */
-.vst-tl::before {
-	content: '';
+/* Tracing Beam: a rule with a white fill that grows with --p */
+.vst-tl__beam {
 	position: absolute;
-	top: 0;
-	bottom: 0;
-	left: 8px;
+	inset: 0 auto 0 0;
 	width: 1px;
-	background: #333;
+	background: var(--rule);
 }
 
-/* …and the progress fill over it, driven by --p from the page script */
-.vst-tl::after {
+.vst-tl__beam span {
+	position: absolute;
+	inset: 0 0 auto;
+	height: calc(var(--p, 0) * 100%);
+	background: linear-gradient(to bottom, transparent, var(--color-white) 30%);
+}
+
+.vst-tl__beam span::after {
 	content: '';
 	position: absolute;
-	top: 0;
-	left: 7px;
-	width: 3px;
-	height: var(--p, 0%);
-	background: var(--gradient-accent);
-	box-shadow: 0 0 12px rgb(var(--vst-acc-rgb) / 0.5);
-	transition: height 0.15s linear;
+	bottom: -5px;
+	left: -5px;
+	width: 11px;
+	height: 11px;
+	border-radius: 50%;
+	background: var(--color-white);
+	box-shadow: 0 0 0 6px rgb(255 255 255 / 0.12);
 }
 
-.vst-tl li {
-	position: relative;
+.vst-tl__step {
 	display: grid;
-	grid-template-columns: 140px minmax(0, 1fr);
-	gap: 24px;
-	padding-block: 32px;
-	border-bottom: 1px solid #2a2a2a;
+	grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+	gap: 16px clamp(32px, 5vw, 96px);
+	padding-block: clamp(28px, 3vw, 44px);
+	border-bottom: 1px solid var(--rule);
 }
 
-/* Square node on the rail, lit once the row is behind the reading line */
-.vst-tl li::before {
-	content: '';
-	position: absolute;
-	top: 39px;
-	left: -40px;
-	z-index: 1;
-	width: 10px;
-	height: 10px;
-	border: 1px solid #555;
-	background: var(--vst-night);
-	transition:
-		background 0.4s ease,
-		border-color 0.4s ease,
-		box-shadow 0.4s ease;
+.vst-tl__step:nth-child(2) {
+	padding-top: 0;
 }
 
-.vst-tl li.is-past::before {
-	border-color: var(--color-accent);
-	background: var(--color-accent);
-	box-shadow: 0 0 0 5px rgb(var(--vst-acc-rgb) / 0.2);
+.vst-tl__step:last-child {
+	border-bottom: 0;
 }
 
-.vst-tl li h3,
-.vst-tl li p {
-	transition: opacity 0.4s ease;
-}
-
-/* Rows ahead of the reading line sit back. Only with JS, so the whole
-   timeline stays legible if the script never runs. */
-.js .vst-tl li:not(.is-past) h3,
-.js .vst-tl li:not(.is-past) p {
-	opacity: 0.4;
-}
-
-.vst-tl time {
-	padding-top: 6px;
-	font-size: 12px;
-	font-weight: 700;
-	letter-spacing: 2px;
-	text-transform: uppercase;
+/* Grey dates that turn white once the beam reaches them */
+.vst-tl__step time {
+	font-size: clamp(32px, 2vw + 16px, 56px);
+	font-weight: 600;
+	line-height: 1;
+	letter-spacing: -0.05em;
 	font-variant-numeric: tabular-nums;
-	color: #9a9a9a;
+	color: rgb(255 255 255 / 0.22);
+	transition: color 0.6s var(--ease-out);
 }
 
-.vst-tl h3 {
-	font-size: clamp(20px, 0.6vw + 16px, 26px);
-	font-weight: 700;
-	letter-spacing: -0.025em;
+.vst-tl__step.is-lit time {
+	color: var(--ink);
 }
 
-.vst-tl p {
-	max-width: 62ch;
-	margin-top: 8px;
-	font-size: 15.5px;
+.vst-tl__body {
+	transition:
+		opacity 0.6s var(--ease-out),
+		transform 0.6s var(--ease-out);
+}
+
+.js .vst-tl__step:not(.is-lit) .vst-tl__body {
+	opacity: 0.45;
+	transform: translateX(8px);
+}
+
+.vst-tl__body h3 {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 8px 14px;
+	font-size: clamp(22px, 0.8vw + 16px, 30px);
+	font-weight: 600;
+	line-height: 1.15;
+	letter-spacing: -0.035em;
+}
+
+.vst-tl__tag {
+	display: inline-flex;
+	align-items: center;
+	gap: 7px;
+	padding: 4px 10px;
+	font-size: 12px;
+	font-weight: 500;
+	letter-spacing: 0;
+	color: var(--muted);
+	border: 1px solid var(--rule);
+	border-radius: 999px;
+}
+
+.vst-tl__tag::before {
+	content: '';
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: var(--brand-2);
+}
+
+.vst-tl__body p {
+	max-width: 56ch;
+	margin-top: 10px;
+	font-size: 16px;
 	line-height: 1.7;
-	color: #b5b5b5;
-}
-
-.vst-tl-on h3::after {
-	content: 'VCPility milestone';
-	display: inline-block;
-	margin-left: 12px;
-	padding: 4px 8px;
-	font-size: 9px;
-	font-weight: 700;
-	letter-spacing: 1.5px;
-	text-transform: uppercase;
-	vertical-align: 0.35em;
-	background: var(--gradient-accent);
+	color: var(--muted);
 }
 
 /* ============================================
-   FAQ: heading left, ruled accordion right
+   04 FAQ
    ============================================ */
 
-.vst-faq-grid {
+.vst-faq {
+	border-top: 0;
+}
+
+.vst-faq__layout {
 	display: grid;
-	grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-	gap: clamp(40px, 6vw, 96px);
+	grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+	gap: clamp(48px, 7vw, 128px);
 	align-items: start;
 }
 
-.vst-faq-head {
+.vst-faq__head {
 	position: sticky;
-	top: 110px;
+	top: 130px;
 }
 
-.vst-faq {
-	border-top: 1px solid var(--color-ink);
+.vst-faq__list {
+	border-top: 1px solid var(--rule-strong);
 }
 
-.vst-faq details {
-	border-bottom: 1px solid var(--vst-line);
+.vst-faq__list details {
+	border-bottom: 1px solid var(--rule);
 	/* Lets the answer animate to its natural height. Browsers without
-	   ::details-content support just snap open, as they always did. */
+	   ::details-content support just snap open. */
 	interpolate-size: allow-keywords;
 }
 
-.vst-faq details::details-content {
+.vst-faq__list details::details-content {
 	height: 0;
 	overflow: clip;
 	transition:
@@ -834,252 +759,192 @@
 		content-visibility 0.4s allow-discrete;
 }
 
-.vst-faq details[open]::details-content {
+.vst-faq__list details[open]::details-content {
 	height: auto;
 }
 
-.vst-faq summary {
+.vst-faq__list summary {
 	position: relative;
 	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	gap: 24px;
-	padding: 28px 44px 28px 0;
-	font-size: clamp(17px, 0.4vw + 15px, 20px);
-	font-weight: 700;
-	letter-spacing: -0.015em;
+	align-items: baseline;
+	gap: 20px;
+	padding: 28px 48px 28px 0;
+	font-size: clamp(18px, 0.5vw + 15px, 22px);
+	font-weight: 600;
+	line-height: 1.35;
+	letter-spacing: -0.025em;
 	list-style: none;
 	cursor: pointer;
 	transition: color 0.25s ease;
 }
 
-.vst-faq summary::-webkit-details-marker {
+.vst-faq__list summary::-webkit-details-marker {
 	display: none;
 }
 
+.vst-faq__list summary:focus-visible {
+	outline: 2px solid var(--ink);
+	outline-offset: 4px;
+}
+
+.vst-faq__num {
+	flex: none;
+	font-size: 13px;
+	font-weight: 500;
+	font-variant-numeric: tabular-nums;
+	color: var(--soft);
+}
+
 /* Plus drawn from two bars; the vertical one folds away when open */
-.vst-faq summary::before,
-.vst-faq summary::after {
+.vst-faq__list summary::before,
+.vst-faq__list summary::after {
 	content: '';
 	position: absolute;
 	top: 50%;
-	right: 6px;
+	right: 4px;
 	width: 16px;
-	height: 2px;
+	height: 1.5px;
 	background: currentColor;
 	transition: transform 0.4s var(--ease-out);
 }
 
-.vst-faq summary::after {
+.vst-faq__list summary::after {
 	transform: rotate(90deg);
 }
 
-.vst-faq details[open] summary::after {
+.vst-faq__list details[open] summary::after {
 	transform: rotate(0deg);
 }
 
-.vst-faq summary:hover {
-	color: var(--color-accent);
+.vst-faq__list summary:hover {
+	color: var(--muted);
 }
 
-.vst-faq p {
-	max-width: 62ch;
-	padding-bottom: 28px;
+.vst-faq__list p {
+	max-width: 60ch;
+	padding: 0 48px 28px 36px;
 	font-size: 16px;
 	line-height: 1.7;
-	color: var(--vst-ink-2);
+	color: var(--muted);
 }
 
 /* ============================================
-   CTA + offices
+   Closing CTA + offices
    ============================================ */
 
-.vst-cta {
-	position: relative;
-	display: grid;
-	grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-	gap: 48px;
-	align-items: end;
-	padding: clamp(40px, 6vw, 88px);
-	overflow: hidden;
-	color: var(--color-white);
-	background:
-		radial-gradient(520px 320px at 0% 100%, rgb(var(--vst-acc-rgb) / 0.32), transparent 70%),
-		radial-gradient(420px 300px at 100% 0%, rgb(var(--vst-acc-deep-rgb) / 0.6), transparent 70%),
-		#111;
+.vst-finale__label {
+	margin-top: 20px;
+	font-size: 14px;
+	font-weight: 500;
+	color: rgb(255 255 255 / 0.72);
 }
 
-.vst-cta .eyebrow {
-	color: var(--color-accent);
+.vst-finale .finale__title {
+	margin-top: 16px;
 }
 
-.vst-cta .vst-lead {
-	color: #bdbdbd;
-}
-
-.vst-cta-links {
-	display: flex;
-	flex-direction: column;
-	align-items: flex-start;
-	gap: 24px;
-}
-
-/* Accent buttons hover onto an ink offset block; on this dark panel use white */
-.vst-cta .btn--accent {
-	--btn-shadow: var(--color-white);
-}
-
-.vst-btn-light {
-	color: var(--color-white);
-	border-color: var(--color-white);
-}
-
-.vst-addr {
+.vst-offices {
 	display: grid;
 	grid-template-columns: repeat(3, minmax(0, 1fr));
-	margin-top: clamp(40px, 4vw, 56px);
-	border-top: 1px solid var(--vst-line);
+	gap: 24px 32px;
+	margin-top: clamp(40px, 4vw, 64px);
+	padding-top: 28px;
+	border-top: 1px solid var(--rule);
 }
 
-.vst-addr > div {
-	padding: 24px 24px 0 0;
+.vst-offices dt {
+	font-size: 13px;
+	font-weight: 500;
+	color: var(--muted);
 }
 
-.vst-addr > div + div {
-	padding-left: 24px;
-	border-left: 1px solid var(--vst-line);
-}
-
-.vst-addr dt {
-	margin-bottom: 6px;
-	font-size: 11px;
-	font-weight: 700;
-	letter-spacing: 2px;
-	text-transform: uppercase;
-	color: var(--color-gray-400);
-}
-
-.vst-addr dd {
-	font-size: 15px;
-	line-height: 1.6;
-	color: var(--color-ink);
+.vst-offices dd {
+	margin-top: 6px;
+	font-size: 16px;
+	font-weight: 600;
+	line-height: 1.5;
+	letter-spacing: -0.01em;
 }
 
 /* ============================================
    Responsive
    ============================================ */
 
+@media (max-width: 1200px) {
+	.vst-file__facts {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+}
+
 @media (max-width: 1024px) {
-	.vst-hero-grid,
-	.vst-split,
-	.vst-cta,
-	.vst-faq-grid,
-	.vst-head {
+	.vst-means__layout,
+	.vst-faq__layout {
 		grid-template-columns: 1fr;
 	}
 
-	.vst-head {
-		align-items: start;
-	}
-
-	.vst-split-l,
-	.vst-faq-head {
+	.vst-faq__head {
 		position: static;
 	}
 
-	.vst-port {
+	.vst-port__grid {
 		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 
-	.vst-feat {
+	.vst-port__feat {
 		grid-column: 1 / -1;
 		grid-row: auto;
-		min-height: 0;
-	}
-
-	.vst-cta {
-		align-items: start;
 	}
 }
 
-@media (max-width: 768px) {
-	.vst-hero {
-		padding-top: 120px;
+@media (max-width: 720px) {
+	.vst-file__facts {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 
-	.vst-stats,
-	.vst-addr {
+	.vst-band__grid,
+	.vst-port__grid,
+	.vst-offices {
 		grid-template-columns: 1fr;
 	}
 
-	.vst-stat,
-	.vst-stat + .vst-stat {
-		padding: 32px 0;
+	.vst-band__grid {
+		row-gap: 40px;
+	}
+
+	.vst-band__item {
+		padding-left: 0;
 		border-left: 0;
 	}
 
-	.vst-stat + .vst-stat {
-		border-top: 1px solid var(--vst-line);
+	.vst-band__item dd {
+		font-size: 72px;
 	}
 
-	.vst-addr > div,
-	.vst-addr > div + div {
-		padding: 20px 0;
-		border-left: 0;
+	.vst-port__grid {
+		grid-auto-rows: auto;
 	}
 
-	.vst-addr > div + div {
-		border-top: 1px solid var(--vst-line);
-	}
-
-	.vst-tl li {
+	.vst-tl__step {
 		grid-template-columns: 1fr;
-		gap: 8px;
+	}
+
+	.vst-faq__list p {
+		padding-left: 0;
 	}
 }
 
-@media (max-width: 640px) {
-	.vst-file dl > div,
-	.vst-file__here {
+@media (max-width: 480px) {
+	.vst-file__facts {
 		grid-template-columns: 1fr;
-		gap: 4px;
-	}
-
-	.vst-point {
-		grid-template-columns: 1fr;
-	}
-
-	.vst-point__num {
-		grid-row: auto;
-		padding-top: 0;
-	}
-
-	.vst-port {
-		grid-template-columns: 1fr;
-	}
-
-	.vst-sib {
-		min-height: 0;
-	}
-
-	/* Pull the rail in, and keep the nodes centred on it */
-	.vst-tl {
-		padding-left: 32px;
-	}
-
-	.vst-tl li::before {
-		top: 37px;
-		left: -28px;
-	}
-
-	.vst-tl-on h3::after {
-		display: table;
-		margin: 10px 0 0;
 	}
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.vst-mq-track {
+	.vst-feat__live::before {
 		animation: none;
+	}
+
+	.vst-means__frame img {
+		transform: none;
 	}
 }

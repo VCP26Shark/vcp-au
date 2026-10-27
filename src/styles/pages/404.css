@@ -5,101 +5,111 @@
 .notfound {
 	display: flex;
 	align-items: center;
-	justify-content: center;
 	min-height: 100vh;
 	min-height: 100svh;
-	padding: 120px var(--gutter) 100px;
-	background: var(--color-bg);
+	padding-block: clamp(130px, 12vw, 180px) clamp(80px, 8vw, 120px);
 }
 
-.notfound__container {
+.notfound__inner {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 	width: 100%;
-	max-width: 760px;
-	margin: 0 auto;
 	text-align: center;
 }
 
-.notfound .eyebrow {
-	margin-bottom: 40px;
-}
-
-.notfound .section-title {
-	margin-bottom: 22px;
-}
-
-.notfound .section-lead {
-	max-width: 500px;
-	margin: 0 auto 44px;
+.notfound .lead {
+	margin: 24px auto 0;
 }
 
 /* ----- Big 404 ----- */
 
 .notfound__code {
-	--digit: clamp(110px, 22vw, 240px);
+	--digit: clamp(120px, 20vw, 260px);
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	gap: clamp(8px, 2vw, 24px);
-	margin-bottom: 30px;
+	gap: clamp(4px, 1vw, 16px);
+	margin-bottom: clamp(28px, 3vw, 44px);
 	font-size: var(--digit);
-	font-weight: 800;
-	line-height: 0.85;
-	letter-spacing: -0.05em;
+	font-weight: 600;
+	line-height: 0.8;
+	letter-spacing: -0.06em;
+	font-variant-numeric: tabular-nums;
 }
 
-/* The 0 is an accent tile that gently floats, framed by black corner marks */
+/* The 0: a hairline ring with closed eyes, a red dot orbiting and a few drifting z's */
 .notfound__zero {
 	position: relative;
-	display: flex;
 	flex-shrink: 0;
-	align-items: center;
-	justify-content: center;
-	width: var(--digit);
-	height: clamp(130px, 26vw, 280px);
-	color: var(--color-white);
-	background: var(--gradient-accent);
-	animation: notfound-float 6s ease-in-out infinite;
-	will-change: transform;
+	width: calc(var(--digit) * 0.72);
+	aspect-ratio: 1;
 }
 
-.notfound__zero-digit {
-	font-size: clamp(90px, 18vw, 200px);
+.notfound__ring {
+	width: 100%;
+	height: 100%;
+	overflow: visible;
+	fill: none;
+	stroke: var(--ink);
+	stroke-linecap: round;
 }
 
-.notfound__corner {
+.notfound__ring circle {
+	stroke-width: 8;
+}
+
+.notfound__eye {
+	stroke-width: 3;
+	stroke: var(--muted);
+}
+
+/* The dot rides the ring's centre line */
+.notfound__orbit {
 	position: absolute;
-	width: 26px;
-	height: 26px;
-	border: 0 solid var(--color-ink);
-	pointer-events: none;
+	inset: 0;
+	animation: notfound-orbit 9s linear infinite;
 }
 
-.notfound__corner--tl {
-	top: 12px;
-	left: 12px;
-	border-top-width: 3px;
-	border-left-width: 3px;
+.notfound__orbit span {
+	position: absolute;
+	top: 2%;
+	left: 50%;
+	width: 9%;
+	aspect-ratio: 1;
+	border-radius: 50%;
+	background: var(--color-accent);
+	box-shadow: 0 0 0 4px var(--color-white);
+	transform: translate(-50%, 0);
 }
 
-.notfound__corner--tr {
-	top: 12px;
-	right: 12px;
-	border-top-width: 3px;
-	border-right-width: 3px;
+.notfound__z {
+	position: absolute;
+	top: -6%;
+	right: -10%;
+	display: flex;
+	align-items: flex-end;
+	gap: 2px;
+	font-size: calc(var(--digit) * 0.12);
+	font-weight: 500;
+	letter-spacing: 0;
+	line-height: 1;
+	color: var(--soft);
 }
 
-.notfound__corner--bl {
-	bottom: 12px;
-	left: 12px;
-	border-bottom-width: 3px;
-	border-left-width: 3px;
+.notfound__z span {
+	font-size: calc(0.7em + var(--k) * 0.25em);
+	animation: notfound-drift 3s ease-in-out infinite;
+	animation-delay: calc(var(--k) * 0.4s);
 }
 
-.notfound__corner--br {
-	right: 12px;
-	bottom: 12px;
-	border-right-width: 3px;
-	border-bottom-width: 3px;
+/* ----- Title ----- */
+
+.notfound__title {
+	font-size: clamp(36px, 3.4vw + 14px, 72px);
+	font-weight: 600;
+	line-height: 1;
+	letter-spacing: -0.05em;
 }
 
 /* ----- Buttons ----- */
@@ -109,10 +119,22 @@
 	flex-wrap: wrap;
 	align-items: center;
 	justify-content: center;
-	gap: 16px;
+	gap: 16px 36px;
+	margin-top: 40px;
 }
 
-/* The support link's arrow points back, and nudges back on hover */
+.notfound__home {
+	padding: 16px 30px;
+	font-weight: 600;
+	border-radius: 999px;
+}
+
+.notfound__support {
+	padding-block: 6px;
+	font-weight: 600;
+}
+
+/* The support link's arrow points back */
 .notfound__support svg {
 	scale: -1 1;
 }
@@ -120,18 +142,18 @@
 /* ----- Quick links ----- */
 
 .notfound__links {
-	margin-top: 56px;
-	padding-top: 32px;
-	border-top: 1px solid var(--color-gray-200);
+	width: 100%;
+	max-width: 640px;
+	margin-top: clamp(48px, 5vw, 72px);
+	padding-top: 28px;
+	border-top: 1px solid var(--rule);
 }
 
 .notfound__links-label {
-	margin-bottom: 18px;
-	font-size: 11px;
-	font-weight: 700;
-	letter-spacing: 2px;
-	text-transform: uppercase;
-	color: var(--color-gray-500);
+	margin-bottom: 16px;
+	font-size: 13px;
+	font-weight: 500;
+	color: var(--muted);
 }
 
 .notfound__links-list {
@@ -142,100 +164,57 @@
 }
 
 .notfound__links a {
-	position: relative;
 	display: block;
-	padding: 8px 16px;
+	padding: 9px 18px;
 	font-size: 15px;
 	font-weight: 500;
-	color: var(--color-gray-600);
-	transition: color 0.3s ease;
-}
-
-/* Accent underline that draws in from the left */
-.notfound__links a::after {
-	content: '';
-	position: absolute;
-	right: 16px;
-	bottom: 4px;
-	left: 16px;
-	height: 2px;
-	background: var(--gradient-accent);
-	transform: scaleX(0);
-	transform-origin: left;
-	transition: transform 0.35s var(--ease-out);
+	color: var(--ink);
+	background: var(--surface);
+	border: 1px solid transparent;
+	border-radius: 999px;
+	transition:
+		background 0.3s ease,
+		border-color 0.3s ease,
+		transform 0.35s var(--ease-out);
 }
 
 .notfound__links a:hover,
 .notfound__links a:focus-visible {
-	color: var(--color-ink);
+	background: var(--color-white);
+	border-color: var(--rule);
+	transform: translateY(-2px);
 }
 
-.notfound__links a:hover::after,
-.notfound__links a:focus-visible::after {
-	transform: none;
+@keyframes notfound-orbit {
+	to {
+		transform: rotate(360deg);
+	}
 }
 
-@keyframes notfound-float {
+@keyframes notfound-drift {
 	50% {
-		transform: translateY(-12px);
+		opacity: 0.35;
+		transform: translateY(-8px);
 	}
 }
 
 /* ----- Responsive ----- */
 
-@media (max-width: 768px) {
-	.notfound {
-		padding: 100px var(--gutter) 80px;
-	}
-
-	.notfound .eyebrow {
-		margin-bottom: 30px;
-	}
-
-	.notfound .section-lead {
-		margin-bottom: 36px;
-		font-size: 16px;
-	}
-
+@media (max-width: 600px) {
 	.notfound__buttons {
 		flex-direction: column;
 	}
 
-	.notfound__buttons .btn--dark {
+	.notfound__home {
 		justify-content: center;
 		width: 100%;
 		max-width: 300px;
 	}
-
-	.notfound__corner {
-		width: 18px;
-		height: 18px;
-	}
-
-	.notfound__corner--tl,
-	.notfound__corner--tr {
-		top: 8px;
-	}
-
-	.notfound__corner--bl,
-	.notfound__corner--br {
-		bottom: 8px;
-	}
-
-	.notfound__corner--tl,
-	.notfound__corner--bl {
-		left: 8px;
-	}
-
-	.notfound__corner--tr,
-	.notfound__corner--br {
-		right: 8px;
-	}
 }
 
-@media (max-width: 480px) {
-	.notfound__links-list {
-		flex-direction: column;
-		gap: 4px;
+@media (prefers-reduced-motion: reduce) {
+	.notfound__orbit,
+	.notfound__z span {
+		animation: none;
 	}
 }

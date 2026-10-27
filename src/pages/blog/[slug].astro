@@ -24,43 +24,50 @@ const { post, others } = Astro.props;
 const { title, description, category, date, author, cover, coverAlt } = post.data;
 const { Content, headings } = await render(post);
 const sections = headings.filter((h) => h.depth === 2);
+// Posts whose headings carry their own numbers ("1. ...") skip the contents counters
+const numbered = sections.some(({ text }) => /^\d+\.\s/.test(text));
 
 const arrow = '<path d="M5 12h14M12 5l7 7-7 7"/>';
+
+// The facts under the title, each with one of the logo colours as a small dot
+const facts = [
+	{ label: 'Written by', value: author },
+	{ label: 'Published', value: formatDate(date), datetime: date.toISOString() },
+	{ label: 'Reading time', value: readingTime(post) },
+];
 ---
 
 <Layout title={`${title} | VCPility Blog`} description={description} ogType="article">
-	<!-- Reading progress (scroll-driven; hidden where unsupported) -->
-	<div class="post-progress" aria-hidden="true"></div>
-
 	<!-- ============================================
 	     Hero
 	     ============================================ -->
-	<section class="post-hero">
-		<canvas class="post-hero__grid" aria-hidden="true" data-flicker-grid></canvas>
+	<section class="page-hero post-hero">
+		<canvas class="post-hero__grid" aria-hidden="true" data-flicker-grid data-flicker-color="13, 31, 56"></canvas>
 
-		<div class="container post-hero__content">
-			<nav class="post-crumbs reveal" aria-label="Breadcrumb">
+		<div class="container">
+			<nav class="label post-crumbs reveal" aria-label="Breadcrumb">
+				<span class="bars" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span>
 				<a href="/blog">Blog</a>
 				<span aria-hidden="true">/</span>
 				<span aria-current="page">{category}</span>
 			</nav>
 
-			<h1 class="post-hero__title reveal" style="--d: 0.1s">{title}</h1>
-			<p class="post-hero__lead reveal" style="--d: 0.25s">{description}</p>
+			<div class="page-hero__grid">
+				<h1 class="post-hero__title reveal-lines" style="--d: 0.1s">
+					<span class="line"><span class="line__inner">{title}</span></span>
+				</h1>
+				<p class="lead reveal" style="--d: 0.25s">{description}</p>
+			</div>
 
 			<dl class="post-facts reveal" style="--d: 0.35s">
-				<div>
-					<dt>Written by</dt>
-					<dd>{author}</dd>
-				</div>
-				<div>
-					<dt>Published</dt>
-					<dd><time datetime={date.toISOString()}>{formatDate(date)}</time></dd>
-				</div>
-				<div>
-					<dt>Reading time</dt>
-					<dd>{readingTime(post)}</dd>
-				</div>
+				{
+					facts.map(({ label, value, datetime }, i) => (
+						<div style={`--c: var(--brand-${i + 1})`}>
+							<dt>{label}</dt>
+							<dd>{datetime ? <time datetime={datetime}>{value}</time> : value}</dd>
+						</div>
+					))
+				}
 			</dl>
 		</div>
 	</section>
@@ -75,15 +82,15 @@ const arrow = '<path d="M5 12h14M12 5l7 7-7 7"/>';
 	</figure>
 
 	<!-- ============================================
-	     Article
+	     Article: sticky contents beside the text column
 	     ============================================ -->
 	<div class="container post-layout">
 		{
 			sections.length > 0 && (
 				<aside class="post-toc">
-					<nav aria-label="In this article">
+					<nav aria-label="In this article" data-toc>
 						<p class="post-toc__label">In this article</p>
-						<ol>
+						<ol class:list={[numbered && 'post-toc--plain']}>
 							{sections.map(({ slug, text }) => (
 								<li>
 									<a href={`#${slug}`} data-toc-link={slug}>
@@ -107,41 +114,43 @@ const arrow = '<path d="M5 12h14M12 5l7 7-7 7"/>';
 	     ============================================ -->
 	{
 		others.length > 0 && (
-			<section class="sec post-more">
+			<section class="chapter post-more">
 				<div class="container">
-					<header class="sec-head">
-						<div>
-							<p class="eyebrow reveal">Keep reading</p>
-							<h2 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
-								<span class="line">
-									<span class="line__inner">More from the journal.</span>
-								</span>
-							</h2>
-						</div>
-						<p class="sec-head__lead reveal" style="--d: 0.2s">
+					<p class="label reveal">
+						<span class="label__num">01</span>Keep reading
+					</p>
+
+					<div class="chapter__head">
+						<h2 class="display reveal-lines" style="--d: 0.1s">
+							<span class="line"><span class="line__inner">More from</span></span>
+							<span class="line" style="--i: 1"><span class="line__inner muted">the journal.</span></span>
+						</h2>
+						<p class="lead reveal" style="--d: 0.2s">
 							<a href="/blog" class="btn btn--link">
 								All articles
 								<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
 							</a>
 						</p>
-					</header>
+					</div>
 
 					<ul class="post-cards">
 						{others.slice(0, 3).map((other, i) => (
-							<li class="post-card reveal" style={`--d: ${i * 0.08}s`}>
-								<a href={`/blog/${other.id}`} class="post-card__link">
+							<li class="reveal" style={`--d: ${i * 0.06}s`}>
+								<a href={`/blog/${other.id}`} class="card post-card" data-spotlight>
 									<span class="post-card__media">
 										<Image src={other.data.cover} alt="" widths={[480, 800, 1200]} sizes="(max-width: 768px) 90vw, 30vw" />
 									</span>
-									<span class="post-meta">
-										<span>{other.data.category}</span>
-										<span>{readingTime(other)}</span>
+									<span class="post-card__body">
+										<span class="post-meta">
+											<span>{other.data.category}</span>
+											<span>{readingTime(other)}</span>
+										</span>
+										<span class="post-card__title">{other.data.title}</span>
+										<span class="post-card__desc">{other.data.description}</span>
+										<time class="post-card__date" datetime={other.data.date.toISOString()}>
+											{formatDate(other.data.date)}
+										</time>
 									</span>
-									<span class="post-card__title">{other.data.title}</span>
-									<span class="post-card__desc">{other.data.description}</span>
-									<time class="post-card__date" datetime={other.data.date.toISOString()}>
-										{formatDate(other.data.date)}
-									</time>
 								</a>
 							</li>
 						))}
@@ -152,43 +161,65 @@ const arrow = '<path d="M5 12h14M12 5l7 7-7 7"/>';
 	}
 
 	<!-- ============================================
-	     CTA (shader band)
+	     Closing CTA: shader panel with Ripple rings
 	     ============================================ -->
-	<section class="blog-cta" data-pause-offscreen>
-		<canvas class="shader" aria-hidden="true" data-shader></canvas>
-		<div class="container blog-cta__inner reveal">
-			<h2 class="section-title section-title--sm">Put the ideas to work.</h2>
-			<p>See how VCPility automates your enquiries, reviews and follow-ups, so your team can get on with the work.</p>
-			<div class="blog-cta__actions">
-				<a href="/contact" class="btn btn--light btn--shine">
-					Book a demo
-					<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
-				</a>
-				<a href="/features" class="btn btn--link blog-cta__link">Explore the features</a>
+	<section class="finale">
+		<div class="container">
+			<div class="finale__panel" data-pause-offscreen>
+				<canvas class="shader" aria-hidden="true" data-shader></canvas>
+				<span class="ripple" aria-hidden="true">
+					{[0, 1, 2, 3, 4].map((n) => <span style={`--n: ${n}`} />)}
+				</span>
+
+				<div class="finale__inner">
+					<span class="bars bars--light reveal" aria-hidden="true"
+						><span></span><span></span><span></span><span></span><span></span></span
+					>
+					<h2 class="finale__title reveal-lines" style="--d: 0.1s">
+						<span class="line"><span class="line__inner">Put the ideas</span></span>
+						<span class="line" style="--i: 1"><span class="line__inner">to work.</span></span>
+					</h2>
+					<p class="finale__text reveal" style="--d: 0.3s">
+						See how VCPility automates your enquiries, reviews and follow-ups, so your team can get on with the
+						work.
+					</p>
+					<div class="finale__buttons reveal" style="--d: 0.4s">
+						<a href="/contact" class="btn btn--light btn--shine" data-magnetic>
+							Book a demo
+							<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+						</a>
+						<a href="/features" class="btn btn--link btn--on-ink">
+							Explore the features
+							<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+						</a>
+					</div>
+				</div>
 			</div>
 		</div>
 	</section>
 </Layout>
 
 <script>
-	import { initFlickerGrids } from '../../scripts/flicker-grid';
-	import { initShaders } from '../../scripts/shader';
-
-	initFlickerGrids();
-	initShaders();
-
-	/* Highlight the contents link for the section being read */
+	/* Highlight the contents link for the section being read, and keep it in view
+	   when the list is taller than the screen */
+	const toc = document.querySelector<HTMLElement>('[data-toc]');
 	const links = new Map(
 		[...document.querySelectorAll<HTMLAnchorElement>('[data-toc-link]')].map((a) => [a.dataset.tocLink, a]),
 	);
 
-	if (links.size) {
+	if (toc && links.size) {
 		const spy = new IntersectionObserver(
 			(entries) => {
 				for (const entry of entries) {
 					if (!entry.isIntersecting) continue;
+					const active = links.get(entry.target.id);
+					if (!active) continue;
 					links.forEach((a) => a.removeAttribute('aria-current'));
-					links.get(entry.target.id)?.setAttribute('aria-current', 'true');
+					active.setAttribute('aria-current', 'true');
+
+					if (toc.scrollHeight > toc.clientHeight) {
+						toc.scrollTo({ top: active.offsetTop - toc.clientHeight / 3, behavior: 'smooth' });
+					}
 				}
 			},
 			{ rootMargin: '-15% 0px -70% 0px' },

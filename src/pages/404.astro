@@ -16,36 +16,42 @@ const quickLinks = [
 	<!-- ============================================
 	     Not found
 	     ============================================ -->
-	<section class="notfound grid-bg">
-		<div class="notfound__container">
-			<p class="eyebrow eyebrow--center reveal">Error 404</p>
+	<section class="notfound">
+		<div class="container notfound__inner">
+			<p class="label reveal">
+				<span class="bars" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span>
+				Error 404
+			</p>
 
-			<!-- Big 404, with the 0 as a floating accent tile -->
-			<p class="notfound__code reveal" style="--d: 0.1s" aria-label="404">
+			<!-- Big 404: the 0 is a sleepy ring with a red dot orbiting it -->
+			<p class="notfound__code reveal" style="--d: 0.05s" aria-label="404" data-pause-offscreen>
 				<span aria-hidden="true">4</span>
 				<span class="notfound__zero" aria-hidden="true">
-					<span class="notfound__corner notfound__corner--tl"></span>
-					<span class="notfound__corner notfound__corner--tr"></span>
-					<span class="notfound__corner notfound__corner--bl"></span>
-					<span class="notfound__corner notfound__corner--br"></span>
-					<span class="notfound__zero-digit">0</span>
+					<svg class="notfound__ring" viewBox="0 0 100 100">
+						<circle cx="50" cy="50" r="44" />
+						<path class="notfound__eye" d="M33 52q5 5 10 0" />
+						<path class="notfound__eye" d="M57 52q5 5 10 0" />
+					</svg>
+					<span class="notfound__orbit"><span></span></span>
+					<span class="notfound__z">
+						{['z', 'z', 'z'].map((z, k) => <span style={`--k: ${k}`}>{z}</span>)}
+					</span>
 				</span>
 				<span aria-hidden="true">4</span>
 			</p>
 
-			<h1 class="section-title section-title--sm reveal-lines" style="--d: 0.2s">
-				<span class="line">
-					<span class="line__inner">This Page Took a Day Off</span>
-				</span>
+			<h1 class="notfound__title reveal-lines" style="--d: 0.15s">
+				<span class="line"><span class="line__inner">This Page Took</span></span>
+				<span class="line" style="--i: 1"><span class="line__inner muted">a Day Off</span></span>
 			</h1>
 
-			<p class="section-lead reveal" style="--d: 0.3s">
+			<p class="lead reveal" style="--d: 0.25s">
 				The page you're looking for doesn't exist or has moved. Let's get you back to growing your
 				business.
 			</p>
 
-			<div class="notfound__buttons reveal" style="--d: 0.4s">
-				<a href="/" class="btn btn--dark">
+			<div class="notfound__buttons reveal" style="--d: 0.3s">
+				<a href="/" class="btn btn--dark notfound__home" data-magnetic>
 					Back to Home
 					<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
 				</a>
@@ -55,7 +61,7 @@ const quickLinks = [
 				</a>
 			</div>
 
-			<nav class="notfound__links reveal" style="--d: 0.5s" aria-label="Popular pages">
+			<nav class="notfound__links reveal" style="--d: 0.35s" aria-label="Popular pages">
 				<p class="notfound__links-label">Or jump to</p>
 				<ul class="notfound__links-list">
 					{

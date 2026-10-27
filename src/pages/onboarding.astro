@@ -2,6 +2,11 @@
 import Layout from '../layouts/Layout.astro';
 import '../styles/pages/onboarding.css';
 
+const pad = (n: number) => String(n).padStart(2, '0');
+
+// The logo's five colour bars, used as small accents (index 0-4 maps to --brand-1 … --brand-5)
+const brand = (i: number) => `var(--brand-${(i % 5) + 1})`;
+
 const steps = ['Fill the form', 'We build your system', 'You grow'];
 const formId = '2FSuzzr2EK0YWz3PCz3A';
 ---
@@ -12,44 +17,50 @@ const formId = '2FSuzzr2EK0YWz3PCz3A';
 	noindex
 >
 	<!-- ============================================
-	     Onboarding
+	     Hero: title left, lead and the three steps right
 	     ============================================ -->
-	<section class="onboarding grid-bg">
-		<div class="onboarding__container">
-			<header class="onboarding__header">
-				<p class="eyebrow eyebrow--center reveal">Welcome Aboard</p>
+	<section class="page-hero onboarding-hero">
+		<div class="container">
+			<p class="label reveal">
+				<span class="bars" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span>
+				Welcome Aboard
+			</p>
 
-				<h1 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
-					<span class="line">
-						<span class="line__inner">Let’s Get You Set Up</span>
-					</span>
+			<div class="page-hero__grid">
+				<h1 class="page-hero__title reveal-lines">
+					<span class="line"><span class="line__inner">Let’s Get You</span></span>
+					<span class="line" style="--i: 1"><span class="line__inner muted">Set Up</span></span>
 				</h1>
 
-				<p class="section-lead reveal" style="--d: 0.25s">
-					A few quick details and we'll start building your AI-powered system. The more we know, the
-					faster you'll be up and running.
-				</p>
+				<div>
+					<p class="lead reveal" style="--d: 0.15s">
+						A few quick details and we'll start building your AI-powered system. The more we know, the faster you'll
+						be up and running.
+					</p>
 
-				<ol class="onboarding__steps" role="list">
-					{
-						steps.map((step, i) => (
-							<li class="reveal" style={`--d: ${0.35 + i * 0.08}s`}>
-								<span class="onboarding__step-num" aria-hidden="true">
-									{i + 1}
-								</span>
-								{step}
-							</li>
-						))
-					}
-				</ol>
-			</header>
+					<ol class="onboarding__steps" role="list">
+						{
+							steps.map((step, i) => (
+								<li class="reveal" style={`--d: ${0.2 + i * 0.06}s; --c: ${brand(i * 2)}`}>
+									<span class="onboarding__step-num" aria-hidden="true">
+										{pad(i + 1)}
+									</span>
+									{step}
+								</li>
+							))
+						}
+					</ol>
+				</div>
+			</div>
+		</div>
+	</section>
 
-			<div class="onboarding__form reveal" style="--d: 0.4s">
-				<span class="onboarding__corner onboarding__corner--tl" aria-hidden="true"></span>
-				<span class="onboarding__corner onboarding__corner--tr" aria-hidden="true"></span>
-				<span class="onboarding__corner onboarding__corner--bl" aria-hidden="true"></span>
-				<span class="onboarding__corner onboarding__corner--br" aria-hidden="true"></span>
-
+	<!-- ============================================
+	     Form
+	     ============================================ -->
+	<section class="onboarding">
+		<div class="container">
+			<div class="onboarding__form reveal">
 				<!-- LeadConnector form: attributes are read by form_embed.js, which also auto-sizes the iframe -->
 				<iframe
 					src={`https://api.leadconnectorhq.com/widget/form/${formId}`}

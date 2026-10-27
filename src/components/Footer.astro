@@ -72,12 +72,10 @@ const pin = '<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle c
 const year = new Date().getFullYear();
 ---
 
-<footer class="footer grid-bg" data-reveal>
-	<span class="footer__rule"></span>
-
+<footer class="footer" data-reveal>
 	<div class="footer__main">
 		<div class="footer__grid">
-			<div class="footer__brand">
+			<div class="footer__brand footer__col" style="--i: 0">
 				<a href="/" class="footer__logo">
 					<Image src={logo} alt="VCPility" height={80} />
 				</a>
@@ -99,8 +97,8 @@ const year = new Date().getFullYear();
 			</div>
 
 			{
-				columns.map(({ heading, links }) => (
-					<nav class="footer__column" aria-label={heading}>
+				columns.map(({ heading, links }, i) => (
+					<nav class="footer__column footer__col" aria-label={heading} style={`--i: ${i + 1}`}>
 						<h2 class="footer__heading">{heading}</h2>
 						<ul class="footer__links">
 							{links.map(({ href, label }) => (
@@ -115,7 +113,7 @@ const year = new Date().getFullYear();
 				))
 			}
 
-			<div class="footer__contact">
+			<div class="footer__contact footer__col" style={`--i: ${columns.length + 1}`}>
 				<h2 class="footer__heading">Get In Touch</h2>
 				<ul class="footer__contact-list">
 					{
@@ -143,7 +141,8 @@ const year = new Date().getFullYear();
 
 		<div class="footer__bottom">
 			<p class="footer__copyright">
-				© {year} <span>Sharktech VCPility</span>. All rights reserved.
+				<span class="bars" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span>
+				<span>© {year} <span class="footer__name">Sharktech VCPility</span>. All rights reserved.</span>
 			</p>
 			<ul class="footer__locations" aria-label="Locations">
 				{

@@ -14,6 +14,8 @@ interface Props {
 	noindex?: boolean;
 	/** Open Graph type, e.g. 'article' for blog posts */
 	ogType?: string;
+	/** Preload the site font; off for pages that set their own (e.g. home-v2) */
+	preloadSans?: boolean;
 }
 
 const { title = 'VCPility', description = '', keywords = '', noindex = false, ogType = 'website' } = Astro.props;
@@ -42,13 +44,14 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : un
 		<meta name="twitter:card" content="summary" />
 		<meta name="twitter:title" content={title} />
 		{description && <meta name="twitter:description" content={description} />}
-		{/* Preload the upright face only; italic loads on demand where it is used */}
-		<Font cssVariable="--font-sans" preload={[{ style: 'normal' }]} />
+		<Font cssVariable="--font-sans" preload />
 		<script is:inline>
 			document.documentElement.classList.add('js');
 		</script>
 	</head>
 	<body>
+		<!-- Reading progress, in the logo colours (CSS scroll-driven; hidden where unsupported) -->
+		<div class="progress" aria-hidden="true"></div>
 		<Navbar />
 		<main>
 			<slot />
@@ -56,6 +59,8 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : un
 		<Footer />
 
 		<script>
+			import { initEffects } from '../scripts/effects';
+
 			const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 			/* Count-up for [data-count] numbers. The final value is already rendered, so
@@ -102,6 +107,8 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : un
 			});
 
 			document.querySelectorAll('[data-pause-offscreen]').forEach((el) => pauser.observe(el));
+
+			initEffects();
 		</script>
 	</body>
 </html>

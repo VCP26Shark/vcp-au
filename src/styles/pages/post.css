@@ -1,38 +1,9 @@
 /* ============================================
    Blog post pages (/blog/<slug>)
-   Cards, meta line and CTA come from styles/components/blog.css.
+   Meta line and post cards come from styles/components/blog.css;
+   the hero, chapters and closing CTA from the design system in global.css.
+   The reading-progress bar is the global .progress in Layout.astro.
    ============================================ */
-
-/* ----- Reading progress: a hairline across the top that fills as you scroll.
-   Pure CSS (scroll-driven animation); browsers without support just don't show it. ----- */
-
-.post-progress {
-	display: none;
-}
-
-@supports (animation-timeline: scroll()) {
-	.post-progress {
-		display: block;
-		position: fixed;
-		inset: 0 0 auto;
-		z-index: 1001;
-		height: 3px;
-		background: var(--gradient-accent);
-		transform-origin: left;
-		animation: post-progress linear both;
-		animation-timeline: scroll(root);
-	}
-}
-
-@keyframes post-progress {
-	from {
-		transform: scaleX(0);
-	}
-
-	to {
-		transform: scaleX(1);
-	}
-}
 
 /* ============================================
    Hero
@@ -40,9 +11,10 @@
 
 .post-hero {
 	position: relative;
-	padding-top: 150px;
-	overflow: hidden;
 	isolation: isolate;
+	overflow: hidden;
+	padding-bottom: clamp(48px, 5vw, 80px);
+	border-bottom: 0;
 }
 
 .post-hero__grid {
@@ -52,96 +24,93 @@
 	width: 100%;
 	height: 100%;
 	pointer-events: none;
-	-webkit-mask-image: radial-gradient(ellipse 55% 75% at 85% 30%, #000 15%, transparent 72%);
-	mask-image: radial-gradient(ellipse 55% 75% at 85% 30%, #000 15%, transparent 72%);
+	-webkit-mask-image: radial-gradient(ellipse 45% 65% at 92% 18%, #000 10%, transparent 70%);
+	mask-image: radial-gradient(ellipse 45% 65% at 92% 18%, #000 10%, transparent 70%);
 }
 
+/* Breadcrumb in the label slot */
 .post-crumbs {
-	display: flex;
 	flex-wrap: wrap;
 	gap: 10px;
-	margin-bottom: 32px;
-	font-size: 13px;
-	font-weight: 600;
-	color: var(--color-gray-500);
+}
+
+.post-crumbs .bars {
+	margin-right: 4px;
 }
 
 .post-crumbs a {
-	color: var(--color-ink);
+	color: var(--ink);
 	text-decoration: underline;
+	text-decoration-color: var(--rule);
 	text-decoration-thickness: 1px;
 	text-underline-offset: 4px;
-	transition: color 0.2s ease;
+	transition: text-decoration-color 0.2s ease;
 }
 
 .post-crumbs a:hover {
-	color: var(--color-accent);
+	text-decoration-color: currentColor;
 }
 
-.post-crumbs [aria-current] {
-	color: var(--color-accent);
-}
-
+/* Titles are sentences, so a step smaller than the page-hero display size */
 .post-hero__title {
-	max-width: 22ch;
-	font-size: clamp(36px, 3.8vw + 14px, 84px);
-	font-weight: 800;
-	line-height: 1.02;
-	letter-spacing: -0.045em;
+	max-width: 18ch;
+	font-size: clamp(40px, 3.6vw + 14px, 92px);
+	font-weight: 600;
+	line-height: 1;
+	letter-spacing: -0.05em;
+	text-wrap: balance;
 }
 
-.post-hero__lead {
-	max-width: 60ch;
-	margin-top: clamp(24px, 3vw, 36px);
-	font-size: clamp(17px, 0.4vw + 15px, 20px);
-	line-height: 1.7;
-	color: var(--color-gray-600);
-}
-
+/* Author, date and reading time on a hairline, each with a logo-colour dot */
 .post-facts {
 	display: grid;
 	grid-template-columns: repeat(3, minmax(0, 1fr));
-	max-width: 880px;
-	margin-top: clamp(40px, 5vw, 64px);
+	margin-top: clamp(48px, 5vw, 80px);
+	border-top: 1px solid var(--rule);
 }
 
 .post-facts > div {
-	padding: 22px 24px 4px 0;
-	border-top: 1px solid rgb(26 26 26 / 0.1);
+	padding: 22px 24px 0 0;
 }
 
 .post-facts > div + div {
-	padding-left: 32px;
-	border-left: 1px solid rgb(26 26 26 / 0.1);
+	padding-left: 28px;
+	border-left: 1px solid var(--rule);
 }
 
 .post-facts dt {
-	margin-bottom: 4px;
-	font-size: 11px;
-	font-weight: 600;
-	letter-spacing: 2px;
-	text-transform: uppercase;
-	color: var(--color-gray-400);
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-bottom: 6px;
+	font-size: 13px;
+	font-weight: 500;
+	color: var(--muted);
+}
+
+.post-facts dt::before {
+	content: '';
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: var(--c);
 }
 
 .post-facts dd {
-	font-size: 15px;
-	font-weight: 700;
-	letter-spacing: -0.01em;
+	font-size: clamp(16px, 0.3vw + 15px, 18px);
+	font-weight: 600;
+	letter-spacing: -0.02em;
 }
 
 /* ============================================
    Cover: frame wipes open while the image settles from a slight zoom
    ============================================ */
 
-.post-cover {
-	margin-top: clamp(48px, 5vw, 72px);
-}
-
 .post-cover__frame {
 	aspect-ratio: 21 / 9;
 	overflow: hidden;
-	background: var(--color-surface);
+	background: var(--surface);
+	border-radius: calc(var(--radius) * 1.4);
 }
 
 .post-cover img {
@@ -151,17 +120,17 @@
 }
 
 .js .post-cover .post-cover__frame {
-	clip-path: inset(0 0 100% 0);
-	transition: clip-path 1.2s var(--ease-in-out);
+	clip-path: inset(0 0 100% 0 round calc(var(--radius) * 1.4));
+	transition: clip-path 1s var(--ease-in-out);
 }
 
 .js .post-cover img {
-	transform: scale(1.12);
-	transition: transform 1.8s var(--ease-out);
+	transform: scale(1.1);
+	transition: transform 1.6s var(--ease-out);
 }
 
 .js .post-cover.is-visible .post-cover__frame {
-	clip-path: inset(0);
+	clip-path: inset(0 round calc(var(--radius) * 1.4));
 }
 
 .js .post-cover.is-visible img {
@@ -174,24 +143,29 @@
 
 .post-layout {
 	display: grid;
-	grid-template-columns: minmax(180px, 260px) minmax(0, 1fr);
-	gap: clamp(40px, 6vw, 120px);
-	padding-block: clamp(64px, 7vw, 112px) clamp(32px, 4vw, 64px);
+	grid-template-columns: minmax(200px, 280px) minmax(0, 1fr);
+	gap: clamp(48px, 7vw, 128px);
+	padding-block: clamp(72px, 7vw, 120px) clamp(80px, 8vw, 128px);
 }
+
+/* ----- Contents: scrolls on its own when longer than the screen ----- */
 
 .post-toc nav {
 	position: sticky;
 	top: 120px;
+	max-height: calc(100vh - 150px);
+	overflow-y: auto;
+	overscroll-behavior: contain;
+	scrollbar-width: thin;
+	scrollbar-color: var(--rule) transparent;
 }
 
 .post-toc__label {
 	padding-bottom: 14px;
-	margin-bottom: 8px;
-	font-size: 11px;
-	font-weight: 700;
-	letter-spacing: 2px;
-	text-transform: uppercase;
-	border-bottom: 1px solid var(--color-ink);
+	font-size: 13px;
+	font-weight: 500;
+	color: var(--muted);
+	border-bottom: 1px solid var(--rule);
 }
 
 .post-toc ol {
@@ -206,129 +180,194 @@
 }
 
 .post-toc a {
+	position: relative;
 	display: grid;
-	grid-template-columns: 28px 1fr;
+	grid-template-columns: 32px 1fr;
 	padding-block: 10px;
 	font-size: 14px;
-	font-weight: 600;
-	line-height: 1.4;
-	color: var(--color-gray-500);
-	border-bottom: 1px solid rgb(26 26 26 / 0.08);
+	font-weight: 500;
+	line-height: 1.45;
+	color: var(--muted);
+	border-bottom: 1px solid var(--rule);
 	transition: color 0.2s ease;
 }
 
 .post-toc a::before {
 	content: counter(toc, decimal-leading-zero);
-	font-size: 11px;
+	font-size: 12px;
 	font-variant-numeric: tabular-nums;
-	line-height: 1.4rem;
-	color: var(--color-gray-400);
+	line-height: 1.7;
+	color: var(--soft);
+	transition: color 0.2s ease;
+}
+
+.post-toc .post-toc--plain a {
+	grid-template-columns: 1fr;
+	padding-left: 16px;
+}
+
+.post-toc .post-toc--plain a::before {
+	content: none;
+}
+
+.post-toc .post-toc--plain a::after {
+	left: 2px;
 }
 
 .post-toc a:hover,
 .post-toc a[aria-current] {
-	color: var(--color-ink);
+	color: var(--ink);
 }
 
 .post-toc a[aria-current]::before {
-	color: var(--color-accent);
+	color: var(--ink);
 }
 
-/* ----- Prose: the Markdown body ----- */
+/* The section being read gets the one red dot, beside its number */
+.post-toc a::after {
+	content: '';
+	position: absolute;
+	top: 17px;
+	left: 20px;
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: var(--color-accent);
+	transform: scale(0);
+	transition: transform 0.35s var(--ease-back);
+}
+
+.post-toc a[aria-current]::after {
+	transform: none;
+}
+
+.post-toc a:focus-visible {
+	outline: 2px solid var(--ink);
+	outline-offset: 2px;
+}
+
+/* ============================================
+   Prose: the Markdown body, set for long reading
+   ============================================ */
 
 .prose {
 	max-width: 68ch;
 	font-size: clamp(17px, 0.25vw + 16px, 19px);
-	line-height: 1.8;
-	color: var(--color-gray-700);
+	line-height: 1.75;
+	color: #3b4658;
 	hanging-punctuation: first;
+	overflow-wrap: break-word;
 }
 
 .prose > * + * {
-	margin-top: 1.4em;
+	margin-top: 1.25em;
 }
 
-/* Drop cap on the opening paragraph */
-.prose > p:first-child::first-letter {
-	float: left;
-	margin: 0.08em 0.12em 0 0;
-	font-size: 4.2em;
-	font-weight: 800;
-	line-height: 0.82;
-	letter-spacing: -0.04em;
-	color: var(--color-accent);
+/* The opening paragraph reads as a standfirst */
+.prose > p:first-child {
+	font-size: 1.15em;
+	line-height: 1.6;
+	letter-spacing: -0.01em;
+	color: var(--ink);
 }
+
+/* ----- Headings ----- */
 
 .prose h2,
-.prose h3 {
-	color: var(--color-ink);
-	letter-spacing: -0.03em;
+.prose h3,
+.prose h4 {
+	font-weight: 600;
+	color: var(--ink);
+	text-wrap: balance;
 	scroll-margin-top: 110px;
 }
 
 .prose h2 {
-	margin-top: 2.6em;
-	padding-top: 0.9em;
-	font-size: clamp(26px, 1.2vw + 18px, 36px);
-	font-weight: 800;
-	line-height: 1.15;
-	border-top: 1px solid rgb(26 26 26 / 0.1);
+	margin-top: 2.4em;
+	padding-top: 1.2em;
+	font-size: clamp(26px, 1.1vw + 19px, 38px);
+	line-height: 1.12;
+	letter-spacing: -0.04em;
+	border-top: 1px solid var(--rule);
 }
 
 .prose h3 {
 	margin-top: 2em;
-	font-size: clamp(20px, 0.5vw + 17px, 24px);
-	font-weight: 700;
+	font-size: clamp(20px, 0.4vw + 17px, 24px);
 	line-height: 1.3;
+	letter-spacing: -0.025em;
+}
+
+.prose h4 {
+	margin-top: 1.8em;
+	font-size: 1em;
+	letter-spacing: -0.01em;
 }
 
 .prose h2 + *,
-.prose h3 + * {
+.prose h3 + *,
+.prose h4 + * {
 	margin-top: 0.7em;
 }
 
+/* ----- Inline ----- */
+
 .prose strong {
-	font-weight: 700;
-	color: var(--color-ink);
+	font-weight: 600;
+	color: var(--ink);
 }
 
 .prose a {
-	font-weight: 600;
-	color: var(--color-ink);
+	font-weight: 500;
+	color: var(--ink);
 	text-decoration: underline;
-	text-decoration-color: var(--color-accent);
-	text-decoration-thickness: 2px;
+	text-decoration-color: rgb(13 31 56 / 0.3);
+	text-decoration-thickness: 1.5px;
 	text-underline-offset: 4px;
-	transition: color 0.2s ease;
+	transition: text-decoration-color 0.2s ease;
 }
 
 .prose a:hover {
-	color: var(--color-accent);
+	text-decoration-color: var(--color-accent);
 }
+
+.prose code {
+	padding: 0.15em 0.4em;
+	font-size: 0.88em;
+	color: var(--ink);
+	background: var(--surface);
+	border-radius: 6px;
+}
+
+/* ----- Lists ----- */
 
 .prose ul,
 .prose ol {
-	padding-left: 0;
+	display: grid;
+	gap: 0.55em;
+	padding: 0;
 	list-style: none;
-}
-
-.prose li + li {
-	margin-top: 0.6em;
 }
 
 .prose li {
 	position: relative;
-	padding-left: 2em;
+	padding-left: 1.9em;
+}
+
+.prose li > ul,
+.prose li > ol {
+	margin-top: 0.55em;
 }
 
 .prose ul > li::before {
 	content: '';
 	position: absolute;
-	top: 0.85em;
-	left: 0.2em;
-	width: 14px;
-	height: 2px;
-	background: var(--color-accent);
+	top: 0.78em;
+	left: 0.45em;
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: var(--soft);
 }
 
 .prose ol {
@@ -342,36 +381,105 @@
 .prose ol > li::before {
 	content: counter(prose-ol, decimal-leading-zero);
 	position: absolute;
+	top: 0.3em;
 	left: 0;
-	font-size: 0.75em;
-	font-weight: 800;
+	font-size: 0.78em;
+	font-weight: 600;
 	font-variant-numeric: tabular-nums;
-	line-height: 2.4;
-	color: var(--color-accent);
+	color: var(--ink);
 }
 
-/* Pull quote: a large italic line hanging off an accent rule */
+/* ----- Blocks ----- */
+
+/* Quotes as a soft surface panel */
 .prose blockquote {
-	margin-block: 2em;
-	padding: 4px 0 4px 28px;
-	font-size: 1.2em;
-	font-style: italic;
-	line-height: 1.6;
-	color: var(--color-ink);
-	border-left: 3px solid var(--color-accent);
+	margin-block: 1.8em;
+	padding: clamp(20px, 2.4vw, 32px);
+	font-size: 1.05em;
+	line-height: 1.65;
+	color: var(--ink);
+	background: var(--surface);
+	border-radius: var(--radius);
 }
 
 .prose blockquote p + p {
 	margin-top: 0.8em;
 }
 
-/* The closing call to action: set apart below a short rule */
-.prose > p:last-child {
-	margin-top: 2.6em;
-	padding-top: 1.6em;
-	border-top: 2px solid var(--color-ink);
+.prose pre {
+	padding: 20px 24px;
+	overflow-x: auto;
+	font-size: 0.85em;
+	line-height: 1.6;
+	background: var(--surface);
+	border-radius: 14px;
+}
+
+.prose pre code {
+	padding: 0;
+	font-size: inherit;
+	background: none;
+}
+
+.prose img {
+	width: 100%;
+	height: auto;
+	border-radius: var(--radius);
+}
+
+.prose figcaption {
+	margin-top: 12px;
+	font-size: 14px;
+	color: var(--muted);
+}
+
+.prose hr {
+	margin-block: 2.4em;
+	border: 0;
+	border-top: 1px solid var(--rule);
+}
+
+/* Tables scroll sideways on small screens instead of widening the page */
+.prose table {
+	display: block;
+	width: 100%;
+	max-width: 100%;
+	overflow-x: auto;
+	font-size: 0.88em;
+	line-height: 1.5;
+	border-collapse: collapse;
+	font-variant-numeric: tabular-nums;
+}
+
+.prose th,
+.prose td {
+	padding: 12px 16px 12px 0;
+	text-align: left;
+	vertical-align: top;
+	border-bottom: 1px solid var(--rule);
+}
+
+.prose th {
+	font-size: 0.9em;
 	font-weight: 500;
-	color: var(--color-ink);
+	color: var(--muted);
+	white-space: nowrap;
+	border-bottom-color: var(--rule-strong);
+}
+
+.prose td:first-child {
+	font-weight: 500;
+	color: var(--ink);
+}
+
+/* A closing paragraph with links (the call to action) is set apart in a panel */
+.prose > p:last-child:has(a) {
+	margin-top: 2.4em;
+	padding: clamp(24px, 3vw, 36px);
+	font-weight: 500;
+	color: var(--ink);
+	background: var(--surface);
+	border-radius: var(--radius);
 }
 
 /* ============================================
@@ -379,7 +487,7 @@
    ============================================ */
 
 .post-more {
-	border-top: 1px solid rgb(26 26 26 / 0.1);
+	border-top: 1px solid var(--rule);
 }
 
 /* ============================================
@@ -401,10 +509,6 @@
 }
 
 @media (max-width: 768px) {
-	.post-hero {
-		padding-top: 120px;
-	}
-
 	.post-hero__grid {
 		-webkit-mask-image: radial-gradient(ellipse 90% 30% at 85% 8%, #000 10%, transparent 75%);
 		mask-image: radial-gradient(ellipse 90% 30% at 85% 8%, #000 10%, transparent 75%);
@@ -420,7 +524,12 @@
 		border-left: 0;
 	}
 
+	.post-facts > div + div {
+		border-top: 1px solid var(--rule);
+	}
+
 	.post-cover__frame {
 		aspect-ratio: 3 / 2;
+		border-radius: var(--radius);
 	}
 }

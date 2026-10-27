@@ -2,32 +2,63 @@
 import Layout from '../layouts/Layout.astro';
 import '../styles/pages/about.css';
 
-/* ----- Guiding principles ----- */
+const pad = (n: number) => String(n).padStart(2, '0');
 
+// The logo's five colour bars, used as small accents (index 0-4 maps to --brand-1 … --brand-5)
+const brand = (i: number) => `var(--brand-${(i % 5) + 1})`;
+
+const arrow = '<path d="M5 12h14M12 5l7 7-7 7"/>';
+const down = '<path d="M12 5v14M5 12l7 7 7-7"/>';
+const externalIcon = '<path d="M7 17 17 7M8 7h9v9"/>';
 const person = '<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>';
+const lock = '<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>';
+
+/* ----- Hero: the leadership quote writes itself in, word by word ----- */
+
+const manifesto =
+	'“We believe artificial intelligence should not replace human potential. It should amplify it. This is not just our technology. This is our responsibility.”';
+
+/* ----- Founding vision: the lede darkens word by word as it scrolls through view ----- */
+
+const visionLede = [
+	{ text: 'VCPility is not just another product from Sharktech Global. It is an extension of our founding philosophy. We build AI that' },
+	{ text: 'empowers humanity, not replaces it,', em: true },
+	{ text: 'serving with transparency and long-term ethics.' },
+];
+
+const ledeWords = visionLede.flatMap(({ text, em }) => text.split(' ').map((word) => ({ word, em })));
+
+/* ----- Guiding principles: each card gets a small live illustration (art) ----- */
 
 const principles = [
 	{
+		art: 'amplify',
 		title: 'Human-Centered Intelligence',
 		desc: 'AI that empowers, not replaces. We amplify your creativity and insight.',
 		icon: person,
 	},
 	{
+		art: 'privacy',
 		title: 'Privacy Is Non-Negotiable',
 		desc: 'Your trust is worth more than any data we could monetise.',
-		icon: '<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+		icon: lock,
 	},
 	{
+		art: 'open',
 		title: 'Transparent Systems',
 		desc: 'We show how things work - no black boxes, no hidden agendas.',
 		icon: '<circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/>',
 	},
 	{
+		art: 'craft',
 		title: 'Software Is Craft',
 		desc: 'Every feature is intentional. Every interface is designed with care.',
 		icon: '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
 	},
 ];
+
+// Decorative steps for the transparent-systems card
+const flowSteps = ['Input', 'Logic', 'Output'];
 
 /* ----- What we actually do ----- */
 
@@ -46,11 +77,7 @@ const purpose = [
 	},
 ];
 
-/* ----- Icons, CTA + contact ----- */
-
-const arrow = '<path d="M5 12h14M12 5l7 7-7 7"/>';
-const down = '<path d="M12 5v14M5 12l7 7 7-7"/>';
-const externalIcon = '<path d="M7 17 17 7M8 7h9v9"/>';
+/* ----- Contact ----- */
 
 const contactCards = [
 	{
@@ -81,106 +108,200 @@ const contactCards = [
 	<!-- ============================================
 	     Hero: headline, then the leadership quote on a shader panel
 	     ============================================ -->
-	<section class="about-hero">
+	<section class="page-hero about-hero">
 		<div class="container">
-			<p class="eyebrow about-hero__eyebrow reveal">About VCPility</p>
-			<h1 class="about-hero__title reveal-lines" style="--d: 0.1s">
-				<span class="line"><span class="line__inner">Technology Should</span></span>
-				<span class="line" style="--i: 1"><span class="line__inner">Serve People.</span></span>
-			</h1>
+			<p class="label reveal">
+				<span class="bars" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span>
+				About VCPility
+			</p>
 
-			<div class="about-hero__row">
-				<p class="about-hero__lead reveal" style="--d: 0.35s">
-					VCPility was born from a simple but profound belief: that technology should serve people, not the other way
-					around.
-				</p>
-				<a href="#vision" class="btn btn--link reveal" style="--d: 0.45s">
-					Our founding vision
-					<svg viewBox="0 0 24 24" aria-hidden="true" set:html={down} />
-				</a>
+			<div class="page-hero__grid">
+				<h1 class="page-hero__title reveal-lines">
+					<span class="line"><span class="line__inner">Technology Should</span></span>
+					<span class="line" style="--i: 1"><span class="line__inner muted">Serve People.</span></span>
+				</h1>
+
+				<div>
+					<p class="lead reveal" style="--d: 0.15s">
+						VCPility was born from a simple but profound belief: that technology should serve people, not the other way
+						around.
+					</p>
+					<div class="page-hero__buttons reveal" style="--d: 0.25s">
+						<a href="#vision" class="btn btn--link about-hero__down">
+							Our founding vision
+							<svg viewBox="0 0 24 24" aria-hidden="true" set:html={down} />
+						</a>
+					</div>
+				</div>
 			</div>
-		</div>
 
-		<figure class="manifesto reveal" style="--d: 0.3s" data-pause-offscreen>
-			<canvas class="shader" aria-hidden="true" data-shader></canvas>
-			<blockquote class="container">
-				<p>
-					“We believe artificial intelligence should not replace human potential. It should amplify it. This is not
-					just our technology. This is our responsibility.”
-				</p>
-			</blockquote>
-			<figcaption class="container">From Sharktech Global Leadership</figcaption>
-		</figure>
+			<figure class="about-manifesto reveal" style="--d: 0.2s" data-pause-offscreen>
+				<canvas class="shader" aria-hidden="true" data-shader></canvas>
+				<span class="beam" aria-hidden="true"></span>
+				<blockquote>
+					<p>
+						{
+							manifesto.split(' ').map((word, w) => (
+								<span class="about-manifesto__w" style={`--w: ${w}`}>
+									{word}{' '}
+								</span>
+							))
+						}
+					</p>
+				</blockquote>
+				<figcaption>
+					<span class="bars" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span>
+					From Sharktech Global Leadership
+				</figcaption>
+			</figure>
+		</div>
 	</section>
 
 	<!-- ============================================
-	     Founding vision
+	     01 Founding vision: sticky title beside the essay
 	     ============================================ -->
-	<section class="sec vision" id="vision">
-		<div class="container vision__grid">
-			<div class="vision__head">
-				<p class="eyebrow reveal">Why We Exist</p>
-				<h2 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
+	<section class="chapter about-vision" id="vision">
+		<div class="container about-vision__layout">
+			<header class="about-vision__head">
+				<p class="label reveal"><span class="label__num">01</span>Why We Exist</p>
+				<h2 class="display reveal-lines" style="--d: 0.1s">
 					<span class="line"><span class="line__inner">Our Founding</span></span>
-					<span class="line" style="--i: 1"><span class="line__inner">Vision</span></span>
+					<span class="line" style="--i: 1"><span class="line__inner muted">Vision</span></span>
 				</h2>
-			</div>
+			</header>
 
-			<div class="vision__body">
-				<p class="vision__lede reveal">
-					VCPility is not just another product from Sharktech Global. It is an extension of our founding philosophy. We
-					build AI that <em>empowers humanity, not replaces it</em>, serving with transparency and long-term ethics.
+			<div class="about-vision__body">
+				<p class="about-vision__lede" data-scroll-text>
+					{
+						ledeWords.map(({ word, em }, i) =>
+							em ? (
+								<em class="w" style={`--w: ${(i / ledeWords.length).toFixed(3)}`}>
+									{word}{' '}
+								</em>
+							) : (
+								<span class="w" style={`--w: ${(i / ledeWords.length).toFixed(3)}`}>
+									{word}{' '}
+								</span>
+							),
+						)
+					}
 				</p>
 
-				<p class="vision__para reveal" style="--d: 0.1s">
+				<p class="about-vision__para reveal">
 					We believe that <strong>small businesses deserve world-class tools</strong>. For too long, the most powerful AI
 					capabilities were locked behind enterprise budgets and technical complexity. We're changing that. Every
 					business owner, whether running a real estate agency, a solar installation company or a local service, should
 					have access to technology that genuinely amplifies their potential.
 				</p>
 
-				<p class="vision__para reveal" style="--d: 0.15s">
+				<p class="about-vision__para reveal" style="--d: 0.08s">
 					<strong>Privacy is not negotiable</strong>. Your trust is worth more than any data we could monetise. We
-					amplify your creativity and insight; we don't replace them. AI should enhance human judgment, not override
-					it. And above all, <strong>software is craft, not just code</strong>. Every feature is intentional. Every
-					interface is designed with care.
+					amplify your creativity and insight; we don't replace them. AI should enhance human judgment, not override it.
+					And above all, <strong>software is craft, not just code</strong>. Every feature is intentional. Every interface
+					is designed with care.
 				</p>
 
-				<p class="vision__signature reveal" style="--d: 0.2s">Sharktech Global Leadership</p>
+				<p class="about-vision__signature reveal" style="--d: 0.12s">
+					<span class="bars" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span>
+					Sharktech Global Leadership
+				</p>
 			</div>
 		</div>
 	</section>
 
 	<!-- ============================================
-	     Guiding principles
+	     02 Guiding principles: cards with small live illustrations
 	     ============================================ -->
-	<section class="sec principles">
+	<section class="chapter about-principles">
 		<div class="container">
-			<header class="sec-head">
-				<div>
-					<p class="eyebrow reveal">What We Stand For</p>
-					<h2 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
-						<span class="line"><span class="line__inner">Our Four Guiding</span></span>
-						<span class="line" style="--i: 1"><span class="line__inner">Principles</span></span>
-					</h2>
-				</div>
-				<p class="sec-head__lead reveal" style="--d: 0.25s">
+			<p class="label reveal"><span class="label__num">02</span>What We Stand For</p>
+
+			<div class="chapter__head">
+				<h2 class="display reveal-lines" style="--d: 0.1s">
+					<span class="line"><span class="line__inner">Our Four Guiding</span></span>
+					<span class="line" style="--i: 1"><span class="line__inner muted">Principles</span></span>
+				</h2>
+				<p class="lead reveal" style="--d: 0.25s">
 					The commitments behind every feature we ship and every conversation we have with you.
 				</p>
-			</header>
+			</div>
 
-			<ol class="principles__grid">
+			<ol class="about-principles__grid" data-pause-offscreen>
 				{
-					principles.map(({ title, desc, icon }, i) => (
-						<li class="principle reveal" style={`--d: ${i * 0.08}s`}>
-							<div class="principle__top">
-								<span class="principle__num">{String(i + 1).padStart(2, '0')}</span>
-								<span class="principle__icon">
-									<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icon} />
-								</span>
+					principles.map(({ art, title, desc, icon }, i) => (
+						<li class={`about-principle about-principle--${art} reveal`} style={`--d: ${i * 0.08}s`}>
+							<div class="card" data-spotlight>
+								<div class="about-principle__head">
+									<span class="about-principle__num">{pad(i + 1)}</span>
+									<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icon} data-draw />
+								</div>
+
+								<div class="about-principle__art" aria-hidden="true">
+									{art === 'amplify' && (
+										<span class="ab-amp">
+											{[0, 1, 2].map((n) => (
+												<span class="ab-amp__ring" style={`--n: ${n}`} />
+											))}
+											{[0, 1, 2, 3, 4].map((n) => (
+												<span class="ab-amp__dot" style={`--a: ${n * 72 + 18}deg; --c: ${brand(n)}`} />
+											))}
+											<span class="ab-amp__hub">
+												<svg viewBox="0 0 24 24" set:html={person} />
+											</span>
+										</span>
+									)}
+
+									{art === 'privacy' && (
+										<span class="ab-vault">
+											{['Name', 'Phone', 'Email'].map((field, n) => (
+												<span class="ab-vault__row" style={`--k: ${n}`}>
+													<span class="ab-vault__key">{field}</span>
+													<span class="ab-vault__mask">
+														{Array.from({ length: 8 }, () => (
+															<span />
+														))}
+													</span>
+												</span>
+											))}
+											<span class="ab-vault__chip">
+												<svg viewBox="0 0 24 24" set:html={lock} />
+												Private
+											</span>
+										</span>
+									)}
+
+									{art === 'open' && (
+										<span class="ab-flow">
+											<span class="ab-flow__line">
+												<span class="ab-flow__pulse" />
+											</span>
+											{flowSteps.map((step, n) => (
+												<span class="ab-flow__node" style={`--k: ${n}; --c: ${brand(n)}`}>
+													<span class="ab-flow__dot" />
+													{step}
+												</span>
+											))}
+										</span>
+									)}
+
+									{art === 'craft' && (
+										<svg class="ab-craft" viewBox="0 0 200 120">
+											<path class="ab-craft__grid" d="M0 30h200M0 60h200M0 90h200M40 0v120M80 0v120M120 0v120M160 0v120" />
+											<path class="ab-craft__handle" d="M20 96 L70 14 M130 106 L180 24" />
+											<path class="ab-craft__curve" d="M20 96 C70 14 130 106 180 24" pathLength="1" />
+											<circle class="ab-craft__knot" cx="20" cy="96" r="4" />
+											<circle class="ab-craft__knot" cx="180" cy="24" r="4" />
+											<circle class="ab-craft__pin" cx="70" cy="14" r="3" />
+											<circle class="ab-craft__pin" cx="130" cy="106" r="3" />
+										</svg>
+									)}
+								</div>
+
+								<div class="about-principle__body">
+									<h3>{title}</h3>
+									<p>{desc}</p>
+								</div>
 							</div>
-							<h3>{title}</h3>
-							<p>{desc}</p>
 						</li>
 					))
 				}
@@ -189,24 +310,25 @@ const contactCards = [
 	</section>
 
 	<!-- ============================================
-	     What we actually do
+	     03 What we actually do: mission, vision and promise as a ledger
 	     ============================================ -->
-	<section class="sec purpose">
+	<section class="chapter about-purpose">
 		<div class="container">
-			<header class="sec-head">
-				<div>
-					<p class="eyebrow reveal">Our Purpose</p>
-					<h2 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
-						<span class="line"><span class="line__inner">What We Actually Do</span></span>
-					</h2>
-				</div>
-			</header>
+			<p class="label reveal"><span class="label__num">03</span>Our Purpose</p>
 
-			<dl class="purpose__list">
+			<h2 class="display reveal-lines" style="--d: 0.1s">
+				<span class="line"><span class="line__inner">What We</span></span>
+				<span class="line" style="--i: 1"><span class="line__inner muted">Actually Do</span></span>
+			</h2>
+
+			<dl class="about-purpose__list">
 				{
 					purpose.map(({ label, desc }, i) => (
-						<div class="purpose__row reveal" style={`--d: ${i * 0.08}s`}>
-							<dt>{label}</dt>
+						<div class="about-purpose__row reveal" style={`--d: ${i * 0.08}s; --c: ${brand(i * 2)}`}>
+							<dt>
+								<span class="about-purpose__num">{pad(i + 1)}</span>
+								{label}
+							</dt>
 							<dd>{desc}</dd>
 						</div>
 					))
@@ -216,52 +338,73 @@ const contactCards = [
 	</section>
 
 	<!-- ============================================
-	     CTA (shader band) + contact
+	     Closing CTA: shader panel with Ripple rings
 	     ============================================ -->
-	<section class="about-cta" data-pause-offscreen>
-		<canvas class="shader" aria-hidden="true" data-shader></canvas>
-		<div class="container about-cta__inner reveal">
-			<h2 class="section-title section-title--sm">Join Us in Building Something Better</h2>
-			<p class="about-cta__lead">We're offering partnership built on trust, transparency, and long-term value.</p>
-			<p class="about-cta__quote">“True success lies in empowerment, not extraction.”</p>
-			<a href="/contact" class="btn btn--light btn--shine">
-				Get a FREE Quote
-				<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
-			</a>
+	<section class="finale about-finale">
+		<div class="container">
+			<div class="finale__panel" data-pause-offscreen>
+				<canvas class="shader" aria-hidden="true" data-shader></canvas>
+				<span class="ripple" aria-hidden="true">
+					{[0, 1, 2, 3, 4].map((n) => <span style={`--n: ${n}`} />)}
+				</span>
+
+				<div class="finale__inner">
+					<span class="bars bars--light reveal" aria-hidden="true"
+						><span></span><span></span><span></span><span></span><span></span></span
+					>
+					<h2 class="finale__title reveal-lines" style="--d: 0.1s">
+						<span class="line"><span class="line__inner">Join Us in Building</span></span>
+						<span class="line" style="--i: 1"><span class="line__inner">Something Better</span></span>
+					</h2>
+					<p class="finale__text reveal" style="--d: 0.3s">
+						We're offering partnership built on trust, transparency, and long-term value.
+					</p>
+					<p class="about-finale__quote reveal" style="--d: 0.35s">“True success lies in empowerment, not extraction.”</p>
+					<div class="finale__buttons reveal" style="--d: 0.4s">
+						<a href="/contact" class="btn btn--light btn--shine" data-magnetic>
+							Get a FREE Quote
+							<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+						</a>
+					</div>
+				</div>
+			</div>
 		</div>
 	</section>
 
-	<section class="sec talk">
+	<!-- ============================================
+	     04 Contact
+	     ============================================ -->
+	<section class="chapter about-talk">
 		<div class="container">
-			<header class="sec-head">
-				<div>
-					<p class="eyebrow reveal">Get In Touch</p>
-					<h2 class="section-title section-title--sm reveal-lines">
-						<span class="line"><span class="line__inner">Let's Talk</span></span>
-					</h2>
-				</div>
-				<p class="sec-head__lead reveal" style="--d: 0.2s">
+			<p class="label reveal"><span class="label__num">04</span>Get In Touch</p>
+
+			<div class="chapter__head">
+				<h2 class="display reveal-lines" style="--d: 0.1s">
+					<span class="line"><span class="line__inner">Let's Talk</span></span>
+				</h2>
+				<p class="lead reveal" style="--d: 0.2s">
 					We respond <strong>personally</strong>: no automation, no sales pressure.
 				</p>
-			</header>
+			</div>
 
-			<ul class="talk__grid">
+			<ul class="about-talk__grid">
 				{
 					contactCards.map(({ label, lines, href, external, icon }, i) => {
 						const Tag = href ? 'a' : 'div';
 						return (
 							<li class="reveal" style={`--d: ${i * 0.08}s`}>
 								<Tag
-									class:list={['talk__item', href && 'talk__item--link']}
+									class:list={['card', 'about-talk__item', href && 'about-talk__item--link']}
 									href={href}
 									target={external ? '_blank' : undefined}
 									rel={external ? 'noopener' : undefined}
+									data-spotlight
 								>
-									<span class="talk__label">
+									<span class="about-talk__icon" style={`--c: ${brand(i * 2)}`}>
 										<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icon} />
-										{label}
 									</span>
-									<span class="talk__value">
+									<span class="about-talk__label">{label}</span>
+									<span class="about-talk__value">
 										{lines.map((line, n) => (
 											<>
 												{n > 0 && <br />}
@@ -269,7 +412,14 @@ const contactCards = [
 											</>
 										))}
 									</span>
-									{href && <svg class="talk__arrow" viewBox="0 0 24 24" aria-hidden="true" set:html={external ? externalIcon : arrow} />}
+									{href && (
+										<svg
+											class="about-talk__arrow"
+											viewBox="0 0 24 24"
+											aria-hidden="true"
+											set:html={external ? externalIcon : arrow}
+										/>
+									)}
 								</Tag>
 							</li>
 						);
@@ -279,9 +429,3 @@ const contactCards = [
 		</div>
 	</section>
 </Layout>
-
-<script>
-	import { initShaders } from '../scripts/shader';
-
-	initShaders();
-</script>

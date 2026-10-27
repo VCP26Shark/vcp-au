@@ -1,62 +1,68 @@
 /* ============================================
    Blog pieces shared by /blog and /blog/<slug>:
-   the meta line, post cards and the shader CTA band
+   the meta line and the post cards
    ============================================ */
 
-/* ----- Meta line: small caps labels separated by short rules ----- */
+/* ----- Meta line: small grey facts separated by dots ----- */
 
 .post-meta {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
-	gap: 6px 14px;
-	font-size: 11px;
-	font-weight: 700;
-	letter-spacing: 2px;
-	text-transform: uppercase;
-	color: var(--color-gray-500);
+	gap: 6px 10px;
+	font-size: 13px;
+	font-weight: 500;
+	color: var(--muted);
 	font-variant-numeric: tabular-nums;
 }
 
 .post-meta > * + *::before {
 	content: '';
 	display: inline-block;
-	width: 14px;
-	height: 1px;
-	margin-right: 14px;
+	width: 3px;
+	height: 3px;
+	margin-right: 10px;
 	vertical-align: middle;
+	border-radius: 50%;
 	background: currentColor;
-	opacity: 0.5;
+	opacity: 0.6;
 }
 
-.post-meta__label,
 .post-meta__num {
-	color: var(--color-accent);
+	color: var(--ink);
 }
 
-/* ----- Post cards: image, meta, title, standfirst, date ----- */
+/* The one red accent: a small tag on the latest post */
+.post-meta__label {
+	display: inline-flex;
+	align-items: center;
+	gap: 7px;
+	color: var(--ink);
+}
+
+.post-meta__label::before {
+	content: '';
+	width: 7px;
+	height: 7px;
+	border-radius: 50%;
+	background: var(--color-accent);
+}
+
+/* ----- Post cards: a surface card with the image inset at the top ----- */
 
 .post-cards {
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
-	gap: clamp(48px, 5vw, 72px) clamp(24px, 3vw, 48px);
-}
-
-.post-card__link {
-	display: flex;
-	flex-direction: column;
-	gap: 18px;
-	height: 100%;
-	padding-top: 24px;
-	border-top: 1px solid var(--color-ink);
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+	gap: clamp(16px, 1.6vw, 24px);
 }
 
 .post-card__media {
 	display: block;
 	aspect-ratio: 3 / 2;
-	margin-bottom: 6px;
+	margin: 10px 10px 0;
 	overflow: hidden;
-	background: var(--color-surface);
+	background: var(--color-white);
+	border-radius: calc(var(--radius) - 8px);
 }
 
 .post-card__media img {
@@ -66,78 +72,44 @@
 	transition: transform 1.2s var(--ease-out);
 }
 
+.post-card__body {
+	display: flex;
+	flex: 1;
+	flex-direction: column;
+	gap: 14px;
+	padding: 24px clamp(20px, 2vw, 28px) 28px;
+}
+
 .post-card__title {
-	font-size: clamp(22px, 0.8vw + 16px, 28px);
-	font-weight: 800;
-	line-height: 1.15;
-	letter-spacing: -0.03em;
+	font-size: clamp(22px, 0.6vw + 17px, 28px);
+	font-weight: 600;
+	line-height: 1.12;
+	letter-spacing: -0.04em;
 	text-wrap: balance;
-	text-decoration: underline;
-	text-decoration-color: transparent;
-	text-decoration-thickness: 2px;
-	text-underline-offset: 5px;
-	transition: text-decoration-color 0.3s ease;
 }
 
 .post-card__desc {
 	max-width: 52ch;
 	font-size: 15px;
-	line-height: 1.7;
-	color: var(--color-gray-600);
+	line-height: 1.65;
+	color: var(--muted);
 }
 
+/* The date sits on a hairline at the foot of the card */
 .post-card__date {
 	margin-top: auto;
+	padding-top: 16px;
 	font-size: 13px;
-	font-weight: 600;
-	color: var(--color-gray-400);
+	font-weight: 500;
+	color: var(--soft);
+	border-top: 1px solid var(--rule);
 }
 
-.post-card__link:hover .post-card__media img {
+.post-card:hover .post-card__media img {
 	transform: scale(1.05);
 }
 
-.post-card__link:hover .post-card__title {
-	text-decoration-color: var(--color-accent);
-}
-
-/* ----- CTA (shader band) ----- */
-
-.blog-cta {
-	position: relative;
-	isolation: isolate;
-	overflow: hidden;
-	padding-block: clamp(96px, 10vw, 160px);
-	color: var(--color-white);
-	text-align: center;
-	background:
-		radial-gradient(circle at 75% 70%, rgb(224 3 72 / 0.6), transparent 55%),
-		radial-gradient(circle at 20% 30%, rgb(57 4 78 / 0.9), transparent 60%),
-		#100d12;
-}
-
-.blog-cta .shader {
-	z-index: -1;
-}
-
-.blog-cta__inner p {
-	max-width: 46ch;
-	margin: 20px auto 0;
-	font-size: 18px;
-	line-height: 1.7;
-	color: rgb(255 255 255 / 0.78);
-}
-
-.blog-cta__actions {
-	display: flex;
-	flex-wrap: wrap;
-	align-items: center;
-	justify-content: center;
-	gap: 20px 40px;
-	margin-top: 40px;
-}
-
-.blog-cta__link {
-	color: var(--color-white);
-	border-color: var(--color-white);
+.post-card:focus-visible {
+	outline: 2px solid var(--ink);
+	outline-offset: 3px;
 }

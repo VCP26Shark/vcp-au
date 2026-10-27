@@ -6,10 +6,10 @@ export default defineConfig({
 	fonts: [
 		{
 			provider: fontProviders.google(),
-			name: 'Plus Jakarta Sans',
+			name: 'Inter',
 			cssVariable: '--font-sans',
-			weights: ['200 800'],
-			styles: ['normal', 'italic'],
+			weights: ['100 900'],
+			styles: ['normal'],
 			subsets: ['latin'],
 			fallbacks: ['system-ui', 'sans-serif'],
 		},

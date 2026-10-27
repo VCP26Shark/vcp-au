@@ -2,27 +2,32 @@
 import Layout from '../layouts/Layout.astro';
 import '../styles/pages/plans.css';
 
-/* ----- Plans ----- */
+const arrow = '<path d="M5 12h14M12 5l7 7-7 7"/>';
+const check = '<polyline points="20 6 9 17 4 12"/>';
+
+// The logo's five colour bars, used as small accents (index 0-4 maps to --brand-1 … --brand-5)
+const brand = (i: number) => `var(--brand-${(i % 5) + 1})`;
+
+/* ----- Plans: Elevate is the one highlighted (dark) card ----- */
 
 type Plan = {
 	name: string;
 	type: string;
-	variant: 'highlight' | 'featured' | 'premium';
-	badge?: { label: string; style: 'popular' | 'value' | 'enterprise' };
+	featured?: boolean;
+	badge?: string;
 	startingFrom?: boolean;
 	price: { annual: number; monthly: number };
 	pitch: { title: string; text: string };
 	includesLabel: string;
 	features: string[];
 	note?: string;
-	cta: { label: string; style: 'black' | 'accent' | 'white' };
+	cta: { label: string; style: 'dark' | 'accent' | 'outline' };
 };
 
 const plans: Plan[] = [
 	{
 		name: 'Launch',
 		type: 'Foundation Package',
-		variant: 'highlight',
 		price: { annual: 165, monthly: 220 },
 		pitch: {
 			title: 'AI-Powered Marketing Partner',
@@ -39,13 +44,13 @@ const plans: Plan[] = [
 			'Centralised Inbox',
 			'Mobile App',
 		],
-		cta: { label: 'Start Your Journey', style: 'black' },
+		cta: { label: 'Start Your Journey', style: 'dark' },
 	},
 	{
 		name: 'Elevate',
 		type: 'Professional Package',
-		variant: 'featured',
-		badge: { label: 'Most Popular', style: 'popular' },
+		featured: true,
+		badge: 'Most Popular',
 		price: { annual: 590, monthly: 790 },
 		pitch: {
 			title: 'AI-Powered Growth Team',
@@ -69,8 +74,7 @@ const plans: Plan[] = [
 	{
 		name: 'Dominate',
 		type: 'Premium Package',
-		variant: 'highlight',
-		badge: { label: 'Best Value', style: 'value' },
+		badge: 'Best Value',
 		price: { annual: 940, monthly: 1250 },
 		pitch: {
 			title: 'AI-Powered Marketing Department',
@@ -87,13 +91,12 @@ const plans: Plan[] = [
 			'Google Ads Management',
 			'Meta Ads Management',
 		],
-		cta: { label: 'Scale Your Business', style: 'black' },
+		cta: { label: 'Scale Your Business', style: 'dark' },
 	},
 	{
 		name: 'Apex',
 		type: 'Enterprise Package',
-		variant: 'premium',
-		badge: { label: 'Enterprise', style: 'enterprise' },
+		badge: 'Enterprise',
 		startingFrom: true,
 		price: { annual: 5760, monthly: 7200 },
 		pitch: {
@@ -112,7 +115,7 @@ const plans: Plan[] = [
 			'Enterprise SLA & Priority Support',
 		],
 		note: 'Custom pricing for multi-site deployments',
-		cta: { label: 'Book a Strategy Call', style: 'white' },
+		cta: { label: 'Book a Strategy Call', style: 'outline' },
 	},
 ];
 
@@ -125,30 +128,39 @@ const billingNote = (plan: Plan) => ({
 	annual: `Billed ${plan.startingFrom ? 'from' : 'at'} $${money(plan.price.annual * 12)} + GST per year - save up to ${saving(plan.price)}% versus paying monthly.`,
 	monthly: `Paid monthly, or switch to annual billing to save up to ${saving(plan.price)}%.`,
 });
-const check = '<polyline points="20 6 9 17 4 12"/>';
-const arrow = '<path d="M5 12h14M12 5l7 7-7 7"/>';
 
-/* ----- Add-ons ----- */
+/* ----- Add-ons: each card gets a small live illustration (art) ----- */
 
 const addOns = [
 	{
+		art: 'sites',
 		title: 'Additional Sites',
 		price: 'AU$198/month per site',
 		text: 'Expand your reach with multi-location support. Each additional site gets full platform access.',
 		icon: '<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/>',
 	},
 	{
+		art: 'ads',
 		title: 'Ad Budget Management',
 		price: '15% of ad spend (min AU$500/month)',
 		text: 'Expert management of your advertising campaigns across Google, Meta, and LinkedIn.',
 		icon: '<path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>',
 	},
 	{
+		art: 'link',
 		title: 'Custom Integrations',
 		price: 'AU$500 one-time setup',
 		text: 'Connect your existing tools and workflows with custom API integrations built for your business.',
 		icon: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
 	},
+];
+
+// Decorative pieces for the add-on illustrations
+const siteCount = 4;
+const adChannels = [
+	{ name: 'Google', share: 46 },
+	{ name: 'Meta', share: 34 },
+	{ name: 'LinkedIn', share: 20 },
 ];
 
 /* ----- Enterprise ----- */
@@ -158,6 +170,11 @@ const enterprisePoints = [
 	'Share your goals and KPIs - we’ll recommend the best options',
 	'Strategic and tactical programmes designed for scale',
 	'Comprehensive KPI mapping and real-time tracking',
+];
+
+const scaleStats = [
+	{ value: '500+', label: 'Sites Managed' },
+	{ value: '99.9%', label: 'Uptime' },
 ];
 
 const users =
@@ -174,138 +191,190 @@ const planFormId = 'EM6FhotBuN9uljNjbYsZ';
 	description="Flexible VCPility plans for every business, from sole traders to national brands. Annual and monthly billing."
 >
 	<!-- ============================================
-	     Hero
+	     Hero: title left, lead and the billing toggle right
 	     ============================================ -->
-	<section class="plans-hero">
-		<div class="plans-hero__container">
-			<p class="eyebrow eyebrow--center reveal">Pricing Plans</p>
-
-			<h1 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
-				<span class="line">
-					<span class="line__inner">Flexible Plans for Every Business</span>
-				</span>
-			</h1>
-
-			<p class="section-lead reveal" style="--d: 0.25s">
-				Choose the right plan to grow your business. All plans include our core platform features.
+	<section class="page-hero plans-hero">
+		<div class="container">
+			<p class="label reveal">
+				<span class="bars" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span>
+				Pricing Plans
 			</p>
 
-			<div class="billing-toggle reveal" style="--d: 0.35s" role="group" aria-label="Billing period" data-billing-toggle>
-				<button type="button" aria-pressed="false" data-billing="monthly">Monthly</button>
-				<button type="button" aria-pressed="true" data-billing="annual">
-					Annually
-					<span class="billing-toggle__badge">Save up to 25%</span>
-				</button>
+			<div class="page-hero__grid">
+				<h1 class="page-hero__title reveal-lines">
+					<span class="line"><span class="line__inner">Flexible Plans</span></span>
+					<span class="line" style="--i: 1"><span class="line__inner muted">for Every Business</span></span>
+				</h1>
+
+				<div>
+					<p class="lead reveal" style="--d: 0.15s">
+						Choose the right plan to grow your business. All plans include our core platform features.
+					</p>
+
+					<div class="billing reveal" style="--d: 0.25s" role="group" aria-label="Billing period" data-billing-toggle>
+						<span class="billing__thumb" aria-hidden="true"></span>
+						<button type="button" aria-pressed="false" data-billing="monthly">Monthly</button>
+						<button type="button" aria-pressed="true" data-billing="annual">
+							Annually
+							<span class="billing__save">Save up to 25%</span>
+						</button>
+					</div>
+					<p class="sr-only" aria-live="polite" data-billing-status></p>
+				</div>
 			</div>
-			<p class="sr-only" aria-live="polite" data-billing-status></p>
 		</div>
 	</section>
 
 	<!-- ============================================
-	     Plans
+	     Plans: cards share subgrid rows so prices, lists and buttons line up
 	     ============================================ -->
 	<section class="plans">
-		<ul class="plans__grid">
-			{
-				plans.map((plan, i) => {
-					const { name, type, variant, badge, startingFrom, price, pitch, includesLabel, features, note, cta } = plan;
-					return (
-						<li class="reveal" style={`--d: ${0.1 + i * 0.08}s`}>
-							<article class:list={['plan', `plan--${variant}`, { 'plan--badged': badge }]}>
-								{variant === 'highlight' && (
-									<>
-										<span class="plan__bracket plan__bracket--tl" aria-hidden="true" />
-										<span class="plan__bracket plan__bracket--br" aria-hidden="true" />
-									</>
-								)}
-								{badge && <span class={`plan__badge plan__badge--${badge.style}`}>{badge.label}</span>}
+		<div class="container">
+			<ul class="plans__grid">
+				{
+					plans.map((plan, i) => {
+						const { name, type, featured, badge, startingFrom, price, pitch, includesLabel, features, note, cta } = plan;
+						return (
+							<li class="plans__cell reveal" style={`--d: ${i * 0.06}s`}>
+								<article class:list={['card', 'plan', { 'plan--featured': featured }]} data-spotlight>
+									{featured && <span class="beam" aria-hidden="true" />}
 
-								<header class="plan__header">
-									<div>
+									<header class="plan__head">
 										<h2 class="plan__name">{name}</h2>
+										{badge && <span class="plan__badge">{badge}</span>}
 										<p class="plan__type">{type}</p>
-									</div>
+									</header>
+
 									<div class="plan__price">
-										{startingFrom && <p class="plan__from">Starting from</p>}
+										<p class="plan__from">{startingFrom && 'Starting from'}</p>
 										<p class="plan__amount">
 											<span class="plan__currency">$</span>
-											<span
-												class="plan__value"
-												data-annual={money(price.annual)}
-												data-monthly={money(price.monthly)}
-											>
+											<span class="plan__value" data-annual={money(price.annual)} data-monthly={money(price.monthly)}>
 												{money(price.annual)}
 											</span>
 											<span class="plan__period">+ GST / month</span>
 										</p>
+										<p class="plan__billing" data-annual={billingNote(plan).annual} data-monthly={billingNote(plan).monthly}>
+											{billingNote(plan).annual}
+										</p>
 									</div>
-								</header>
 
-								<p class="plan__billing" data-annual={billingNote(plan).annual} data-monthly={billingNote(plan).monthly}>
-									{billingNote(plan).annual}
-								</p>
+									<div class="plan__pitch">
+										<h3>{pitch.title}</h3>
+										<p>{pitch.text}</p>
+									</div>
 
-								<div class="plan__pitch">
-									<h3>{pitch.title}</h3>
-									<p>{pitch.text}</p>
-								</div>
+									<div class="plan__features">
+										<p class="plan__features-title">{includesLabel}</p>
+										<ul>
+											{features.map((feature) => (
+												<li>
+													<svg viewBox="0 0 24 24" aria-hidden="true" set:html={check} />
+													{feature}
+												</li>
+											))}
+										</ul>
+									</div>
 
-								<div class="plan__features">
-									<p class="plan__features-title">{includesLabel}</p>
-									<ul>
-										{features.map((feature) => (
-											<li>
-												<svg viewBox="0 0 24 24" aria-hidden="true" set:html={check} />
-												{feature}
-											</li>
-										))}
-									</ul>
-								</div>
+									{note && <p class="plan__note">{note}</p>}
 
-								{note && <p class="plan__note">{note}</p>}
-								<a href="#plan-enquiry" class={`plan__btn plan__btn--${cta.style}`}>
-									{cta.label}
-								</a>
-							</article>
-						</li>
-					);
-				})
-			}
-		</ul>
+									<a href="#plan-enquiry" class={`btn plan__btn plan__btn--${cta.style}`}>
+										{cta.label}
+										<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+									</a>
+								</article>
+							</li>
+						);
+					})
+				}
+			</ul>
+		</div>
 	</section>
 
 	<!-- ============================================
-	     Add-ons
+	     01 Add-ons
 	     ============================================ -->
-	<section class="addons grid-bg" data-reveal>
-		<span class="addons__bracket addons__bracket--tl" aria-hidden="true"></span>
-		<span class="addons__bracket addons__bracket--br" aria-hidden="true"></span>
+	<section class="chapter addons">
+		<div class="container">
+			<p class="label reveal"><span class="label__num">01</span>Enhance Your Plan</p>
 
-		<div class="addons__container">
-			<header class="addons__header">
-				<p class="eyebrow eyebrow--center reveal">Enhance Your Plan</p>
-
-				<h2 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
-					<span class="line">
-						<span class="line__inner">Optional Add-Ons</span>
-					</span>
+			<div class="chapter__head">
+				<h2 class="display reveal-lines" style="--d: 0.1s">
+					<span class="line"><span class="line__inner">Optional</span></span>
+					<span class="line" style="--i: 1"><span class="line__inner muted">Add-Ons</span></span>
 				</h2>
-
-				<p class="addons__lead reveal" style="--d: 0.2s">
+				<p class="lead reveal" style="--d: 0.25s">
 					Supercharge your plan with powerful extras tailored to your growth needs.
 				</p>
-			</header>
+			</div>
 
-			<ul class="addons__grid">
+			<ul class="addons__grid" data-pause-offscreen>
 				{
-					addOns.map(({ title, price, text, icon }, i) => (
-						<li class="addon reveal" style={`--d: ${0.25 + i * 0.1}s`}>
-							<span class="addon__icon" aria-hidden="true">
-								<svg viewBox="0 0 24 24" set:html={icon} />
-							</span>
-							<h3 class="addon__title">{title}</h3>
-							<p class="addon__price">{price}</p>
-							<p class="addon__text">{text}</p>
+					addOns.map(({ art, title, price, text, icon }, i) => (
+						<li class={`addons__item addons__item--${art} reveal`} style={`--d: ${i * 0.08}s`}>
+							<div class="card" data-spotlight>
+								<div class="addon__art" aria-hidden="true">
+									{art === 'sites' && (
+										<span class="aa-sites">
+											{Array.from({ length: siteCount }, (_, k) => (
+												<span class="aa-sites__win" style={`--k: ${k}; --c: ${brand(k)}`}>
+													<span class="aa-sites__bar" />
+													<span class="aa-sites__line" />
+													<span class="aa-sites__line aa-sites__line--short" />
+												</span>
+											))}
+											<span class="aa-sites__add">+</span>
+										</span>
+									)}
+
+									{art === 'ads' && (
+										<span class="aa-ads">
+											{adChannels.map(({ name, share }, k) => (
+												<span class="aa-ads__row" style={`--k: ${k}; --w: ${share}%; --c: ${brand(k * 2)}`}>
+													<span class="aa-ads__name">{name}</span>
+													<span class="aa-ads__track">
+														<span class="aa-ads__fill" />
+													</span>
+												</span>
+											))}
+											<span class="aa-ads__fee">
+												<strong>15%</strong> of spend
+											</span>
+										</span>
+									)}
+
+									{art === 'link' && (
+										<span class="aa-link">
+											<span class="aa-link__node">
+												<span class="bars">
+													<span />
+													<span />
+													<span />
+													<span />
+													<span />
+												</span>
+											</span>
+											<span class="aa-link__wire">
+												<span class="aa-link__pulse" />
+											</span>
+											<span class="aa-link__node aa-link__node--tools">
+												{[0, 1, 2, 3].map((k) => (
+													<span style={`--c: ${brand(k + 1)}`} />
+												))}
+											</span>
+										</span>
+									)}
+								</div>
+
+								<div class="addon__body">
+									<p class="addon__label">
+										<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icon} data-draw />
+										{price}
+									</p>
+									<h3 class="addon__title">{title}</h3>
+									<p class="addon__text">{text}</p>
+								</div>
+							</div>
 						</li>
 					))
 				}
@@ -314,84 +383,84 @@ const planFormId = 'EM6FhotBuN9uljNjbYsZ';
 	</section>
 
 	<!-- ============================================
-	     Enterprise
+	     02 Enterprise: the navy chapter, on a Flickering Grid
 	     ============================================ -->
-	<section class="enterprise">
-		<div class="enterprise__grid">
-			<div class="enterprise__copy">
-				<p class="eyebrow reveal">For Large Teams</p>
+	<section class="chapter chapter--ink enterprise" data-pause-offscreen>
+		<canvas class="enterprise__grid-bg" aria-hidden="true" data-flicker-grid data-flicker-color="255, 255, 255"
+		></canvas>
 
-				<h2 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
-					<span class="line">
-						<span class="line__inner">Enterprise &amp; Custom</span>
-					</span>
-					<span class="line" style="--i: 1">
-						<span class="line__inner">Solutions</span>
-					</span>
-				</h2>
+		<div class="container">
+			<p class="label reveal"><span class="label__num">02</span>For Large Teams</p>
 
-				<p class="enterprise__kicker reveal" style="--d: 0.2s">
-					Dedicated Customer Relations Manager for Any Industry
-				</p>
+			<div class="enterprise__layout">
+				<div>
+					<h2 class="display reveal-lines" style="--d: 0.1s">
+						<span class="line"><span class="line__inner">Enterprise &amp; Custom</span></span>
+						<span class="line" style="--i: 1"><span class="line__inner muted">Solutions</span></span>
+					</h2>
 
-				<p class="enterprise__text reveal" style="--d: 0.25s">
-					For marketing teams requiring bespoke services and paid media management. Choose from a
-					comprehensive range of solutions tailored to your specific requirements.
-				</p>
-
-				<ul class="enterprise__list">
-					{
-						enterprisePoints.map((point, i) => (
-							<li class="reveal" style={`--d: ${0.3 + i * 0.06}s`}>
-								<span class="enterprise__tick" aria-hidden="true">
-									<svg viewBox="0 0 24 24" set:html={check} />
-								</span>
-								{point}
-							</li>
-						))
-					}
-				</ul>
-
-				<a
-					href="#plan-enquiry"
-					class="btn btn--accent btn--compact enterprise__btn reveal"
-					style="--d: 0.55s"
-				>
-					Let’s Talk Strategy
-					<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
-				</a>
-			</div>
-
-			<div class="enterprise__visual reveal" style="--d: 0.2s">
-				<span class="enterprise__bracket" aria-hidden="true"></span>
-
-				<div class="scale-card">
-					<p class="scale-card__badge">Enterprise Ready</p>
-					<h3 class="scale-card__title">Built for Scale</h3>
-					<p class="scale-card__text">
-						Whether you’re managing 5 locations or 500, our enterprise solutions grow with you. Get
-						dedicated support, custom workflows, and priority access to new features.
+					<p class="enterprise__kicker reveal" style="--d: 0.2s">
+						Dedicated Customer Relations Manager for Any Industry
 					</p>
 
-					<dl class="scale-card__stats">
-						<div>
-							<dt>Sites Managed</dt>
-							<dd data-count="500" data-suffix="+">500+</dd>
-						</div>
-						<div>
-							<dt>Uptime</dt>
-							<dd data-count="99.9" data-decimals="1" data-suffix="%">99.9%</dd>
-						</div>
-					</dl>
+					<p class="lead reveal" style="--d: 0.25s">
+						For marketing teams requiring bespoke services and paid media management. Choose from a comprehensive
+						range of solutions tailored to your specific requirements.
+					</p>
+
+					<ul class="enterprise__list">
+						{
+							enterprisePoints.map((point, i) => (
+								<li class="reveal" style={`--d: ${0.1 + i * 0.06}s`}>
+									<svg viewBox="0 0 24 24" aria-hidden="true" set:html={check} />
+									{point}
+								</li>
+							))
+						}
+					</ul>
+
+					<div class="chapter__cta reveal">
+						<a href="#plan-enquiry" class="btn btn--light btn--shine" data-magnetic>
+							Let’s Talk Strategy
+							<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+						</a>
+					</div>
 				</div>
 
-				<div class="scale-toast">
-					<span class="scale-toast__icon" aria-hidden="true">
-						<svg viewBox="0 0 24 24" set:html={users} />
-					</span>
-					<div>
-						<p class="scale-toast__title">Dedicated Support</p>
-						<p class="scale-toast__text">Your success team awaits</p>
+				<div class="enterprise__visual reveal" style="--d: 0.1s">
+					<div class="scale">
+						<p class="scale__tag">
+							<span class="bars" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span>
+							Enterprise Ready
+						</p>
+						<h3 class="scale__title">Built for Scale</h3>
+						<p class="scale__text">
+							Whether you’re managing 5 locations or 500, our enterprise solutions grow with you. Get dedicated support,
+							custom workflows, and priority access to new features.
+						</p>
+
+						<dl class="scale__stats">
+							{
+								scaleStats.map(({ value, label }, i) => (
+									<div style={`--c: ${brand(i * 2)}`}>
+										<dt>{label}</dt>
+										<dd class="ticker" data-ticker data-reveal style={`--d: ${0.2 + i * 0.12}s`}>
+											{value}
+										</dd>
+									</div>
+								))
+							}
+						</dl>
+					</div>
+
+					<div class="scale-toast">
+						<span class="scale-toast__icon" aria-hidden="true">
+							<svg viewBox="0 0 24 24" set:html={users} />
+						</span>
+						<div>
+							<p class="scale-toast__title">Dedicated Support</p>
+							<p class="scale-toast__text">Your success team awaits</p>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -399,33 +468,38 @@ const planFormId = 'EM6FhotBuN9uljNjbYsZ';
 	</section>
 
 	<!-- ============================================
-	     Tailored plan form
+	     03 Tailored plan form
 	     ============================================ -->
-	<section class="plan-enquiry" id="plan-enquiry">
-		<div class="plan-enquiry__container">
-			<h2 class="plan-enquiry__title reveal">
-				Get a plan tailored to your business
-			</h2>
+	<section class="chapter plan-enquiry" id="plan-enquiry">
+		<div class="container">
+			<p class="label reveal"><span class="label__num">03</span>Tailored Plans</p>
 
-			<div class="plan-enquiry__form reveal" style="--d: 0.15s">
-				<iframe
-					src={`${formHost}/widget/form/${planFormId}`}
-					class="plan-enquiry__iframe"
-					id={`inline-${planFormId}`}
-					title="Pricing enquiry form"
-					data-layout="{'id':'INLINE'}"
-					data-trigger-type="alwaysShow"
-					data-trigger-value=""
-					data-activation-type="alwaysActivated"
-					data-activation-value=""
-					data-deactivation-type="neverDeactivate"
-					data-deactivation-value=""
-					data-form-name="Website Pricing Page Form Latest"
-					data-height="573"
-					data-layout-iframe-id={`inline-${planFormId}`}
-					data-form-id={planFormId}
-					data-cookie-consent="true"
-					data-cookie-consent-provider="auto"></iframe>
+			<div class="plan-enquiry__layout">
+				<h2 class="display plan-enquiry__title reveal-lines" style="--d: 0.1s">
+					<span class="line"><span class="line__inner">Get a plan tailored</span></span>
+					<span class="line" style="--i: 1"><span class="line__inner muted">to your business</span></span>
+				</h2>
+
+				<div class="plan-enquiry__form reveal" style="--d: 0.15s">
+					<iframe
+						src={`${formHost}/widget/form/${planFormId}`}
+						class="plan-enquiry__iframe"
+						id={`inline-${planFormId}`}
+						title="Pricing enquiry form"
+						data-layout="{'id':'INLINE'}"
+						data-trigger-type="alwaysShow"
+						data-trigger-value=""
+						data-activation-type="alwaysActivated"
+						data-activation-value=""
+						data-deactivation-type="neverDeactivate"
+						data-deactivation-value=""
+						data-form-name="Website Pricing Page Form Latest"
+						data-height="573"
+						data-layout-iframe-id={`inline-${planFormId}`}
+						data-form-id={planFormId}
+						data-cookie-consent="true"
+						data-cookie-consent-provider="auto"></iframe>
+				</div>
 			</div>
 		</div>
 	</section>
@@ -441,20 +515,31 @@ const planFormId = 'EM6FhotBuN9uljNjbYsZ';
 			const buttons = [...toggle.querySelectorAll<HTMLButtonElement>('[data-billing]')];
 			const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+			// The sliding thumb sits under the pressed button
+			const placeThumb = () => {
+				const pressed = buttons.find((button) => button.getAttribute('aria-pressed') === 'true');
+				if (!pressed) return;
+				toggle.style.setProperty('--tx', `${pressed.offsetLeft}px`);
+				toggle.style.setProperty('--tw', `${pressed.offsetWidth}px`);
+			};
+			placeThumb();
+			addEventListener('resize', placeThumb);
+			document.fonts?.ready.then(placeThumb);
+
 			const swap = (el: HTMLElement, text: string) => {
 				if (reduceMotion) {
 					el.textContent = text;
 					return;
 				}
 				const out = el.animate(
-					[{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(-6px) scale(0.9)' }],
-					{ duration: 150, easing: 'ease-in', fill: 'forwards' },
+					[{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateY(-0.3em)' }],
+					{ duration: 140, easing: 'ease-in', fill: 'forwards' },
 				);
 				out.finished.then(() => {
 					el.textContent = text;
 					out.cancel();
-					el.animate([{ opacity: 0, transform: 'translateY(6px) scale(0.9)' }, { opacity: 1, transform: 'none' }], {
-						duration: 250,
+					el.animate([{ opacity: 0, transform: 'translateY(0.3em)' }, { opacity: 1, transform: 'none' }], {
+						duration: 260,
 						easing: 'cubic-bezier(0.2, 0.7, 0.2, 1)',
 					});
 				});
@@ -462,6 +547,7 @@ const planFormId = 'EM6FhotBuN9uljNjbYsZ';
 
 			const setBilling = (period: 'annual' | 'monthly') => {
 				buttons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.billing === period)));
+				placeThumb();
 				document.querySelectorAll<HTMLElement>('.plan__value').forEach((el) => swap(el, el.dataset[period] ?? ''));
 				document.querySelectorAll<HTMLElement>('.plan__billing').forEach((el) => {
 					el.textContent = el.dataset[period] ?? '';

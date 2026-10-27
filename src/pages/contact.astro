@@ -32,6 +32,10 @@ const flipCards = [
 ];
 
 const formId = 'DiM1RLgmUaDmgQWSJZ6f';
+
+/* ----- Reply note: little stack of message lines above the form ----- */
+
+const replyLines = [72, 48, 60];
 ---
 
 <Layout
@@ -39,50 +43,57 @@ const formId = 'DiM1RLgmUaDmgQWSJZ6f';
 	description="Talk to VCPility. Send us a message and our team will get back to you within 24 hours."
 >
 	<!-- ============================================
-	     Banner
+	     Hero
 	     ============================================ -->
-	<section class="contact-banner" data-reveal>
-		<span class="contact-banner__bracket contact-banner__bracket--tl" aria-hidden="true"></span>
-		<span class="contact-banner__bracket contact-banner__bracket--br" aria-hidden="true"></span>
-
-		<div class="contact-banner__content">
-			<p class="eyebrow eyebrow--center reveal">Contact Us</p>
-
-			<h1 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
-				<span class="line">
-					<span class="line__inner">Let’s Talk</span>
-				</span>
-			</h1>
-
-			<p class="contact-banner__lead reveal" style="--d: 0.25s">
-				Have a question or ready to transform your business? Fill out the form and our team will get
-				back to you within 24 hours.
+	<section class="page-hero contact-hero">
+		<div class="container">
+			<p class="label reveal">
+				<span class="bars" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span>
+				Contact Us
 			</p>
+
+			<div class="page-hero__grid">
+				<h1 class="page-hero__title reveal-lines">
+					<span class="line"><span class="line__inner">Let’s Talk</span></span>
+				</h1>
+
+				<div>
+					<p class="lead reveal" style="--d: 0.15s">
+						Have a question or ready to transform your business? Fill out the form and our team will get
+						back to you within 24 hours.
+					</p>
+				</div>
+			</div>
 		</div>
 	</section>
 
 	<!-- ============================================
-	     Form + flip cards
+	     01 Form + flip cards
+	     The header sits above the form only, so the cards line up with the top of the form panel.
 	     ============================================ -->
-	<section class="contact">
-		<div class="contact__grid">
+	<section class="chapter contact">
+		<div class="container contact__grid">
 			<header class="contact__header">
-				<p class="eyebrow reveal">Get in Touch</p>
+				<p class="label reveal"><span class="label__num">01</span>Get in Touch</p>
 
-				<h2 class="section-title contact__title reveal-lines" style="--d: 0.1s">
-					<span class="line">
-						<span class="line__inner">Send Us a Message</span>
-					</span>
+				<h2 class="display contact__title reveal-lines" style="--d: 0.1s">
+					<span class="line"><span class="line__inner">Send Us a Message</span></span>
 				</h2>
 
-				<p class="contact__lead reveal" style="--d: 0.2s">
+				<p class="lead reveal" style="--d: 0.2s">
 					We'd love to hear from you. Fill in the details below and we'll be in touch soon.
 				</p>
 			</header>
 
 			<div class="contact__form reveal" style="--d: 0.25s">
-				<span class="contact__bracket contact__bracket--tl" aria-hidden="true"></span>
-				<span class="contact__bracket contact__bracket--br" aria-hidden="true"></span>
+				<!-- Decorative status strip: a message being written -->
+				<div class="contact__status" aria-hidden="true" data-pause-offscreen>
+					<span class="contact__dot"></span>
+					<span class="contact__lines">
+						{replyLines.map((w, k) => <span style={`--w: ${w}%; --k: ${k}`} />)}
+					</span>
+					<span class="contact__reply">Reply within 24 hours</span>
+				</div>
 
 				<!-- LeadConnector form: attributes are read by form_embed.js, which also auto-sizes the iframe -->
 				<iframe
@@ -106,7 +117,7 @@ const formId = 'DiM1RLgmUaDmgQWSJZ6f';
 			<ul class="contact__cards">
 				{
 					flipCards.map(({ label, photo, alt, front, title, text, href }, i) => (
-						<li class="reveal" style={`--d: ${0.35 + i * 0.1}s`}>
+						<li class="reveal" style={`--d: ${0.3 + i * 0.08}s`}>
 							<div class="flip" tabindex="0" role="group" aria-label={label}>
 								<div class="flip__inner">
 									<div class="flip__front">
@@ -117,7 +128,7 @@ const formId = 'DiM1RLgmUaDmgQWSJZ6f';
 											widths={[400, 800]}
 											sizes="(max-width: 1024px) 92vw, 380px"
 										/>
-										<span class="flip__corner" aria-hidden="true" />
+										<span class="flip__tag" aria-hidden="true">{label}</span>
 										<h3 class="flip__front-title">
 											{front[0]} <span>{front[1]}</span>
 										</h3>
@@ -125,7 +136,7 @@ const formId = 'DiM1RLgmUaDmgQWSJZ6f';
 									<div class="flip__back">
 										<p class="flip__back-title">{title}</p>
 										<p class="flip__back-text">{text}</p>
-										<a href={href} class="flip__btn" target="_blank" rel="noopener">
+										<a href={href} class="btn btn--light btn--compact flip__btn" target="_blank" rel="noopener">
 											Learn More
 											<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
 										</a>

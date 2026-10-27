@@ -13,11 +13,17 @@ import reviews from '../assets/home/hero/reviews.webp';
 import reactivation from '../assets/home/hero/reactivation.webp';
 
 import accountingPhoto from '../assets/home/industries/accounting.jpg';
+import ndisPhoto from '../assets/home/industries/ndis.jpg';
 import realEstatePhoto from '../assets/home/industries/real-estate.jpg';
 import solarPhoto from '../assets/home/industries/solar.jpg';
 import dentalPhoto from '../assets/home/industries/dental.jpg';
 import wellnessPhoto from '../assets/home/industries/wellness.jpg';
 import tradesPhoto from '../assets/home/industries/trades.jpg';
+
+/* Homepage v2: the same content and flow as index.astro in a modern editorial
+   style. Inter throughout, white space and hairline rules, navy ink and the
+   five logo colours as small accents. Effects are ported (dependency-free)
+   from Magic UI, Aceternity UI and React Bits. */
 
 const arrow = '<path d="M5 12h14M12 5l7 7-7 7"/>';
 
@@ -33,9 +39,15 @@ const icons = {
 	phone: '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>',
 };
 
+const pad = (n: number) => String(n).padStart(2, '0');
+
+// The logo's five colour bars, used as small accents (index 0-4 maps to --brand-1 … --brand-5)
+const brand = (i: number) => `var(--brand-${(i % 5) + 1})`;
+
 /* ----- Hero ----- */
 
-const heroTitle = ['Stop Drowning', 'in Admin', 'Start Growing', 'Your Business'];
+// The first sentence blurs in word by word; the second, in a white-to-pink gradient, line by line
+const heroLines = ['Stop Drowning', 'in Admin.', 'Start Growing', 'Your Business.'];
 
 const heroStats = [
 	{ value: 15, suffix: '+', label: 'Hours Saved Weekly' },
@@ -101,37 +113,71 @@ const heroTrack = [...heroSlides, heroSlides[0]];
 
 const painTitle = ["You're Great at What You Do.", 'But the Business Side?', 'Exhausting.'];
 
+const painLead =
+	"Every day, brilliant business owners like you lose hours to tasks that never seem to end. It's exhausting, frustrating, and holds you back from real growth.";
+
 const painPoints = [
 	{
 		title: 'Leads Slipping Away',
+		art: 'calls',
 		desc: 'Another missed call. Another lead gone to your competitor who answered first.',
 		icon: icons.phone + '<path d="m23 1-6 6M17 1l6 6"/>',
 	},
 	{
 		title: 'Nights & Weekends',
+		art: 'clock',
 		desc: 'Catching up on admin when you should be resting.',
 		icon: '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>',
 	},
 	{
 		title: 'Firefighting',
+		art: 'tasks',
 		desc: 'Stuck in survival mode.',
 		icon: '<path d="M12 2c.5 2.5 2 4.5 2 6.5a4 4 0 0 1-8 0c0-2 1.5-4 2-6.5C7 5 4 8 4 12a8 8 0 0 0 16 0c0-4-3-7-8-10z"/>',
 	},
 	{
 		title: 'Money Left Behind',
+		art: 'bars',
 		desc: 'No follow-up system means lost revenue opportunities.',
 		icon: '<path d="M12 1v22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>',
 	},
 	{
 		title: 'Tool Overload',
+		art: 'apps',
 		desc: "10 apps that don't talk to each other. Nothing syncs properly.",
 		icon: '<polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/>',
 	},
 	{
 		title: 'Review Anxiety',
+		art: 'stars',
 		desc: 'Bad reviews linger.',
 		icon: '<path d="M11.05 2.93c.3-.92 1.6-.92 1.9 0l1.52 4.67a1 1 0 0 0 .95.7h4.91c.97 0 1.37 1.24.59 1.8l-3.97 2.9a1 1 0 0 0-.37 1.11l1.52 4.68c.3.92-.76 1.69-1.54 1.12l-3.98-2.89a1 1 0 0 0-1.17 0l-3.98 2.89c-.78.57-1.84-.2-1.54-1.12l1.52-4.68a1 1 0 0 0-.36-1.11L3.03 10.1c-.78-.57-.38-1.81.59-1.81h4.91a1 1 0 0 0 .95-.69z"/><path d="m4 4 16 16"/>',
 	},
+];
+
+// Small illustrations inside the pain cards
+const missedCalls = ['4:41 pm', '3:02 pm', '2:14 pm'];
+const urgentTasks = ['Chase unpaid invoice', 'Fix double booking', 'Call back lead'];
+const shrinkingBars = [92, 74, 60, 41, 24];
+const appTiles = [
+	{ icon: icons.calendar, x: 8, y: 14 },
+	{ icon: icons.chat, x: 30, y: 52 },
+	{ icon: icons.users, x: 50, y: 8 },
+	{ icon: icons.star, x: 70, y: 46 },
+	{ icon: icons.clock, x: 88, y: 12 },
+	{ icon: icons.mobile, x: 12, y: 78 },
+	{ icon: icons.chart, x: 58, y: 82 },
+	{ icon: icons.phone, x: 86, y: 76 },
+];
+// Dashed links between tiles (indexes into appTiles); the last one is broken
+const appLinks = [
+	[0, 1],
+	[1, 2],
+	[2, 3],
+	[3, 4],
+	[1, 5],
+	[3, 6],
+	[6, 7],
 ];
 
 /* ----- Daily struggle ----- */
@@ -176,13 +222,13 @@ const steps = [
 	},
 ];
 
-/* ----- Features ----- */
+/* ----- Features: each card gets a small live illustration (art) ----- */
 
 const dots = (y: number) => `<path d="M8 ${y}h.01M12 ${y}h.01M16 ${y}h.01"/>`;
 
 const features = [
 	{
-		variant: 'dark',
+		art: 'orbit',
 		label: 'Core Feature',
 		title: 'All-in-One CRM',
 		href: '/features#crm',
@@ -191,6 +237,7 @@ const features = [
 		icon: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/>',
 	},
 	{
+		art: 'chat',
 		label: 'Automation',
 		title: 'AI Chatbot',
 		href: '/features#chatbot',
@@ -198,6 +245,7 @@ const features = [
 		icon: icons.chat + dots(10),
 	},
 	{
+		art: 'calendar',
 		label: 'Scheduling',
 		title: 'Smart Booking',
 		href: '/features#smart-booking',
@@ -205,6 +253,7 @@ const features = [
 		icon: icons.calendar + dots(14),
 	},
 	{
+		art: 'phone',
 		label: 'On The Go',
 		title: 'Mobile App',
 		href: '/features#mobile-app',
@@ -212,6 +261,7 @@ const features = [
 		icon: icons.mobile,
 	},
 	{
+		art: 'bars',
 		label: 'Analytics',
 		title: 'AI Dashboard',
 		href: '/features#ai-dashboard',
@@ -219,6 +269,27 @@ const features = [
 		icon: icons.chart,
 	},
 ];
+
+// Icons circling the CRM card: [icon, ring, start angle]
+const orbitIcons: [string, 'inner' | 'outer', number][] = [
+	[icons.chat, 'inner', 0],
+	[icons.calendar, 'inner', 120],
+	[icons.star, 'inner', 240],
+	[icons.phone, 'outer', 30],
+	[icons.mobile, 'outer', 150],
+	[icons.chart, 'outer', 270],
+];
+
+// Illustrative copy for the chatbot card (decorative, hidden from assistive tech)
+const chatLines = [
+	{ from: 'them', text: 'Do you have anything Thursday?' },
+	{ from: 'bot', text: 'Yes, 10:30am is free. Shall I book it?' },
+	{ from: 'them', text: 'Perfect, thanks!' },
+];
+
+const bookedDays = [3, 5, 8, 9, 12, 16, 17, 19, 23, 24, 26, 30];
+const today = 18;
+const bars = [38, 52, 44, 68, 60, 82, 74, 96];
 
 /* ----- Stats band ----- */
 
@@ -262,44 +333,37 @@ const industries = [
 		title: 'LYD Accrual OS',
 		desc: 'Automate invoicing, reminders, and client workflows with smarter financial operations.',
 		photo: accountingPhoto,
-		icon: '<rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 6h8M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h4"/>',
 	},
 	{
 		title: 'LYD Assist',
 		desc: 'Run your NDIS business with participant management, rostering, and compliance in one suite.',
-		// No photo yet: the card shows a plain ink panel until one is added
-		photo: undefined,
-		icon: '<circle cx="12" cy="12" r="10"/><circle cx="12" cy="7" r="1"/><path d="M8 10h8M12 10v4l-2 4M12 14l2 4"/>',
+		// Unsplash photo Zx4ddAfk0Ck (Unsplash License)
+		photo: ndisPhoto,
 	},
 	{
 		title: 'LYD Solar',
 		desc: 'Convert inquiries to installations with automated quote delivery and smart scheduling.',
 		photo: solarPhoto,
-		icon: '<circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>',
 	},
 	{
 		title: 'Real Estate',
 		desc: 'Never miss a lead. Automate follow-ups and fill your calendar with qualified buyers.',
 		photo: realEstatePhoto,
-		icon: '<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/>',
 	},
 	{
 		title: 'Dental',
 		desc: 'Fill your chairs with smart appointment reminders and review management.',
 		photo: dentalPhoto,
-		icon: icons.clock,
 	},
 	{
 		title: 'Wellness',
 		desc: 'Nurture client relationships with personalized follow-ups and membership management.',
 		photo: wellnessPhoto,
-		icon: '<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>',
 	},
 	{
 		title: 'Trades',
 		desc: 'Streamline job requests, dispatch teams efficiently, and get paid faster.',
 		photo: tradesPhoto,
-		icon: '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
 	},
 ];
 ---
@@ -310,213 +374,297 @@ const industries = [
 	keywords="AI, automation, business growth platform, CRM"
 >
 	<!-- ============================================
-	     Hero
+	     Hero: word-by-word headline (Magic UI Text Animate)
 	     ============================================ -->
-	<section class="hero">
-		<div class="hero__container">
-			<div class="hero__content">
-				<p class="eyebrow hero__eyebrow reveal">AI-Powered Automation</p>
-
-				<h1
-					class="hero__title reveal-lines"
-					style="--d: 0.1s"
-					aria-label="Stop drowning in admin. Start growing your business."
-				>
-					{
-						heroTitle.map((text, i) => (
-							<span class="line" style={`--i: ${i}`} aria-hidden="true">
-								<span class="line__inner">{text}</span>
-							</span>
-						))
-					}
-				</h1>
-
-				<p class="hero__subtitle reveal" style="--d: 0.45s">
-					You didn't start your business to chase leads or spend weekends on paperwork. Let AI handle the busy work
-					while you focus on what you do best.
-				</p>
-
-				<div class="hero__buttons reveal" style="--d: 0.55s">
-					<a href="#three-steps" class="btn btn--accent btn--shine">
-						See How It Works
-						<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
-					</a>
-					<a href="/contact" class="btn btn--link">
-						Book Free Strategy Call
-						<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
-					</a>
-				</div>
-
-				<dl class="hero__stats reveal" style="--d: 0.65s">
-					{
-						heroStats.map(({ value, suffix, decimals = 0, label }) => (
-							<div class="hero__stat">
-								<dt>{label}</dt>
-								<dd data-count={value} data-decimals={decimals} data-suffix={suffix} data-count-delay="700">
-									{value.toFixed(decimals)}
-									{suffix}
-								</dd>
-							</div>
-						))
-					}
-				</dl>
-			</div>
-
-			<!-- Product carousel over a live mesh-gradient shader -->
-			<div class="hero__visual reveal" style="--d: 0.2s" data-pause-offscreen>
+	<section class="hero2">
+		<div class="container">
+			<div class="hero2__panel" data-pause-offscreen data-hero-panel>
 				<canvas class="shader" aria-hidden="true" data-shader></canvas>
+				<span class="hero2__lines" aria-hidden="true"></span>
+				<span class="hero2__spot" aria-hidden="true"></span>
+				<span class="beam" aria-hidden="true"></span>
 
-				<div
-					class="hero__frame"
-					role="region"
-					aria-roledescription="carousel"
-					aria-label="VCPility features"
-					data-hero-carousel
-				>
-					<div class="hero__track" data-hero-track>
-						{
-							heroTrack.map(({ image, title, subtitle, icon }, i) => {
-								const isClone = i === heroSlides.length;
-								return (
-									<div
-										class="hero__slide"
-										role="group"
-										aria-roledescription="slide"
-										aria-label={`${i + 1} of ${heroSlides.length}`}
-										aria-hidden={i === 0 ? undefined : 'true'}
-									>
-										<div class="hero__slide-image">
-											<Image
-												src={image}
-												alt={isClone ? '' : title}
-												width={960}
-												widths={[480, 960]}
-												sizes="(max-width: 1024px) 80vw, 520px"
-												loading="eager"
-												fetchpriority={i === 0 ? 'high' : 'low'}
-											/>
-										</div>
-										<div class="hero__caption">
-											<span class="hero__caption-icon">
-												<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icon} />
-											</span>
-											<span>
-												<span class="hero__caption-title">{title}</span>
-												<span class="hero__caption-subtitle">{subtitle}</span>
-											</span>
-										</div>
-									</div>
-								);
-							})
-						}
+				<div class="hero2__content">
+					<div class="hero2__copy">
+						<p class="pill reveal">
+							<span class="bars" aria-hidden="true"
+								><span></span><span></span><span></span><span></span><span></span></span
+							>
+							AI-Powered Automation
+						</p>
+
+						<h1 class="hero2__title" data-reveal aria-label="Stop drowning in admin. Start growing your business.">
+							{
+								heroLines.map((line, l) =>
+									l < 2 ? (
+										<span class="hero2__line" aria-hidden="true">
+											{line.split(' ').map((word, w) => (
+												<span class="word" style={`--i: ${l * 2 + w}`}>
+													{word}
+												</span>
+											))}
+										</span>
+									) : (
+										<span class="hero2__line hero2__line--glow" aria-hidden="true" style={`--i: ${l + 3}`}>
+											{line}
+										</span>
+									),
+								)
+							}
+						</h1>
+
+						<p class="hero2__subtitle reveal" style="--d: 0.25s">
+							You didn't start your business to chase leads or spend weekends on paperwork. Let AI handle the busy
+							work while you focus on what you do best.
+						</p>
+
+						<div class="hero2__buttons reveal" style="--d: 0.3s">
+							<a href="#three-steps" class="btn btn--light btn--shine" data-magnetic>
+								See How It Works
+								<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+							</a>
+							<a href="/contact" class="btn btn--link btn--on-ink">
+								Book Free Strategy Call
+								<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+							</a>
+						</div>
 					</div>
-					<span class="hero__progress" data-hero-progress></span>
+
+					<!-- Product carousel that tilts with the pointer, with the stats floating around it -->
+					<div class="hero2__stage" data-tilt>
+						<div class="hero2__tilt">
+							<div
+								class="hero2__frame reveal"
+								style="--d: 0.1s"
+								role="region"
+								aria-roledescription="carousel"
+								aria-label="VCPility features"
+								data-hero-carousel
+							>
+								<div class="hero2__track" data-hero-track>
+									{
+										heroTrack.map(({ image, title, subtitle, icon }, i) => {
+											const isClone = i === heroSlides.length;
+											return (
+												<div
+													class="hero2__slide"
+													role="group"
+													aria-roledescription="slide"
+													aria-label={`${(i % heroSlides.length) + 1} of ${heroSlides.length}`}
+													aria-hidden={i === 0 ? undefined : 'true'}
+												>
+													<div class="hero2__slide-image">
+														<Image
+															src={image}
+															alt={isClone ? '' : title}
+															width={960}
+															widths={[480, 960]}
+															sizes="(max-width: 1024px) 90vw, 600px"
+															loading={i === 0 ? 'eager' : 'lazy'}
+															fetchpriority={i === 0 ? 'high' : 'auto'}
+														/>
+													</div>
+													<div class="hero2__caption">
+														<span class="hero2__caption-icon">
+															<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icon} />
+														</span>
+														<span class="hero2__caption-text">
+															<span class="hero2__caption-title">{title}</span>
+															<span class="hero2__caption-subtitle">{subtitle}</span>
+														</span>
+														<span class="hero2__caption-num">
+															{pad((i % heroSlides.length) + 1)}/{pad(heroSlides.length)}
+														</span>
+													</div>
+												</div>
+											);
+										})
+									}
+								</div>
+								<span class="hero2__progress" data-hero-progress></span>
+							</div>
+
+							<dl class="hero2__chips">
+								{
+									heroStats.map(({ value, suffix, decimals = 0, label }, i) => (
+										<div
+											class="hero2__chip reveal"
+											style={`--d: ${0.45 + i * 0.12}s; --b: ${i * -2}s; --c: ${brand(i * 2)}`}
+										>
+											<dt>{label}</dt>
+											<dd class="ticker" data-ticker data-reveal style={`--d: ${0.5 + i * 0.12}s`}>
+												{value.toFixed(decimals)}
+												{suffix}
+											</dd>
+										</div>
+									))
+								}
+							</dl>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
 	</section>
 
-	<!-- ----- Capability marquee (rendered twice for a seamless -50% loop) ----- -->
-	<div class="marquee" aria-hidden="true" data-pause-offscreen>
-		<div class="marquee__track">
-			{[...heroSlides, ...heroSlides].map(({ title, icon }) => (
-				<span class="marquee__item">
-					<svg viewBox="0 0 24 24" set:html={icon} />
-					{title}
-				</span>
-			))}
+	<!-- ----- Capabilities: two rows that speed up and flip with scrolling (Magic UI Scroll Based Velocity).
+	     Each track is rendered twice so it can wrap seamlessly. ----- -->
+	<div class="velocity" aria-hidden="true">
+		<div class="velocity__row velocity__row--lg" data-velocity="1">
+			<div class="velocity__track">
+				{
+					[0, 1].map(() =>
+						heroSlides.map(({ title }, i) => (
+							<span class="velocity__item">
+								{title}
+								<span class="velocity__dot" style={`background: ${brand(i)}`} />
+							</span>
+						)),
+					)
+				}
+			</div>
+		</div>
+		<div class="velocity__row velocity__row--sm" data-velocity="-1">
+			<div class="velocity__track">
+				{
+					[0, 1].map(() =>
+						heroSlides.map(({ subtitle, icon }) => (
+							<span class="velocity__item">
+								<svg viewBox="0 0 24 24" set:html={icon} />
+								{subtitle}
+							</span>
+						)),
+					)
+				}
+			</div>
 		</div>
 	</div>
 
-	<script>
-		/* Hero: carousel steps through the slides, with a progress rule timing each one */
-		const carousel = document.querySelector<HTMLElement>('[data-hero-carousel]');
-		const track = carousel?.querySelector<HTMLElement>('[data-hero-track]');
-		const bar = carousel?.querySelector<HTMLElement>('[data-hero-progress]');
-
-		if (carousel && track && bar) {
-			const INTERVAL = 4000;
-			const slides = [...track.children] as HTMLElement[];
-			const last = slides.length - 1; // index of the clone of the first slide
-			let index = 0;
-			let inView = true;
-
-			const moveTo = (next: number) => {
-				index = next;
-				track.style.transform = `translateX(${-index * 100}%)`;
-				slides.forEach((slide, i) => slide.setAttribute('aria-hidden', String(i !== index)));
-			};
-
-			const progress = bar.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], {
-				duration: INTERVAL,
-				easing: 'linear',
-			});
-
-			const sync = () => {
-				if (!inView || document.hidden) progress.pause();
-				else progress.play();
-			};
-
-			progress.onfinish = () => {
-				// Sitting on the clone looks identical to slide one, so jump back without animating
-				if (index === last) {
-					track.style.transition = 'none';
-					moveTo(0);
-					void track.offsetWidth;
-					track.style.transition = '';
-				}
-				moveTo(index + 1);
-				progress.currentTime = 0;
-				sync();
-			};
-
-			document.addEventListener('visibilitychange', sync);
-			new IntersectionObserver(([entry]) => {
-				inView = entry.isIntersecting;
-				sync();
-			}).observe(carousel);
-		}
-	</script>
-
 	<!-- ============================================
-	     Pain points
+	     01 Pain points: lead reads in as you scroll (Magic UI Text Reveal)
 	     ============================================ -->
-	<section class="sec pain">
+	<section class="chapter pain">
 		<div class="container">
-			<header class="sec-head">
-				<div>
-					<p class="eyebrow reveal">Sound Familiar?</p>
-					<h2 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
-						{
-							painTitle.map((text, i) => (
-								<span class="line" style={`--i: ${i}`}>
-									<span class="line__inner">{text}</span>
-								</span>
-							))
-						}
-					</h2>
-				</div>
-				<p class="sec-head__lead reveal" style="--d: 0.3s">
-					Every day, brilliant business owners like you lose hours to tasks that never seem to end. It's exhausting,
-					frustrating, and holds you back from real growth.
-				</p>
-			</header>
+			<p class="label reveal"><span class="label__num">01</span>Sound Familiar?</p>
+
+			<h2 class="display reveal-lines" style="--d: 0.1s">
+				{
+					painTitle.map((text, i) => (
+						<span class="line" style={`--i: ${i}`}>
+							<span class:list={['line__inner', i === painTitle.length - 1 && 'muted']}>{text}</span>
+						</span>
+					))
+				}
+			</h2>
+
+			<p class="scroll-text" data-scroll-text>
+				{
+					painLead.split(' ').map((word, i, all) => (
+						<span class="w" style={`--w: ${(i / all.length).toFixed(3)}`}>
+							{word}{' '}
+						</span>
+					))
+				}
+			</p>
 
 			<ul class="pain__grid">
 				{
-					painPoints.map(({ title, desc, icon }, i) => (
-						<li class="pain__item reveal" style={`--d: ${(i % 3) * 0.08}s`}>
-							<span class="pain__icon">
-								<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icon} />
-							</span>
-							<h3>{title}</h3>
-							<p>{desc}</p>
+					painPoints.map(({ title, desc, icon, art }, i) => (
+						<li class:list={['pain__item', `pain__item--${art}`, 'reveal']} style={`--d: ${(i % 3) * 0.08}s`}>
+							<div class="pain__head">
+								<span class="pain__num">{pad(i + 1)}</span>
+								<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icon} data-draw />
+							</div>
+
+							<div class="pain__art" aria-hidden="true">
+								{art === 'calls' &&
+									missedCalls.map((time, k) => (
+										<div class="pa-call" style={`--k: ${k}`}>
+											<span class="pa-call__icon">
+												<svg viewBox="0 0 24 24" set:html={icons.phone + '<path d="m23 1-6 6M17 1l6 6"/>'} />
+											</span>
+											<span class="pa-call__text">
+												<strong>Missed call</strong>
+												<span>New enquiry · {time}</span>
+											</span>
+										</div>
+									))}
+
+								{art === 'clock' && (
+									<div class="pa-clock">
+										<strong>
+											11<span class="pa-clock__colon">:</span>48
+										</strong>
+										<span>pm · Saturday</span>
+									</div>
+								)}
+
+								{art === 'tasks' && (
+									<ul class="pa-tasks">
+										{urgentTasks.map((task, k) => (
+											<li style={`--k: ${k}`}>
+												<span class="pa-tasks__box"></span>
+												{task}
+												<span class="pa-tasks__tag">Urgent</span>
+											</li>
+										))}
+									</ul>
+								)}
+
+								{art === 'bars' && (
+									<div class="pa-bars">
+										{shrinkingBars.map((h, k) => (
+											<span style={`--h: ${h}%; --k: ${k}`} />
+										))}
+									</div>
+								)}
+
+								{art === 'apps' && (
+									<div class="pa-apps">
+										<svg class="pa-apps__links" viewBox="0 0 100 100" preserveAspectRatio="none">
+											{appLinks.map(([a, b], k) => (
+												<line
+													class:list={[k === appLinks.length - 1 && 'is-broken']}
+													x1={appTiles[a].x}
+													y1={appTiles[a].y}
+													x2={appTiles[b].x}
+													y2={appTiles[b].y}
+												/>
+											))}
+										</svg>
+										{appTiles.map(({ icon: tile, x, y }, k) => (
+											<span class="pa-apps__tile" style={`left: ${x}%; top: ${y}%; --c: ${brand(k)}; --k: ${k}`}>
+												<svg viewBox="0 0 24 24" set:html={tile} />
+											</span>
+										))}
+									</div>
+								)}
+
+								{art === 'stars' && (
+									<div class="pa-stars">
+										<strong>1.0</strong>
+										<span class="pa-stars__row">
+											{[0, 1, 2, 3, 4].map((k) => (
+												<svg viewBox="0 0 20 20" class:list={[k === 0 && 'is-on']} style={`--k: ${k}`}>
+													<path d={starPath} />
+												</svg>
+											))}
+										</span>
+										<span class="pa-stars__note">No reply yet</span>
+									</div>
+								)}
+							</div>
+
+							<div class="pain__body">
+								<h3>{title}</h3>
+								<p>{desc}</p>
+							</div>
 						</li>
 					))
 				}
 			</ul>
 
-			<div class="pain__cta reveal">
+			<div class="chapter__cta reveal">
 				<a href="/contact" class="btn btn--link">
 					See How We Fix This
 					<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
@@ -526,108 +674,124 @@ const industries = [
 	</section>
 
 	<!-- ============================================
-	     Daily struggle (Animated List)
+	     02 Daily struggle: figures beside the Animated List (Magic UI),
+	     on a Flickering Grid
 	     ============================================ -->
-	<section class="sec struggle">
-		<div class="container struggle__grid">
-			<div>
-				<p class="eyebrow reveal">The Daily Struggle</p>
-				<h2 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
-					<span class="line"><span class="line__inner">You're Drowning</span></span>
-					<span class="line" style="--i: 1"><span class="line__inner">in Busywork</span></span>
-				</h2>
-				<p class="sec-head__lead struggle__lead reveal" style="--d: 0.25s">
-					While you're juggling admin tasks, your competitors are closing deals. Every hour spent on manual work is
-					revenue slipping through your fingers.
-				</p>
+	<section class="chapter chapter--ink struggle" data-pause-offscreen>
+		<canvas class="struggle__grid-bg" aria-hidden="true" data-flicker-grid data-flicker-color="255, 255, 255"
+		></canvas>
 
-				<ul class="struggle__list">
-					{
-						struggles.map(({ title, desc, value, prefix = '', suffix = '', decimals = 0 }, i) => (
-							<li class="struggle__item reveal" style={`--d: ${0.1 + i * 0.06}s`}>
-								<span>
-									<strong>{title}</strong>
-									<span>{desc}</span>
-								</span>
-								<span
-									class="struggle__stat"
-									data-count={value}
-									data-decimals={decimals}
-									data-prefix={prefix}
-									data-suffix={suffix}
-								>
-									{prefix}
-									{value.toFixed(decimals)}
-									{suffix}
-								</span>
-							</li>
-						))
-					}
-				</ul>
+		<div class="container">
+			<p class="label reveal"><span class="label__num">02</span>The Daily Struggle</p>
 
-				<div class="struggle__cta reveal">
-					<a href="/features" class="btn btn--link">
-						View All Features
-						<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
-					</a>
+			<div class="struggle__layout">
+				<div>
+					<h2 class="display reveal-lines" style="--d: 0.1s">
+						<span class="line"><span class="line__inner">You're Drowning</span></span>
+						<span class="line" style="--i: 1"><span class="line__inner muted">in Busywork</span></span>
+					</h2>
+					<p class="lead reveal" style="--d: 0.25s">
+						While you're juggling admin tasks, your competitors are closing deals. Every hour spent on manual work
+						is revenue slipping through your fingers.
+					</p>
+
+					<ul class="ledger">
+						{
+							struggles.map(({ title, desc, value, prefix = '', suffix = '', decimals = 0 }, i) => (
+								<li class="ledger__row reveal" style={`--d: ${0.1 + i * 0.06}s`}>
+									<span class="ledger__text">
+										<strong>{title}</strong>
+										<span>{desc}</span>
+									</span>
+									<span class="ledger__stat ticker" data-ticker data-reveal style={`--d: ${0.2 + i * 0.08}s`}>
+										{prefix}
+										{value.toFixed(decimals)}
+										{suffix}
+									</span>
+								</li>
+							))
+						}
+					</ul>
+
+					<div class="chapter__cta reveal">
+						<a href="/features" class="btn btn--link btn--on-ink">
+							View All Features
+							<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+						</a>
+					</div>
 				</div>
-			</div>
 
-			<div class="alist reveal" style="--d: 0.2s" aria-hidden="true" data-pause-offscreen>
-				<div class="alist__bar">
-					<span class="alist__live"></span>
-					Your day without automation
-					<span class="alist__time">Today</span>
+				<div class="phone reveal" style="--d: 0.1s" aria-hidden="true">
+					<div class="phone__screen">
+						<div class="phone__status">
+							<span>9:41</span>
+							<span class="phone__island"></span>
+							<span class="phone__icons">
+								<svg viewBox="0 0 18 12"><rect x="0" y="8" width="3" height="4" rx="1" /><rect x="5" y="5.5" width="3" height="6.5" rx="1" /><rect x="10" y="3" width="3" height="9" rx="1" /><rect x="15" y="0" width="3" height="12" rx="1" /></svg>
+								<span class="phone__battery"></span>
+							</span>
+						</div>
+
+						<div class="phone__clock">
+							<span>Monday</span>
+							<strong>9:41</strong>
+						</div>
+
+						<div class="alist__bar">
+							<span class="alist__live"></span>
+							Your day without automation
+							<span class="alist__time">Today</span>
+						</div>
+						<ul class="alist__list" data-alist>
+							{
+								notifications.map(({ count, title, meta, icon }) => (
+									<li class="alist__item">
+										<span class="alist__icon">
+											<svg viewBox="0 0 24 24" set:html={icon} />
+										</span>
+										<span class="alist__text">
+											<strong>{title}</strong>
+											<span>{meta}</span>
+										</span>
+										<span class="alist__count">{count}</span>
+									</li>
+								))
+							}
+						</ul>
+
+						<span class="phone__home"></span>
+					</div>
 				</div>
-				<ul class="alist__list" data-alist>
-					{
-						notifications.map(({ count, title, meta, icon }) => (
-							<li class="alist__item">
-								<span class="alist__icon">
-									<svg viewBox="0 0 24 24" set:html={icon} />
-								</span>
-								<span class="alist__text">
-									<strong>{title}</strong>
-									<span>{meta}</span>
-								</span>
-								<span class="alist__count">{count}</span>
-							</li>
-						))
-					}
-				</ul>
-				<div class="alist__fade"></div>
 			</div>
 		</div>
 	</section>
 
 	<!-- ============================================
-	     How it works (Animated Beam)
+	     03 How it works: sticky heading beside a Tracing Beam (Aceternity UI)
 	     ============================================ -->
-	<section class="sec hiw" id="three-steps">
-		<div class="container">
-			<header class="sec-head">
-				<div>
-					<p class="eyebrow reveal">Simple as 1-2-3</p>
-					<h2 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
-						<span class="line"><span class="line__inner">Get Your Time Back</span></span>
-						<span class="line" style="--i: 1"><span class="line__inner">in 3 Steps</span></span>
-					</h2>
-				</div>
-				<p class="sec-head__lead reveal" style="--d: 0.25s">
-					No tech skills needed. We handle the setup. You enjoy the results.
-				</p>
+	<section class="chapter hiw" id="three-steps">
+		<div class="container hiw__layout">
+			<header class="hiw__head">
+				<p class="label reveal"><span class="label__num">03</span>Simple as 1-2-3</p>
+				<h2 class="display reveal-lines" style="--d: 0.1s">
+					<span class="line"><span class="line__inner">Get Your Time Back</span></span>
+					<span class="line" style="--i: 1"><span class="line__inner muted">in 3 Steps</span></span>
+				</h2>
+				<p class="lead reveal" style="--d: 0.25s">No tech skills needed. We handle the setup. You enjoy the results.</p>
 			</header>
 
-			<ol class="hiw__steps" data-reveal data-pause-offscreen>
-				<li class="hiw__beam" aria-hidden="true"></li>
+			<ol class="hiw__steps" data-trace>
+				<li class="hiw__beam" aria-hidden="true"><span></span></li>
 				{
 					steps.map(({ title, desc }, i) => (
-						<li class="hiw__step" style={`--i: ${i}`}>
-							<span class="hiw__node" aria-hidden="true">
-								{String(i + 1).padStart(2, '0')}
+						<li class="hiw__step" data-trace-step>
+							<span class="hiw__num" aria-hidden="true">
+								{pad(i + 1)}
 							</span>
-							<h3>{title}</h3>
-							<p>{desc}</p>
+							<div class="hiw__body">
+								<h3>{title}</h3>
+								<p>{desc}</p>
+							</div>
 						</li>
 					))
 				}
@@ -636,48 +800,121 @@ const industries = [
 	</section>
 
 	<!-- ============================================
-	     Features (Bento grid + Magic Card spotlight)
+	     04 Features: Bento Grid with Magic Card spotlight, Orbiting Circles
+	     and small animated illustrations (Magic UI)
 	     ============================================ -->
-	<section class="sec features">
+	<section class="chapter features">
 		<div class="container">
-			<header class="sec-head">
-				<div>
-					<p class="eyebrow reveal">Platform Features</p>
-					<h2 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
-						<span class="line"><span class="line__inner">Everything You Need,</span></span>
-						<span class="line" style="--i: 1"><span class="line__inner">One Platform</span></span>
-					</h2>
-				</div>
-				<div class="sec-head__lead reveal" style="--d: 0.25s">
+			<p class="label reveal"><span class="label__num">04</span>Platform Features</p>
+
+			<div class="chapter__head">
+				<h2 class="display reveal-lines" style="--d: 0.1s">
+					<span class="line"><span class="line__inner">Everything You Need,</span></span>
+					<span class="line" style="--i: 1"><span class="line__inner muted">One Platform</span></span>
+				</h2>
+				<div class="lead reveal" style="--d: 0.25s">
 					<p><strong>20+ business management tools</strong>, all in one easy-to-use platform.</p>
 					<a href="/features" class="btn btn--link">
 						View All Features
 						<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
 					</a>
 				</div>
-			</header>
+			</div>
 
-			<ul class="fbento">
+			<ul class="bento" data-pause-offscreen>
 				{
-					features.map(({ variant, label, title, href, desc, list, icon }, i) => (
-						<li class={`fbento__item fbento__item--${i + 1} reveal`} style={`--d: ${i * 0.06}s`}>
-							<a href={href} class:list={['mcard', variant === 'dark' && 'mcard--dark']} data-spotlight>
-								<span class="mcard__icon">
-									<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icon} />
+					features.map(({ art, label, title, href, desc, list, icon }, i) => (
+						<li class={`bento__item bento__item--${art} reveal`} style={`--d: ${i * 0.06}s`}>
+							<a href={href} class="card" data-spotlight>
+								{art === 'orbit' && <span class="beam" aria-hidden="true" />}
+
+								<span class="card__art" aria-hidden="true">
+									{art === 'orbit' && (
+										<span class="orbit">
+											<span class="orbit__ring orbit__ring--inner" />
+											<span class="orbit__ring orbit__ring--outer" />
+											<span class="orbit__hub">
+												<svg viewBox="0 0 24 24" set:html={icons.users} />
+											</span>
+											{orbitIcons.map(([svg, ring, angle], n) => (
+												<span
+													class={`orbit__item orbit__item--${ring}`}
+													style={`--a: ${angle}deg; --c: ${brand(n)}`}
+												>
+													<svg viewBox="0 0 24 24" set:html={svg} />
+												</span>
+											))}
+										</span>
+									)}
+									{art === 'chat' && (
+										<span class="chat">
+											{chatLines.map(({ from, text }, n) => (
+												<span class={`chat__msg chat__msg--${from}`} style={`--n: ${n}`}>
+													{text}
+												</span>
+											))}
+											<span class="chat__typing">
+												<span />
+												<span />
+												<span />
+											</span>
+										</span>
+									)}
+									{art === 'calendar' && (
+										<span class="cal">
+											{Array.from({ length: 35 }, (_, d) => (
+												<span
+													class:list={[
+														'cal__day',
+														bookedDays.includes(d) && 'is-booked',
+														d === today && 'is-today',
+													]}
+													style={`--n: ${bookedDays.indexOf(d)}`}
+												/>
+											))}
+										</span>
+									)}
+									{art === 'phone' && (
+										<span class="handset">
+											<span class="handset__notch" />
+											{[0, 1, 2].map((n) => (
+												<span class="handset__note" style={`--n: ${n}; --c: ${brand(n + 1)}`} />
+											))}
+										</span>
+									)}
+									{art === 'bars' && (
+										<span class="chart">
+											{bars.map((h, n) => (
+												<span
+													class:list={['chart__bar', n === bars.length - 1 && 'is-peak']}
+													style={`--h: ${h}%; --n: ${n}`}
+												/>
+											))}
+											<svg class="chart__line" viewBox="0 0 100 40" preserveAspectRatio="none">
+												<path d="M0 34 L14 28 L28 31 L42 20 L57 23 L71 12 L85 15 L100 4" pathLength="1" />
+											</svg>
+										</span>
+									)}
 								</span>
-								<span class="mcard__label">{label}</span>
-								<h3 class="mcard__title">{title}</h3>
-								<p class="mcard__desc">{desc}</p>
-								{list && (
-									<ul class="mcard__list">
-										{list.map((item) => (
-											<li>{item}</li>
-										))}
-									</ul>
-								)}
-								<span class="mcard__more">
-									Learn more
-									<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+
+								<span class="card__body">
+									<span class="card__label">
+										<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icon} />
+										{label}
+									</span>
+									<h3 class="card__title">{title}</h3>
+									<p class="card__desc">{desc}</p>
+									{list && (
+										<ul class="card__list">
+											{list.map((item) => (
+												<li>{item}</li>
+											))}
+										</ul>
+									)}
+									<span class="card__more">
+										Learn more
+										<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+									</span>
 								</span>
 							</a>
 						</li>
@@ -688,19 +925,19 @@ const industries = [
 	</section>
 
 	<!-- ============================================
-	     Stats band
+	     Stats band: rolling digits (Magic UI Number Ticker)
 	     ============================================ -->
-	<section class="stats">
+	<section class="band">
 		<div class="container">
-			<dl class="stats__grid">
+			<dl class="band__grid">
 				{
 					bandStats.map(({ value, suffix = '', text, label }, i) => (
-						<div class="stats__item reveal" style={`--d: ${i * 0.08}s`}>
+						<div class="band__item reveal" style={`--d: ${i * 0.08}s; --c: ${brand(i)}`}>
 							<dt>{label}</dt>
 							{value === undefined ? (
 								<dd>{text}</dd>
 							) : (
-								<dd data-count={value} data-suffix={suffix} data-count-delay={i * 120}>
+								<dd class="ticker" data-ticker data-reveal style={`--d: ${i * 0.12}s`}>
 									{value}
 									{suffix}
 								</dd>
@@ -713,32 +950,31 @@ const industries = [
 	</section>
 
 	<!-- ============================================
-	     Testimonials
+	     05 Testimonials: the lead quote writes itself in (Aceternity Text Generate Effect)
 	     ============================================ -->
-	<section class="sec testimonials">
+	<section class="chapter quotes-sec">
 		<div class="container">
-			<header class="sec-head">
-				<div>
-					<p class="eyebrow reveal">Real Results</p>
-					<h2 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
-						<span class="line"><span class="line__inner">Businesses Like Yours</span></span>
-						<span class="line" style="--i: 1"><span class="line__inner">Are Thriving</span></span>
-					</h2>
-				</div>
-				<div class="sec-head__lead reveal" style="--d: 0.25s">
+			<p class="label reveal"><span class="label__num">05</span>Real Results</p>
+
+			<div class="chapter__head">
+				<h2 class="display reveal-lines" style="--d: 0.1s">
+					<span class="line"><span class="line__inner">Businesses Like Yours</span></span>
+					<span class="line" style="--i: 1"><span class="line__inner muted">Are Thriving</span></span>
+				</h2>
+				<div class="lead reveal" style="--d: 0.25s">
 					<p>Don't just take our word for it. Here's what our clients say.</p>
 					<a href="/contact" class="btn btn--link">
 						Get Results Like These
 						<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
 					</a>
 				</div>
-			</header>
+			</div>
 
 			<ul class="quotes">
 				{
 					testimonials.map(({ quote, name, role }, i) => (
-						<li class="reveal" style={`--d: ${i * 0.1}s`}>
-							<figure class="quote" data-spotlight>
+						<li class:list={['reveal', i === 0 && 'quotes__lead']} style={`--d: ${i * 0.1}s`}>
+							<figure class="quote">
 								<span class="quote__stars" role="img" aria-label="Rated 5 out of 5">
 									{Array.from({ length: 5 }, () => (
 										<svg viewBox="0 0 20 20" aria-hidden="true">
@@ -747,13 +983,21 @@ const industries = [
 									))}
 								</span>
 								<blockquote>
-									<p>{quote}</p>
+									<p>
+										{i === 0
+											? quote.split(' ').map((word, w) => (
+													<span class="qw" style={`--w: ${w}`}>
+														{word}{' '}
+													</span>
+												))
+											: quote}
+									</p>
 								</blockquote>
 								<figcaption>
 									<span class="quote__avatar" aria-hidden="true">
 										{name.replace(/^Dr\.\s*/, '')[0]}
 									</span>
-									<span>
+									<span class="quote__who">
 										<strong>{name}</strong>
 										<span>{role}</span>
 									</span>
@@ -767,56 +1011,47 @@ const industries = [
 	</section>
 
 	<!-- ============================================
-	     Industries (hover list with image preview)
+	     06 Industries: an index whose photo follows the cursor, titles
+	     scrambling in on hover (Magic UI Hyper Text)
 	     ============================================ -->
-	<section class="sec industries" id="built-for-you">
+	<section class="chapter industries" id="built-for-you">
 		<div class="container">
-			<header class="sec-head">
-				<div>
-					<p class="eyebrow reveal">Built For You</p>
-					<h2 class="section-title section-title--sm reveal-lines" style="--d: 0.1s">
-						<span class="line"><span class="line__inner">We Speak Your</span></span>
-						<span class="line" style="--i: 1"><span class="line__inner">Industry's Language</span></span>
-					</h2>
-				</div>
-				<p class="sec-head__lead reveal" style="--d: 0.25s">
-					Custom solutions designed for how your business actually works.
-				</p>
-			</header>
+			<p class="label reveal"><span class="label__num">06</span>Built For You</p>
 
-			<div class="ind" data-ind>
-				<ol class="ind__list">
+			<div class="chapter__head">
+				<h2 class="display reveal-lines" style="--d: 0.1s">
+					<span class="line"><span class="line__inner">We Speak Your</span></span>
+					<span class="line" style="--i: 1"><span class="line__inner muted">Industry's Language</span></span>
+				</h2>
+				<p class="lead reveal" style="--d: 0.25s">Custom solutions designed for how your business actually works.</p>
+			</div>
+
+			<div class="index" data-index>
+				<ol class="index__list">
 					{
-						industries.map(({ title, desc, icon }, i) => (
+						industries.map(({ title, desc, photo }, i) => (
 							<li class="reveal" style={`--d: ${i * 0.05}s`}>
-								<a href="/contact" class:list={['ind__item', i === 0 && 'is-active']} data-ind-item={i}>
-									<span class="ind__num">{String(i + 1).padStart(2, '0')}</span>
-									<span class="ind__body">
-										<span class="ind__title">
-											<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icon} />
-											{title}
-										</span>
-										<span class="ind__desc"><span>{desc}</span></span>
+								<a href="/contact" class="index__row" data-index-item={i} aria-label={`${title}: ${desc}`}>
+									<span class="index__num">{pad(i + 1)}</span>
+									<span class="index__thumb">
+										<Image src={photo} alt="" width={160} widths={[80, 160]} sizes="64px" loading="lazy" />
 									</span>
-									<svg class="ind__arrow" viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+									<span class="index__title" data-scramble>
+										{title}
+									</span>
+									<span class="index__desc">{desc}</span>
+									<svg class="index__arrow" viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
 								</a>
 							</li>
 						))
 					}
 				</ol>
 
-				<div class="ind__media reveal" style="--d: 0.15s" aria-hidden="true">
+				<div class="index__preview" aria-hidden="true" data-index-preview>
 					{
-						industries.map(({ title, photo, icon }, i) => (
-							<figure class:list={['ind__figure', i === 0 && 'is-active']} data-ind-media={i}>
-								{photo ? (
-									<Image src={photo} alt="" width={1200} widths={[640, 1200]} sizes="(max-width: 1024px) 0px, 45vw" />
-								) : (
-									<span class="ind__placeholder">
-										<svg viewBox="0 0 24 24" set:html={icon} />
-									</span>
-								)}
-								<figcaption>{title}</figcaption>
+						industries.map(({ photo }, i) => (
+							<figure class="index__figure" data-index-media={i}>
+								<Image src={photo} alt="" width={640} widths={[400, 640]} sizes="320px" loading="lazy" decoding="async" />
 							</figure>
 						))
 					}
@@ -826,91 +1061,188 @@ const industries = [
 	</section>
 
 	<!-- ============================================
-	     Closing CTA (same shader as the hero)
+	     Closing CTA: shader panel with Ripple rings (Magic UI)
 	     ============================================ -->
-	<section class="cta" data-pause-offscreen>
-		<canvas class="shader" aria-hidden="true" data-shader></canvas>
-		<div class="container cta__inner reveal">
-			<h2 class="section-title section-title--sm">Ready to Get Your Time Back?</h2>
-			<p>Book a free strategy call and see what VCPility can take off your plate.</p>
-			<div class="cta__buttons">
-				<a href="/contact" class="btn btn--light btn--shine">
-					Book Free Strategy Call
-					<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
-				</a>
-				<a href="/plans" class="btn btn--link cta__link">
-					View Plans
-					<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
-				</a>
+	<section class="finale">
+		<div class="container">
+			<div class="finale__panel" data-pause-offscreen>
+				<canvas class="shader" aria-hidden="true" data-shader></canvas>
+				<span class="ripple" aria-hidden="true">
+					{[0, 1, 2, 3, 4].map((n) => <span style={`--n: ${n}`} />)}
+				</span>
+
+				<div class="finale__inner">
+					<span class="bars bars--light reveal" aria-hidden="true"
+						><span></span><span></span><span></span><span></span><span></span></span
+					>
+					<h2 class="finale__title reveal-lines" style="--d: 0.1s">
+						<span class="line"><span class="line__inner">Ready to Get Your</span></span>
+						<span class="line" style="--i: 1"><span class="line__inner">Time Back?</span></span>
+					</h2>
+					<p class="finale__text reveal" style="--d: 0.3s">
+						Book a free strategy call and see what VCPility can take off your plate.
+					</p>
+					<div class="finale__buttons reveal" style="--d: 0.4s">
+						<a href="/contact" class="btn btn--light btn--shine" data-magnetic>
+							Book Free Strategy Call
+							<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+						</a>
+						<a href="/plans" class="btn btn--link btn--on-ink">
+							View Plans
+							<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+						</a>
+					</div>
+				</div>
 			</div>
 		</div>
 	</section>
 </Layout>
 
 <script>
-	import { initShaders } from '../scripts/shader';
-
+	// Shaders, the flicker grid, tickers, icon drawing, velocity rows, text reveal, the tracing
+	// beam, spotlight cards, magnetic buttons and scramble titles all run from scripts/effects.ts
 	const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+	const finePointer = matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-	initShaders();
+	/* ----- Hero carousel: steps through the slides, a progress rule timing each one ----- */
+	const carousel = document.querySelector<HTMLElement>('[data-hero-carousel]');
+	const track = carousel?.querySelector<HTMLElement>('[data-hero-track]');
+	const bar = carousel?.querySelector<HTMLElement>('[data-hero-progress]');
 
-	/* ----- Animated List (after Magic UI) -----
-	   Notifications drop in at the top one by one and the oldest falls off the
-	   bottom, looping. Without JS (or with reduced motion) the full list shows. */
+	if (carousel && track && bar) {
+		const INTERVAL = 4500;
+		const slides = [...track.children] as HTMLElement[];
+		const last = slides.length - 1; // index of the clone of the first slide
+		let index = 0;
+		let inView = true;
+
+		// Slides after the first are lazy; start loading the one after the current slide early
+		const warm = (i: number) => {
+			const img = slides[i % slides.length]?.querySelector('img');
+			if (img) img.loading = 'eager';
+		};
+		warm(1);
+
+		const moveTo = (next: number) => {
+			index = next;
+			warm(index + 1);
+			track.style.transform = `translateX(${-index * 100}%)`;
+			slides.forEach((slide, i) => slide.setAttribute('aria-hidden', String(i !== index)));
+		};
+
+		const progress = bar.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], {
+			duration: INTERVAL,
+			easing: 'linear',
+		});
+
+		const sync = () => {
+			if (!inView || document.hidden) progress.pause();
+			else progress.play();
+		};
+
+		progress.onfinish = () => {
+			// Sitting on the clone looks identical to slide one, so jump back without animating
+			if (index === last) {
+				track.style.transition = 'none';
+				moveTo(0);
+				void track.offsetWidth;
+				track.style.transition = '';
+			}
+			moveTo(index + 1);
+			progress.currentTime = 0;
+			sync();
+		};
+
+		document.addEventListener('visibilitychange', sync);
+		new IntersectionObserver(([entry]) => {
+			inView = entry.isIntersecting;
+			sync();
+		}).observe(carousel);
+	}
+
+	/* ----- Hero: a spotlight follows the pointer across the panel, and the stage tilts towards it ----- */
+	const heroPanel = document.querySelector<HTMLElement>('[data-hero-panel]');
+	const stage = heroPanel?.querySelector<HTMLElement>('[data-tilt]');
+
+	if (heroPanel && stage && !reduceMotion && finePointer) {
+		heroPanel.addEventListener('pointermove', (e) => {
+			const panelBox = heroPanel.getBoundingClientRect();
+			heroPanel.style.setProperty('--sx', `${e.clientX - panelBox.left}px`);
+			heroPanel.style.setProperty('--sy', `${e.clientY - panelBox.top}px`);
+
+			const box = stage.getBoundingClientRect();
+			const x = (e.clientX - box.left) / box.width - 0.5;
+			const y = (e.clientY - box.top) / box.height - 0.5;
+			stage.style.setProperty('--ry', `${(x * 10).toFixed(2)}deg`);
+			stage.style.setProperty('--rx', `${(y * -8).toFixed(2)}deg`);
+		});
+		heroPanel.addEventListener('pointerleave', () => {
+			stage.style.setProperty('--rx', '0deg');
+			stage.style.setProperty('--ry', '0deg');
+		});
+	}
+
+	/* ----- Animated List (after Magic UI): the full list shows straight away, then the bottom
+	   notification drops back in at the top, looping, while the list is on screen. ----- */
 	const alist = document.querySelector<HTMLElement>('[data-alist]');
 
 	if (alist && !reduceMotion) {
-		const templates = [...alist.children] as HTMLElement[];
-		const VISIBLE = 5;
-		let next = 0;
 		let timer = 0;
 
-		alist.replaceChildren();
-		alist.classList.add('is-animated');
-
-		const push = () => {
-			const item = templates[next % templates.length].cloneNode(true) as HTMLElement;
-			next++;
+		const rotate = () => {
+			const last = alist.lastElementChild;
+			if (!last) return;
+			const item = last.cloneNode(true) as HTMLElement;
+			last.remove();
 			item.classList.add('is-entering');
 			alist.prepend(item);
 			requestAnimationFrame(() => requestAnimationFrame(() => item.classList.remove('is-entering')));
-			while (alist.children.length > VISIBLE) alist.lastElementChild?.remove();
 		};
 
 		new IntersectionObserver(([entry]) => {
 			clearInterval(timer);
-			if (!entry.isIntersecting) return;
-			if (!alist.children.length) for (let k = 0; k < 3; k++) push();
-			timer = window.setInterval(push, 1800);
+			if (entry.isIntersecting) timer = window.setInterval(rotate, 2000);
 		}).observe(alist);
 	}
 
-	/* ----- Magic Card spotlight: a soft glow and border light that follow the pointer ----- */
-	if (!reduceMotion) {
-		document.querySelectorAll<HTMLElement>('[data-spotlight]').forEach((card) => {
-			card.addEventListener('pointermove', (e) => {
-				const box = card.getBoundingClientRect();
-				card.style.setProperty('--mx', `${e.clientX - box.left}px`);
-				card.style.setProperty('--my', `${e.clientY - box.top}px`);
-			});
-		});
-	}
+	/* ----- Industries: on hover-capable screens the row's photo trails the cursor ----- */
+	const index = document.querySelector<HTMLElement>('[data-index]');
+	const preview = index?.querySelector<HTMLElement>('[data-index-preview]');
 
-	/* ----- Industries: hovering or focusing a row swaps the preview image ----- */
-	const ind = document.querySelector<HTMLElement>('[data-ind]');
+	if (index && preview && finePointer) {
+		const figures = [...preview.querySelectorAll<HTMLElement>('[data-index-media]')];
+		const target = { x: 0, y: 0 };
+		const pos = { x: 0, y: 0 };
+		let frame = 0;
 
-	if (ind) {
-		const items = [...ind.querySelectorAll<HTMLElement>('[data-ind-item]')];
-		const figures = [...ind.querySelectorAll<HTMLElement>('[data-ind-media]')];
-
-		const activate = (i: number) => {
-			items.forEach((el, n) => el.classList.toggle('is-active', n === i));
-			figures.forEach((el, n) => el.classList.toggle('is-active', n === i));
+		const follow = () => {
+			const ease = reduceMotion ? 1 : 0.14;
+			pos.x += (target.x - pos.x) * ease;
+			pos.y += (target.y - pos.y) * ease;
+			preview.style.transform = `translate3d(${pos.x}px, ${pos.y}px, 0) rotate(${(target.x - pos.x) * 0.04}deg)`;
+			if (Math.abs(target.x - pos.x) + Math.abs(target.y - pos.y) > 0.5) frame = requestAnimationFrame(follow);
+			else frame = 0;
 		};
 
-		items.forEach((item, i) => {
-			item.addEventListener('pointerenter', () => activate(i));
-			item.addEventListener('focus', () => activate(i));
+		index.addEventListener('pointermove', (e) => {
+			const box = index.getBoundingClientRect();
+			target.x = e.clientX - box.left;
+			target.y = e.clientY - box.top;
+			if (!preview.classList.contains('is-shown')) {
+				pos.x = target.x;
+				pos.y = target.y;
+			}
+			if (!frame) frame = requestAnimationFrame(follow);
 		});
+
+		index.querySelectorAll<HTMLElement>('[data-index-item]').forEach((row) => {
+			row.addEventListener('pointerenter', () => {
+				const i = Number(row.dataset.indexItem);
+				figures.forEach((fig, n) => fig.classList.toggle('is-active', n === i));
+				preview.classList.add('is-shown');
+			});
+		});
+
+		index.addEventListener('pointerleave', () => preview.classList.remove('is-shown'));
 	}
 </script>

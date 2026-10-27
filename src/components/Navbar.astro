@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import logo from '../assets/logo.png';
+import logoLight from '../assets/logo-light.png';
 import '../styles/components/navbar.css';
 
 const links = [
@@ -22,7 +23,9 @@ const pad = (n: number) => String(n).padStart(2, '0');
 <header class="nav" data-nav>
 	<div class="nav__bar">
 		<a href="/" class="nav__logo">
-			<Image src={logo} alt="VCPility" height={100} loading="eager" />
+			<Image src={logo} alt="VCPility" height={100} loading="eager" class="nav__logo-dark" />
+			<!-- Swapped in over the navy mobile panel -->
+			<Image src={logoLight} alt="" height={100} loading="eager" class="nav__logo-light" />
 		</a>
 
 		<div class="nav__right">
@@ -60,7 +63,7 @@ const pad = (n: number) => String(n).padStart(2, '0');
 
 	<div class="nav__panel" id="nav-panel" inert>
 		<nav aria-label="Mobile">
-			<ul>
+			<ul class="nav__panel-list">
 				{
 					links.map(({ href, label }, i) => (
 						<li class="nav__panel-item" style={`--i: ${i}`}>
