@@ -5,112 +5,61 @@
    ============================================ */
 
 /* ============================================
-   Hero: a full-height shader panel. Copy on the left; on the right the product
-   carousel tilts with the pointer, ringed by floating stat cards.
+   Hero: white and editorial. Copy, buttons and a stat row on the left; on the
+   right the product carousel sits on a light panel and tilts with the pointer.
    ============================================ */
 
-.hero2 {
-	padding: 92px 0 clamp(24px, 3vw, 40px);
-}
-
-.hero2__panel {
-	--sx: 70%;
-	--sy: 30%;
-	position: relative;
-	display: flex;
+.hero {
+	display: grid;
 	align-items: center;
-	min-height: clamp(680px, calc(100svh - 116px), 920px);
-	padding: clamp(40px, 5vw, 88px) clamp(28px, 5vw, 88px);
-	overflow: hidden;
-	isolation: isolate;
-	color: var(--color-white);
-	border-radius: calc(var(--radius) * 1.4);
-	background:
-		radial-gradient(circle at 70% 75%, rgb(224 3 72 / 0.7), transparent 55%),
-		radial-gradient(circle at 25% 30%, rgb(57 4 78 / 0.9), transparent 60%),
-		#100d12;
+	overflow-x: clip;
+	border-bottom: 1px solid var(--rule);
+	min-height: clamp(720px, 100svh, 980px);
+	padding: clamp(112px, 8.5vw, 136px) 0 clamp(48px, 5vw, 80px);
 }
 
-/* Darken the left so the copy always reads, whatever the shader is doing */
-.hero2__panel::before {
-	content: '';
-	position: absolute;
-	inset: 0;
-	z-index: 0;
-	background: linear-gradient(90deg, rgb(10 8 14 / 0.72) 0%, rgb(10 8 14 / 0.35) 45%, transparent 75%);
-	pointer-events: none;
-}
-
-/* Fine grid, fading out towards the edges */
-.hero2__lines {
-	position: absolute;
-	inset: 0;
-	z-index: 0;
-	background-image:
-		linear-gradient(rgb(255 255 255 / 0.06) 1px, transparent 1px),
-		linear-gradient(90deg, rgb(255 255 255 / 0.06) 1px, transparent 1px);
-	background-size: 64px 64px;
-	-webkit-mask-image: radial-gradient(ellipse 70% 70% at 70% 45%, #000, transparent 75%);
-	mask-image: radial-gradient(ellipse 70% 70% at 70% 45%, #000, transparent 75%);
-	pointer-events: none;
-}
-
-/* Spotlight (after Aceternity UI): a soft light that follows the pointer */
-.hero2__spot {
-	position: absolute;
-	inset: 0;
-	z-index: 0;
-	background: radial-gradient(520px circle at var(--sx) var(--sy), rgb(255 255 255 / 0.12), transparent 60%);
-	pointer-events: none;
-	transition: opacity 0.6s ease;
-}
-
-.hero2__content {
-	position: relative;
-	z-index: 1;
+.hero__grid {
 	display: grid;
 	grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
 	align-items: center;
 	gap: clamp(40px, 5vw, 96px);
-	width: 100%;
 }
 
 /* ----- Copy ----- */
 
-.pill {
+/* Badge: a hairline capsule with the logo bars */
+.hero__badge {
 	display: inline-flex;
 	align-items: center;
 	gap: 10px;
-	padding: 8px 14px;
+	margin-bottom: clamp(24px, 2.4vw, 36px);
+	padding: 7px 14px 7px 10px;
 	font-size: 13px;
 	font-weight: 500;
-	color: var(--color-white);
-	background: rgb(255 255 255 / 0.08);
-	border: 1px solid rgb(255 255 255 / 0.16);
+	color: var(--ink);
+	background: var(--color-white);
+	border: 1px solid var(--rule);
 	border-radius: 999px;
-	backdrop-filter: blur(10px);
-	-webkit-backdrop-filter: blur(10px);
+	box-shadow: 0 1px 2px rgb(13 31 56 / 0.05);
 }
 
-.hero2__title {
-	margin-top: clamp(24px, 2.6vw, 36px);
-	font-size: clamp(46px, 5.8vw, 112px);
-	font-weight: 600;
-	line-height: 0.95;
-	letter-spacing: -0.06em;
+.hero__badge .bars {
+	height: 11px;
 }
 
-.hero2__line {
+.hero__title {
+	font-size: clamp(46px, 5.2vw, 104px);
+	font-weight: 500;
+	line-height: 1;
+	letter-spacing: -0.055em;
+}
+
+.hero__line {
 	display: block;
 }
 
-/* The second sentence fades from white into a soft brand pink */
-.hero2__line--glow {
-	padding-bottom: 0.06em;
-	background: linear-gradient(90deg, #ffffff 0%, #ffd1de 45%, #ff7aa2 100%);
-	-webkit-background-clip: text;
-	background-clip: text;
-	-webkit-text-fill-color: transparent;
+.hero__line.muted {
+	color: #8a94a6;
 }
 
 .word {
@@ -122,9 +71,8 @@
 	margin-right: 0;
 }
 
-/* Blur-in-up, word by word for the first sentence, line by line for the second (Magic UI Text Animate) */
-.js .hero2__title .word,
-.js .hero2__title .hero2__line--glow {
+/* Blur-in-up, word by word (Magic UI Text Animate) */
+.js .hero__title .word {
 	opacity: 0;
 	filter: blur(14px);
 	transform: translateY(0.3em);
@@ -135,99 +83,216 @@
 	transition-delay: calc(var(--i) * 40ms);
 }
 
-.js .hero2__title.is-visible .word,
-.js .hero2__title.is-visible .hero2__line--glow {
+.js .hero__title.is-visible .word {
 	opacity: 1;
 	filter: none;
 	transform: none;
 }
 
-.hero2__subtitle {
-	max-width: 42ch;
-	margin-top: clamp(24px, 2.4vw, 36px);
-	font-size: clamp(17px, 0.4vw + 15px, 20px);
-	line-height: 1.6;
-	color: rgb(255 255 255 / 0.74);
+.hero__lead {
+	margin-top: clamp(20px, 2vw, 32px);
 }
 
-.hero2__buttons {
+.hero__buttons {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: center;
 	gap: 20px 36px;
-	margin-top: clamp(32px, 3vw, 44px);
+	margin-top: clamp(24px, 2.4vw, 36px);
 }
 
-/* ----- Stage: tilting product carousel with floating stat cards ----- */
+/* ----- Panel: a deep navy app window that runs off the right edge of the page, with a
+   slow glow in the logo colours behind the product. Its stage holds a dot grid that
+   brightens under the pointer (after Aceternity UI Spotlight). ----- */
 
-.hero2__stage {
+.hero__panel {
+	position: relative;
+	margin-right: -5vw;
+	overflow: hidden;
+	color: var(--color-white);
+	background: var(--ink-deep);
+	border-radius: calc(var(--radius) * 1.3) 0 0 calc(var(--radius) * 1.3);
+	box-shadow: 0 60px 120px -40px rgb(13 31 56 / 0.55);
+}
+
+/* Hairline border that catches the light along the top and left edges */
+.hero__panel::after {
+	content: '';
+	position: absolute;
+	inset: 0;
+	z-index: 2;
+	padding: 1px;
+	border-radius: inherit;
+	background: linear-gradient(135deg, rgb(255 255 255 / 0.32), rgb(255 255 255 / 0.06) 40%, transparent 70%);
+	-webkit-mask:
+		linear-gradient(#000 0 0) content-box,
+		linear-gradient(#000 0 0);
+	-webkit-mask-composite: xor;
+	mask-composite: exclude;
+	pointer-events: none;
+}
+
+.hero__chrome {
+	position: relative;
+	z-index: 1;
+	display: flex;
+	align-items: center;
+	height: 48px;
+	padding-inline: 22px;
+	border-bottom: 1px solid rgb(255 255 255 / 0.08);
+}
+
+.hero__dots {
+	display: flex;
+	gap: 7px;
+}
+
+.hero__dots span {
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	background: rgb(255 255 255 / 0.16);
+}
+
+.hero__chrome-title {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-left: 24px;
+	font-size: 12.5px;
+	font-weight: 500;
+	color: rgb(255 255 255 / 0.6);
+}
+
+/* The one red dot, gently pulsing */
+.hero__chrome-title::before {
+	content: '';
+	width: 6px;
+	height: 6px;
+	border-radius: 50%;
+	background: var(--color-accent);
+	animation: tag-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes tag-pulse {
+	50% {
+		box-shadow: 0 0 0 5px rgb(224 3 72 / 0.25);
+	}
+}
+
+.hero__stage {
+	--sx: 60%;
+	--sy: 35%;
 	--rx: 0deg;
 	--ry: 0deg;
 	position: relative;
+	isolation: isolate;
+	padding: clamp(28px, 3.4vw, 52px) calc(5vw + clamp(28px, 3.4vw, 52px)) clamp(28px, 3.4vw, 52px)
+		clamp(28px, 3.4vw, 52px);
 	perspective: 1400px;
 }
 
-.hero2__tilt {
+/* Glow in the logo colours, drifting slowly */
+.hero__stage::before {
+	content: '';
+	position: absolute;
+	inset: -20%;
+	z-index: -2;
+	background:
+		radial-gradient(32% 40% at 68% 32%, rgb(91 143 208 / 0.6), transparent 70%),
+		radial-gradient(30% 38% at 30% 72%, rgb(127 76 128 / 0.55), transparent 70%),
+		radial-gradient(22% 28% at 80% 82%, rgb(224 3 72 / 0.22), transparent 70%);
+	filter: blur(20px);
+	animation: aurora 18s ease-in-out infinite alternate;
+}
+
+@keyframes aurora {
+	to {
+		transform: translate(-4%, 3%) rotate(6deg) scale(1.05);
+	}
+}
+
+.hero__dotgrid,
+.hero__spot {
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	background-image: radial-gradient(rgb(255 255 255 / 0.1) 1px, transparent 1.5px);
+	background-size: 22px 22px;
+	pointer-events: none;
+}
+
+.hero__dotgrid {
+	-webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, #000, transparent 80%);
+	mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, #000, transparent 80%);
+}
+
+.hero__spot {
+	background-image: radial-gradient(rgb(255 255 255 / 0.5) 1px, transparent 1.5px);
+	-webkit-mask-image: radial-gradient(260px circle at var(--sx) var(--sy), #000, transparent 70%);
+	mask-image: radial-gradient(260px circle at var(--sx) var(--sy), #000, transparent 70%);
+}
+
+.hero__tilt {
 	position: relative;
 	transform: rotateX(var(--rx)) rotateY(var(--ry));
 	transform-style: preserve-3d;
 	transition: transform 0.6s var(--ease-out);
 }
 
-.hero2__frame {
+.hero__frame {
 	position: relative;
-	aspect-ratio: 1 / 1.04;
+	aspect-ratio: 1 / 0.98;
 	overflow: hidden;
 }
 
-.js .hero2__frame.reveal {
+.js .hero__frame.reveal {
 	transform: translateY(40px) scale(0.96);
 }
 
-.js .hero2__frame.reveal.is-visible {
+.js .hero__frame.reveal.is-visible {
 	transform: none;
 }
 
-.hero2__track {
+.hero__track {
 	display: flex;
 	height: 100%;
 	transition: transform 1s var(--ease-in-out);
 }
 
-.hero2__slide {
+.hero__slide {
 	position: relative;
 	flex: 0 0 100%;
 }
 
-.hero2__slide-image {
+.hero__slide-image {
 	position: absolute;
-	inset: 0 0 92px;
+	inset: 0 0 88px;
 }
 
-.hero2__slide-image img {
+.hero__slide-image img {
 	width: 100%;
 	height: 100%;
 	object-fit: contain;
-	filter: drop-shadow(0 40px 50px rgb(0 0 0 / 0.5));
+	filter: drop-shadow(0 40px 50px rgb(0 0 0 / 0.55));
 }
 
-/* Glassy caption: icon, title, subtitle, counter */
-.hero2__caption {
+/* Caption card: icon, title, subtitle, counter */
+.hero__caption {
 	position: absolute;
-	inset: auto 0 0;
+	inset: auto 1px 1px;
 	display: flex;
 	align-items: center;
 	gap: 14px;
 	padding: 12px 18px 12px 12px;
-	color: var(--color-white);
-	background: rgb(255 255 255 / 0.1);
-	border: 1px solid rgb(255 255 255 / 0.16);
+	background: rgb(255 255 255 / 0.07);
+	border: 1px solid rgb(255 255 255 / 0.12);
 	border-radius: 16px;
-	backdrop-filter: blur(14px) saturate(1.3);
-	-webkit-backdrop-filter: blur(14px) saturate(1.3);
+	backdrop-filter: blur(16px) saturate(1.4);
+	-webkit-backdrop-filter: blur(16px) saturate(1.4);
 }
 
-.hero2__caption-icon {
+.hero__caption-icon {
 	display: grid;
 	flex: none;
 	place-items: center;
@@ -237,7 +302,7 @@
 	border-radius: 11px;
 }
 
-.hero2__caption-icon svg {
+.hero__caption-icon svg {
 	width: 18px;
 	height: 18px;
 	fill: none;
@@ -245,33 +310,33 @@
 	stroke-width: 1.8;
 }
 
-.hero2__caption-text {
+.hero__caption-text {
 	min-width: 0;
 }
 
-.hero2__caption-title {
+.hero__caption-title {
 	display: block;
 	font-size: 15px;
 	font-weight: 600;
 	letter-spacing: -0.01em;
 }
 
-.hero2__caption-subtitle {
+.hero__caption-subtitle {
 	display: block;
 	margin-top: 2px;
 	font-size: 12.5px;
-	color: rgb(255 255 255 / 0.65);
-}
-
-.hero2__caption-num {
-	margin-left: auto;
-	font-size: 12px;
-	font-variant-numeric: tabular-nums;
 	color: rgb(255 255 255 / 0.6);
 }
 
+.hero__caption-num {
+	margin-left: auto;
+	font-size: 12px;
+	font-variant-numeric: tabular-nums;
+	color: rgb(255 255 255 / 0.5);
+}
+
 /* Progress rule along the caption's bottom edge */
-.hero2__progress {
+.hero__progress {
 	position: absolute;
 	inset: auto 16px 0;
 	z-index: 1;
@@ -283,61 +348,66 @@
 }
 
 /* Floating stat cards: lifted off the tilting stage, each bobbing on its own beat */
-.hero2__chips {
+.hero__chips {
 	position: absolute;
 	inset: 0;
+	z-index: 1;
 	transform-style: preserve-3d;
 	pointer-events: none;
 }
 
-.hero2__chip {
+.hero__chip {
 	position: absolute;
 	display: flex;
 	flex-direction: column;
-	gap: 4px;
-	min-width: 168px;
-	padding: 14px 18px 16px;
+	gap: 6px;
+	min-width: 150px;
+	padding: 12px 16px 14px;
 	color: var(--ink);
 	background: var(--color-white);
 	border-radius: 16px;
-	box-shadow: 0 24px 48px -16px rgb(0 0 0 / 0.45);
+	box-shadow:
+		0 1px 2px rgb(0 0 0 / 0.1),
+		0 24px 48px -16px rgb(0 0 0 / 0.55);
 	transform: translateZ(70px);
 }
 
-.hero2__chip:nth-child(1) {
+.hero__chip:nth-child(1) {
 	top: 2%;
-	left: -12%;
+	left: -3%;
 }
 
-.hero2__chip:nth-child(2) {
+.hero__chip:nth-child(2) {
 	top: 30%;
-	right: -8%;
+	right: -4%;
 }
 
-.hero2__chip:nth-child(3) {
-	bottom: 22%;
-	left: -14%;
+.hero__chip:nth-child(3) {
+	bottom: 25%;
+	left: -3%;
 }
 
-.hero2__chip dd {
+.hero__chip dd {
 	order: -1;
-	font-size: clamp(30px, 1.4vw + 16px, 40px);
-	font-weight: 600;
+	font-size: clamp(28px, 1vw + 16px, 34px);
+	font-weight: 500;
 	line-height: 1;
-	letter-spacing: -0.05em;
+	letter-spacing: -0.045em;
+	font-variant-numeric: tabular-nums;
 }
 
-.hero2__chip dt {
+.hero__chip dt {
 	display: flex;
 	align-items: center;
 	gap: 8px;
-	font-size: 13px;
+	font-size: 12.5px;
 	font-weight: 500;
-	color: #667085;
+	color: var(--muted);
 }
 
-.hero2__chip dt::before {
+.hero__chip dt::before {
 	content: '';
+	flex: none;
 	width: 7px;
 	height: 7px;
 	border-radius: 50%;
@@ -345,11 +415,11 @@
 }
 
 /* Pop in, then bob */
-.js .hero2__chip.reveal {
+.js .hero__chip.reveal {
 	transform: translateZ(70px) translateY(24px) scale(0.9);
 }
 
-.js .hero2__chip.reveal.is-visible {
+.js .hero__chip.reveal.is-visible {
 	transform: translateZ(70px);
 	animation: bob 6s ease-in-out infinite;
 	animation-delay: calc(1s + var(--b, 0s));
@@ -364,7 +434,7 @@
 /* Product image drifts a touch as the hero scrolls away */
 @supports (animation-timeline: view()) {
 	@media (prefers-reduced-motion: no-preference) {
-		.hero2__slide-image img {
+		.hero__slide-image img {
 			animation: drift linear both;
 			animation-timeline: view();
 		}
@@ -2096,11 +2166,12 @@ html:not(.js) .chart__line path {
 }
 
 @media (hover: none), (pointer: coarse) {
+	/* Scoped under .index so these win over the 1024px row layout further down */
 	.index__preview {
 		display: none;
 	}
 
-	.index__thumb {
+	.index .index__thumb {
 		display: block;
 		overflow: hidden;
 		width: 64px;
@@ -2108,31 +2179,31 @@ html:not(.js) .chart__line path {
 		border-radius: 12px;
 	}
 
-	.index__thumb img {
+	.index .index__thumb img {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
 	}
 
-	.index__row {
+	.index .index__row {
 		grid-template-columns: 64px minmax(0, 1fr) 28px;
 		column-gap: 18px;
 	}
 
-	.index__num {
+	.index .index__num {
 		display: none;
 	}
 
-	.index__title {
+	.index .index__title {
 		white-space: normal;
 	}
 
-	.index__desc {
+	.index .index__desc {
 		grid-column: 2;
 		grid-row: 2;
 	}
 
-	.index__thumb {
+	.index .index__thumb {
 		grid-row: span 2;
 		align-self: start;
 	}
@@ -2149,7 +2220,7 @@ html:not(.js) .chart__line path {
 }
 
 @media (max-width: 1024px) {
-	.hero2__content,
+	.hero__grid,
 	.struggle__layout,
 	.hiw__layout {
 		grid-template-columns: 1fr;
@@ -2159,18 +2230,19 @@ html:not(.js) .chart__line path {
 		position: static;
 	}
 
-	.hero2__panel {
+	.hero {
 		min-height: 0;
 	}
 
-	.hero2__panel::before {
-		background: linear-gradient(180deg, rgb(10 8 14 / 0.6) 0%, rgb(10 8 14 / 0.2) 50%, transparent 80%);
+	.hero__panel {
+		width: 100%;
+		max-width: 680px;
+		margin-right: 0;
+		border-radius: calc(var(--radius) * 1.3);
 	}
 
-	.hero2__stage {
-		width: 100%;
-		max-width: 560px;
-		margin-inline: auto;
+	.hero__stage {
+		padding: clamp(20px, 4vw, 40px);
 	}
 
 	.pain__grid {
@@ -2220,16 +2292,16 @@ html:not(.js) .chart__line path {
 }
 
 @media (max-width: 720px) {
-	.hero2 {
-		padding-top: 84px;
+	.hero {
+		padding-top: 112px;
 	}
 
-	.hero2__caption-num {
+	.hero__caption-num {
 		display: none;
 	}
 
 	/* Stat cards sit in a row under the product instead of floating */
-	.hero2__chips {
+	.hero__chips {
 		position: static;
 		display: grid;
 		grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -2237,30 +2309,30 @@ html:not(.js) .chart__line path {
 		margin-top: 12px;
 	}
 
-	.hero2__chip,
-	.js .hero2__chip.reveal,
-	.js .hero2__chip.reveal.is-visible {
+	.hero__chip,
+	.js .hero__chip.reveal,
+	.js .hero__chip.reveal.is-visible {
 		transform: none;
 		animation: none;
 	}
 
-	.hero2__chip {
+	.hero__chip {
 		position: static;
 		min-width: 0;
 		padding: 12px 12px 14px;
 		border-radius: 12px;
 	}
 
-	.hero2__chip dd {
+	.hero__chip dd {
 		font-size: 26px;
 	}
 
-	.hero2__chip dt {
-		font-size: 11.5px;
+	.hero__chip dt {
+		font-size: 12px;
 		line-height: 1.3;
 	}
 
-	.hero2__chip dt::before {
+	.hero__chip dt::before {
 		display: none;
 	}
 
@@ -2271,7 +2343,12 @@ html:not(.js) .chart__line path {
 	.pain__grid,
 	.bento,
 	.quotes {
-		grid-template-columns: 1fr;
+		grid-template-columns: minmax(0, 1fr);
+	}
+
+	/* Keep the row hover wash inside the page gutter */
+	.index__row::before {
+		inset: 0 -12px;
 	}
 
 	.pain__item {
@@ -2325,13 +2402,14 @@ html:not(.js) .chart__line path {
 }
 
 @media (prefers-reduced-motion: reduce) {
-	.js .hero2__title .word,
-	.js .hero2__title .hero2__line--glow,
+	.js .hero__title .word,
 	.js .quotes__lead .qw {
 		filter: none;
 	}
 
 	/* The looping illustrations end hidden, so show them still instead */
+	.hero__chrome-title::before,
+	.hero__stage::before,
 	.chat__msg,
 	.chat__typing,
 	.cal__day.is-booked,

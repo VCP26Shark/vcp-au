@@ -294,6 +294,24 @@ a.footer__contact-value:hover {
 	}
 }
 
+/* Touch screens: taller links so each one is an easy tap (44px row) */
+@media (pointer: coarse) {
+	.footer__links {
+		gap: 0;
+	}
+
+	.footer__link {
+		padding-block: 10px;
+		background-position: left calc(100% - 8px);
+	}
+
+	a.footer__contact-value {
+		display: inline-block;
+		padding-block: 11px;
+		margin-block: -11px;
+	}
+}
+
 @media (prefers-reduced-motion: reduce) {
 	.js .footer__col {
 		transform: none;

@@ -599,9 +599,11 @@
 	margin-top: clamp(72px, 8vw, 128px);
 }
 
+/* Numbers sit on a common baseline even when a label wraps onto two lines */
 .feat-band__item {
 	display: flex;
 	flex-direction: column;
+	justify-content: space-between;
 	gap: 16px;
 	padding: 4px 28px;
 	border-left: 1px solid var(--rule);

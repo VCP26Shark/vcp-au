@@ -51,6 +51,14 @@
 	text-decoration-color: currentColor;
 }
 
+/* A bigger tap area on touch screens without moving the line */
+@media (pointer: coarse) {
+	.post-crumbs a {
+		padding-block: 10px;
+		margin-block: -10px;
+	}
+}
+
 /* Titles are sentences, so a step smaller than the page-hero display size */
 .post-hero__title {
 	max-width: 18ch;

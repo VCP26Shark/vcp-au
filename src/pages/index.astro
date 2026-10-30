@@ -46,7 +46,7 @@ const brand = (i: number) => `var(--brand-${(i % 5) + 1})`;
 
 /* ----- Hero ----- */
 
-// The first sentence blurs in word by word; the second, in a white-to-pink gradient, line by line
+// Blurs in word by word; the second sentence (lines 3 and 4) sits in grey
 const heroLines = ['Stop Drowning', 'in Admin.', 'Start Growing', 'Your Business.'];
 
 const heroStats = [
@@ -374,133 +374,130 @@ const industries = [
 	keywords="AI, automation, business growth platform, CRM"
 >
 	<!-- ============================================
-	     Hero: word-by-word headline (Magic UI Text Animate)
+	     Hero: the headline blurs in word by word (Magic UI Text Animate). On the right the
+	     product carousel tilts towards the pointer under a soft spotlight.
 	     ============================================ -->
-	<section class="hero2">
-		<div class="container">
-			<div class="hero2__panel" data-pause-offscreen data-hero-panel>
-				<canvas class="shader" aria-hidden="true" data-shader></canvas>
-				<span class="hero2__lines" aria-hidden="true"></span>
-				<span class="hero2__spot" aria-hidden="true"></span>
-				<span class="beam" aria-hidden="true"></span>
+	<section class="hero" data-hero>
+		<div class="container hero__grid">
+			<div class="hero__copy">
+				<p class="hero__badge reveal">
+					<span class="bars" aria-hidden="true"
+						><span></span><span></span><span></span><span></span><span></span></span
+					>
+					AI-Powered Automation
+				</p>
 
-				<div class="hero2__content">
-					<div class="hero2__copy">
-						<p class="pill reveal">
-							<span class="bars" aria-hidden="true"
-								><span></span><span></span><span></span><span></span><span></span></span
-							>
-							AI-Powered Automation
-						</p>
+				<h1 class="hero__title" data-reveal aria-label="Stop drowning in admin. Start growing your business.">
+					{
+						heroLines.map((line, l) => (
+							<span class:list={['hero__line', { muted: l > 1 }]} aria-hidden="true">
+								{line.split(' ').map((word, w) => (
+									<span class="word" style={`--i: ${l * 2 + w}`}>
+										{word}
+									</span>
+								))}
+							</span>
+						))
+					}
+				</h1>
 
-						<h1 class="hero2__title" data-reveal aria-label="Stop drowning in admin. Start growing your business.">
-							{
-								heroLines.map((line, l) =>
-									l < 2 ? (
-										<span class="hero2__line" aria-hidden="true">
-											{line.split(' ').map((word, w) => (
-												<span class="word" style={`--i: ${l * 2 + w}`}>
-													{word}
-												</span>
-											))}
-										</span>
-									) : (
-										<span class="hero2__line hero2__line--glow" aria-hidden="true" style={`--i: ${l + 3}`}>
-											{line}
-										</span>
-									),
-								)
-							}
-						</h1>
+				<p class="lead hero__lead reveal" style="--d: 0.25s">
+					You didn't start your business to chase leads or spend weekends on paperwork. Let AI handle the busy work
+					while you focus on what you do best.
+				</p>
 
-						<p class="hero2__subtitle reveal" style="--d: 0.25s">
-							You didn't start your business to chase leads or spend weekends on paperwork. Let AI handle the busy
-							work while you focus on what you do best.
-						</p>
+				<div class="hero__buttons reveal" style="--d: 0.3s">
+					<a href="#three-steps" class="btn btn--accent btn--shine" data-magnetic>
+						See How It Works
+						<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+					</a>
+					<a href="/contact" class="btn btn--link">
+						Book Free Strategy Call
+						<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
+					</a>
+				</div>
+			</div>
 
-						<div class="hero2__buttons reveal" style="--d: 0.3s">
-							<a href="#three-steps" class="btn btn--light btn--shine" data-magnetic>
-								See How It Works
-								<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
-							</a>
-							<a href="/contact" class="btn btn--link btn--on-ink">
-								Book Free Strategy Call
-								<svg viewBox="0 0 24 24" aria-hidden="true" set:html={arrow} />
-							</a>
-						</div>
-					</div>
+			<!-- Product carousel in an app-style window; the stage tilts with the pointer, with the
+			     stats floating over it -->
+			<div class="hero__panel reveal" style="--d: 0.1s">
+				<div class="hero__chrome" aria-hidden="true">
+					<span class="hero__dots"><span></span><span></span><span></span></span>
+					<span class="hero__chrome-title">Inside VCPility</span>
+				</div>
 
-					<!-- Product carousel that tilts with the pointer, with the stats floating around it -->
-					<div class="hero2__stage" data-tilt>
-						<div class="hero2__tilt">
-							<div
-								class="hero2__frame reveal"
-								style="--d: 0.1s"
-								role="region"
-								aria-roledescription="carousel"
-								aria-label="VCPility features"
-								data-hero-carousel
-							>
-								<div class="hero2__track" data-hero-track>
-									{
-										heroTrack.map(({ image, title, subtitle, icon }, i) => {
-											const isClone = i === heroSlides.length;
-											return (
-												<div
-													class="hero2__slide"
-													role="group"
-													aria-roledescription="slide"
-													aria-label={`${(i % heroSlides.length) + 1} of ${heroSlides.length}`}
-													aria-hidden={i === 0 ? undefined : 'true'}
-												>
-													<div class="hero2__slide-image">
-														<Image
-															src={image}
-															alt={isClone ? '' : title}
-															width={960}
-															widths={[480, 960]}
-															sizes="(max-width: 1024px) 90vw, 600px"
-															loading={i === 0 ? 'eager' : 'lazy'}
-															fetchpriority={i === 0 ? 'high' : 'auto'}
-														/>
-													</div>
-													<div class="hero2__caption">
-														<span class="hero2__caption-icon">
-															<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icon} />
-														</span>
-														<span class="hero2__caption-text">
-															<span class="hero2__caption-title">{title}</span>
-															<span class="hero2__caption-subtitle">{subtitle}</span>
-														</span>
-														<span class="hero2__caption-num">
-															{pad((i % heroSlides.length) + 1)}/{pad(heroSlides.length)}
-														</span>
-													</div>
-												</div>
-											);
-										})
-									}
-								</div>
-								<span class="hero2__progress" data-hero-progress></span>
-							</div>
+				<div class="hero__stage" data-tilt>
+					<span class="hero__dotgrid" aria-hidden="true"></span>
+					<span class="hero__spot" aria-hidden="true"></span>
 
-							<dl class="hero2__chips">
+					<div class="hero__tilt">
+						<div
+							class="hero__frame reveal"
+							style="--d: 0.2s"
+							role="region"
+							aria-roledescription="carousel"
+							aria-label="VCPility features"
+							data-hero-carousel
+						>
+							<div class="hero__track" data-hero-track>
 								{
-									heroStats.map(({ value, suffix, decimals = 0, label }, i) => (
-										<div
-											class="hero2__chip reveal"
-											style={`--d: ${0.45 + i * 0.12}s; --b: ${i * -2}s; --c: ${brand(i * 2)}`}
-										>
-											<dt>{label}</dt>
-											<dd class="ticker" data-ticker data-reveal style={`--d: ${0.5 + i * 0.12}s`}>
-												{value.toFixed(decimals)}
-												{suffix}
-											</dd>
-										</div>
-									))
+									heroTrack.map(({ image, title, subtitle, icon }, i) => {
+										const isClone = i === heroSlides.length;
+										return (
+											<div
+												class="hero__slide"
+												role="group"
+												aria-roledescription="slide"
+												aria-label={`${(i % heroSlides.length) + 1} of ${heroSlides.length}`}
+												aria-hidden={i === 0 ? undefined : 'true'}
+											>
+												<div class="hero__slide-image">
+													<Image
+														src={image}
+														alt={isClone ? '' : title}
+														width={960}
+														widths={[480, 960]}
+														sizes="(max-width: 1024px) 90vw, 600px"
+														loading={i === 0 ? 'eager' : 'lazy'}
+														fetchpriority={i === 0 ? 'high' : 'auto'}
+													/>
+												</div>
+												<div class="hero__caption">
+													<span class="hero__caption-icon">
+														<svg viewBox="0 0 24 24" aria-hidden="true" set:html={icon} />
+													</span>
+													<span class="hero__caption-text">
+														<span class="hero__caption-title">{title}</span>
+														<span class="hero__caption-subtitle">{subtitle}</span>
+													</span>
+													<span class="hero__caption-num">
+														{pad((i % heroSlides.length) + 1)}/{pad(heroSlides.length)}
+													</span>
+												</div>
+											</div>
+										);
+									})
 								}
-							</dl>
+							</div>
+							<span class="hero__progress" data-hero-progress></span>
 						</div>
+
+						<dl class="hero__chips">
+							{
+								heroStats.map(({ value, suffix, decimals = 0, label }, i) => (
+									<div
+										class="hero__chip reveal"
+										style={`--d: ${0.45 + i * 0.12}s; --b: ${i * -2}s; --c: ${brand(i * 2)}`}
+									>
+										<dt>{label}</dt>
+										<dd class="ticker" data-ticker data-reveal style={`--d: ${0.5 + i * 0.12}s`}>
+											{value.toFixed(decimals)}
+											{suffix}
+										</dd>
+									</div>
+								))
+							}
+						</dl>
 					</div>
 				</div>
 			</div>
@@ -1160,23 +1157,23 @@ const industries = [
 		}).observe(carousel);
 	}
 
-	/* ----- Hero: a spotlight follows the pointer across the panel, and the stage tilts towards it ----- */
-	const heroPanel = document.querySelector<HTMLElement>('[data-hero-panel]');
-	const stage = heroPanel?.querySelector<HTMLElement>('[data-tilt]');
+	/* ----- Hero: anywhere over the hero, a spotlight follows the pointer across the product
+	   panel and the carousel tilts towards it ----- */
+	const hero = document.querySelector<HTMLElement>('[data-hero]');
+	const stage = hero?.querySelector<HTMLElement>('[data-tilt]');
 
-	if (heroPanel && stage && !reduceMotion && finePointer) {
-		heroPanel.addEventListener('pointermove', (e) => {
-			const panelBox = heroPanel.getBoundingClientRect();
-			heroPanel.style.setProperty('--sx', `${e.clientX - panelBox.left}px`);
-			heroPanel.style.setProperty('--sy', `${e.clientY - panelBox.top}px`);
-
+	if (hero && stage && !reduceMotion && finePointer) {
+		hero.addEventListener('pointermove', (e) => {
 			const box = stage.getBoundingClientRect();
-			const x = (e.clientX - box.left) / box.width - 0.5;
-			const y = (e.clientY - box.top) / box.height - 0.5;
+			stage.style.setProperty('--sx', `${e.clientX - box.left}px`);
+			stage.style.setProperty('--sy', `${e.clientY - box.top}px`);
+
+			const x = Math.max(-0.5, Math.min((e.clientX - box.left) / box.width - 0.5, 0.5));
+			const y = Math.max(-0.5, Math.min((e.clientY - box.top) / box.height - 0.5, 0.5));
 			stage.style.setProperty('--ry', `${(x * 10).toFixed(2)}deg`);
 			stage.style.setProperty('--rx', `${(y * -8).toFixed(2)}deg`);
 		});
-		heroPanel.addEventListener('pointerleave', () => {
+		hero.addEventListener('pointerleave', () => {
 			stage.style.setProperty('--rx', '0deg');
 			stage.style.setProperty('--ry', '0deg');
 		});
